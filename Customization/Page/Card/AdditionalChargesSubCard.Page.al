@@ -247,6 +247,7 @@ page 50906 "Additional Charges Sub Card"
         salesHeader."Posting Date" := Today;
         salesHeader."Due Date" := Today;
         salesHeader."Property Classification" := pUnitType;
+        salesHeader."Posting No. Series" := salesReciveable."Posted Invoice Nos.";
         salesHeader.Insert();
         exit(salesHeader);
     end;
@@ -274,7 +275,7 @@ page 50906 "Additional Charges Sub Card"
         saleline.Type := saleline.Type::Item;
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
         item.SetRange(Description, additionalchargessub."Secondary Item Type");
-
+        item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
         if item.FindFirst() then
             saleline.Validate("No.", item."No.");
 

@@ -105,44 +105,9 @@ pageextension 50503 salesinvoiceext extends "Sales Invoice List"
         modify(Post)
         {
             trigger OnBeforeAction()
-            var
-                ConfigRecord: Record AzureConfiguration;
-                SalesHeader1: Record "Sales Header";
-                TempBlob: Codeunit "Temp Blob";
-                azureBlobUploader: Codeunit "Azure AD Blob Storage";
-                RecRef: RecordRef;
-                InStream: InStream;
-                FileName: Text[250];
-                SASUrlBase: Text;
-                UploadResult: Text;
-                ValidFormats: List of [Text];
-                FileExtension: Text[10];
-                ReportID: Integer;
-                OutStream: OutStream;
-                folderName: Text;
             begin
-                if not ConfigRecord.FindFirst() then
-                    Error('Azure configuration is missing. Please set up the SAS URL in the Azure Configuration table.');
-                ValidFormats.Add('.png');
-                ValidFormats.Add('.jpg');
-                ValidFormats.Add('.jpeg');
-                SASUrlBase := ConfigRecord."SAS URL";
-                FileExtension := '.pdf';
-                ReportID := 50104;
-                SalesHeader1.Reset();
-                SalesHeader1.SetRange("No.", Rec."No.");
-                if not SalesHeader1.FindFirst() then
-                    Error('Sales Invoice record not found.');
-                RecRef.GetTable(SalesHeader1);
-                TempBlob.CreateOutStream(OutStream);
-                Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
-                TempBlob.CreateInStream(InStream);
-                FileName := 'Invoice_' + Rec."No." + FileExtension;
-                folderName := 'SalesInvoiceDocuments';
-                UploadResult := azureBlobUploader.UploadDocumentToBlob(InStream, FileName, folderName);
-                Rec."View Invoice" := FileName;
-                Rec."View Document URL" := Format(UploadResult);
-                Rec.Modify();
+                if Rec."Approval Status" <> Rec."Approval Status"::Approved then
+                    Error('The Sales Invoice cannot be posted because the approval status is not "Approved".');
             end;
         }
     }

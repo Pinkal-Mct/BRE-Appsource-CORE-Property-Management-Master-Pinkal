@@ -122,6 +122,13 @@ page 50922 "Payment Schedule Card2"
                     ToolTip = 'The ID of the invoice associated with this payment schedule.';
                     Editable = InvoicedField;
                 }
+                field("Invoice Approval Status"; Rec."Invoice Approval Status")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'The approval status of the invoice associated with this payment schedule.';
+                    Caption = 'Invoice Approval Status';
+                    Editable = false;
+                }
                 field("Contract Status"; Rec."Contract Status")
                 {
                     ApplicationArea = All;
@@ -331,6 +338,7 @@ page 50922 "Payment Schedule Card2"
         salesHeader."Posting Date" := Today;
         salesHeader."Due Date" := Today;
         salesHeader."Property Classification" := pUnitType;
+        salesHeader."Posting No. Series" := salesReciveable."Posted Invoice Nos.";
         salesHeader.Insert();
         exit(salesHeader);
     end;
@@ -356,6 +364,7 @@ page 50922 "Payment Schedule Card2"
         saleline.Type := saleline.Type::Item;
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
         item.SetRange(Description, PaymentscheduleGridLine."Secondary Item Type");
+        item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
         if item.FindFirst() then
             saleline.Validate("No.", item."No.");
 

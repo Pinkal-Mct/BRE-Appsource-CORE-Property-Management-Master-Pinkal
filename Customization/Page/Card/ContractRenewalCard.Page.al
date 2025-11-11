@@ -358,14 +358,12 @@ page 50335 "Contract Renewal Card"
                 {
                     ApplicationArea = All;
                     Caption = 'Frequency of payment';
-                    Editable = false;
                     ToolTip = 'Frequency of payment';
                 }
                 field("Payment Method"; rec."Payment Method")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Mode';
-                    Editable = false;
                     ToolTip = 'Payment Mode';
                 }
 

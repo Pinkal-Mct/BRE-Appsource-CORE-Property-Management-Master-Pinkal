@@ -81,11 +81,17 @@ page 50928 "Payment Mode Card2"
                 field("Payment Status"; Rec."Payment Status")
                 {
                     ApplicationArea = All;
-                    Editable = IsApproved;
+                    Editable = IsApproved or not IsReceivedCancelled;
                     ToolTip = 'The Payment Status indicates the current status of the payment, such as Due, Overdue, or Paid.';
 
+                    trigger OnValidate()
+                    begin
+                        if (Rec."Payment Status" = Rec."Payment Status"::Cancelled) or (Rec."Payment Status" = Rec."Payment Status"::Received) then
+                            IsReceivedCancelled := true
+                        else
+                            IsReceivedCancelled := false;
+                    end;
                 }
-
                 field("Cheque Status"; Rec."Cheque Status")
                 {
                     ApplicationArea = All;
@@ -96,7 +102,8 @@ page 50928 "Payment Mode Card2"
                 field("Invoice #"; Rec."Invoice #")
                 {
                     ApplicationArea = All;
-                    Editable = IsApproved AND (Rec."Payment Status" <> Rec."Payment Status"::Cancelled); // Makes the field editable unless Payment Status is "Cancelled"
+                    Editable = false;
+                    StyleExpr = Rec."Receipt #" <> '-';
                     ToolTip = 'The Invoice # is the unique identifier for the invoice associated with the payment.';
                 }
 
@@ -257,6 +264,19 @@ page 50928 "Payment Mode Card2"
                     ApplicationArea = All;
                     Editable = IsApproved AND IsFinanceManager;
                     ToolTip = 'The Approval Status indicates the approval status of the payment mode, such as Approved, Pending, or Declined.';
+
+                    trigger OnValidate()
+                    begin
+                        case Rec."Payment Mode" of
+                            'Cheque':
+                                if (Rec."Cheque Number" = '-') or (Rec."Deposit Bank" = '') or (Rec."Upload Cheque" = 'Upload Cheque') then
+                                    Error('Cheque details are incomplete. Please fill Cheque Number, Deposit Bank, and upload the Cheque.');
+
+                            'Bank Transfer', 'Credit Card', 'Mobile Wallet':
+                                if Rec."Deposit Bank" = '' then
+                                    Error('Deposit Bank must be entered for %1 payments.', Rec."Payment Mode");
+                        end;
+                    end;
                 }
                 field(Reason; Rec.Reason)
                 {
@@ -371,7 +391,8 @@ page 50928 "Payment Mode Card2"
                 field(PortalSidePaymentProcessing; Rec.PortalSidePaymentProcessing)
                 {
                     ApplicationArea = All;
-                    Caption = '"PortalSidePaymentProcessing"';
+                    ToolTip = 'The Portal Side Payment Processing indicates whether the payment processing is done through the portal side.';
+                    Caption = 'Portal Side Payment Processing';
                     Editable = true;
                 }
             }
@@ -415,7 +436,6 @@ page 50928 "Payment Mode Card2"
 
                 trigger OnAction()
                 var
-
                     PaymentModeRec: Record "Payment Mode2";
                     PrePDCTransRec: Record "PDC Transaction";
                     PDCTransRec: Record "PDC Transaction";
@@ -561,6 +581,12 @@ page 50928 "Payment Mode Card2"
         PaymentStatus: Enum "Payment Status";
     begin
         IsApproved := (Rec."Approval Status" <> Rec."Approval Status"::Approved);
+
+        if (Rec."Payment Status" = Rec."Payment Status"::Cancelled) or (Rec."Payment Status" = Rec."Payment Status"::Received) then
+            IsReceivedCancelled := true
+        else
+            IsReceivedCancelled := false;
+
         // If the field is blank, assign '-'
         if Rec."Cheque Number" = '' then
             Rec."Cheque Number" := '-';
@@ -616,13 +642,8 @@ page 50928 "Payment Mode Card2"
             until paymentschedul2grid.Next() = 0;
 
         Rec."Final Rent Amount" := Rec."Amount" - Rec."Credit Note Amount";
-        Rec.FinalRentAmountIncludingVAT := 0;
-        paymentschedulegrid1.SetRange("Contract ID", Rec."Contract ID");
-        paymentschedulegrid1.SetRange("Payment Series", Rec."Payment Series");
-        if paymentschedulegrid1.FindSet() then
-            repeat
-                Rec.FinalRentAmountIncludingVAT += paymentschedulegrid1."Final RentAmountIncludingVAT";
-            until paymentschedulegrid1.Next() = 0;
+        Rec.FinalRentAmountIncludingVAT := Rec."Final Rent Amount" + Rec."VAT Amount";
+
         Rec.Modify();
     end;
 
@@ -700,6 +721,7 @@ page 50928 "Payment Mode Card2"
         IsApproved: Boolean;
         IsLeaseManager: Boolean;
         IsFinanceManager: Boolean;
+        IsReceivedCancelled: Boolean;
 
     trigger OnOpenPage()
     var
@@ -723,6 +745,11 @@ page 50928 "Payment Mode Card2"
     trigger OnModifyRecord(): Boolean
     begin
         IsApproved := (Rec."Approval Status" <> Rec."Approval Status"::Approved);
+
+        if (Rec."Payment Status" = Rec."Payment Status"::Cancelled) or (Rec."Payment Status" = Rec."Payment Status"::Received) then
+            IsReceivedCancelled := true
+        else
+            IsReceivedCancelled := false;
     end;
 
     procedure CreateChequeEntry()

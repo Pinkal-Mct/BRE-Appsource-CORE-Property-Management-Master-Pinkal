@@ -109,6 +109,7 @@ page 50939 "Tenancy Contract SubPage Card"
                                 TargetRecord."VAT Amount" := Rec."VAT Amount";
                                 TargetRecord."Amount Including VAT" := Rec."Amount Including VAT";
                                 TargetRecord."VAT %" := Rec."VAT %";
+                                TargetRecord."Entry No" := Rec."Entry No.";
                                 TargetRecord.Modify();
                             end else begin
                                 TargetRecord.Init();
@@ -122,6 +123,7 @@ page 50939 "Tenancy Contract SubPage Card"
                                 TargetRecord."VAT Amount" := Rec."VAT Amount";
                                 TargetRecord."Amount Including VAT" := Rec."Amount Including VAT";
                                 TargetRecord."VAT %" := Rec."VAT %";
+                                TargetRecord."Entry No" := Rec."Entry No.";
                                 TargetRecord.Insert();
 
                                 StartDate := TargetRecord."Contract Start Date";
@@ -229,6 +231,27 @@ page 50939 "Tenancy Contract SubPage Card"
         }
     }
 
+    trigger OnAfterGetRecord()
+    var
+        revenueStructure: Record "Revenue Structure";
+    begin
+        revenueStructure.SetRange("RS ID", Rec.Link);
+        if revenueStructure.IsEmpty() then
+            Rec.Link := 0;
+    end;
+
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        Rec.ContractID := ContractID;
+        Rec.TenantID := tenantID;
+        Rec.ProposalID := (proposalID);
+    end;
+
+    var
+        ContractID: Integer;
+        proposalID: Integer;
+        tenantID: Code[20];
+
     local procedure IsLeapYear(Year: Integer): Boolean
     begin
         if (Year mod 4 = 0) and ((Year mod 100 <> 0) or (Year mod 400 = 0)) then
@@ -250,18 +273,5 @@ page 50939 "Tenancy Contract SubPage Card"
     begin
         tenantID := pTenantID;
     end;
-
-    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
-    begin
-        Rec.ContractID := ContractID;
-        Rec.TenantID := tenantID;
-        Rec.ProposalID := (proposalID);
-
-    end;
-
-    var
-        ContractID: Integer;
-        proposalID: Integer;
-        tenantID: Code[20];
 
 }
