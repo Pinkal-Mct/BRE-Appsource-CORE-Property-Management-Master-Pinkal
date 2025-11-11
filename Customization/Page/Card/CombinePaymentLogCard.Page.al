@@ -69,6 +69,16 @@ page 50932 "CombinePaymentLogCard"
                     Editable = false;
                     ToolTip = 'The payment series associated with the combine payment log entry.';
                 }
+                field("cheque No"; Rec."C_Cheque_Number")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the cheque number associated with this combine payment log entry.';
+                }
+                field("Deposit Bank"; Rec."C_Deposit_Bank")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the deposit bank associated with this combine payment log entry.';
+                }
                 field("Contract ID"; Rec."Contract ID")
                 {
                     ApplicationArea = All;

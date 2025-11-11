@@ -166,53 +166,9 @@ pageextension 50508 SalesCreditMemo extends "Sales Credit Memo"
         modify(Post)
         {
             trigger OnBeforeAction()
-            var
-                SalesHeader1: Record "Sales Header";
-                ConfigRecord: Record AzureConfiguration;
-                azureBlobUploader: Codeunit "Azure AD Blob Storage";
-                TempBlob: Codeunit "Temp Blob";
-                RecRef: RecordRef;
-                InStream: InStream;
-                FileName: Text[100];
-                SASUrlBase: Text;
-                UploadResult: Text[1000];
-                ValidFormats: List of [Text];
-                FileExtension: Text[10];
-                ReportID: Integer; // Your report ID
-                OutStream: OutStream;
-                folderName: Text;
             begin
                 if Rec."Approval Status for CreditNote" <> Rec."Approval Status for CreditNote"::Approved then
                     Error('The Sales Credit Memo cannot be posted because the approval status is not "Approved".');
-
-                if not ConfigRecord.FindFirst() then
-                    Error('Azure configuration is missing. Please set up the SAS URL in the Azure Configuration table.');
-                ValidFormats.Add('.png');
-                ValidFormats.Add('.jpg');
-                ValidFormats.Add('.jpeg');
-
-                SASUrlBase := ConfigRecord."SAS URL";
-                FileExtension := '.pdf';
-                ReportID := 50116;
-                SalesHeader1.Reset();
-                SalesHeader1.SetRange("No.", Rec."No.");
-                SalesHeader1.SetRange("Document Type", Rec."Document Type"::"Credit Memo");
-                if not SalesHeader1.FindFirst() then
-                    Error('Sales Credit memo record not found.');
-
-                // Open the correct record in RecRef
-                RecRef.GetTable(SalesHeader1);
-
-                TempBlob.CreateOutStream(OutStream);
-                Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
-                TempBlob.CreateInStream(InStream);
-                FileName := 'CreditNote' + Rec."No." + FileExtension;
-                folderName := 'SalesCreditMemoDocuments';
-                UploadResult := azureBlobUploader.UploadDocumentToBlob(InStream, FileName, folderName);
-                Rec."Credit Memo Document" := FileName;
-                Rec."Credit Memo URL" := UploadResult;
-                Rec.Modify();
-
             end;
         }
 

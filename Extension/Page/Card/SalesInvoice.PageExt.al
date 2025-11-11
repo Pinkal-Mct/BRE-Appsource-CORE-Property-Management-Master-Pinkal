@@ -48,7 +48,7 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
 
                         if Rec."Property Classification" <> '' then begin
                             Rec.Validate("Gen. Bus. Posting Group", Rec."Property Classification");
-                            Rec."Customer Posting Group" := Rec."Property Classification";
+                            Rec."Customer Posting Group" := CopyStr(Rec."Property Classification", 1, Strlen(Rec."Property Classification"));
                             Rec.Modify();
                         end;
                     end;
@@ -148,6 +148,8 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
                         else
                             if Rec."Approval Status" = Rec."Approval Status"::Rejected then
                                 ShowDialogBox.DialogboxForRejection(Rec);
+
+                        UpdateInvoiceApprovalStatus();
                     end;
                 }
                 field("Overdue Invoice"; Rec."Overdue Invoice")
@@ -246,56 +248,9 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
         modify(Post)
         {
             trigger OnBeforeAction()
-            var
-
-                SalesHeader1: Record "Sales Header";
-                ConfigRecord: Record AzureConfiguration;
-                TempBlob: Codeunit "Temp Blob";
-                azureBlobUploader: Codeunit "Azure AD Blob Storage";
-                RecRef: RecordRef;
-                InStream: InStream;
-                FileName: Text[250];
-                SASUrlBase: Text;
-                UploadResult: Text[1000];
-                ValidFormats: List of [Text];
-                FileExtension: Text[10];
-                ReportID: Integer; // Your report ID
-                OutStream: OutStream;
-                folderName: Text;
-
             begin
                 if Rec."Approval Status" <> Rec."Approval Status"::Approved then
                     Error('The Sales Invoice cannot be posted because the approval status is not "Approved".');
-                if not ConfigRecord.FindFirst() then
-                    Error('Azure configuration is missing. Please set up the SAS URL in the Azure Configuration table.');
-                ValidFormats.Add('.png');
-                ValidFormats.Add('.jpg');
-                ValidFormats.Add('.jpeg');
-
-                SASUrlBase := ConfigRecord."SAS URL";
-                FileExtension := '.pdf';
-                ReportID := 50104;
-
-                SalesHeader1.Reset();
-                SalesHeader1.SetRange("No.", Rec."No.");
-                if not SalesHeader1.FindFirst() then
-                    Error('Sales Invoice record not found.');
-
-                // Open the correct record in RecRef
-                RecRef.GetTable(SalesHeader1);
-                TempBlob.CreateOutStream(OutStream);
-                Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
-
-                TempBlob.CreateInStream(InStream);
-                FileName := 'Invoice_' + Rec."No." + FileExtension;
-
-                folderName := 'SalesInvoiceDocuments';
-                UploadResult := azureBlobUploader.UploadDocumentToBlob(InStream, FileName, folderName);
-
-                Rec."View Invoice" := FileName;
-                Rec."View Document URL" := UploadResult;
-                Rec.Modify();
-
             end;
         }
 
@@ -384,10 +339,21 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
 
     end;
 
-
     var
         approvaleditable: Boolean;
         NotAccessFieldFM: Boolean;
+
+    procedure UpdateInvoiceApprovalStatus()
+    var
+        PaymentSchedule2: Record "Payment Schedule2";
+    begin
+        PaymentSchedule2.SetRange("Invoice ID", Rec."No.");
+        if PaymentSchedule2.FindSet() then
+            repeat
+                PaymentSchedule2.Validate("Invoice Approval Status", Rec."Approval Status");
+                PaymentSchedule2.Modify();
+            until PaymentSchedule2.Next() = 0;
+    end;
 
 }
 

@@ -204,6 +204,30 @@ page 50951 "Final Billing Calculation"
                             Editable = false;
                             Visible = false;
                         }
+                        field("Total Differnece Amount"; Rec."Total Differnece Amount")
+                        {
+                            ApplicationArea = All;
+                            ToolTip = 'The total difference amount calculated for this billing calculation.';
+                            Caption = 'Total Differnece Amount';
+                            Editable = false;
+                            Visible = false;
+                        }
+                        field("Total Difference VAT"; Rec."Total Difference VAT")
+                        {
+                            ApplicationArea = All;
+                            ToolTip = 'The total difference VAT calculated for this billing calculation.';
+                            Caption = 'Total Difference VAT';
+                            Editable = false;
+                            Visible = false;
+                        }
+                        field("Total DifferenceAmountIncl.VAT"; Rec."Total DifferenceAmountIncl.VAT")
+                        {
+                            ApplicationArea = All;
+                            ToolTip = 'The total difference amount including VAT calculated for this billing calculation.';
+                            Caption = 'Total Difference Amount Incl. VAT';
+                            Editable = false;
+                            Visible = false;
+                        }
                     }
                 }
             }
@@ -343,7 +367,7 @@ page 50951 "Final Billing Calculation"
                     customercard: Record Customer;
                     userConfirmed: Boolean;
                 begin
-                    if Rec.DifferenceAmountInclVAT < 0 then begin
+                    if Rec."Invoice To Be Raised" > 0 then begin
                         if Rec.Invoiced = false then begin
                             userConfirmed := Confirm('Do you want to create the invoice?', false);
                             if not userConfirmed then
@@ -408,6 +432,7 @@ page 50951 "Final Billing Calculation"
         salesHeader."Posting Date" := Today;
         salesHeader."Due Date" := Today;
         salesHeader."Property Classification" := pUnitType;
+        salesHeader."Posting No. Series" := salesReciveable."Posted Invoice Nos.";
         salesHeader.Insert();
         exit(salesHeader);
     end;
@@ -432,6 +457,7 @@ page 50951 "Final Billing Calculation"
         saleline.Type := saleline.Type::Item;
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
         item.SetRange(Description, Billingcalculation.RevenueDescription);
+        item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
         if item.FindFirst() then
             saleline.Validate("No.", item."No.");
         saleline.Validate("Quantity (Base)", 1);
@@ -498,6 +524,7 @@ page 50951 "Final Billing Calculation"
         PaymentScheduleRec.SetRange("Contract ID", Rec."Contract ID");
         PaymentScheduleRec.SetFilter("Workflow frequency date", '<%1', Rec."Termination Date");
         PaymentScheduleRec.SetRange(Invoiced, true);
+        PaymentScheduleRec.SetFilter("Invoice Approval Status", 'Approved');
         PaymentScheduleRec.SetRange("Secondary Item Type", Rec.RevenueDescription);
         if PaymentScheduleRec.FindSet() then
             repeat

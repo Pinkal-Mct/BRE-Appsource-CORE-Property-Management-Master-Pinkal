@@ -1,5 +1,6 @@
 namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
+using Microsoft.Sales.History;
 using Microsoft.Sales.Document;
 using Microsoft.Sales.Customer;
 using System.Text;
@@ -64,7 +65,7 @@ report 50116 "Credit Note"
             column(Applies_to_Doc__No_; "Applies-to Doc. No.")
             {
             }
-            column(No_; "No.")
+            column(No_; InvoiceNo)
             {
             }
             dataitem("Sales Line"; "Sales Line")
@@ -152,6 +153,16 @@ report 50116 "Credit Note"
                 {
                 }
             }
+            trigger OnAfterGetRecord()
+            var
+                SalesCreditMemoHeader: Record "Sales Cr.Memo Header";
+            begin
+                SalesCreditMemoHeader.SetRange("Pre-Assigned No.", "Sales Header"."No.");
+                if SalesCreditMemoHeader.FindFirst() then
+                    InvoiceNo := SalesCreditMemoHeader."No."
+                else
+                    InvoiceNo := "Sales Header"."No.";
+            end;
         }
     }
     requestpage
@@ -197,7 +208,7 @@ report 50116 "Credit Note"
         VATAmount: Decimal;
         SerialNo: Integer;
         TotalAmountInclVAT: Decimal;
-
+        InvoiceNo: Code[20];
         AmountInWordsText: Text;
 
     procedure AmountToWords(Amount: Decimal)

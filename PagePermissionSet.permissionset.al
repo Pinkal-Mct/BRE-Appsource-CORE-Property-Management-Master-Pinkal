@@ -156,5 +156,7 @@ permissionset 50101 PagePermissionSet
         page "Workflow Frequency PR Card" = X,
         codeunit SendListPendingCreditNoteInv = X,
         page "Vendor Profile Card" = X,
-        page OverduePaymentmodelist = X;
+        page OverduePaymentmodelist = X,
+        codeunit "Attach Credit Memo Report" = X,
+        codeunit "Attach Invoice Report" = X;
 }

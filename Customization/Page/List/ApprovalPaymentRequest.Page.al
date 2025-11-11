@@ -59,13 +59,24 @@ page 50710 "Approval Payment Request"
                             Message('No Customer found using FindFirst either.');
                     end;
                 }
-                field("Proposal ID"; Rec."Proposal ID")
+                field("Payment mode ID"; Rec."Payment mode ID")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the unique identifier for the payment mode associated with this payment change request.';
                     Editable = false;
-                    ToolTip = 'Specifies the unique identifier for the proposal associated with this payment change request.';
-                }
+                    DrillDown = true;
 
+                    trigger OnDrillDown()
+                    var
+                        paymentmode: Record "Payment Mode";
+                    begin
+                        paymentmode.SetRange("Contract ID", Rec."Contract ID");
+                        if paymentmode.FindSet() then
+                            PAGE.RunModal(PAGE::"Payment Mode Card", paymentmode)
+                        else
+                            Message('No payment mode found using FindFirst either.');
+                    end;
+                }
                 field("Contract ID"; Rec."Contract ID")
                 {
                     ApplicationArea = All;
@@ -120,7 +131,16 @@ page 50710 "Approval Payment Request"
                     Editable = false;
                     ToolTip = 'Specifies the VAT amount associated with the payment change request.';
                 }
-
+                field("Cheque No"; Rec."C_Cheque_Number")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the cheque number associated with this payment change request.';
+                }
+                field("Deposit Bank"; Rec."C_Deposit_Bank")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the deposit bank associated with this payment change request.';
+                }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
@@ -377,8 +397,8 @@ page 50710 "Approval Payment Request"
                                 PaymentChangeReqTable."Tenant ID", PaymentChangeReqTable."ID");
 
                             Clear(paymentSeriesNos);
-                            if PaymentChangeReqTable."Payment Series".Contains(', ') then
-                                foreach paymentSeries in PaymentChangeReqTable."Payment Series".Split(', ') do
+                            if PaymentChangeReqTable."Payment Series".Contains(',') then
+                                foreach paymentSeries in PaymentChangeReqTable."Payment Series".Split(',') do
                                     paymentSeriesNos.Add(DelChr(paymentSeries, '=', ' '))
                             else
                                 paymentSeriesNos.Add(PaymentChangeReqTable."Payment Series");

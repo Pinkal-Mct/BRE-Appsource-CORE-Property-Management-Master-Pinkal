@@ -57,8 +57,61 @@ page 50927 "Payment Mode Card"
                 field("Approval Status"; Rec."Approval Status")
                 {
                     ApplicationArea = All;
-                    Editable = IsFinanceManager AND IsFieldEditable;
                     ToolTip = 'Enter the Approval Status.';
+
+                    trigger OnValidate()
+                    var
+                        PaymentModeRec: Record "Payment Mode2";
+                        MissingFields: Text;
+                        AnyMissing: Boolean;
+                        ChqNumLbl: Label 'Series %1: Cheque Number is missing', Comment = '%1 is the Payment Series';
+                        DpstBnkLbl: Label 'Series %1: Deposit Bank is missing', Comment = '%1 is the Payment Series';
+                        UpldChqLbl: Label 'Series %1: Upload Cheque is missing', Comment = '%1 is the Payment Series';
+                    begin
+                        if Rec."Approval Status" <> Rec."Approval Status"::Approved then
+                            exit;
+
+                        PaymentModeRec.Reset();
+                        PaymentModeRec.SetRange("Contract ID", Rec."Contract ID");
+
+                        if not PaymentModeRec.FindSet() then
+                            Error('Cannot change Approval Status to Approved. No payment mode details found for Contract %1.', Rec."Contract ID");
+
+                        AnyMissing := false;
+                        MissingFields := '';
+
+                        repeat
+                            if PaymentModeRec."Payment Mode" = 'Pending' then
+                                Error('Cannot change Approval Status to Approved. Payment Mode is still Pending for Series %1.', PaymentModeRec."Payment Series");
+
+                            case PaymentModeRec."Payment Mode" of
+                                'Cheque':
+                                    begin
+                                        if PaymentModeRec."Cheque Number" = '-' then begin
+                                            AnyMissing := true;
+                                            MissingFields += StrSubstNo(ChqNumLbl, PaymentModeRec."Payment Series");
+                                        end;
+                                        if PaymentModeRec."Deposit Bank" = '' then begin
+                                            AnyMissing := true;
+                                            MissingFields += StrSubstNo(DpstBnkLbl, PaymentModeRec."Payment Series");
+                                        end;
+                                        if PaymentModeRec."Upload Cheque" = 'Upload Cheque' then begin
+                                            AnyMissing := true;
+                                            MissingFields += StrSubstNo(UpldChqLbl, PaymentModeRec."Payment Series");
+                                        end;
+                                    end;
+
+                                'Bank Transfer', 'Credit Card', 'Mobile Wallet':
+                                    if PaymentModeRec."Deposit Bank" = '' then begin
+                                        AnyMissing := true;
+                                        MissingFields += StrSubstNo(DpstBnkLbl, PaymentModeRec."Payment Series");
+                                    end;
+                            end;
+                        until PaymentModeRec.Next() = 0;
+
+                        if AnyMissing then
+                            Error('Cannot change Approval Status to Approved. The following required details are missing for Contract %1: %2', Rec."Contract ID", MissingFields);
+                    end;
                 }
 
                 field("Payment Reminder"; rec."Payment Reminder")
@@ -91,7 +144,6 @@ page 50927 "Payment Mode Card"
                       "Tenant ID" = FIELD("Tenant ID"); // Link to filter attachments for this owner only
                                                         // "Contract ID" = FIELD("Contract ID")
                     ApplicationArea = All;
-                    Editable = IsFieldEditable;
                 }
             }
 
@@ -113,100 +165,128 @@ page 50927 "Payment Mode Card"
             {
                 Visible = IsCombineVisible;
                 Caption = 'Combine Payment';
-                field("Combine Payment Series"; Rec."Combine Payment Series")
+                group(labels)
                 {
-                    ApplicationArea = All;
-                    ToolTip = 'Enter the Payment Series for combining payments.';
+                    ShowCaption = false;
 
-                    // Trasfer from Table Start
-                    trigger OnLookup(var Text: Text): Boolean
-                    var
-                        PaymentMode2Rec: Record "Payment Mode2";
-                        Selection: Page "Payment Mode2 List";
-                        SelectedPaymentSeries: Text[250];
-                        TotalAmount: Decimal;
-                        TotalVATAmount: Decimal;
-                        TotalAmountInclVAT: Decimal;
-                    begin
-                        // First check if Contract ID is selected
-                        if Rec."Contract ID" = 0 then
-                            Error('Please select a Contract ID first');
+                    field("Combine Payment Series"; Rec."Combine Payment Series")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Enter the Payment Series for combining payments.';
 
-                        // Filter Payment Mode2 records based on Contract ID
-                        PaymentMode2Rec.Reset();
-                        PaymentMode2Rec.SetRange("Contract ID", Rec."Contract ID");
-                        PaymentMode2Rec.SetFilter("Payment Status", '<> %1 & <> %2', PaymentMode2Rec."Payment Status"::Cancelled, PaymentMode2Rec."Payment Status"::Received);
+                        // Trasfer from Table Start
+                        trigger OnLookup(var Text: Text): Boolean
+                        var
+                            PaymentMode2Rec: Record "Payment Mode2";
+                            Selection: Page "Payment Mode2 List";
+                            SelectedPaymentSeries: Text;
+                            TotalAmount: Decimal;
+                            TotalVATAmount: Decimal;
+                            TotalAmountInclVAT: Decimal;
+                        begin
+                            // First check if Contract ID is selected
+                            if Rec."Contract ID" = 0 then
+                                Error('Please select a Contract ID first');
 
-                        Selection.LookupMode(true);
-                        Selection.SetTableView(PaymentMode2Rec);
+                            // Filter Payment Mode2 records based on Contract ID
+                            PaymentMode2Rec.Reset();
+                            PaymentMode2Rec.SetRange("Contract ID", Rec."Contract ID");
+                            PaymentMode2Rec.SetFilter("Payment Status", '<> %1 & <> %2', PaymentMode2Rec."Payment Status"::Cancelled, PaymentMode2Rec."Payment Status"::Received);
 
-                        if Selection.RunModal() = ACTION::LookupOK then begin
-                            // Clear totals
-                            Clear(TotalAmount);
-                            Clear(TotalVATAmount);
-                            Clear(TotalAmountInclVAT);
-                            Clear(SelectedPaymentSeries);
+                            Selection.LookupMode(true);
+                            Selection.SetTableView(PaymentMode2Rec);
 
-                            Selection.SetSelectionFilter(PaymentMode2Rec);
-                            if PaymentMode2Rec.FindSet() then begin
-                                repeat
-                                    // Add to payment series string
-                                    if SelectedPaymentSeries <> '' then
-                                        SelectedPaymentSeries := CopyStr(SelectedPaymentSeries, 1, StrLen(SelectedPaymentSeries)) + ',';
-                                    SelectedPaymentSeries := CopyStr(SelectedPaymentSeries, 1, StrLen(SelectedPaymentSeries)) + PaymentMode2Rec."Payment Series";
+                            if Selection.RunModal() = ACTION::LookupOK then begin
+                                // Clear totals
+                                Clear(TotalAmount);
+                                Clear(TotalVATAmount);
+                                Clear(TotalAmountInclVAT);
+                                Clear(SelectedPaymentSeries);
 
-                                    // Sum up amounts
-                                    TotalAmount += PaymentMode2Rec.Amount;
-                                    TotalVATAmount += PaymentMode2Rec."VAT Amount";
-                                    TotalAmountInclVAT += PaymentMode2Rec."Amount Including VAT";
-                                until PaymentMode2Rec.Next() = 0;
+                                Selection.SetSelectionFilter(PaymentMode2Rec);
+                                if PaymentMode2Rec.FindSet() then begin
+                                    repeat
+                                        // Add to payment series string
+                                        if SelectedPaymentSeries <> '' then
+                                            SelectedPaymentSeries := SelectedPaymentSeries + ',';
+                                        SelectedPaymentSeries := SelectedPaymentSeries + PaymentMode2Rec."Payment Series";
 
-                                // Set all values to the record
-                                Rec."Combine Payment Series" := CopyStr(SelectedPaymentSeries, 1, StrLen(SelectedPaymentSeries));
-                                Rec."Combine Amount" := TotalAmount;
-                                Rec."Combine VAT Amount" := TotalVATAmount;
-                                Rec."Combine Amount Including VAT" := TotalAmountInclVAT;
+                                        // Sum up amounts
+                                        TotalAmount += PaymentMode2Rec.Amount;
+                                        TotalVATAmount += PaymentMode2Rec."VAT Amount";
+                                        TotalAmountInclVAT += PaymentMode2Rec."Amount Including VAT";
+                                    until PaymentMode2Rec.Next() = 0;
+
+                                    // Set all values to the record
+                                    Rec."Combine Payment Series" := CopyStr(SelectedPaymentSeries, 1, StrLen(SelectedPaymentSeries));
+                                    Rec."Combine Amount" := TotalAmount;
+                                    Rec."Combine VAT Amount" := TotalVATAmount;
+                                    Rec."Combine Amount Including VAT" := TotalAmountInclVAT;
+                                end;
                             end;
                         end;
-                    end;
-                    // Trasfer from Table End
-                }
+                        // Trasfer from Table End
+                    }
 
-                field("Combine Due Date"; Rec."Combine Due Date")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Enter the Due Date for combining payments.';
-                }
+                    field("Combine Due Date"; Rec."Combine Due Date")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Enter the Due Date for combining payments.';
+                    }
 
-                field("Combine Payment Mode"; Rec."Combine Payment Mode")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Enter the Payment Mode for combining payments.';
-                }
+                    field("Combine Payment Mode"; Rec."Combine Payment Mode")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Enter the Payment Mode for combining payments.';
+                    }
 
-                field("Combine Amount"; Rec."Combine Amount")
-                {
-                    ApplicationArea = All;
-                    Editable = false;
-                    ToolTip = 'Enter the Amount for combining payments.';
-                }
+                    field("Combine Amount"; Rec."Combine Amount")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'The total amount for the combined payments.';
+                        Editable = false;
+                    }
 
-                field("Combine VAT Amount"; Rec."Combine VAT Amount")
-                {
-                    ApplicationArea = All;
-                    Editable = false;
-                    ToolTip = 'Enter the VAT Amount for combining payments.';
-                }
+                    field("Combine VAT Amount"; Rec."Combine VAT Amount")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'The total VAT amount for the combined payments.';
+                        Editable = false;
+                    }
 
-                field("Combine Amount Including VAT"; Rec."Combine Amount Including VAT")
+                    field("Combine Amount Including VAT"; Rec."Combine Amount Including VAT")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'The total amount including VAT for the combined payments.';
+                        Editable = false;
+                    }
+                }
+                group(label)
                 {
-                    ApplicationArea = All;
-                    Editable = false;
-                    ToolTip = 'Enter the Amount Including VAT for combining payments.';
+                    ShowCaption = false;
+                    label(note)
+                    {
+                        Caption = 'Note: Cheque details are required only if Payment Mode is Cheque.';
+                        ApplicationArea = All;
+                        Style = Strong;
+                    }
+                }
+                group("ChequeDetails")
+                {
+                    ShowCaption = false;
+
+                    field("Cheque No"; Rec."C_Cheque_Number")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the cheque number for the combine payment.';
+                    }
+                    field("Deposit Bank"; Rec."C_Deposit_Bank")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the deposit bank for the combine payment.';
+                    }
                 }
             }
-
-
             group("SplitPaymentLog")
             {
                 Visible = IsSplitVisible;
@@ -400,6 +480,9 @@ page 50927 "Payment Mode Card"
                         Approvalpayment."Amount" := Rec."Combine Amount";
                         Approvalpayment."VAT Amount" := Rec."Combine VAT Amount";
                         Approvalpayment."Change Amount" := Rec."Combine Amount Including VAT";
+                        Approvalpayment."Payment mode ID" := Rec."Contract ID";
+                        Approvalpayment.C_Cheque_Number := Rec.C_Cheque_Number;
+                        Approvalpayment.C_Deposit_Bank := Rec.C_Deposit_Bank;
                         Approvalpayment.Insert();
                     end
                     else
@@ -430,6 +513,7 @@ page 50927 "Payment Mode Card"
                                         Approvalpayment."Amount" := SplitPayChange."Split Amount";
                                         Approvalpayment."VAT Amount" := SplitPayChange."Split VAT Amount";
                                         Approvalpayment."Change Amount" := SplitPayChange."Split Amount Including VAT";
+                                        Approvalpayment."Payment mode ID" := Rec."Contract ID";
 
                                         Approvalpayment.Insert(); // Insert inside the loop
                                     end;
@@ -449,6 +533,7 @@ page 50927 "Payment Mode Card"
                                 Approvalpayment."Manual/Auto Status" := Format(Status);
                                 Approvalpayment."Payment Series" := Rec."Change Payment Series";
                                 Approvalpayment."Payment Mode" := Rec."Change Payment Mode";
+                                Approvalpayment."Payment mode ID" := Rec."Contract ID";
                                 Approvalpayment.Insert();
                             end;
 
@@ -469,6 +554,8 @@ page 50927 "Payment Mode Card"
                     Clear(Rec."Combine Amount");
                     Clear(Rec."Combine VAT Amount");
                     Clear(Rec."Combine Amount Including VAT");
+                    Clear(Rec.C_Cheque_Number);
+                    Clear(Rec.C_Deposit_Bank);
 
                     Clear(Rec."Change Payment Series");
                     Clear(Rec."Change Payment Mode");
@@ -543,6 +630,8 @@ page 50927 "Payment Mode Card"
                 CombinePaymentLogsub."Payment mode" := ApprovalPaymentRequest."Payment mode";
                 CombinePaymentLogsub."Payment Series" := ApprovalPaymentRequest."Payment Series";
                 CombinePaymentLogsub."Due Date" := ApprovalPaymentRequest."Due Date";
+                CombinePaymentLogsub."C_Deposit_Bank" := ApprovalPaymentRequest."C_Deposit_Bank";
+                CombinePaymentLogsub."C_Cheque_Number" := ApprovalPaymentRequest."C_Cheque_Number";
                 CombinePaymentLogsub.Insert();
                 Clear(CombinePaymentLogsub);
             until ApprovalPaymentRequest.Next() = 0;

@@ -9,6 +9,10 @@ pageextension 50512 "PostedsalesinvoiceList" extends "Posted Sales Invoices"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the pre-assigned number of the sales invoice.';
             }
+            field("Contract ID"; Rec."Contract ID")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 }
