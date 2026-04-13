@@ -483,8 +483,6 @@ page 50903 "Final Calculation Card"
                 trigger OnAction()
                 var
                     ApprovalFinalCalculation: Record "Approval Final Calculation";
-                    FinalCalculation: Record "Final Calculation";
-                    FinalCalculationid: Integer;
                 begin
                     // Validate required fields
                     if Rec."Contract ID" = 0 then
@@ -492,7 +490,7 @@ page 50903 "Final Calculation Card"
 
                     ApprovalFinalCalculation.SetRange("Contract ID", Rec."Contract ID");
                     ApprovalFinalCalculation.SetRange("Tenant ID", Rec."Tenant ID");
-
+                    ApprovalFinalCalculation.SetRange("FC ID", Rec."FC ID");
                     if ApprovalFinalCalculation.FindSet() then begin
                         ApprovalFinalCalculation."FC ID" := Rec."FC ID";
                         ApprovalFinalCalculation."Contract ID" := Rec."Contract ID";
@@ -502,6 +500,7 @@ page 50903 "Final Calculation Card"
                         ApprovalFinalCalculation."Contract End Date" := Rec."Contract End Date";
                         ApprovalFinalCalculation."Termination Date" := Rec."Termination Date";
                         ApprovalFinalCalculation."Contract Amount" := Rec."Contract Amount";
+                        ApprovalFinalCalculation."Link" := Rec."FC ID";
                         ApprovalFinalCalculation.Modify();
                         Message('Approval Request Modify successfully!');
                     end else begin
@@ -516,20 +515,7 @@ page 50903 "Final Calculation Card"
                         ApprovalFinalCalculation."Contract End Date" := Rec."Contract End Date";
                         ApprovalFinalCalculation."Termination Date" := Rec."Termination Date";
                         ApprovalFinalCalculation."Contract Amount" := Rec."Contract Amount";
-
-
-                        if FinalCalculation.FindSet() then
-                            // If found, get the latest RS ID
-                            FinalCalculationid := ApprovalFinalCalculation."FC ID"
-                        else begin
-                            // If no record is found, create a new Revenue Structure record
-                            FinalCalculation.Init();
-                            FinalCalculation.Insert(true);
-
-                            // Get the newly created RS ID
-                            FinalCalculationid := ApprovalFinalCalculation."FC ID";
-                        end;
-                        ApprovalFinalCalculation."Link" := FinalCalculationid;
+                        ApprovalFinalCalculation."Link" := Rec."FC ID";
                         ApprovalFinalCalculation.Insert(true);
 
                         Message('Approval Request Send successfully!');

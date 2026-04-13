@@ -58,6 +58,7 @@ page 50927 "Payment Mode Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the Approval Status.';
+                    Editable = IsFinanceManager AND IsFieldEditable;
 
                     trigger OnValidate()
                     var

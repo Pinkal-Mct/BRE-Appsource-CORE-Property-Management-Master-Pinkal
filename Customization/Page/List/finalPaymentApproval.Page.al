@@ -125,8 +125,8 @@ page 50732 "final payment approval"
 
                                 Finalsettlement.SetRange("Contract ID", SelectedRecs."Contract ID");
                                 if Finalsettlement.FindSet() then begin
-                                    // Update the status of OnlinePaymentApproval record
                                     Finalsettlement."Receivable Payment Status" := PaymentStatus::Received;
+                                    Finalsettlement.receivablePaymentStatuss := 'Received';
                                     Finalsettlement.Modify(true);
                                 end;
                                 ApproveCount += 1;

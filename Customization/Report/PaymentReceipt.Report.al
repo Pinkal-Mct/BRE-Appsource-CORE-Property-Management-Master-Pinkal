@@ -60,16 +60,16 @@ report 50112 PaymentReceipt
             {
                 DataItemLink = "Contract ID" = field("Contract ID");
                 DataItemTableView = SORTING("Payment Series");
-                column(Pay_S; "Payment Series")
+                column(Pay_S; "Payment Mode2"."Payment Series")
                 {
                 }
-                column(I_ID; "Invoice ID")
+                column(I_ID; "Payment Mode2"."Invoice #")
                 {
                 }
-                column(Pay_M; "Payment Mode")
+                column(Pay_M; "Payment Mode2"."Payment Mode")
                 {
                 }
-                column(Che_N; "Cheque Number")
+                column(Che_N; "Payment Mode2"."Cheque Number")
                 {
                 }
                 column(Secondary_Item_Type; "Secondary Item Type")
