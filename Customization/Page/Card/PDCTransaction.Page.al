@@ -16,6 +16,7 @@ page 50509 "PDC Transaction"
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    Caption = 'PDC ID';
                     ToolTip = 'Unique identifier for the record.';
                 }
 
@@ -23,30 +24,35 @@ page 50509 "PDC Transaction"
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    Caption = 'Payment Series';
                     ToolTip = 'The series of the payment associated with this PDC transaction.';
                 }
                 field("Contract ID"; Rec."Contract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    Caption = 'Contract ID';
                     ToolTip = 'The unique identifier for the contract associated with this PDC transaction.';
                 }
                 field("Tenant Name"; Rec."Tenant Id")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    Caption = 'Tenant Name';
                     ToolTip = 'The name of the tenant associated with this PDC transaction.';
                 }
                 field("Tenant"; Rec."Tenant Name Display")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    Caption = 'Tenant';
                     ToolTip = 'The display name of the tenant associated with this PDC transaction.';
                 }
                 field("Cheque Number"; Rec."Cheque Number")
                 {
                     ApplicationArea = All;
                     Editable = IsFieldEditable;
+                    Caption = 'Cheque Number';
                     ToolTip = 'The cheque number associated with this PDC transaction.';
                     trigger OnValidate()
                     var
@@ -64,6 +70,7 @@ page 50509 "PDC Transaction"
                 {
                     ApplicationArea = All;
                     Editable = IsFieldEditable;
+                    Caption = 'Bank Name';
                     ToolTip = 'The name of the bank associated with this PDC transaction.';
                     trigger OnValidate()
                     var
@@ -82,29 +89,33 @@ page 50509 "PDC Transaction"
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    Caption = 'Cheque Date';
                     ToolTip = 'The date of the cheque associated with this PDC transaction.';
                 }
                 field(Amount; Rec.Amount)
                 {
                     ApplicationArea = All;
                     Editable = IsFieldEditable;
+                    Caption = 'Amount';
                     ToolTip = 'The amount of the cheque associated with this PDC transaction.';
                 }
                 field("Old Cheque#"; Rec."Old Cheque#")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    Caption = 'Old Cheque#';
                     ToolTip = 'The old cheque number if this cheque has been replaced.';
                 }
                 field(Status; Rec."Cheque Status")
                 {
                     ApplicationArea = All;
                     Editable = IsLeaseManager;
+                    Caption = 'Status';
                     ToolTip = 'The status of the cheque associated with this PDC transaction.';
                     trigger OnValidate()
                     var
                         PaymentSeriesRec: Record "Payment Mode2";
-                        CashReceiptJournalCodeunit: Codeunit "Cash Receipt Journal Entry";
+
                         oldStatus: Enum "PDC Status Type Enum";
 
                     begin
@@ -178,7 +189,7 @@ page 50509 "PDC Transaction"
                                         PaymentSeriesRec."Deposit Status" := PaymentSeriesRec."Deposit Status"::Y;
                                         PaymentSeriesRec.Modify(); // Save the changes
 
-                                        CashReceiptJournalCodeunit.CreateCashReceiptJournal(PaymentSeriesRec);
+                                        //  CashReceiptJournalCodeunit.CreateCashReceiptJournal(PaymentSeriesRec);
                                     end else
                                         Error('The related Payment Series record was not found.');
                                 end;
@@ -274,6 +285,8 @@ page 50509 "PDC Transaction"
                                         Error('The related Payment Series record was not found.');
                                 end;
                         end;
+                        if Rec.Get(Rec."PDC ID") then
+                            CurrPage.UPDATE();
                     end;
                 }
 
@@ -282,6 +295,7 @@ page 50509 "PDC Transaction"
                     ApplicationArea = All;
                     Editable = false;
                     Visible = true;
+                    Caption = 'Approval Status';
                     ToolTip = 'The approval status of the PDC transaction.';
                 }
 
@@ -290,6 +304,7 @@ page 50509 "PDC Transaction"
                     ApplicationArea = All;
                     Editable = false;
                     DrillDown = true;
+                    Caption = 'View Document';
                     ToolTip = 'Click to view the details of the PDC transaction.';
 
                     trigger OnDrillDown()
@@ -317,6 +332,7 @@ page 50509 "PDC Transaction"
                     {
                         ApplicationArea = All;
                         Visible = false;
+                        Caption = 'Reason';
                         ToolTip = 'The reason for the rejection of the cheque.';
                     }
                 }

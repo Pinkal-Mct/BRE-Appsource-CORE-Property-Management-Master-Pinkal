@@ -53,7 +53,7 @@ report 50112 PaymentReceipt
             column(Tenant_Email; "Tenant Email")
             {
             }
-            column(CurrentDate; Format(CurrentDateTime, 0, '<Day,2>/<Month,2>/<Year4>'))
+            column(Receipt_Date; Format("Receipt Date", 0, '<Day,2>/<Month,2>/<Year4>'))  // Add a column to hold the current date
             {
             }
             dataitem("Payment Schedule2"; "Payment Schedule2")

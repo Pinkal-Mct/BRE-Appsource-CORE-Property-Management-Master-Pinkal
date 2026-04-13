@@ -156,6 +156,7 @@ page 50352 "TC Single LumAnnualAmnt SP"
                         end;
 
                         Rec.Modify();
+                        RecalculateFinalAnnualAmount();
                         // Recalculate totals and per day rent
                         RecalculateTotals();
                         RecalculatePerDayRent();
@@ -170,11 +171,7 @@ page 50352 "TC Single LumAnnualAmnt SP"
                     trigger OnValidate()
                     begin
                         // Recalculate the final annual amount
-                        if Rec."SL_Round off" = 0 then
-                            Rec."SL_Final Annual Amount" := Rec."SL_Annual Amount"
-                        else
-                            Rec."SL_Final Annual Amount" := Rec."SL_Annual Amount" + Rec."SL_Round off";
-
+                        RecalculateFinalAnnualAmount();
                         Rec.Modify();
                         // Recalculate totals
                         RecalculateTotals();
@@ -389,6 +386,71 @@ page 50352 "TC Single LumAnnualAmnt SP"
 
             LeaseProposalRec.Modify(); // Save the changes to the Lease Proposal record
         end;
+
+        Rec.Modify();
+        CurrPage.Update();
+    end;
+
+    local procedure RecalculateFinalAnnualAmount()
+    var
+        YearStart: Integer;
+        YearEnd: Integer;
+        CurrYear: Integer;
+        YearStartDate: Date;
+        YearEndDate: Date;
+        OverlapStart: Date;
+        OverlapEnd: Date;
+        DaysInYear: Integer;
+        DaysInPeriod: Integer;
+        ProratedAmount: Decimal;
+        LeapDay: Date;
+    begin
+        ProratedAmount := 0;
+
+        // If dates are not set, set Final Annual Amount to Annual Amount + Round off
+        if (Rec."SL_Start Date" = 0D) or (Rec."SL_End Date" = 0D) then begin
+            Rec."SL_Final Annual Amount" := Rec."SL_Annual Amount" + Rec."SL_Round off";
+            Rec.Modify();
+            CurrPage.Update();
+            exit;
+        end;
+
+        if Rec."SL_End Date" < Rec."SL_Start Date" then
+            Error('End Date cannot be earlier than Start Date.');
+
+        YearStart := Date2DMY(Rec."SL_Start Date", 3);
+        YearEnd := Date2DMY(Rec."SL_End Date", 3);
+
+        // Loop through each calendar year overlapping the period
+        for CurrYear := YearStart to YearEnd do begin
+            YearStartDate := DMY2Date(1, 1, CurrYear);
+            YearEndDate := DMY2Date(31, 12, CurrYear);
+
+            OverlapStart := Rec."SL_Start Date";
+            if OverlapStart < YearStartDate then
+                OverlapStart := YearStartDate;
+
+            OverlapEnd := Rec."SL_End Date";
+            if OverlapEnd > YearEndDate then
+                OverlapEnd := YearEndDate;
+
+            if OverlapEnd >= OverlapStart then begin
+                DaysInPeriod := OverlapEnd - OverlapStart + 1;
+                if IsLeapYear(CurrYear) then begin
+                    LeapDay := DMY2Date(29, 2, CurrYear);
+                    if (OverlapStart <= LeapDay) and (OverlapEnd >= LeapDay) then
+                        DaysInYear := 366
+                    else
+                        DaysInYear := 365;
+                end else
+                    DaysInYear := 365;
+
+                ProratedAmount += (Rec."SL_Annual Amount" * DaysInPeriod) / DaysInYear;
+            end;
+        end;
+
+        // Apply round off on top of the prorated sum
+        Rec."SL_Final Annual Amount" := ProratedAmount + Rec."SL_Round off";
 
         Rec.Modify();
         CurrPage.Update();

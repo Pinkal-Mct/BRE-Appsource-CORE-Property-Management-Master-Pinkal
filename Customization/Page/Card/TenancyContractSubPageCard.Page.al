@@ -60,6 +60,18 @@ page 50939 "Tenancy Contract SubPage Card"
                     Lookup = true;
                     ToolTip = 'Enter the End Date.';
                 }
+                field(Invoiced; Rec.Invoiced)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Invoiced';
+                    ToolTip = 'Indicates whether the amount has been invoiced.';
+                }
+                field("Invoiced and Paid"; Rec."Invoiced and Paid")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Invoiced and Paid';
+                    ToolTip = 'Indicates whether the amount has been invoiced and paid.';
+                }
 
                 field("Payment Type"; Rec."Payment Type")
                 {
@@ -234,11 +246,36 @@ page 50939 "Tenancy Contract SubPage Card"
     trigger OnAfterGetRecord()
     var
         revenueStructure: Record "Revenue Structure";
+        PaymentSchedule: Record "Payment Schedule2";
+        SumInvoicedAmount: Decimal;
     begin
         revenueStructure.SetRange("RS ID", Rec.Link);
         if revenueStructure.IsEmpty() then
             Rec.Link := 0;
+
+        // Calculate total invoiced amount for this secondary item type
+        SumInvoicedAmount := 0;
+        PaymentSchedule.SetRange("Contract ID", Rec.ContractID);
+        PaymentSchedule.SetRange("Tenant ID", Rec.TenantID);
+        PaymentSchedule.SetRange("Secondary Item Type", Rec."Secondary Item Type");
+        // Only consider lines that are marked Invoiced and have an Invoice ID
+        PaymentSchedule.SetFilter(Invoiced, '=true');
+        PaymentSchedule.SetFilter("Invoice ID", '<>%1', '');
+        if PaymentSchedule.FindSet() then begin
+            repeat
+                SumInvoicedAmount += PaymentSchedule.Amount;
+            until PaymentSchedule.Next() = 0;
+
+            // Update the displayed Invoiced amount on the Tenancy Subpage record
+            Rec.Invoiced := SumInvoicedAmount;
+        end else
+            Rec.Invoiced := 0;
+
+        Rec.Modify();
+
+
     end;
+
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin

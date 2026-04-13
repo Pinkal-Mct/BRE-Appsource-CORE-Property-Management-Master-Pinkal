@@ -379,7 +379,6 @@ page 50129 "Security Deposit Entries"
         GenJnlTemplate: Record "Gen. Journal Template";
         GenJnlBatch: Record "Gen. Journal Batch";
         BillingCalculation: Record "Final Billing Calculation Grid";
-        finalsettlmentRefund: Record FinalSettlementRefund;
         finalsettlmentRefund1: Record FinalSettlementRefund;
         PostingDate: Date;
         DocumentNo: Code[20];
@@ -397,7 +396,7 @@ page 50129 "Security Deposit Entries"
         TotalReceivable: Decimal;
         JournalTemplateName: Code[10];
         JournalBatchName: Code[10];
-        HasApplicableCharges: Boolean;
+        ContractID: Integer;
     begin
         JournalTemplateName := 'CASH RECE';
         JournalBatchName := 'DEFAULT';
@@ -409,7 +408,7 @@ page 50129 "Security Deposit Entries"
         GenJnlBatch.Reset();
         GenJnlBatch.SetRange("Journal Template Name", JournalTemplateName);
         GenJnlBatch.SetRange(Name, JournalBatchName);
-        if not GenJnlBatch.FindFirst() then
+        if not GenJnlBatch.IsEmpty() then
             Error('The Journal Batch %1 does not exist for template %2.', JournalBatchName, JournalTemplateName);
 
         PostingDate := Today();
@@ -425,6 +424,7 @@ page 50129 "Security Deposit Entries"
         // Get values from Final Calculation
         Tenantid := finalcalculation."Tenant ID";
         Tenantname := finalcalculation."Tenant Name";
+        ContractID := finalcalculation."Contract ID";
         securitydeposit := Round(finalcalculation."Net Balance");
         chillerdeposit := Round(finalcalculation."Chiller Deposit");
         otherdeposit := Round(finalcalculation."Other Deposit");
@@ -495,6 +495,7 @@ page 50129 "Security Deposit Entries"
                 GenJnlLine.Description := Tenantname + ' - Security Deposit';
                 GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
                 GenJnlLine."Account No." := Tenantid;
+                GenJnlLine."Contract ID" := ContractID;
                 GenJnlLine.Amount := Round(-AppliedAmount);
                 GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
                 GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
@@ -523,6 +524,7 @@ page 50129 "Security Deposit Entries"
                     GenJnlLine.Description := Tenantname + ' - Security Deposit';
                     GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
                     GenJnlLine."Account No." := Tenantid;
+                    GenJnlLine."Contract ID" := ContractID;
                     GenJnlLine.Amount := Round(-AppliedAmount);
                     GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
                     GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
@@ -554,6 +556,7 @@ page 50129 "Security Deposit Entries"
                 GenJnlLine.Description := Tenantname + ' - Chiller Deposit';
                 GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
                 GenJnlLine."Account No." := Tenantid;
+                GenJnlLine."Contract ID" := ContractID;
                 GenJnlLine.Amount := Round(-AppliedAmount);
                 GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
                 GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
@@ -566,32 +569,34 @@ page 50129 "Security Deposit Entries"
                 Totaladdtionalcharges -= AppliedAmount;
                 LastLineNo += 10000;
 
-            end else if TotalReceivable > 0 then begin
-                AppliedAmount := Min(chillerdeposit, TotalReceivable);
+            end else
+                if TotalReceivable > 0 then begin
+                    AppliedAmount := Min(chillerdeposit, TotalReceivable);
 
-                Clear(GenJnlLine);
-                GenJnlLine.Init();
-                GenJnlLine."Journal Template Name" := JournalTemplateName;
-                GenJnlLine."Journal Batch Name" := JournalBatchName;
-                GenJnlLine."Line No." := LastLineNo;
-                GenJnlLine."Posting Date" := PostingDate;
-                GenJnlLine."Document Type" := GenJnlLine."Document Type"::Payment;
-                GenJnlLine."Document No." := DocumentNo;
-                GenJnlLine.Description := Tenantname + ' - Chiller Deposit';
-                GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
-                GenJnlLine."Account No." := Tenantid;
-                GenJnlLine.Amount := Round(-AppliedAmount);
-                GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
-                GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
-                GenJnlLine."Bal. Account No." := '4508';
-                GenJnlLine."Applies-to Doc. Type" := GenJnlLine."Applies-to Doc. Type"::Invoice;
-                GenJnlLine."Applies-to Doc. No." := InvoiceNo;
-                GenJnlLine.Insert(true);
+                    Clear(GenJnlLine);
+                    GenJnlLine.Init();
+                    GenJnlLine."Journal Template Name" := JournalTemplateName;
+                    GenJnlLine."Journal Batch Name" := JournalBatchName;
+                    GenJnlLine."Line No." := LastLineNo;
+                    GenJnlLine."Posting Date" := PostingDate;
+                    GenJnlLine."Document Type" := GenJnlLine."Document Type"::Payment;
+                    GenJnlLine."Document No." := DocumentNo;
+                    GenJnlLine.Description := Tenantname + ' - Chiller Deposit';
+                    GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
+                    GenJnlLine."Account No." := Tenantid;
+                    GenJnlLine."Contract ID" := ContractID;
+                    GenJnlLine.Amount := Round(-AppliedAmount);
+                    GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
+                    GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
+                    GenJnlLine."Bal. Account No." := '4508';
+                    GenJnlLine."Applies-to Doc. Type" := GenJnlLine."Applies-to Doc. Type"::Invoice;
+                    GenJnlLine."Applies-to Doc. No." := InvoiceNo;
+                    GenJnlLine.Insert(true);
 
-                chillerdeposit -= AppliedAmount;
-                TotalReceivable -= AppliedAmount;
-                LastLineNo += 10000;
-            end;
+                    chillerdeposit -= AppliedAmount;
+                    TotalReceivable -= AppliedAmount;
+                    LastLineNo += 10000;
+                end;
 
         while (otherdeposit > 0) and ((Totaladdtionalcharges > 0) or (TotalReceivable > 0)) do
             if Totaladdtionalcharges > 0 then begin
@@ -611,6 +616,7 @@ page 50129 "Security Deposit Entries"
                 GenJnlLine.Description := Tenantname + ' - Other Deposit';
                 GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
                 GenJnlLine."Account No." := Tenantid;
+                GenJnlLine."Contract ID" := ContractID;
                 GenJnlLine.Amount := Round(-AppliedAmount);
                 GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
                 GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
@@ -623,32 +629,34 @@ page 50129 "Security Deposit Entries"
                 Totaladdtionalcharges -= AppliedAmount;
                 LastLineNo += 10000;
 
-            end else if TotalReceivable > 0 then begin
-                AppliedAmount := Min(otherdeposit, TotalReceivable);
+            end else
+                if TotalReceivable > 0 then begin
+                    AppliedAmount := Min(otherdeposit, TotalReceivable);
 
-                Clear(GenJnlLine);
-                GenJnlLine.Init();
-                GenJnlLine."Journal Template Name" := JournalTemplateName;
-                GenJnlLine."Journal Batch Name" := JournalBatchName;
-                GenJnlLine."Line No." := LastLineNo;
-                GenJnlLine."Posting Date" := PostingDate;
-                GenJnlLine."Document Type" := GenJnlLine."Document Type"::Payment;
-                GenJnlLine."Document No." := DocumentNo;
-                GenJnlLine.Description := Tenantname + ' - Other Deposit';
-                GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
-                GenJnlLine."Account No." := Tenantid;
-                GenJnlLine.Amount := Round(-AppliedAmount);
-                GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
-                GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
-                GenJnlLine."Bal. Account No." := '4508';
-                GenJnlLine."Applies-to Doc. Type" := GenJnlLine."Applies-to Doc. Type"::Invoice;
-                GenJnlLine."Applies-to Doc. No." := InvoiceNo;
-                GenJnlLine.Insert(true);
+                    Clear(GenJnlLine);
+                    GenJnlLine.Init();
+                    GenJnlLine."Journal Template Name" := JournalTemplateName;
+                    GenJnlLine."Journal Batch Name" := JournalBatchName;
+                    GenJnlLine."Line No." := LastLineNo;
+                    GenJnlLine."Posting Date" := PostingDate;
+                    GenJnlLine."Document Type" := GenJnlLine."Document Type"::Payment;
+                    GenJnlLine."Document No." := DocumentNo;
+                    GenJnlLine.Description := Tenantname + ' - Other Deposit';
+                    GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
+                    GenJnlLine."Account No." := Tenantid;
+                    GenJnlLine."Contract ID" := ContractID;
+                    GenJnlLine.Amount := Round(-AppliedAmount);
+                    GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
+                    GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
+                    GenJnlLine."Bal. Account No." := '4508';
+                    GenJnlLine."Applies-to Doc. Type" := GenJnlLine."Applies-to Doc. Type"::Invoice;
+                    GenJnlLine."Applies-to Doc. No." := InvoiceNo;
+                    GenJnlLine.Insert(true);
 
-                otherdeposit -= AppliedAmount;
-                TotalReceivable -= AppliedAmount;
-                LastLineNo += 10000;
-            end;
+                    otherdeposit -= AppliedAmount;
+                    TotalReceivable -= AppliedAmount;
+                    LastLineNo += 10000;
+                end;
 
         // *** NEW: REFUND REMAINING DEPOSITS ***
         // Update Final Settlement Refund with remaining amounts
@@ -674,6 +682,7 @@ page 50129 "Security Deposit Entries"
             GenJnlLine.Description := Tenantname + ' - Security Deposit Refund';
             GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
             GenJnlLine."Account No." := '4502';  // Security Deposit Account
+            GenJnlLine."Contract ID" := ContractID;
             GenJnlLine.Amount := Round(-securitydeposit);  // Credit G/L (reduce liability)
             GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
             GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::Customer;
@@ -695,6 +704,7 @@ page 50129 "Security Deposit Entries"
             GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
             GenJnlLine."Account No." := '4508';  // Chiller Deposit Account
             GenJnlLine.Amount := Round(-chillerdeposit);
+            GenJnlLine."Contract ID" := ContractID;
             GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
             GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::Customer;
             GenJnlLine."Bal. Account No." := Tenantid;
@@ -715,6 +725,7 @@ page 50129 "Security Deposit Entries"
             GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
             GenJnlLine."Account No." := '4508';  // Other Deposit Account
             GenJnlLine.Amount := Round(-otherdeposit);
+            GenJnlLine."Contract ID" := ContractID;
             GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
             GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::Customer;
             GenJnlLine."Bal. Account No." := Tenantid;

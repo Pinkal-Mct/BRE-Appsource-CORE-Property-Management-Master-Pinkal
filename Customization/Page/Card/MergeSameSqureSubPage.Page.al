@@ -116,6 +116,7 @@ page 50118 "Merge SameSqure SubPage"
                         Rec."MS_Final Annual Amount" := Rec."MS_Annual Amount";
 
                         // Recalculate Per Day Rent
+                        RecalculateFinalAnnualAmount();
                         RecalculatePerDayRent();
 
                         // Recalculate totals dynamically
@@ -162,6 +163,7 @@ page 50118 "Merge SameSqure SubPage"
                             Rec."MS_Final Annual Amount" := Rec."MS_Annual Amount";
 
                             // Recalculate Per Day Rent
+                            RecalculateFinalAnnualAmount();
                             RecalculatePerDayRent();
                         end else
                             Error('No record found for the previous year to base the calculation.');
@@ -452,15 +454,69 @@ page 50118 "Merge SameSqure SubPage"
     //-----------------Calculate Final Annual Amount -----------------//
 
     local procedure RecalculateFinalAnnualAmount()
+    var
+        YearStart: Integer;
+        YearEnd: Integer;
+        CurrYear: Integer;
+        YearStartDate: Date;
+        YearEndDate: Date;
+        OverlapStart: Date;
+        OverlapEnd: Date;
+        DaysInYear: Integer;
+        DaysInPeriod: Integer;
+        ProratedAmount: Decimal;
+        LeapDay: Date;
     begin
-        if Rec."MS_Round off" = 0 then
-            Rec."MS_Final Annual Amount" := Rec."MS_Annual Amount"
-        else
+        ProratedAmount := 0;
+
+        // If dates are not set, set Final Annual Amount to Annual Amount + Round off
+        if (Rec."MS_Start Date" = 0D) or (Rec."MS_End Date" = 0D) then begin
             Rec."MS_Final Annual Amount" := Rec."MS_Annual Amount" + Rec."MS_Round off";
+            Rec.Modify();
+            CurrPage.Update();
+            exit;
+        end;
+
+        if Rec."MS_End Date" < Rec."MS_Start Date" then
+            Error('End Date cannot be earlier than Start Date.');
+
+        YearStart := Date2DMY(Rec."MS_Start Date", 3);
+        YearEnd := Date2DMY(Rec."MS_End Date", 3);
+        // Loop through each calendar year overlapping the period
+        for CurrYear := YearStart to YearEnd do begin
+            YearStartDate := DMY2Date(1, 1, CurrYear);
+            YearEndDate := DMY2Date(31, 12, CurrYear);
+
+            OverlapStart := Rec."MS_Start Date";
+            if OverlapStart < YearStartDate then
+                OverlapStart := YearStartDate;
+
+            OverlapEnd := Rec."MS_End Date";
+            if OverlapEnd > YearEndDate then
+                OverlapEnd := YearEndDate;
+
+            if OverlapEnd >= OverlapStart then begin
+                DaysInPeriod := OverlapEnd - OverlapStart + 1;
+                if IsLeapYear(CurrYear) then begin
+                    LeapDay := DMY2Date(29, 2, CurrYear);
+                    if (OverlapStart <= LeapDay) and (OverlapEnd >= LeapDay) then
+                        DaysInYear := 366
+                    else
+                        DaysInYear := 365;
+                end else
+                    DaysInYear := 365;
+
+                ProratedAmount += (Rec."MS_Annual Amount" * DaysInPeriod) / DaysInYear;
+            end;
+        end;
+
+        // Apply round off on top of the prorated sum
+        Rec."MS_Final Annual Amount" := ProratedAmount + Rec."MS_Round off";
 
         Rec.Modify();
         CurrPage.Update();
     end;
+
 
     //-----------------Calculate Final Annual Amount -----------------//
 

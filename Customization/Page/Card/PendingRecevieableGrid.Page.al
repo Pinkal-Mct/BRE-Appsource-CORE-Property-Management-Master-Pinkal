@@ -112,6 +112,32 @@ page 50952 "Pending Recevieable Grid"
                     Editable = false;
                     Visible = false;
                 }
+                field("CrditNoteID Security Deposit"; Rec."CrditNoteID Security Deposit")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Credit Note ID Security Deposit';
+                    Editable = false;
+                    ToolTip = 'The ID of the credit note created for the security deposit.';
+
+                    trigger OnDrillDown()
+                    var
+                        postedsalesinvoice: Record "Sales Cr.Memo Header";
+                    begin
+                        postedsalesinvoice.SetRange("No.", Rec."CrditNoteID Security Deposit");
+                        if postedsalesinvoice.FindFirst() then
+                            PAGE.Run(PAGE::"Posted Sales Credit Memo", postedsalesinvoice);
+
+                    end;
+
+                }
+                field(GeneratedCRMemoSD; Rec.GeneratedCRMemoSD)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Generated CR Memo SD';
+                    Editable = false;
+                    Visible = false;
+                    ToolTip = 'Indicates whether a credit memo for the security deposit has been generated.';
+                }
             }
             group(" ")
             {
@@ -162,24 +188,27 @@ page 50952 "Pending Recevieable Grid"
                     }
                     group("Difference & Summary")
                     {
-                        field("Total Difference Amount"; Rec."Total Difference Amount")
-                        {
-                            ToolTip = 'The total difference between the revised amount and the receipts amount.';
-                            ApplicationArea = All;
-                            Editable = false;
-                        }
-                        field("Total Difference VAT"; Rec."Total Difference VAT")
-                        {
-                            ToolTip = 'The total difference in VAT between the revised amount and the receipts amount.';
-                            ApplicationArea = All;
-                            Editable = false;
-                        }
-                        field("Total DifferenceAmountIncl.VAT"; Rec."Total DifferenceAmountIncl.VAT")
-                        {
-                            ToolTip = 'The total difference in total amount including VAT between the revised amount and the receipts amount.';
-                            ApplicationArea = All;
-                            Editable = false;
-                        }
+                        // field("Total Difference Amount"; Rec."Total Difference Amount")
+                        // {
+                        //     ToolTip = 'The total difference between the revised amount and the receipts amount.';
+                        //     ApplicationArea = All;
+                        //     Editable = false;
+                        //     Caption = 'Total Difference Amount';
+                        // }
+                        // field("Total Difference VAT"; Rec."Total Difference VAT")
+                        // {
+                        //     ToolTip = 'The total difference in VAT between the revised amount and the receipts amount.';
+                        //     ApplicationArea = All;
+                        //     Editable = false;
+                        //     Caption = 'Total Difference VAT';
+                        // }
+                        // field("Total DifferenceAmountIncl.VAT"; Rec."Total DifferenceAmountIncl.VAT")
+                        // {
+                        //     ToolTip = 'The total difference in total amount including VAT between the revised amount and the receipts amount.';
+                        //     ApplicationArea = All;
+                        //     Editable = false;
+                        //     Caption = 'Total Difference Amount Incl. VAT';
+                        // }
                         field("Total Refundable"; Rec."Total Refundable")
                         {
                             ToolTip = 'The total refundable amount based on the difference in amounts.';
@@ -197,77 +226,165 @@ page 50952 "Pending Recevieable Grid"
             }
         }
     }
-    trigger OnAfterGetRecord()
-    var
-    begin
-        FetchDataFromRevenueCalcGrid();
-        Recvieableamountfrompaymentscheule();
-        DifferenceAmountCalculation();
-        GetpositiveAmount();
-    end;
+    actions
+    {
+        area(Processing)
+        {
+            action("Credit Note For Security Deposit")
+            {
+                Caption = 'Credit Note For Security Deposit';
+                Image = CreditMemo;
+                ApplicationArea = All;
+                ToolTip = 'Create a credit note for the security deposit based on the pending receivable amount.';
+                trigger OnAction()
+                begin
+                    CreateSecurityDepositCreditMemo();
+                end;
+            }
+        }
+    }
 
-    procedure FetchDataFromRevenueCalcGrid()
-    var
-        RevenueGrid: Record "Final Revenue Calculation Grid";
-    begin
-        RevenueGrid.SetRange("Contract ID", Rec."Contract ID");
-        RevenueGrid.SetRange("Revenue Description", Rec.RevenueDescription);
-        if RevenueGrid.FindSet() then
-            repeat
-                Rec.RevisedAmount := RevenueGrid."Revised Amount";
-                Rec.RevisedVAT := RevenueGrid."Revised VAT";
-                Rec.RevisedAmountInclVAT := RevenueGrid."Revised Amount Incl.";
-                Rec.Modify();
-            until RevenueGrid.Next() = 0;
-    end;
 
-    procedure Recvieableamountfrompaymentscheule()
+    procedure CreateSecurityDepositCreditMemo()
     var
         PaymentScheduleRec: Record "Payment Schedule2";
-        Totalamount: Decimal;
-        VATAmount: Decimal;
-        AmountIncVAT: Decimal;
-    begin
-        Totalamount := 0;
-        PaymentScheduleRec.Reset();
-        PaymentScheduleRec.SetRange("Contract ID", Rec."Contract ID");
-        PaymentScheduleRec.SetFilter("Due Date", '<=%1', Rec."Termination Date");
-        PaymentScheduleRec.SetRange("Payment Status", 'Received');
-        PaymentScheduleRec.SetRange("Secondary Item Type", Rec.RevenueDescription);
-        if PaymentScheduleRec.FindSet() then
-            repeat
-                Totalamount += PaymentScheduleRec.Amount;
-                VATAmount += PaymentScheduleRec."VAT Amount";
-                AmountIncVAT += PaymentScheduleRec."Amount Including VAT";
-            until PaymentScheduleRec.Next() = 0;
-        PaymentScheduleRec.SetRange("Contract ID", Rec."Contract ID");
-        PaymentScheduleRec.SetRange("Secondary Item Type", Rec.RevenueDescription);
-        if PaymentScheduleRec.FindSet() then
-            repeat
-                Rec.ReceiptsAmount := Totalamount;
-                Rec.ReceiptsVAT := VATAmount;
-                Rec.ReceiptsAmountInclVAT := AmountIncVAT;
-                Rec.Modify();
-            until PaymentScheduleRec.Next() = 0;
-    end;
+        SalesHeader1: Record "Sales Header";
+        customercard: Record Customer;
+        pendingReceivableRec: Record "Pending Receviable Grid";
+        SalesPost: Codeunit "Sales-Post";
+        InvoiceNo: Code[50];
 
-    procedure DifferenceAmountCalculation()
-    var
     begin
-        Rec."DifferenceAmount" := Rec.RevisedAmount - Rec.ReceiptsAmount;
-        Rec."DifferenceVAT" := Rec.RevisedVAT - Rec.ReceiptsVAT;
-        Rec.DifferenceAmountInclVAT := Rec.RevisedAmountInclVAT - Rec.ReceiptsAmountInclVAT;
-        Rec.Modify();
-    end;
+        pendingReceivableRec.SetRange("Contract ID", Rec."Contract ID");
+        pendingReceivableRec.SetRange(GeneratedCRMemoSD, true);
+        if pendingReceivableRec.FindFirst() then
+            Message('Credit Memo for Security Deposit has already been generated for this contract.')
+        else begin
 
-    procedure GetpositiveAmount()
-    begin
-        if Rec."Total DifferenceAmountIncl.VAT" < 0 then begin
-            Rec."Total Refundable" := Abs(Rec."Total DifferenceAmountIncl.VAT");
-            Rec.Modify();
-        end else begin
-            Rec."Total Receivable" := Rec."Total DifferenceAmountIncl.VAT";
-            Rec.Modify();
+            // Implementation for creating credit memo for security deposit
+            PaymentScheduleRec.Reset();
+            PaymentScheduleRec.SetRange("Contract ID", Rec."Contract ID");
+            PaymentScheduleRec.SetRange("Secondary Item Type", 'Security Deposit Amount');
+            PaymentScheduleRec.SetFilter("Payment Status", '<>%1', 'Received'); // Empty = Not Received
+
+            if PaymentScheduleRec.IsEmpty then begin
+                Message('No pending Security Deposit payments found for Credit Memo generation.');
+                exit;
+            end;
+
+            if PaymentScheduleRec.FindFirst() then begin
+                InvoiceNo := PaymentScheduleRec."Invoice ID";
+                SalesHeader1 := CreateSalesHeader(Rec."Contract ID", PaymentScheduleRec."Tenant ID", PaymentScheduleRec."Property Classification", InvoiceNo);
+                customercard.SetRange("No.", SalesHeader1."Sell-to Customer No.");
+                if customercard.FindFirst() then
+                    if SalesHeader1."Property Classification" <> '' then begin
+                        customercard.Validate("Gen. Bus. Posting Group", SalesHeader1."Property Classification");
+                        customercard.Validate("Customer Posting Group", SalesHeader1."Property Classification");
+                        customercard.Modify();
+                    end;
+
+                if SalesHeader1."Property Classification" <> '' then begin
+                    SalesHeader1.Validate("Gen. Bus. Posting Group", SalesHeader1."Property Classification");
+                    SalesHeader1.Validate("Customer Posting Group", SalesHeader1."Property Classification");
+                    SalesHeader1.Modify();
+                end;
+                createSalesLine(SalesHeader1, PaymentScheduleRec.Amount, PaymentScheduleRec."VAT Amount", PaymentScheduleRec);
+                pendingReceivableRec.Reset();
+                pendingReceivableRec.SetRange("Contract ID", Rec."Contract ID");
+                pendingReceivableRec.SetRange(RevenueDescription, 'Security Deposit Amount');
+                if pendingReceivableRec.FindFirst() then begin
+                    pendingReceivableRec."CrditNoteID Security Deposit" := SalesHeader1."No.";
+                    pendingReceivableRec.GeneratedCRMemoSD := true;
+                    pendingReceivableRec.Modify();
+                end;
+
+                SalesPost.Run(SalesHeader1);
+                Message('✅ Sales Credit Memo created for the Security Deposit Amount');
+            end;
         end;
+
+
     end;
+
+
+
+
+    procedure CreateSalesHeader(pContractID: Integer; pTenantID: Code[50]; pUnitType: Text[100]; pInvoiceID: Code[50]): Record "Sales Header"
+    var
+        SalesHeader: Record "Sales Header";
+        TenancyContractRec: Record "Tenancy Contract";
+        salesReciveable: Record "Sales & Receivables Setup";
+        noseries: Codeunit "No. Series";
+    begin
+
+        salesHeader.Init();
+        if not salesReciveable.IsEmpty() then
+            salesHeader."No." := noseries.GetNextNo(salesReciveable."Credit Memo Nos.", Today, true);
+
+        salesHeader."Document Type" := SalesHeader."Document Type"::"Credit Memo";
+        salesHeader.Validate("Sell-to Customer No.", pTenantID);
+        salesHeader.Validate("Contract ID", pContractID);
+        salesHeader."Document Date" := Today;
+        salesHeader."Posting Date" := Today;
+        salesHeader."Due Date" := Today;
+        salesHeader."Property Classification" := pUnitType;
+        salesHeader."Posting No. Series" := salesReciveable."Posted Credit Memo Nos.";
+        salesHeader."Approval Status for CreditNote" := SalesHeader."Approval Status for CreditNote"::Approved;
+        SalesHeader.Validate("Applies-to Doc. Type", SalesHeader."Applies-to Doc. Type"::Invoice);
+        SalesHeader.Validate("Applies-to Doc. No.", pInvoiceID);
+        TenancyContractRec.SetRange("Contract ID", pContractID);
+        if TenancyContractRec.FindFirst() then begin
+            SalesHeader."Property Name" := TenancyContractRec."Property Name";
+            SalesHeader."Unit Name" := TenancyContractRec."Unit Name";
+            SalesHeader."Contract Tenure" := TenancyContractRec."Contract Tenor";
+            SalesHeader."Contract Period" := Format(TenancyContractRec."Contract Start Date", 0, '<Day,2>/<Month,2>/<Year4>') + ' To ' + Format(TenancyContractRec."Contract End Date", 0, '<Day,2>/<Month,2>/<Year4>');
+            SalesHeader."Contract Amount" := Round(TenancyContractRec."Annual Rent Amount");
+        end;
+
+        salesHeader.Insert();
+        exit(salesHeader);
+    end;
+
+
+    procedure createSalesLine(var SalesHeader2: Record "Sales Header"; pAmount: Decimal; pVATAmount: Decimal; var paymentScheduleRec1: Record "Payment Schedule2")
+    var
+        saleline: Record "Sales Line";
+        item: Record Item;
+        newSaleslines: Record "Sales Line";
+    begin
+        saleline.Init();
+        saleline."Document Type" := saleline."Document Type"::"Credit Memo";
+        saleline.Validate("Document No.", SalesHeader2."No.");
+
+        // Calculate Line No
+        newSaleslines.SetRange("Document No.", SalesHeader2."No.");
+        newSaleslines.SetRange("Document Type", Enum::"Sales Document Type"::"Credit Memo");
+        newSaleslines.SetRange("Contract ID", SalesHeader2."Contract ID");
+        newSaleslines.SetCurrentKey("Line No.");
+        if newSaleslines.FindLast() then
+            saleline."Line No." := newSaleslines."Line No." + 1000
+        else
+            saleline."Line No." := 1000;
+
+        saleline.Validate("Contract ID", SalesHeader2."Contract ID");
+        saleline.Type := saleline.Type::Item;
+        saleline.Validate("Sell-to Customer No.", SalesHeader2."Sell-to Customer No.");
+
+        // Map item by description
+        item.SetRange(Description, paymentScheduleRec1."Secondary Item Type");
+        if item.FindFirst() then
+            saleline.Validate("No.", item."No.")
+        else
+            Error('No item found with description "%1"', paymentScheduleRec1."Secondary Item Type");
+
+        saleline.Validate("Quantity (Base)", 1);
+        saleline.Validate(Quantity, 1);
+        saleline.Validate("Unit Price", Abs(paymentScheduleRec1.Amount));
+        saleline."Contract ID" := paymentScheduleRec1."Contract ID";
+        saleline.Insert();
+
+    end;
+
+
+
 }

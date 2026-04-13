@@ -393,6 +393,8 @@ page 50951 "Final Billing Calculation"
                                     BillingCalculationGrid.Invoiced := true;
                                     BillingCalculationGrid."Invoice ID" := newsalesheader."No.";
                                     BillingCalculationGrid."Posted Invoice ID" := newsalesheader."No.";
+                                    BillingCalculationGrid."Invoice To Be Raised" := 0;
+
                                     BillingCalculationGrid.Modify();
                                 until BillingCalculationGrid.Next() = 0;
                             Message('Invoice has been generated, please click on the Invoice ID to proceed further');
@@ -476,140 +478,5 @@ page 50951 "Final Billing Calculation"
             Error('The file URL is invalid.');
     end;
 
-    trigger OnAfterGetRecord()
-    var
-    begin
-        FetchDataFromRevenueCalcGrid();
-        Receiptamountfrompaymentscheule();
-        DifferenceAmountCalculation();
-        GetPositiveAmount();
-        CreditNoteTotalAmount();
-        InvoiceTotalAmount();
-        GetOnlyCreditNoteAmount();
-        GetOnlyInvoiceAmount();
-        InvoiceAmountZero();
-    end;
 
-    procedure FetchDataFromRevenueCalcGrid()
-    var
-        RevenueGrid: Record "Final Revenue Calculation Grid";
-    begin
-        RevenueGrid.SetRange("Contract ID", Rec."Contract ID");
-        RevenueGrid.SetRange("Revenue Description", Rec.RevenueDescription);
-        if RevenueGrid.FindSet() then
-            repeat
-                Rec.RevisedAmount := RevenueGrid."Revised Amount";
-                Rec.RevisedVAT := RevenueGrid."Revised VAT";
-                Rec.RevisedAmountInclVAT := RevenueGrid."Revised Amount Incl.";
-            until RevenueGrid.Next() = 0;
-    end;
-
-    procedure DifferenceAmountCalculation()
-    var
-    begin
-        Rec."DifferenceAmount" := Rec.InvoicedAmount - Rec.RevisedAmount;
-        Rec."DifferenceVAT" := Rec.InvoicedVAT - Rec.RevisedVAT;
-        Rec.DifferenceAmountInclVAT := Rec.InvoicedAmountInclVAT - Rec.RevisedAmountInclVAT;
-    end;
-
-    procedure Receiptamountfrompaymentscheule()
-    var
-        PaymentScheduleRec: Record "Payment Schedule2";
-        Totalamount: Decimal;
-        VATAmount: Decimal;
-        AmountIncVAT: Decimal;
-    begin
-        Totalamount := 0;
-        PaymentScheduleRec.Reset();
-        PaymentScheduleRec.SetRange("Contract ID", Rec."Contract ID");
-        PaymentScheduleRec.SetFilter("Workflow frequency date", '<=%1', Rec."Termination Date");
-        PaymentScheduleRec.SetRange(Invoiced, true);
-        PaymentScheduleRec.SetFilter("Invoice Approval Status", 'Approved');
-        PaymentScheduleRec.SetRange("Secondary Item Type", Rec.RevenueDescription);
-        if PaymentScheduleRec.FindSet() then
-            repeat
-                Totalamount += PaymentScheduleRec.Amount;
-                VATAmount += PaymentScheduleRec."VAT Amount";
-                AmountIncVAT += PaymentScheduleRec."Amount Including VAT";
-            until PaymentScheduleRec.Next() = 0;
-        PaymentScheduleRec.SetRange("Contract ID", Rec."Contract ID");
-        PaymentScheduleRec.SetRange("Secondary Item Type", Rec.RevenueDescription);
-        if PaymentScheduleRec.FindSet() then
-            repeat
-                Rec.InvoicedAmount := Totalamount;
-                Rec.InvoicedVAT := VATAmount;
-                Rec.InvoicedAmountInclVAT := AmountIncVAT;
-            until PaymentScheduleRec.Next() = 0;
-    end;
-
-    procedure GetPositiveAmount()
-    var
-    begin
-        if Rec."CreditNote" = true then
-            Rec."Credit Note To Be Raised" := 0;
-    END;
-
-    procedure InvoiceAmountZero()
-    var
-    begin
-        if Rec.Invoiced = true then
-            Rec."Invoice To Be Raised" := 0;
-    end;
-
-    procedure CreditNoteTotalAmount()
-    var
-        billingcalculation: Record "Final Billing Calculation Grid";
-        TotalPositiveDifference: Decimal;
-    begin
-        billingcalculation.SetRange("Contract ID", Rec."Contract ID");
-        billingcalculation.SetFilter("DifferenceAmountInclVAT", '>%1', 0);
-        if billingcalculation.FindSet() then
-            repeat
-                TotalPositiveDifference += billingcalculation."DifferenceAmountInclVAT"
-            until billingcalculation.Next() = 0;
-        Rec."Credit Note To Be Raised" := TotalPositiveDifference;
-    end;
-
-    procedure InvoiceTotalAmount()
-    var
-        billingcalculationgird1: Record "Final Billing Calculation Grid";
-        TotalNegativeDifference: Decimal;
-    begin
-        billingcalculationgird1.SetRange("Contract ID", Rec."Contract ID");
-        billingcalculationgird1.SetFilter("DifferenceAmountInclVAT", '<%1', 0);
-        if billingcalculationgird1.FindSet() then
-            repeat
-                TotalNegativeDifference += billingcalculationgird1."DifferenceAmountInclVAT"
-            until billingcalculationgird1.Next() = 0;
-        Rec."Invoice To Be Raised" := Abs(TotalNegativeDifference);
-    end;
-
-    procedure GetOnlyCreditNoteAmount()
-    var
-        billingcalculationgird: Record "Final Billing Calculation Grid";
-        TotalPositiveDifference: Decimal;
-    begin
-        billingcalculationgird.SetRange("Contract ID", Rec."Contract ID");
-        billingcalculationgird.SetFilter("DifferenceAmountInclVAT", '>%1', 0);
-        if billingcalculationgird.FindSet() then
-            repeat
-                TotalPositiveDifference += billingcalculationgird."DifferenceAmountInclVAT"
-            until billingcalculationgird.Next() = 0;
-        Rec."Credit Note Amount" := TotalPositiveDifference;
-    end;
-
-    procedure GetOnlyInvoiceAmount()
-    var
-        billingcalculationgird: Record "Final Billing Calculation Grid";
-        TotalNegativeDifference: Decimal;
-    begin
-        billingcalculationgird.SetRange("Contract ID", Rec."Contract ID");
-        billingcalculationgird.SetFilter("DifferenceAmountInclVAT", '<%1', 0);
-        if billingcalculationgird.FindSet() then
-            repeat
-                TotalNegativeDifference += billingcalculationgird."DifferenceAmountInclVAT"
-            until billingcalculationgird.Next() = 0;
-        Rec."Invoice Amount" := Abs(TotalNegativeDifference);
-        Rec.Modify();
-    end;
 }

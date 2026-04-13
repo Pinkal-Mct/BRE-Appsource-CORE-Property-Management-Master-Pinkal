@@ -105,6 +105,18 @@ page 50928 "Payment Mode Card2"
                     Editable = false;
                     StyleExpr = Rec."Receipt #" <> '-';
                     ToolTip = 'The Invoice # is the unique identifier for the invoice associated with the payment.';
+                    trigger OnDrillDown()
+                    var
+                        SalesHeader: Record "Sales Header";
+                        postedsalesinvoice: Record "Sales Invoice Header";
+                    begin
+                        if SalesHeader.Get(Enum::"Sales Document Type"::Invoice, Rec."Invoice #") then
+                            PAGE.Run(PAGE::"Sales Invoice", SalesHeader)
+                        else
+                            if postedsalesinvoice.Get(Rec."Invoice #") then
+                                PAGE.Run(PAGE::"Posted Sales Invoice", postedsalesinvoice);
+
+                    end;
                 }
 
                 field("Receipt #"; Rec."Receipt #")
@@ -112,6 +124,12 @@ page 50928 "Payment Mode Card2"
                     ApplicationArea = All;
                     Editable = IsApproved AND (Rec."Payment Status" <> Rec."Payment Status"::Cancelled); // Makes the field editable unless Payment Status is "Cancelled"
                     ToolTip = 'The Receipt # is the unique identifier for the receipt associated with the payment.';
+                }
+                field("Receipt Date"; Rec."Receipt Date")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    ToolTip = 'The Receipt Date indicates the date when the receipt was issued.';
                 }
 
                 field("Old Cheque #"; Rec."Old Cheque #")
@@ -577,7 +595,6 @@ page 50928 "Payment Mode Card2"
     var
         paymentschedul2grid: Record "Payment Schedule2";
         paymentTypeRec: Record "Payment Type";
-        paymentschedulegrid1: Record "Payment Schedule2"; // Record variable for Payment Type
         PaymentStatus: Enum "Payment Status";
     begin
         IsApproved := (Rec."Approval Status" <> Rec."Approval Status"::Approved);
@@ -788,6 +805,7 @@ page 50928 "Payment Mode Card2"
                 GenJournalLine."Account Type" := GenJournalAccountType::Customer;
                 GenJournalLine."Account No." := Rec."Tenant Id";
                 GenJournalLine."Description" := Rec."Tenant Name";
+                GenJournalLine."Contract ID" := Rec."Contract ID";
                 GenJournalLine.Amount := -Rec."Amount Including VAT";
                 GenJournalLine."Amount (LCY)" := GenJournalLine.Amount;
                 GenJournalLine."Bal. Account Type" := GenJournalAccountType::"G/L Account";

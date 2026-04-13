@@ -141,6 +141,8 @@ page 50120 "Merge Lum_AnnualAmount SubPage"
                         end;
 
                         Rec.Modify();
+                        RecalculateFinalAnnualAmount();
+
                         // Recalculate totals and per day rent
                         RecalculateTotals();
                         RecalculatePerDayRent();
@@ -154,11 +156,8 @@ page 50120 "Merge Lum_AnnualAmount SubPage"
                     trigger OnValidate()
                     begin
                         // Recalculate the final annual amount
-                        if Rec."ML_Round off" = 0 then
-                            Rec."ML_Final Annual Amount" := Rec."ML_Annual Amount"
-                        else
-                            Rec."ML_Final Annual Amount" := Rec."ML_Annual Amount" + Rec."ML_Round off";
-
+                        RecalculateFinalAnnualAmount();
+                        RecalculatePerDayRent();
                         Rec.Modify();
                         // Recalculate totals
                         RecalculateTotals();
@@ -445,37 +444,31 @@ page 50120 "Merge Lum_AnnualAmount SubPage"
     var
 
         LeaseProposalRec: Record "Lease Proposal Details";
-        TempRecord: Record "Merge Lum_AnnualAmount SubPage";
-        TotalAnnual: Decimal;
+        MergeLumRecord: Record "Merge Lum_AnnualAmount SubPage";
         TotalFinal: Decimal;
-        TotalRoundOff: Decimal;
+
         FirstYearAnnualAmount: Decimal; // Variable for the first year's annual amount
         vatPer: Integer;
     begin
         // Initialize totals
-        TotalAnnual := 0;
+
         TotalFinal := 0;
-        TotalRoundOff := 0;
+
         FirstYearAnnualAmount := 0; // Initialize to 0
 
         // Loop through all records for the same Proposal ID to calculate totals
-        TempRecord.SetRange("Proposal ID", Rec."Proposal ID");
-        if TempRecord.FindSet() then
+        MergeLumRecord.SetRange("Proposal ID", Rec."Proposal ID");
+        if MergeLumRecord.FindSet() then
             repeat
-                TotalAnnual += TempRecord."ML_Annual Amount";
-                TotalFinal += TempRecord."ML_Final Annual Amount";
-                TotalRoundOff += TempRecord."ML_Round off";
+
+                TotalFinal += MergeLumRecord."ML_Final Annual Amount";
+
 
                 // Check for the first year and assign its Annual Amount
-                if TempRecord."ML_Year" = 1 then
-                    FirstYearAnnualAmount := TempRecord."ML_Final Annual Amount";
-            until TempRecord.Next() = 0;
+                if MergeLumRecord."ML_Year" = 1 then
+                    FirstYearAnnualAmount := MergeLumRecord."ML_Final Annual Amount";
+            until MergeLumRecord.Next() = 0;
 
-        // // Update the totals in the current record
-        // Rec.TotalAnnualAmount := TotalAnnual;
-        // Rec.TotalFinalAmount := TotalFinal;
-        // Rec.TotalRoundOff := TotalRoundOff;
-        // Rec.TotalFirstAnnualAmount := FirstYearAnnualAmount; // Assign the first year's annual amount
 
         LeaseProposalRec.SetRange("Proposal ID", Rec."Proposal ID");
         if LeaseProposalRec.FindSet() then begin
@@ -497,6 +490,68 @@ page 50120 "Merge Lum_AnnualAmount SubPage"
         CurrPage.Update();
     end;
     //-----------------Calculate Total -----------------//
+    local procedure RecalculateFinalAnnualAmount()
+    var
+        YearStart: Integer;
+        YearEnd: Integer;
+        CurrYear: Integer;
+        YearStartDate: Date;
+        YearEndDate: Date;
+        OverlapStart: Date;
+        OverlapEnd: Date;
+        DaysInYear: Integer;
+        DaysInPeriod: Integer;
+        ProratedAmount: Decimal;
+        LeapDay: Date;
+    begin
+        ProratedAmount := 0;
 
+        // If dates are not set, set Final Annual Amount to Annual Amount + Round off
+        if (Rec."ML_Start Date" = 0D) or (Rec."ML_End Date" = 0D) then begin
+            Rec."ML_Final Annual Amount" := Rec."ML_Annual Amount" + Rec."ML_Round off";
+            Rec.Modify();
+            CurrPage.Update();
+            exit;
+        end;
+
+        if Rec."ML_End Date" < Rec."ML_Start Date" then
+            Error('End Date cannot be earlier than Start Date.');
+
+        YearStart := Date2DMY(Rec."ML_Start Date", 3);
+        YearEnd := Date2DMY(Rec."ML_End Date", 3);
+        // Loop through each calendar year overlapping the period
+        for CurrYear := YearStart to YearEnd do begin
+            YearStartDate := DMY2Date(1, 1, CurrYear);
+            YearEndDate := DMY2Date(31, 12, CurrYear);
+
+            OverlapStart := Rec."ML_Start Date";
+            if OverlapStart < YearStartDate then
+                OverlapStart := YearStartDate;
+
+            OverlapEnd := Rec."ML_End Date";
+            if OverlapEnd > YearEndDate then
+                OverlapEnd := YearEndDate;
+
+            if OverlapEnd >= OverlapStart then begin
+                DaysInPeriod := OverlapEnd - OverlapStart + 1;
+                if IsLeapYear(CurrYear) then begin
+                    LeapDay := DMY2Date(29, 2, CurrYear);
+                    if (OverlapStart <= LeapDay) and (OverlapEnd >= LeapDay) then
+                        DaysInYear := 366
+                    else
+                        DaysInYear := 365;
+                end else
+                    DaysInYear := 365;
+
+                ProratedAmount += (Rec."ML_Annual Amount" * DaysInPeriod) / DaysInYear;
+            end;
+        end;
+
+        // Apply round off on top of the prorated sum
+        Rec."ML_Final Annual Amount" := ProratedAmount + Rec."ML_Round off";
+
+        Rec.Modify();
+        CurrPage.Update();
+    end;
 }
 
