@@ -8,6 +8,8 @@ pageextension 50521 ApplyEntriesPageExt extends "Apply Customer Entries"
             {
                 ApplicationArea = All;
                 Caption = 'Contract ID';
+                ToolTip = 'Specifies the contract ID related to the customer ledger entry.';
+                Editable = false;
             }
         }
     }

@@ -2,7 +2,6 @@ codeunit 50113 "Ledger Entries Event Handler"
 {
     Permissions = TableData "VAT Entry" = rimd;
 
-
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnPostItemJnlLineOnAfterCopyDocumentFields, '', false, false)]
     local procedure OnPostItemJnlLineOnAfterCopyDocumentFields(var ItemJournalLine: Record "Item Journal Line"; SalesLine: Record "Sales Line"; WarehouseReceiptHeader: Record "Warehouse Receipt Header"; WarehouseShipmentHeader: Record "Warehouse Shipment Header")
     begin
@@ -55,10 +54,8 @@ codeunit 50113 "Ledger Entries Event Handler"
     local procedure OnAfterInitCustLedgEntry(var CustLedgerEntry: Record "Cust. Ledger Entry"; GenJournalLine: Record "Gen. Journal Line"; var GLRegister: Record "G/L Register")
     var
         finalcalculationRec: Record "Final Calculation";
-        cashRecJournalLine: Record "Gen. Journal Line";
         tenancyContractRec: Record "Tenancy Contract";
         AmountToDeduct: Decimal;
-        checked: Boolean;
     begin
         CustLedgerEntry."Contract ID" := GenJournalLine."Contract ID";
 
@@ -80,19 +77,19 @@ codeunit 50113 "Ledger Entries Event Handler"
                         end;
                     end;
                 'Chiller Deposit':
-                    begin
-                        if finalcalculationRec."Chiller Deposit" >= AmountToDeduct then
-                            finalcalculationRec."Remaining Chiller Deposit" -= AmountToDeduct
-                        else
-                            finalcalculationRec."Remaining Chiller Deposit" := 0;
-                    end;
+
+                    if finalcalculationRec."Chiller Deposit" >= AmountToDeduct then
+                        finalcalculationRec."Remaining Chiller Deposit" -= AmountToDeduct
+                    else
+                        finalcalculationRec."Remaining Chiller Deposit" := 0;
+
                 'Other Deposit':
-                    begin
-                        if finalcalculationRec."Other Deposit" >= AmountToDeduct then
-                            finalcalculationRec."Remaining Other Deposit" -= AmountToDeduct
-                        else
-                            finalcalculationRec."Remaining Other Deposit" := 0;
-                    end;
+
+                    if finalcalculationRec."Other Deposit" >= AmountToDeduct then
+                        finalcalculationRec."Remaining Other Deposit" -= AmountToDeduct
+                    else
+                        finalcalculationRec."Remaining Other Deposit" := 0;
+
             end;
             finalcalculationRec.Modify();
         end;
@@ -120,8 +117,7 @@ codeunit 50113 "Ledger Entries Event Handler"
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Apply", OnSelectCustLedgEntryOnAfterSetFilters, '', false, false)]
     local procedure OnSelectCustLedgEntryOnAfterSetFilters(var CustLedgerEntry: Record "Cust. Ledger Entry"; var GenJournalLine: Record "Gen. Journal Line")
-    var
-        ParentCLE: Record "Cust. Ledger Entry";
+
     begin
         CustLedgerEntry.SetRange("Contract ID", GenJournalLine."Contract ID");
         // ParentCLE.CopyFilters(CustLedgerEntry);

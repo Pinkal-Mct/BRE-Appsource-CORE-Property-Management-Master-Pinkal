@@ -23,6 +23,7 @@ page 50939 "Tenancy Contract SubPage Card"
                     ApplicationArea = All;
                     Caption = 'Amount';
                     ToolTip = 'Enter the Amount.';
+                    Editable = isEditable;
                 }
 
                 field("VAT %"; Rec."VAT %")
@@ -88,28 +89,30 @@ page 50939 "Tenancy Contract SubPage Card"
                     ApplicationArea = All;
                     Editable = false;
                     DrillDown = true;
-                    ToolTip = 'Click to generate the payment schedule.';
 
                     trigger OnDrillDown()
                     var
-                        TargetRecord: Record "Revenue Structure";
                         RevenueStructure: Record "Revenue Structure Subpage";
+                        TargetRecord: Record "Revenue Structure"; // Replace with the actual table name
                         StartDate: Date;
                         EndDate: Date;
                         AnnualAmount: Decimal;
+                        NumInstallments: Integer;
                         PeriodStartDate: Date;
                         PeriodEndDate: Date;
                         YearCounter: Integer;
                         NumDays: Integer;
-                        CurrentYear: Integer;
-                        StartYear: Integer;
-                        EndYear: Integer;
-                        LeapDate: Date;
+
                         Revenuestructureid: Integer;
+                    //LeaseRecord: Record "Lease Proposal Details";
+
 
                     begin
 
                         if Rec."Payment Type" = Rec."Payment Type"::Installment then begin
+
+
+
                             TargetRecord.SetRange("Contract ID", Rec."ContractID");
                             TargetRecord.SetRange("Secondary Item Type", Rec."Secondary Item Type");
                             TargetRecord.SetRange("Tenant ID", Rec."TenantID");
@@ -125,7 +128,7 @@ page 50939 "Tenancy Contract SubPage Card"
                                 TargetRecord.Modify();
                             end else begin
                                 TargetRecord.Init();
-
+                                // TargetRecord."Proposal ID" := Rec."ProposalID";
                                 TargetRecord."Contract ID" := Rec."ContractID";
                                 TargetRecord."Tenant ID" := Rec."TenantID";
                                 TargetRecord."Secondary Item Type" := Rec."Secondary Item Type";
@@ -138,6 +141,7 @@ page 50939 "Tenancy Contract SubPage Card"
                                 TargetRecord."Entry No" := Rec."Entry No.";
                                 TargetRecord.Insert();
 
+
                                 StartDate := TargetRecord."Contract Start Date";
                                 EndDate := TargetRecord."Contract End Date";
                                 AnnualAmount := TargetRecord."Amount";
@@ -148,6 +152,9 @@ page 50939 "Tenancy Contract SubPage Card"
                                 YearCounter := 1;
                                 PeriodStartDate := StartDate;
 
+
+
+
                                 while PeriodStartDate <= EndDate do begin
                                     RevenueStructure.Init();
                                     RevenueStructure."RS ID" := TargetRecord."RS ID";
@@ -155,40 +162,39 @@ page 50939 "Tenancy Contract SubPage Card"
                                     RevenueStructure."Contract ID" := TargetRecord."Contract ID";
                                     RevenueStructure."Year" := YearCounter;
                                     RevenueStructure."Period Start Date" := PeriodStartDate;
+
                                     RevenueStructure."VAT Amount" := TargetRecord."VAT Amount";
                                     RevenueStructure."Amount Including VAT" := TargetRecord."Amount Including VAT";
                                     RevenueStructure."Secondary Item Type" := TargetRecord."Secondary Item Type";
                                     RevenueStructure."VAT %" := TargetRecord."VAT %";
 
-                                    if PeriodStartDate + 365 >= EndDate then
-                                        PeriodEndDate := EndDate
-                                    else
-                                        PeriodEndDate := PeriodStartDate + 365 - 1;
+
+
+                                    PeriodEndDate := CalcDate('<1Y>', PeriodStartDate) - 1;
+
+
+
+                                    if PeriodEndDate > EndDate then
+                                        PeriodEndDate := EndDate;
 
                                     RevenueStructure."Period End Date" := PeriodEndDate;
 
                                     NumDays := PeriodEndDate - PeriodStartDate + 1;
 
-                                    // Check if February 29 falls within the range
-                                    StartYear := Date2DMY(PeriodStartDate, 3); // Extract the year of PeriodStartDate
-                                    EndYear := Date2DMY(PeriodEndDate, 3);    // Extract the year of PeriodEndDate
-
-                                    for CurrentYear := StartYear to EndYear do
-                                        if IsLeapYear(CurrentYear) then begin
-                                            LeapDate := DMY2Date(29, 2, CurrentYear); // Generate February 29 date
-                                            if (LeapDate >= PeriodStartDate) and (LeapDate <= PeriodEndDate) then
-                                                break; // No need to check further if a leap year is found in range
-                                        end;
 
                                     RevenueStructure."Number of Days" := NumDays;
+
                                     RevenueStructure.Insert();
                                     RevenueStructure.Modify();
                                     Clear(RevenueStructure);
+
+
 
                                     PeriodStartDate := PeriodEndDate + 1;
                                     YearCounter += 1;
 
                                     if TargetRecord.FindLast() then
+                                        // If found, get the latest RS ID
                                         Revenuestructureid := TargetRecord."RS ID"
                                     else begin
                                         // If no record is found, create a new Revenue Structure record
@@ -201,14 +207,24 @@ page 50939 "Tenancy Contract SubPage Card"
                                     end;
 
                                     Rec."Link" := Revenuestructureid;
+
+
                                 end;
+
                             end;
+
                             Message('Record are updated in Revenue Structure.Click on the respective link to View the details');
+
+
                         end
                         else
                             Message('Installment cannot be set for One-Time payment');
+
                     end;
+
+
                 }
+
 
                 field("Link"; Rec."Link")
                 {
@@ -272,7 +288,7 @@ page 50939 "Tenancy Contract SubPage Card"
             Rec.Invoiced := 0;
 
         Rec.Modify();
-
+        CheckRefundableDeposit();
 
     end;
 
@@ -288,12 +304,19 @@ page 50939 "Tenancy Contract SubPage Card"
         ContractID: Integer;
         proposalID: Integer;
         tenantID: Code[20];
+        isEditable: Boolean;
 
-    local procedure IsLeapYear(Year: Integer): Boolean
+    procedure CheckRefundableDeposit()
+    var
+        item: Record Item;
     begin
-        if (Year mod 4 = 0) and ((Year mod 100 <> 0) or (Year mod 400 = 0)) then
-            exit(true);
-        exit(false);
+        item.SetRange(Description, Rec."Secondary Item Type");
+        if item.FindFirst() then
+            if item."Category Types" = 'Refundable Deposit' then
+                isEditable := true
+            else
+                isEditable := false;
+
     end;
 
     procedure SetContractID(pContractID: Integer)

@@ -9,8 +9,21 @@ page 50337 "Security Deposit Card"
     {
         area(content)
         {
+            field("Posting Date"; Rec."Posting Date")
+            {
+                ApplicationArea = All;
+                Caption = 'Posting Date';
+
+                trigger OnValidate()
+                begin
+                    if Rec."Posting Date" > Today() then
+                        Error('Posting Date cannot be in the future.');
+                end;
+            }
             group("Carry Forward From")
             {
+                Editable = not (Rec.Status = Rec.Status::Posted);
+
                 field("Security Deposit ID"; rec."Security Deposit ID")
                 {
                     ApplicationArea = All;
@@ -21,7 +34,6 @@ page 50337 "Security Deposit Card"
                 field("Tenant Full Name"; rec."Tenant Full Name")
                 {
                     ApplicationArea = All;
-                    Editable = true;
                     ToolTip = 'Tenant Full Name';
                 }
 
@@ -42,8 +54,8 @@ page 50337 "Security Deposit Card"
                         // Filter the contracts by the selected tenant
                         TenancyContractRec.SetRange("Customer Name", Rec."Tenant Full Name");
                         if PAGE.RunModal(PAGE::"Tenancy Contract List", TenancyContractRec) = ACTION::LookupOK then
-                            Rec."Contract ID" := TenancyContractRec."Contract ID";
-                        Rec."Property Classification" := CopyStr(TenancyContractRec."Property Classification", 1, StrLen(TenancyContractRec."Property Classification"));
+                            Rec.Validate("Contract ID", TenancyContractRec."Contract ID");
+
                         FetchContractDetails(Rec."Contract ID", false);
                     end;
                     // Trasfer from Table End
@@ -84,15 +96,22 @@ page 50337 "Security Deposit Card"
                     Editable = false;
                     ToolTip = 'Balance Amount';
                 }
+                field(Status; Rec.Status)
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    StyleExpr = styleExpr;
+                    ToolTip = 'Status of the security deposit transfer. Open indicates that the transfer is in progress, while Posted indicates that the transfer has been completed.';
+                }
             }
 
             group("Carry Forward To")
             {
+                Editable = not (Rec.Status = Rec.Status::Posted);
 
                 field("New_Contract ID"; rec."New_Contract ID")
                 {
                     ApplicationArea = All;
-                    Editable = true;
                     ToolTip = 'New Contract ID';
 
                     // Trasfer from Table Start  
@@ -105,6 +124,9 @@ page 50337 "Security Deposit Card"
 
                         // Filter the contracts by the selected tenant
                         TenancyContractRec.SetRange("Customer Name", Rec."Tenant Full Name");
+                        TenancyContractRec.SetRange("Tenant Contract Status", TenancyContractRec."Tenant Contract Status"::Active);
+
+
                         if PAGE.RunModal(PAGE::"Tenancy Contract List", TenancyContractRec) = ACTION::LookupOK then
                             Rec."New_Contract ID" := TenancyContractRec."Contract ID";
 
@@ -139,7 +161,6 @@ page 50337 "Security Deposit Card"
                 field("New_Security Deposit Amount"; rec."Carry Forward Amount")
                 {
                     ApplicationArea = All;
-                    Editable = true;
                     ToolTip = 'New Security Deposit Amount';
                 }
                 field("New Security Amount"; rec."New Security Amount")
@@ -182,18 +203,55 @@ page 50337 "Security Deposit Card"
             {
                 ApplicationArea = All;
                 Caption = 'Post Security Deposit';
-                ToolTip = 'Post Security Deposit';
                 Image = Post;
+                ToolTip = 'Post the security deposit transfer and update the final calculation.';
+                Enabled = not (Rec.Status = Rec.Status::Posted);
+
                 trigger OnAction()
                 var
-                    SecurityDepositPostMgt: Codeunit "Security Deposit Posting Mgt."; // We will create this codeunit
+                    finalcalculationRec: Record "Final Calculation";
+                    SecurityDepositPostMgt: Codeunit "Security Deposit Posting Mgt.";
                 begin
-                    SecurityDepositPostMgt.PostSecurityDepositAmount(Rec);
+                    if Rec."Posting Date" <> 0D then begin
+
+                        if Confirm('Do you want to post journal lines?', true) then begin
+
+                            SecurityDepositPostMgt.PostSecurityDepositAmount(Rec);
+
+                            Rec.UpdateAdjustedAmount();
+                            finalcalculationRec.SetRange("Contract ID", Rec."Contract ID");
+                            if finalcalculationRec.FindFirst() then begin
+                                finalcalculationRec."Total Refundable Deposit" := finalcalculationRec."Security Deposit" + finalcalculationRec."Chiller Deposit" + finalcalculationRec."Other Deposit";
+                                finalcalculationRec.Modify(true);
+                                finalcalculationRec.CalculateFinalSummary(finalcalculationRec);
+                            end;
+                            Rec.Status := Rec.Status::Posted;
+                            Rec.Modify(true);
+                        end
+                        else
+                            exit;
+                    end else
+                        Error('Please enter a valid Posting Date before posting the security deposit.');
+
                 end;
             }
         }
     }
+    trigger OnAfterGetCurrRecord()
+    begin
+        styleExpr := GetStatusStyle();
+    end;
 
+    var
+        styleExpr: Text;
+
+    procedure GetStatusStyle(): Text
+    begin
+        if Rec.Status = Rec.Status::Open then
+            exit('Strong');
+        if Rec.Status = Rec.Status::Posted then
+            exit('Favorable');
+    end;
     // Trasfer from Table Start  
     local procedure FetchContractDetails(ContractID: Integer; IsNewContract: Boolean)
     var

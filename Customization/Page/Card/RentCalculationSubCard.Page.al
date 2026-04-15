@@ -172,6 +172,7 @@ page 50946 "Rent Calculation SubCard"
                         OriginalStartDate: Date;
                         YearNo: Integer;
                         UnitId: Code[20];
+                        isMonthStart: Boolean;
                     begin
                         YearNo := 0;
                         UnitId := '';
@@ -179,7 +180,9 @@ page 50946 "Rent Calculation SubCard"
                         InstallmentStructure.SetRange("RC ID", Rec."RC ID");
                         if InstallmentStructure.FindSet() then
                             InstallmentStructure.DeleteAll();
-                        InstallmentStartDate := GetStartDate(tenancyContract."Contract Start Date", tenancyContract."Contract End Date", isMonthEnd);
+
+                        InstallmentStartDate := GetStartDate(tenancyContract."Contract Start Date", tenancyContract."Contract End Date", isMonthEnd, isMonthStart);
+
                         OriginalStartDate := InstallmentStartDate;
 
                         OffsetMonths := fetchMonth.GetNoofMonthsFromFrequency(Format(tenancyContract."Payment Frequency"));
@@ -340,22 +343,23 @@ page 50946 "Rent Calculation SubCard"
         ContractID: Integer;
         tenantID: Code[20];
 
-    procedure GetStartDate(pContractStartDate: Date; pContractEndDate: Date; var isMonthEnd: Boolean): Date
+    procedure GetStartDate(pContractStartDate: Date; pContractEndDate: Date; var isMonthEnd: Boolean; var isMonthStart: Boolean): Date
     var
         StartDate: Date;
     begin
         isMonthEnd := false;
-        case pContractStartDate of
-            CalcDate('<-CM>', pContractStartDate):
-                StartDate := CalcDate('<-CM>', pContractStartDate);
-            CalcDate('<CM>', pContractStartDate):
-                begin
-                    StartDate := CalcDate('<CM>', pContractStartDate);
-                    isMonthEnd := true;
-                end;
+        isMonthStart := false;
+        if pContractStartDate = CalcDate('<-CM>', pContractStartDate) then begin
+            StartDate := CalcDate('<-CM>', pContractStartDate);
+            isMonthStart := true;
+        end
+        else
+            if pContractStartDate = CalcDate('<CM>', pContractStartDate) then begin
+                StartDate := CalcDate('<CM>', pContractStartDate);
+                isMonthEnd := true;
+            end
             else
                 StartDate := pContractStartDate;
-        end;
 
         exit(StartDate);
     end;

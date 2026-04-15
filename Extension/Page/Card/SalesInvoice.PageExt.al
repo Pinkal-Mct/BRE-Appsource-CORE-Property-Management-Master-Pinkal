@@ -13,6 +13,8 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'The Contract ID field is used to link the sales invoice to a specific tenancy contract.';
+                    TableRelation = "Tenancy Contract"."Contract ID";
+
 
                     trigger OnValidate()
                     var
@@ -140,14 +142,16 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
                     trigger OnValidate()
 
                     var
-                        emailrecord: Codeunit SendInvoiceToTenant;
                         ShowDialogBox: Codeunit ShowDialogboxRejctionInvoice;
+                        SalesPost: Codeunit "Sales-Post";
                     begin
-                        if Rec."Approval Status" = Rec."Approval Status"::Approved then
-                            emailrecord.SendInvoice(Rec)
-                        else
+                        if Rec."Approval Status" = Rec."Approval Status"::Approved then begin
+                            SalesPost.Run(Rec);
+                            CurrPage.Close();
+                        end else
                             if Rec."Approval Status" = Rec."Approval Status"::Rejected then
                                 ShowDialogBox.DialogboxForRejection(Rec);
+                        // Rejectionmail.SendInvoiceToLeaseManager(Rec);
 
                         UpdateInvoiceApprovalStatus();
                     end;

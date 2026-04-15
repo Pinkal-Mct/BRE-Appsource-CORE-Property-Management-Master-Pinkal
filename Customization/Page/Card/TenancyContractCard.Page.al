@@ -62,6 +62,8 @@ page 50313 "Tenancy Contract Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the name of the owner or lessor associated with this tenancy contract.';
+                    Editable = false;
+
                 }
                 field("Owner ID"; rec."Owner ID")
                 {
@@ -1605,24 +1607,31 @@ page 50313 "Tenancy Contract Card"
         aFinalCalculation."Contract Amount" := Rec."Annual Rent Amount";
         aFinalCalculation."Tenant Email" := Rec."Email Address";
         aFinalCalculation."Tenant Name" := Rec."Customer Name";
-        aFinalCalculation."Security Deposit" := Rec."Security Deposit Amount";
-        aFinalCalculation."Adjustment Security Deposit" := Rec."Carry Forward Out";
-        aFinalCalculation."Net Balance" := aFinalCalculation."Security Deposit" - aFinalCalculation."Adjustment Security Deposit";
+        aFinalCalculation."Security Deposit" := Rec."Security Balanced Amount";
+        aFinalCalculation."Remaining Security Deposit" := Rec."Security Balanced Amount";
+
 
         // Add Chiller Deposit
         TenancyContractSubpage.Reset();
         TenancyContractSubpage.SetRange(ContractID, Rec."Contract ID");
-        TenancyContractSubpage.SetRange("Secondary Item Type", 'Chiller Deposit Amount');
-        if TenancyContractSubpage.FindFirst() then
+        TenancyContractSubpage.SetRange("Secondary Item Type", 'Chiller Deposit');
+        if TenancyContractSubpage.FindFirst() then begin
+
             aFinalCalculation."Chiller Deposit" := TenancyContractSubpage.Amount;
+            aFinalCalculation."Remaining Chiller Deposit" := TenancyContractSubpage.Amount;
+        end;
+
 
         // Add Other Deposit
         TenancyContractSubpage.Reset();
         TenancyContractSubpage.SetRange(ContractID, Rec."Contract ID");
         TenancyContractSubpage.SetRange("Secondary Item Type", 'Other Deposit');
-        if TenancyContractSubpage.FindFirst() then
+        if TenancyContractSubpage.FindFirst() then begin
             aFinalCalculation."Other Deposit" := TenancyContractSubpage.Amount;
+            aFinalCalculation."Remaining Other Deposit" := TenancyContractSubpage.Amount;
+        end;
 
-        aFinalCalculation."Total Refundable Deposit" := aFinalCalculation."Net Balance" + aFinalCalculation."Chiller Deposit" + aFinalCalculation."Other Deposit";
+
+        aFinalCalculation."Total Refundable Deposit" := aFinalCalculation."Security Deposit" + aFinalCalculation."Chiller Deposit" + aFinalCalculation."Other Deposit";
     end;
 }

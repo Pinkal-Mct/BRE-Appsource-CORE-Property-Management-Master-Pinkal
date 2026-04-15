@@ -52,9 +52,7 @@ permissionset 50101 PagePermissionSet
         page "CR Single LumAnnualAmnt SP" = X,
         page "CR Single Unit Rent SubPage" = X,
         page "CR Sub Lease Merged Units Card" = X,
-        page "Credit Note Approval List" = X,
-        page "Credit Note Card" = X,
-        page "Credit Note List" = X,
+
         page "Customer Payment Receipt" = X,
         page DialogBoxForInvoiceRejection = X,
         page "Expiring Contract List" = X,
@@ -158,5 +156,20 @@ permissionset 50101 PagePermissionSet
         page "Vendor Profile Card" = X,
         page OverduePaymentmodelist = X,
         codeunit "Attach Credit Memo Report" = X,
-        codeunit "Attach Invoice Report" = X;
+        codeunit "Attach Invoice Report" = X,
+               codeunit "Ledger Entries Event Handler" = X,
+        page "Adjustment Deposits" = X,
+          page "Management Fee Calc Grid" = X,
+        page "Management Fee Calc." = X,
+        page "Management Fee Grid ListPart" = X,
+        page "Mangement Fee Master Card" = X,
+         report "Management Fee Calculation" = X,
+        codeunit SetManagementFeeCalculation = X,
+        codeunit "Update Management Fee Status" = X,
+         page FinalAdjuContractReduction = X,
+        page InvoiceCreditNoteSummary = X,
+        codeunit GenerateInvoiceCreditNoteFC = X,
+        page "Management Fee Calc. List" = X,
+          page "Base Amount Card" = X,
+        page "Base Amount Report Grid" = X;
 }

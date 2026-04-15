@@ -311,13 +311,19 @@ page 50951 "Final Billing Calculation"
                             DrillDown = true;
                             trigger OnDrillDown()
                             var
-                                creditnote: Record "Credit Note";
+                                SalesHeader: Record "Sales Header";
+
+                                PostedSalesCreditMemo: Record "Sales Cr.Memo Header";
                             begin
-                                creditnote.SetRange("Credit Note No.", Rec."Credit Note ID");
-                                if creditnote.FindFirst() then
-                                    Page.Run(Page::"Credit Note Card", creditnote)
-                                else
-                                    Message('No Credit Note found with this ID.');
+                                SalesHeader.SetRange("No.", Rec."Credit Note ID");
+                                if SalesHeader.FindFirst() then
+                                    PAGE.Run(PAGE::"Sales Credit Memo", SalesHeader)
+                                else begin
+                                    PostedSalesCreditMemo.SetRange("No.", Rec."Credit Note ID");
+                                    if PostedSalesCreditMemo.FindFirst() then
+                                        PAGE.Run(PAGE::"Posted Sales Credit Memo", PostedSalesCreditMemo);
+
+                                end;
                             end;
                         }
                         field("Credit Note Document"; Rec."Credit Note Document")
@@ -350,125 +356,7 @@ page 50951 "Final Billing Calculation"
             }
         }
     }
-    actions
-    {
-        area(Processing)
-        {
-            action(Invoice)
-            {
-                ToolTip = 'Generate an invoice based on the billing calculation details.';
-                ApplicationArea = All;
-                Caption = 'Generate Invoice';
-                Image = NewInvoice;
-                trigger OnAction()
-                var
-                    newsalesheader: Record "Sales Header";
-                    BillingCalculationGrid: Record "Final Billing Calculation Grid";
-                    customercard: Record Customer;
-                    userConfirmed: Boolean;
-                begin
-                    if Rec."Invoice To Be Raised" > 0 then begin
-                        if Rec.Invoiced = false then begin
-                            userConfirmed := Confirm('Do you want to create the invoice?', false);
-                            if not userConfirmed then
-                                exit;
-                            newsalesheader := CreateSalesHeader(Rec."Contract ID", Rec."Tenant ID", Rec."Property Classification");
-                            customercard.SetRange("No.", newsalesheader."Sell-to Customer No.");
-                            if customercard.FindSet() then
-                                if newsalesheader."Property Classification" <> '' then begin
-                                    customercard.Validate("Gen. Bus. Posting Group", newsalesheader."Property Classification");
-                                    customercard.Validate("Customer Posting Group", newsalesheader."Property Classification");
-                                    customercard.Modify();
-                                end;
-                            if newsalesheader."Property Classification" <> '' then begin
-                                newsalesheader."Gen. Bus. Posting Group" := CopyStr(newsalesheader."Property Classification", 1, StrLen(newsalesheader."Gen. Bus. Posting Group"));
-                                newsalesheader."Customer Posting Group" := CopyStr(newsalesheader."Property Classification", 1, StrLen(newsalesheader."Customer Posting Group"));
-                                newsalesheader.Modify();
-                            end;
-                            BillingCalculationGrid.SetRange("Contract ID", Rec."Contract ID");
-                            BillingCalculationGrid.SetFilter("DifferenceAmountInclVAT", '<%1', 0);
-                            if BillingCalculationGrid.FindSet() then
-                                repeat
-                                    Saleslinecreate(newsalesheader, BillingCalculationGrid);
-                                    BillingCalculationGrid.Invoiced := true;
-                                    BillingCalculationGrid."Invoice ID" := newsalesheader."No.";
-                                    BillingCalculationGrid."Posted Invoice ID" := newsalesheader."No.";
-                                    BillingCalculationGrid."Invoice To Be Raised" := 0;
 
-                                    BillingCalculationGrid.Modify();
-                                until BillingCalculationGrid.Next() = 0;
-                            Message('Invoice has been generated, please click on the Invoice ID to proceed further');
-                        end else
-                            Message('Already Invoiced is created');
-                    end else
-                        Message('Need to create Credit Note');
-                end;
-            }
-            action(GenerateCreditNote)
-            {
-                ToolTip = 'Generate a credit note based on the billing calculation details.';
-                ApplicationArea = All;
-                Caption = 'Generate Credit Note';
-                Image = PostDocument;
-                trigger OnAction()
-                begin
-                    PAGE.Run(PAGE::"Credit Note List");
-                end;
-            }
-        }
-    }
-    procedure CreateSalesHeader(pContractID: Integer; pTenantID: Code[50]; pUnitType: Text[50]): Record "Sales Header";
-    var
-        salesHeader: Record "Sales Header";
-        SalesInvoiceHeader: Record "Sales Header";
-        salesReciveable: Record "Sales & Receivables Setup";
-        noseries: Codeunit "No. Series";
-    begin
-        salesHeader.Init();
-        if salesReciveable.FindFirst() then
-            salesHeader."No." := noseries.GetNextNo(salesReciveable."Invoice Nos.", Today, true);
-        salesHeader."Document Type" := SalesInvoiceHeader."Document Type"::Invoice;
-        salesHeader.Validate("Sell-to Customer No.", pTenantID);
-        salesHeader."Document Date" := Today;
-        salesHeader.Validate("Contract ID", pcontractid);
-        salesHeader."Posting Date" := Today;
-        salesHeader."Due Date" := Today;
-        salesHeader."Property Classification" := pUnitType;
-        salesHeader."Posting No. Series" := salesReciveable."Posted Invoice Nos.";
-        salesHeader.Insert();
-        exit(salesHeader);
-    end;
-
-    procedure Saleslinecreate(salesheader1: Record "Sales Header"; Billingcalculation: Record "Final Billing Calculation Grid")
-    var
-        saleline: Record "Sales Line";
-        newSaleslines: Record "Sales Line";
-        item: Record Item;
-    begin
-        saleline.Init();
-        saleline."Document Type" := saleline."Document Type"::Invoice;
-        newSaleslines.SetRange("Document No.", salesheader1."No.");
-        newSaleslines.SetRange("Document Type", Enum::"Sales Document Type"::Invoice);
-        newSaleslines.SetCurrentKey("Line No.");
-        if newSaleslines.FindLast() then
-            saleline."Line No." := newSaleslines."Line No." + 1000
-        else
-            saleline."Line No." := 1000;
-        saleline."Document No." := salesheader1."No.";
-        saleline."Contract ID" := salesheader1."Contract ID";
-        saleline.Type := saleline.Type::Item;
-        saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
-        item.SetRange(Description, Billingcalculation.RevenueDescription);
-        item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
-        if item.FindFirst() then
-            saleline.Validate("No.", item."No.");
-        saleline.Validate("Quantity (Base)", 1);
-        saleline.Validate(Quantity, 1);
-        saleline.Validate("Unit Price", Abs(Billingcalculation.DifferenceAmount));
-        saleline."Contract ID" := Billingcalculation."Contract ID";
-        saleline.Insert();
-        Clear(saleline);
-    end;
 
     procedure OpenFileInBrowser(URL: Text)
     begin

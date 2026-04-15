@@ -284,7 +284,7 @@ page 50941 "Contract Renewal SubPage Card"
         LeaseProposal: Record "Contract Renewal";
     begin
 
-        if (Rec."Secondary Item Type" = 'Security Deposit Amount') or
+        if (Rec."Secondary Item Type" = 'Security Deposit') or
            (Rec."Secondary Item Type" = 'Rera Fees') or
            (Rec."Secondary Item Type" = 'Ejari Processing Fees') or
            (Rec."Secondary Item Type" = 'Renewal Amount') then begin
@@ -293,7 +293,7 @@ page 50941 "Contract Renewal SubPage Card"
             if LeaseProposal.FindSet() then begin
 
                 case Rec."Secondary Item Type" of
-                    'Security Deposit Amount':
+                    'Security Deposit':
                         LeaseProposal."Security Deposit Amount" := Rec."Amount Including VAT";
                     'Rera Fees':
                         LeaseProposal."Rera" := Rec."Amount Including VAT";

@@ -3,7 +3,7 @@ page 50130 "Carry Forward Grid"
     PageType = ListPart;
     ApplicationArea = All;
     // UsageCategory = Administration;
-    SourceTable = "Carry Forward Grid";
+    SourceTable = "Security Deposit";
     Caption = 'Carry Forward To';
 
     layout
@@ -16,25 +16,79 @@ page 50130 "Carry Forward Grid"
                 {
                     ApplicationArea = All;
                     Visible = false;
-                    ToolTip = 'Specifies the contract associated with the carry forward.';
+                    ToolTip = 'Contract ID';
                 }
-                field("New Contract ID"; Rec."New Contract ID")
+                field("New Contract ID"; Rec."New_Contract ID")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the new contract ID for the carry forward.';
+                    ToolTip = 'New Contract ID';
                 }
-                field("Security Deposit"; Rec."Security Deposit")
+                field("Total Amount"; Rec."Carry Forward Amount")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the security deposit amount for the carry forward.';
-                }
-                field("Total Amount"; Rec."Total Amount")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the total amount for the carry forward.';
+                    ToolTip = 'Total Amount to be carried forward to new contract.';
                 }
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(CarryForward)
+            {
+                ApplicationArea = All;
+                Caption = 'Carry Forward';
+                Image = TransferFunds;
+                ToolTip = 'Carry forward the security deposit amount to new contract.';
+                trigger OnAction()
+                var
+                    securityDepositRec: Record "Security Deposit";
+
+                    securityDepositCard: Page "Security Deposit Card";
+                    userConfirmed: Boolean;
+                begin
+                    userConfirmed := Confirm('Do you want Carry forwad secuirty deposit amount?', false);
+                    if not userConfirmed then
+                        exit;
+                    securityDepositRec.Reset();
+                    securityDepositRec.Init();
+
+                    if PopulateContractDetails(securityDepositRec, contractId) then begin
+                        securityDepositCard.SetRecord(securityDepositRec);
+                        securityDepositCard.Run();
+                    end;
+                end;
+            }
+        }
+    }
+
+
+    var
+        contractId: Integer;
+
+    procedure SetContractId(pContractId: Integer)
+    begin
+        contractId := pContractId;
+    end;
+
+    procedure PopulateContractDetails(var pSecurityDepositRec: Record "Security Deposit"; pContractId: Integer): Boolean
+    var
+        tenancyContractRec: Record "Tenancy Contract";
+    begin
+
+        if tenancyContractRec.Get(pContractId) then begin
+            pSecurityDepositRec."Contract ID" := pContractId;
+            pSecurityDepositRec."Tenant Full Name" := tenancyContractRec."Customer Name";
+            pSecurityDepositRec."Tenant ID" := tenancyContractRec."Tenant ID";
+            pSecurityDepositRec."Property Classification" := tenancyContractRec."Property Classification";
+            pSecurityDepositRec."Contract Start Date" := tenancyContractRec."Contract Start Date";
+            pSecurityDepositRec."Contract End Date" := tenancyContractRec."Contract End Date";
+            pSecurityDepositRec."Security Deposit Amount" := tenancyContractRec."Security Deposit Amount";
+            pSecurityDepositRec."Balance Amount" := tenancyContractRec."Security Balanced Amount";
+            pSecurityDepositRec.Insert(true);
+            exit(true);
+        end;
+    end;
 
 }

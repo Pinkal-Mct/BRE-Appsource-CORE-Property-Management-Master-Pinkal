@@ -111,8 +111,18 @@ page 50940 "FinalSettlemtRefundCard"
 
                     trigger OnValidate()
                     var
+                        finalSettlementRefund: Record FinalSettlementRefund;
+                        Email: Codeunit "FS Refundable Payment Receipt";
+                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
                         RefundPostingMgt: Codeunit "Refund Settlement Posting Mgt.";
-
+                        TempBlob: Codeunit "Temp Blob";
+                        RecRef: RecordRef;
+                        fileName: Text;
+                        uploadResult: Text;
+                        folderName: Text;
+                        inStream: InStream;
+                        ReportID: Integer;
+                        OutStream: OutStream;
                     begin
                         // Check if Receivable Payment Status is 'Received'
                         if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then begin
@@ -126,10 +136,40 @@ page 50940 "FinalSettlemtRefundCard"
                             Rec."Refund Status" := Rec."Refund Status"::Pending;
                             Rec.Modify();  // Save changes to the current record
                         end;
-
                         if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then
-                            RefundPostingMgt.PostRefundJournalLines(Rec);
+                            if Confirm('Do you want to post journal lines?', true) then begin
+                                RefundPostingMgt.PostRefundJournalLines(Rec);
 
+                                Email.SendEmail(Rec);
+
+                                ReportID := 50114;
+                                //  RecRef.Open(DATABASE::"Sales Header"); // Open the table reference
+                                // RecRef.GetTable(Rec);
+                                finalSettlementRefund.Reset();
+                                finalSettlementRefund.SetRange("Tenant ID", Rec."Tenant ID");
+                                finalSettlementRefund.SetRange("Contract ID", Rec."Contract ID"); // Ensure filtering on unique ID
+                                if not finalSettlementRefund.FindFirst() then
+                                    Error('Not avavilable');
+                                RecRef.GetTable(finalSettlementRefund);
+                                RecRef.GetTable(Rec);
+                                TempBlob.CreateOutStream(OutStream);
+                                Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
+                                TempBlob.CreateInStream(inStream);
+
+                                fileName := 'Receipt_' + Format(Rec."Contract ID") + Format(Rec."FC ID") + '.pdf';
+
+                                folderName := 'Payment Receipt';
+                                uploadResult := azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName);
+                                if fileName <> '' then begin
+                                    Rec."Payment Receipt/Proof" := CopyStr(fileName, 1, StrLen(fileName));
+                                    Rec."Pay Receipt/Proof document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                                    Rec.Modify();
+                                    Message('File uploaded successfully: %1', fileName);
+                                end;
+                                Rec.Modify();
+                            end
+                            else
+                                exit;
                     end;
                 }
 
@@ -160,7 +200,21 @@ page 50940 "FinalSettlemtRefundCard"
                     Caption = 'Payment Receipt/Proof';
                     Editable = false;
                     DrillDown = true;
-                    ToolTip = 'Click to view the payment receipt or proof document.';
+                    ToolTip = 'Displays the name of the payment receipt or proof document. Click to view the document.';
+                    trigger OnDrillDown()
+                    var
+                        FileURL: Text;
+                    begin
+
+                        FileURL := Rec."Pay Receipt/Proof document URL";
+
+
+                        if FileURL = '' then
+                            Error('No document is available to view.');
+
+
+                        OpenFileInBrowser1(FileURL);
+                    end;
                 }
                 field("Pay Receipt/Proof document URL"; Rec."Pay Receipt/Proof document URL")
                 {
@@ -178,7 +232,14 @@ page 50940 "FinalSettlemtRefundCard"
             }
         }
     }
-
+    procedure OpenFileInBrowser1(URL: Text)
+    begin
+        // Use the Hyperlink method to open the file in the browser
+        if URL <> '' then
+            Hyperlink(URL)
+        else
+            Error('The file URL is invalid.');
+    end;
 
     trigger OnModifyRecord(): Boolean
     var

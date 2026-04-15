@@ -294,6 +294,7 @@ page 50922 "Payment Schedule Card2"
                     PaymentScheduleGrid.SetRange("Contract ID", Rec."Contract ID");
                     PaymentScheduleGrid.SetRange("Tenant ID", Rec."Tenant ID");
                     PaymentScheduleGrid.SetFilter(Invoiced, '=false');
+                    PaymentScheduleGrid.SetRange(Year, 1);
                     PaymentScheduleGrid.SetRange("Installment No.", 1);
                     if not PaymentScheduleGrid.FindFirst() then begin
                         Message('No uninvoiced first installment records found.');
@@ -319,6 +320,7 @@ page 50922 "Payment Schedule Card2"
                         PaymentscheduleGridRec.SetRange("Contract ID", Rec."Contract ID");
                         PaymentscheduleGridRec.SetRange("Tenant ID", Rec."Tenant ID");
                         PaymentscheduleGridRec.SetFilter(Invoiced, '=false');
+                        PaymentscheduleGridRec.SetRange(Year, 1);
                         PaymentscheduleGridRec.SetRange("Installment No.", 1);
                         if PaymentscheduleGridRec.FindSet() then
                             repeat

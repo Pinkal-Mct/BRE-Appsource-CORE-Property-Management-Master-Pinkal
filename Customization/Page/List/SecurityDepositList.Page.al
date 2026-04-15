@@ -48,6 +48,12 @@ page 50338 "Security Deposit List"
                     ApplicationArea = All;
                     ToolTip = 'Amount of the security deposit.';
                 }
+                field(Status; Rec.Status)
+                {
+                    ApplicationArea = All;
+                    StyleExpr = styleExpr;
+                    ToolTip = 'Status of the security deposit transfer. Open indicates that the transfer is in progress, while Posted indicates that the transfer has been completed.';
+                }
 
                 field("New_Contract ID"; Rec."New_Contract ID")
                 {
@@ -87,6 +93,20 @@ page 50338 "Security Deposit List"
             }
         }
     }
+    trigger OnAfterGetRecord()
+    begin
+        styleExpr := GetStatusStyle();
+    end;
 
+    var
+        styleExpr: Text;
+
+    procedure GetStatusStyle(): Text
+    begin
+        if Rec.Status = Rec.Status::Open then
+            exit('Strong');
+        if Rec.Status = Rec.Status::Posted then
+            exit('Favorable');
+    end;
 
 }
