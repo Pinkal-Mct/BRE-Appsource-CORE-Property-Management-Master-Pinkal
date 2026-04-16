@@ -249,7 +249,7 @@ codeunit 50115 "SetManagementFeeCalculation"
 
     procedure CalculateMgtFeeFromFixedAmount(var MgtFeeCalcLine: Record "Management Fee Calc. Line"; MgtFeeHeader: Record "Management Fee Calc. Header"; BaseAmountHeader: Record "Base Amount Data Header"): Decimal
     var
-        tenancyContract: Record "Tenancy Contract";
+
         baseAmountData: Record "Base Amount Data Unit Wise";
         unitCount: Integer;
         totalAmount: Decimal;

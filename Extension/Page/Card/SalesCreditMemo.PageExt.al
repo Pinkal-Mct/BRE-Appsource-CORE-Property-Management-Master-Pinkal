@@ -10,6 +10,8 @@ pageextension 50508 SalesCreditMemo extends "Sales Credit Memo"
                 {
                     ApplicationArea = All;
                     ToolTip = 'ID of the contract related to this credit memo.';
+                    TableRelation = "Tenancy Contract"."Contract ID";
+
                     trigger OnValidate()
                     var
                         tenancyContract: Record "Tenancy Contract";
@@ -86,12 +88,12 @@ pageextension 50508 SalesCreditMemo extends "Sales Credit Memo"
 
                     trigger OnValidate()
                     var
-                        emailcreditmemo: Codeunit "Send Credit Memo to Tenant";
+                        SalesCreditNotePost: Codeunit "Sales-Post";
                         ShowDialogBox: Codeunit DialogboxRejectionCreditMemo;
                     begin
 
                         if Rec."Approval Status for CreditNote" = Rec."Approval Status for CreditNote"::Approved then
-                            emailcreditmemo.SendMailToTenantForCreditMemo(Rec) // Pass the current record if needed
+                            SalesCreditNotePost.Run(Rec)
                         else
                             if Rec."Approval Status for CreditNote" = Rec."Approval Status for CreditNote"::Rejected then
                                 ShowDialogBox.Dialogboxcreditmemo(Rec);

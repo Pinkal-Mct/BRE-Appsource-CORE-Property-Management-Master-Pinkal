@@ -66,23 +66,8 @@ page 50903 "Final Calculation Card"
 
                     trigger OnValidate()
                     var
-                        FinalCalculation: Record "Final Calculation";
-                        TerminateDate: Date;
-                        DaysCal: Integer;
-                        StartDate: Date;
                     begin
-                        // FinalCalculation.SetRange("FC ID", Rec."FC ID");
-                        // FinalCalculation.SetRange("Contract ID", Rec."Contract ID");
-                        // if not FinalCalculation.IsEmpty() then begin
 
-                        //     StartDate := Rec."Contract Start Date";
-                        //     TerminateDate := Rec."Termination Date";
-                        //     DaysCal := TerminateDate - StartDate + 1;
-                        //     Rec."Actual Contract Tenure" := DaysCal;
-                        //     Rec.Modify();
-
-                        // end;
-                        // CurrPage.Update();
 
                         GetContractTerminationYear();
                         Fetchperdayrent();

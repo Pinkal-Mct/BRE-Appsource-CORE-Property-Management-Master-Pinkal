@@ -171,5 +171,7 @@ permissionset 50101 PagePermissionSet
         codeunit GenerateInvoiceCreditNoteFC = X,
         page "Management Fee Calc. List" = X,
           page "Base Amount Card" = X,
-        page "Base Amount Report Grid" = X;
+        page "Base Amount Report Grid" = X,
+        report "FS Refundable Payment Receipt" = X,
+        page "Base Amount Unit Wise Grid" = X;
 }

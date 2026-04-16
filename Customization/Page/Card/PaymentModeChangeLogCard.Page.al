@@ -43,6 +43,16 @@ page 50935 "PaymentModeChangeLogCard"
                     ToolTip = 'The payment mode for the payment mode change log entry.';
                     Lookup = true;
                 }
+                field("Cheque Number"; Rec."Cheque Number")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
+                field("Deposit Bank Name"; Rec."Deposit Bank Name")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
                 field("Contract ID"; Rec."Contract ID")
                 {
                     ApplicationArea = All;

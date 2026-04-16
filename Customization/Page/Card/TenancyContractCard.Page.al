@@ -1617,8 +1617,8 @@ page 50313 "Tenancy Contract Card"
         TenancyContractSubpage.SetRange("Secondary Item Type", 'Chiller Deposit');
         if TenancyContractSubpage.FindFirst() then begin
 
-            aFinalCalculation."Chiller Deposit" := TenancyContractSubpage.Amount;
-            aFinalCalculation."Remaining Chiller Deposit" := TenancyContractSubpage.Amount;
+            aFinalCalculation."Chiller Deposit" := TenancyContractSubpage."Invoiced and Paid";
+            aFinalCalculation."Remaining Chiller Deposit" := TenancyContractSubpage."Invoiced and Paid";
         end;
 
 
@@ -1627,8 +1627,8 @@ page 50313 "Tenancy Contract Card"
         TenancyContractSubpage.SetRange(ContractID, Rec."Contract ID");
         TenancyContractSubpage.SetRange("Secondary Item Type", 'Other Deposit');
         if TenancyContractSubpage.FindFirst() then begin
-            aFinalCalculation."Other Deposit" := TenancyContractSubpage.Amount;
-            aFinalCalculation."Remaining Other Deposit" := TenancyContractSubpage.Amount;
+            aFinalCalculation."Other Deposit" := TenancyContractSubpage."Invoiced and Paid";
+            aFinalCalculation."Remaining Other Deposit" := TenancyContractSubpage."Invoiced and Paid";
         end;
 
 

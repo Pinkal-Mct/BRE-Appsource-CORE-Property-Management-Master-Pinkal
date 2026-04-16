@@ -8,6 +8,8 @@ codeunit 50112 "Attach Credit Memo Report"
         ConfigRecord: Record AzureConfiguration;
         tenancyContract: Record "Tenancy Contract";
         customer: Record Customer;
+        emailcreditmemo: Codeunit "Send Credit Memo to Tenant";
+
         azureBlobUploader: Codeunit "Azure AD Blob Storage";
         TempBlob: Codeunit "Temp Blob";
         RecRef: RecordRef;
@@ -47,6 +49,7 @@ codeunit 50112 "Attach Credit Memo Report"
         UploadResult := azureBlobUploader.UploadDocumentToBlob(InStream, FileName, folderName);
         SalesCrMemoHeader."Credit Memo Document" := CopyStr(FileName, 1, StrLen(FileName));
         SalesCrMemoHeader."Credit Memo URL" := CopyStr(UploadResult, 1, StrLen(UploadResult));
+        emailcreditmemo.SendMailToTenantForCreditMemo(SalesCrMemoHeader, FileName, InStream);
 
         if tenancyContract.Get(SalesHeader."Contract ID") then begin
             postingGroup := CopyStr(UpperCase(tenancyContract."Property Classification"), 1, 20);

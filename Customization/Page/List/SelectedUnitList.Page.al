@@ -5,7 +5,7 @@ page 50104 "Selected Unit List"
     ApplicationArea = All;
     Caption = 'Selected Unit List';
     UsageCategory = Lists;
-    SourceTableView = where("Unit Status" = const(Selected));
+    SourceTableView = where("Unit Status" = const(Selected), "Item type template" = const("Item Type Template Enum"::"Unit Service"));
     InsertAllowed = false;
     ModifyAllowed = false;
     DeleteAllowed = false;
@@ -64,8 +64,5 @@ page 50104 "Selected Unit List"
             }
         }
     }
-    trigger OnOpenPage();
-    begin
-        Rec.SetRange("Unit Status", Rec."Unit Status"::Selected);
-    end;
+
 }

@@ -81,22 +81,136 @@ page 50928 "Payment Mode Card2"
                 field("Payment Status"; Rec."Payment Status")
                 {
                     ApplicationArea = All;
-                    Editable = IsApproved or not IsReceivedCancelled;
-                    ToolTip = 'The Payment Status indicates the current status of the payment, such as Due, Overdue, or Paid.';
+                    Editable = IsApproved or not IsReceivedCancelled and not (Rec."Payment Mode" = 'Cheque');
+                    ToolTip = 'The Payment Status indicates the status of the payment, such as Scheduled, Due, Received, or Cancelled.';
 
                     trigger OnValidate()
+                    var
+                        PDCTransRec: Record "PDC Transaction";
                     begin
-                        if (Rec."Payment Status" = Rec."Payment Status"::Cancelled) or (Rec."Payment Status" = Rec."Payment Status"::Received) then
+                        if (Rec."Payment Status" = Rec."Payment Status"::Cancelled) or
+                          (Rec."Payment Status" = Rec."Payment Status"::Received) then
                             IsReceivedCancelled := true
                         else
                             IsReceivedCancelled := false;
+
+                        PDCTransRec.SetRange("Contract ID", Rec."Contract ID");
+                        PDCTransRec.SetRange("payment Series", Rec."Payment Series");
+                        if PDCTransRec.FindFirst() then
+                            if PDCTransRec."Cheque Status" <> PDCTransRec."Cheque Status"::Cleared then begin
+                                PDCTransRec."Cheque Status" := Rec."Cheque Status"::Cleared;
+                                PDCTransRec.Modify();
+                            end;
                     end;
                 }
                 field("Cheque Status"; Rec."Cheque Status")
                 {
                     ApplicationArea = All;
-                    Editable = IsApproved and (Rec."Payment Mode" = 'Cheque');
+                    Editable = false;
                     ToolTip = 'The Cheque Status indicates the status of the cheque payment, such as Cheque Received or Cheque Cleared.';
+                    trigger OnValidate()
+                    var
+                        PDCTransRec: Record "PDC Transaction";
+                        CashReceiptJournalCodeunit: Codeunit "Cash Receipt Journal Entry";
+                        selectDate: Page "Select Date";
+                    begin
+                        if Rec."Approval Status" <> Rec."Approval Status"::Approved then
+                            Error('Approval Status must be Approved to update Cheque Status.');
+
+                        PDCTransRec.SetRange("Payment Series", Rec."payment Series");
+                        PDCTransRec.SetRange("Contract ID", Rec."Contract ID");
+                        if PDCTransRec.FindFirst() then begin
+                            if (Rec."Cheque Status" <> Rec."Cheque Status"::" ") AND (Rec."Cheque Status" <> Rec."Cheque Status"::Cleared) then begin
+                                Commit();
+                                selectDate.Caption := 'Select Transaction Date';
+                                if selectDate.RunModal() = Action::OK then begin
+                                    PDCTransRec."Transaction Date" := selectDate.GetDate();
+                                    PDCTransRec.Modify();
+                                end
+                                else
+                                    Error('Transaction Date selection is mandatory to proceed.');
+                            end;
+                            case Rec."Cheque Status" of
+                                Rec."Cheque Status"::"Cheque Received":
+                                    begin
+                                        CashReceiptJournalCodeunit.PDCReceivedTransaction(PDCTransRec);
+                                        PDCTransRec."Cheque Status" := PDCTransRec."Cheque Status"::"Cheque Received";
+                                        PDCTransRec.Modify();
+                                        Rec."Payment Status" := Rec."Payment Status"::Scheduled;
+                                        Rec."Deposit Status" := Rec."Deposit Status"::"-";
+                                        Rec.Modify();
+                                    end;
+                                Rec."Cheque Status"::Cleared:
+                                    begin
+                                        Rec.Validate("Payment Status", Rec."Payment Status"::Received);
+                                        PDCTransRec."Cheque Status" := PDCTransRec."Cheque Status"::Cleared;
+                                        PDCTransRec.Modify();
+                                        Rec.Modify();
+                                    end;
+                                Rec."Cheque Status"::Deposited:
+                                    begin
+                                        CashReceiptJournalCodeunit.PDCDepositedTransaction(PDCTransRec);
+                                        PDCTransRec."Cheque Status" := PDCTransRec."Cheque Status"::Deposited;
+                                        PDCTransRec.Modify();
+                                        Rec."Payment Status" := Rec."Payment Status"::Due;
+                                        Rec."Deposit Status" := Rec."Deposit Status"::Y;
+                                        Rec.Modify();
+                                    end;
+                                Rec."Cheque Status"::"Due cheque not deposited":
+                                    begin
+                                        PDCTransRec."Cheque Status" := PDCTransRec."Cheque Status"::"Due cheque not deposited";
+                                        PDCTransRec.Modify();
+                                        Rec."Payment Status" := Rec."Payment Status"::Scheduled;
+                                        Rec."Deposit Status" := Rec."Deposit Status"::"-";
+                                        Rec.Modify();
+                                    end;
+                                Rec."Cheque Status"::"Replaced & Received":
+                                    begin
+                                        PDCTransRec."Cheque Status" := PDCTransRec."Cheque Status"::"Replaced & Received";
+                                        PDCTransRec."Old Cheque#" := PDCTransRec."Cheque Number";
+                                        PDCTransRec."Cheque Number" := '';
+                                        PDCTransRec.Modify();
+                                        Rec."Payment Status" := Rec."Payment Status"::Scheduled;
+                                        Rec."Deposit Status" := Rec."Deposit Status"::"-";
+                                        Rec."Old Cheque #" := Rec."Cheque Number";
+                                        Rec."Cheque Number" := '-';
+                                        Rec.Modify();
+                                    end;
+                                Rec."Cheque Status"::Retrieved:
+                                    begin
+                                        CashReceiptJournalCodeunit.PDCRetrivedTransaction(PDCTransRec);
+                                        PDCTransRec."Cheque Status" := PDCTransRec."Cheque Status"::Retrieved;
+                                        PDCTransRec."Old Cheque#" := PDCTransRec."Cheque Number";
+                                        PDCTransRec."Cheque Number" := '';
+                                        PDCTransRec.Modify();
+                                        Rec."Payment Status" := Rec."Payment Status"::Cancelled;
+                                        Rec."Deposit Status" := Rec."Deposit Status"::"-";
+                                        Rec."Old Cheque #" := Rec."Cheque Number";
+                                        Rec."Cheque Number" := '-';
+                                        Rec.Modify();
+                                    end;
+                                Rec."Cheque Status"::Returned:
+                                    begin
+                                        CashReceiptJournalCodeunit.PDCReturnedTransaction(PDCTransRec);
+                                        PDCTransRec."Cheque Status" := PDCTransRec."Cheque Status"::Returned;
+                                        PDCTransRec.Modify();
+                                        Rec."Payment Status" := Rec."Payment Status"::Cancelled;
+                                        Rec."Deposit Status" := Rec."Deposit Status"::"-";
+                                        Rec.Modify();
+                                    end;
+                                Rec."Cheque Status"::Cancelled:
+
+                                    if Rec."Cheque Status" = Rec."Cheque Status"::Cancelled then begin
+
+                                        PDCTransRec."Cheque Status" := PDCTransRec."Cheque Status"::Cancelled;
+                                        PDCTransRec.Modify();
+                                    end;
+
+
+                            end;
+                        end else
+                            Error('The related Payment Series record was not found.');
+                    end;
                 }
 
                 field("Invoice #"; Rec."Invoice #")
@@ -450,7 +564,7 @@ page 50928 "Payment Mode Card2"
                 ApplicationArea = All;
                 Caption = 'Insert Data';
                 Image = NewDocument;
-                Visible = IsLeaseManager AND IsApproved;
+                Visible = IsApproved;
 
                 trigger OnAction()
                 var
@@ -483,7 +597,8 @@ page 50928 "Payment Mode Card2"
                     // Insert records into PDC Transaction for Payment Modes with "Cheque"
                     PaymentModeRec.SetRange("Contract ID", Rec."Contract ID"); // Filter by Contract ID
                     PaymentModeRec.SetRange("Tenant Id", Rec."Tenant Id"); // Filter by Tenant ID
-                    PaymentModeRec.SetRange("Payment Mode", 'Cheque'); // Filter by Payment Mode = Cheque
+                    PaymentModeRec.SetRange("Payment Mode", 'Cheque');
+                    PaymentModeRec.SetFilter("Cheque Status", '<>%1', PaymentModeRec."Cheque Status"::Cancelled); // Filter by Payment Mode = Cheque
 
                     if PaymentModeRec.FindSet() then begin
                         repeat
@@ -504,7 +619,7 @@ page 50928 "Payment Mode Card2"
                                 PDCTransRec.Amount := PaymentModeRec."Amount Including VAT";
                                 PDCTransRec."Tenant Id" := PaymentModeRec."Tenant Id";
                                 PDCTransRec."Contract ID" := PaymentModeRec."Contract ID";
-                                PDCTransRec."Cheque Status" := PDCTransRec."Cheque Status"::"Cheque Received";
+                                PDCTransRec."Cheque Status" := PDCTransRec."Cheque Status"::" ";
                                 PDCTransRec."Approval Status" := PDCTransRec."Approval Status"::Pending;
                                 PDCTransRec."View Document URL" := PaymentModeRec."View Document URL";
                                 PDCTransRec."payment Series" := PaymentModeRec."Payment Series";
@@ -528,7 +643,6 @@ page 50928 "Payment Mode Card2"
                 ApplicationArea = All;
                 Caption = 'Update Data';
                 Image = NewDocument;
-                Visible = IsLeaseManager;
                 ToolTip = 'Update Data';
 
                 trigger OnAction()

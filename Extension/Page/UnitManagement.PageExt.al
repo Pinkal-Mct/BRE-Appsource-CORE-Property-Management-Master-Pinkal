@@ -189,6 +189,34 @@ pageextension 50102 UnitManagement extends "O365 Activities"
                     end;
                 }
             }
+            cuegroup("Merged Unit Status")
+            {
+                Caption = 'Merged Unit Status'; // Adjust the caption as needed
+                field("Free Merged units Count"; GetFreeMergedUnitsCount())
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Free merged units';
+                    ToolTip = 'Count of free merged units.';
+
+                    trigger OnDrillDown()
+                    begin
+                        // Drill down to the free merged unit list page
+                        PAGE.RUN(PAGE::"Free Merged Unit list");
+                    end;
+                }
+                field("Occupied Merged units Count"; GetOccupiedMergedUnitsCount())
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Occupied merged units';
+                    ToolTip = 'Count of occupied merged units.';
+
+                    trigger OnDrillDown()
+                    begin
+                        // Drill down to the occupied merged unit list page
+                        PAGE.RUN(PAGE::"Occupied Merged Unit list");
+                    end;
+                }
+            }
             cuegroup("Tenancy Contracts Statistics")
             {
                 field("All Proposals Count"; GetAllProposalsCount())
@@ -401,6 +429,23 @@ pageextension 50102 UnitManagement extends "O365 Activities"
         PropertyRec.SetRange("Usage Type", 'Residential'); // Filter by Vacant status
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
+
+    procedure GetFreeMergedUnitsCount(): Integer;
+    var
+        MergedUnitsRec: Record "Merged Units";
+    begin
+        MergedUnitsRec.SetRange(Status, MergedUnitsRec.Status::Free);
+        exit(MergedUnitsRec.Count());
+    end;
+
+    procedure GetOccupiedMergedUnitsCount(): Integer;
+    var
+        MergedUnitsRec: Record "Merged Units";
+    begin
+        MergedUnitsRec.SetRange(Status, MergedUnitsRec.Status::Occupied);
+        exit(MergedUnitsRec.Count());
+    end;
+
 
     procedure GetCommercialunitsCount(): Integer;
     var

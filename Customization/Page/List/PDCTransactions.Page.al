@@ -67,11 +67,11 @@ page 50508 "PDC Transactions"
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specify the end date for the filter.';
-                    Caption = 'Cheque Date Filter';
+
                     trigger OnValidate()
                     begin
                         if DateToFilter <> 0D then
-                            Rec.SETFILTER("Cheque Date", '<=%1', DateToFilter)
+                            Rec.SETFILTER("Cheque Date", '=%1', DateToFilter)
                         else
                             Rec.RESET();
 
@@ -194,6 +194,17 @@ page 50508 "PDC Transactions"
 
         }
     }
+    trigger OnOpenPage()
+    var
+        PDCTransaction: Record "PDC Transaction";
+    begin
+        PDCTransaction.SetRange("Cheque Status", PDCTransaction."Cheque Status"::Cancelled);
+
+        if PDCTransaction.FindSet() then
+            repeat
+                PDCTransaction.Delete(true);
+            until PDCTransaction.Next() = 0;
+    end;
 
     var
 

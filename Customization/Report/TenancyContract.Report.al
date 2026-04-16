@@ -82,10 +82,10 @@ report 50101 "Tenancy Contract"
             column(Contract_Tenor; "Contract Tenor")
             {
             }
-            column(Rent_Amount; "Rent Amount")
+            column(Rent_Amount; "Annual Rent Amount")
             {
             }
-            column(Annual_Rent_Amount; "Annual Rent Amount")
+            column(Annual_Rent_Amount; "Rent Amount")
             {
             }
             column(Payment_Frequency; "Payment Frequency")
@@ -118,7 +118,7 @@ report 50101 "Tenancy Contract"
             column(Security_Deposit_Amount; "Security Deposit Amount")
             {
             }
-            column(Property_Size; "Property Size")
+            column(Property_Size; Format("Unit Sq. Feet", 0, '<Precision,0:0><Integer>'))
             {
             }
             column(Base_Unit_of_Measure; "Base Unit of Measure")

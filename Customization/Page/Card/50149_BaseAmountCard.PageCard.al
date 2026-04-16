@@ -15,6 +15,7 @@ page 50149 "Base Amount Card"
             {
                 ApplicationArea = All;
                 Caption = 'Base Amount Type';
+                ToolTip = 'Specifies the type of base amount, such as Revenue, Collections, Annual Rent, Per Unit Fee, or Hybrid.';
             }
             part(BaseAmountGrid; "Base Amount Report Grid")
             {

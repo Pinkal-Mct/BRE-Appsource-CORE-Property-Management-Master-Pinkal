@@ -303,7 +303,7 @@ page 50922 "Payment Schedule Card2"
                         userConfirmed := Confirm('Do you want to create the invoice?', false);
                         if not userConfirmed then
                             exit;
-                        newsalesheader := CreateSalesHeader(PaymentScheduleGrid."Contract ID", PaymentScheduleGrid."Tenant ID", PaymentScheduleGrid."Property Classification");
+                        newsalesheader := CreateSalesHeader(PaymentScheduleGrid."Contract ID", PaymentScheduleGrid."Tenant ID", PaymentScheduleGrid."Property Classification", PaymentScheduleGrid."Due Date");
                         customercard.SetRange("No.", newsalesheader."Sell-to Customer No.");
                         if customercard.FindSet() then
                             if newsalesheader."Property Classification" <> '' then begin
@@ -336,7 +336,7 @@ page 50922 "Payment Schedule Card2"
         }
     }
 
-    procedure CreateSalesHeader(pcontractid: Integer; pTenantID: Code[20]; pUnitType: Text[100]): Record "Sales Header"
+    procedure CreateSalesHeader(pcontractid: Integer; pTenantID: Code[20]; pUnitType: Text[50]; pDueDate: Date): Record "Sales Header"
     var
         salesHeader: Record "Sales Header";
         SalesInvoiceHeader: Record "Sales Header";
@@ -351,7 +351,7 @@ page 50922 "Payment Schedule Card2"
         salesHeader."Document Date" := Today;
         salesHeader.Validate("Contract ID", pcontractid);
         salesHeader."Posting Date" := Today;
-        salesHeader."Due Date" := Today;
+        salesHeader."Due Date" := pDueDate;
         salesHeader."Property Classification" := pUnitType;
         salesHeader."Posting No. Series" := salesReciveable."Posted Invoice Nos.";
         salesHeader.Insert();

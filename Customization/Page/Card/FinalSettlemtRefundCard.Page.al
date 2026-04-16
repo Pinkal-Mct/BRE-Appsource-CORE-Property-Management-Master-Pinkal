@@ -66,7 +66,7 @@ page 50940 "FinalSettlemtRefundCard"
             repeater(RefundPaymentDetails)
             {
                 Caption = 'Refund Payment Details';
-                Editable = (Rec."Refund Payment Status" <> Rec."Refund Payment Status"::Paid);
+                //  Editable = (Rec."Refund Payment Status" <> Rec."Refund Payment Status"::Paid);
 
                 field("FC ID"; Rec."FC ID")
                 {
@@ -136,13 +136,31 @@ page 50940 "FinalSettlemtRefundCard"
                             Rec."Refund Status" := Rec."Refund Status"::Pending;
                             Rec.Modify();  // Save changes to the current record
                         end;
-                        if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then
+                        if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then begin
+                            if (Rec."Refund Due Date" = 0D) or (Rec."Refund Due Date" > Today()) then
+                                Error('Refund Date is required. It must be today or in the past to mark payment status as Paid.');
+
+
+
+                            case Rec."Refund Payment mode" of
+                                'Cheque':
+                                    if (Rec."Refund Cheque No." = '-') or (Rec."Deposit Bank" = '') then
+                                        Error('Cheque details are incomplete. Please fill Cheque Number and Deposit Bank');
+
+
+
+                                'Bank Transfer', 'Credit Card', 'Mobile Wallet':
+                                    if Rec."Deposit Bank" = '' then
+                                        Error('Deposit Bank must be entered for %1 payments.', Rec."Refund Payment mode");
+
+                            end;
+
                             if Confirm('Do you want to post journal lines?', true) then begin
                                 RefundPostingMgt.PostRefundJournalLines(Rec);
 
                                 Email.SendEmail(Rec);
 
-                                ReportID := 50114;
+                                ReportID := 50120;
                                 //  RecRef.Open(DATABASE::"Sales Header"); // Open the table reference
                                 // RecRef.GetTable(Rec);
                                 finalSettlementRefund.Reset();
@@ -168,8 +186,11 @@ page 50940 "FinalSettlemtRefundCard"
                                 end;
                                 Rec.Modify();
                             end
-                            else
+                            else begin
+                                Rec."Refund Payment Status" := xRec."Refund Payment Status";
                                 exit;
+                            end;
+                        end;
                     end;
                 }
 
@@ -184,6 +205,7 @@ page 50940 "FinalSettlemtRefundCard"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the cheque number for the refund. This field is editable only if the payment mode is Cheque.';
+                    Editable = Rec."Refund Payment Mode" = 'Cheque';
 
                     trigger OnValidate()
                     var

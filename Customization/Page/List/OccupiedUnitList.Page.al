@@ -5,7 +5,7 @@ page 50105 "Occupied Unit List"
     ApplicationArea = All;
     Caption = 'Occupied Unit List';
     UsageCategory = Lists;
-    SourceTableView = where("Unit Status" = const(Occupied));
+    SourceTableView = where("Unit Status" = const(Occupied), "Item type template" = const("Item Type Template Enum"::"Unit Service"));
     InsertAllowed = false;
     ModifyAllowed = false;
     DeleteAllowed = false;
@@ -65,8 +65,5 @@ page 50105 "Occupied Unit List"
             }
         }
     }
-    trigger OnOpenPage();
-    begin
-        Rec.SetRange("Unit Status", Rec."Unit Status"::Occupied);
-    end;
+
 }

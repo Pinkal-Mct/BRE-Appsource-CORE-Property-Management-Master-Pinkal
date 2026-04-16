@@ -145,10 +145,10 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
                         ShowDialogBox: Codeunit ShowDialogboxRejctionInvoice;
                         SalesPost: Codeunit "Sales-Post";
                     begin
-                        if Rec."Approval Status" = Rec."Approval Status"::Approved then begin
-                            SalesPost.Run(Rec);
-                            CurrPage.Close();
-                        end else
+                        if Rec."Approval Status" = Rec."Approval Status"::Approved then
+                            SalesPost.Run(Rec)
+
+                        else
                             if Rec."Approval Status" = Rec."Approval Status"::Rejected then
                                 ShowDialogBox.DialogboxForRejection(Rec);
                         // Rejectionmail.SendInvoiceToLeaseManager(Rec);

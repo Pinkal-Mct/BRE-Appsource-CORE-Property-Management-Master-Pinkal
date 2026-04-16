@@ -131,10 +131,10 @@ codeunit 50111 "Attach Invoice Report"
             until billingcalculationgrid.Next() = 0;
     end;
 
-    [EventSubscriber(ObjectType::Page, Page::"Sales Invoice", 'OnBeforeOnQueryClosePage', '', false, false)]
-    local procedure OnBeforeOnQueryClosePage(var SalesHeader: Record "Sales Header"; DocumentIsPosted: Boolean; CloseAction: Action; var Result: Boolean; var IsHandled: Boolean)
-    begin
-        IsHandled := true;
-        Result := true;
-    end;
+    // [EventSubscriber(ObjectType::Page, Page::"Sales Invoice", 'OnBeforeOnQueryClosePage', '', false, false)]
+    // local procedure OnBeforeOnQueryClosePage(var SalesHeader: Record "Sales Header"; DocumentIsPosted: Boolean; CloseAction: Action; var Result: Boolean; var IsHandled: Boolean)
+    // begin
+    //     IsHandled := true;
+    //     Result := true;
+    // end;
 }

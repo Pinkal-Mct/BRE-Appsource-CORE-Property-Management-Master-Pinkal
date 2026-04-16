@@ -74,8 +74,8 @@ pageextension 50104 "MyRoleCenterExtension" extends "Business Manager Role Cente
                 {
                     Caption = 'Secondary Items';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Item List";
-                    RunPageView = where("Item type template" = const("Secondary Item"));
+                    RunObject = Page "Secondary Items";
+
                 }
                 action(CategoryList)
                 {

@@ -49,7 +49,6 @@ page 50915 "Payment Schedule"
                     ApplicationArea = All;
                     Caption = 'Yearly No. of Instalment';
                     Editable = true;
-                    ValuesAllowed = 1, 2, 4, 12;
                     ShowMandatory = true;
                     NotBlank = true;
                     ToolTip = 'Enter the Yearly Number of Installments.';
@@ -57,8 +56,12 @@ page 50915 "Payment Schedule"
                     var
                         calculateinstallmentstotal: Codeunit CalculateNumberOfInstallments;
                     begin
+                        if Rec."Yearly No. of Installment" < 1 then
+                            Error('Yearly No. of Installment must be at least 1.');
+
                         calculateinstallmentstotal.CalculateInstallments(Rec);
                     end;
+
                 }
                 field("Tenant ID"; Rec."Tenant ID")
                 {

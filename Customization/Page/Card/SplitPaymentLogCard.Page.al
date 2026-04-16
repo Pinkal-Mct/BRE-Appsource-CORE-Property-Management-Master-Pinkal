@@ -55,7 +55,16 @@ page 50934 "SplitPaymentLogCard"
                     Lookup = true;
                     ToolTip = 'The payment mode for the split payment log entry.';
                 }
-
+                field("Cheque Number"; Rec."Cheque Number")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
+                field("Deposit Bank Name"; Rec."Deposit Bank Name")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
                 field("Due Date"; Rec."Due Date")
                 {
                     ApplicationArea = All;

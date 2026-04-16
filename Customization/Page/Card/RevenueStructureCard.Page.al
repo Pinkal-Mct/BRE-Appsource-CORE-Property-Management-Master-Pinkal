@@ -144,6 +144,7 @@ page 50912 "Revenue Structure Card"
     var
         SubpageRec: Record "RevenueRecognition Othercharge";
         TempSubpageRecs: array[1000] of Record "RevenueRecognition Othercharge" temporary;
+        revenueStructureSubPage: Record "Revenue Structure Subpage";
         TotalDays: Integer;
         CurrentDate: Date;
         MonthDays: Integer;
@@ -152,7 +153,6 @@ page 50912 "Revenue Structure Card"
         AllocatedAmount: Decimal;
         FirstDayNextMonth: Date;
         LastDayOfMonth: Date;
-        MonthlyRate2: Decimal;
         TotalMonths: Integer;
         ActualDaysInMonth: Integer;
         LastEntryNo: Integer;
@@ -161,82 +161,83 @@ page 50912 "Revenue Structure Card"
         RemainingAmount: Decimal;
     begin
         // Clear existing records in the subpage table
-        SubpageRec.DeleteAll();
+        SubpageRec.SetRange("RS Id", Rec."RS ID");
+        if SubpageRec.FindSet() then
+            SubpageRec.DeleteAll();
 
         // Ensure Start and End Dates are valid
         if (Rec."Contract Start Date" = 0D) or (Rec."Contract End Date" = 0D) then
             exit;
 
-        TotalMonths := CalculateTotalMonths(Rec."Contract Start Date", Rec."Contract End Date");
-
-        TotalDays := (Rec."Contract End Date" - Rec."Contract Start Date") + 1;
-        DailyRate := Rec.Amount / TotalDays;
-
-        CurrentDate := Rec."Contract Start Date";
-
-        Method2Total := 0;
         RecCount := 0;
-        MonthlyRate2 := Round(Rec.Amount / TotalMonths);
 
-        // First pass - calculate all monthly values
-        while CurrentDate <= Rec."Contract End Date" do begin
-            RecCount += 1;
+        revenueStructureSubPage.SetRange("Contract ID", Rec."Contract ID");
+        revenueStructureSubPage.SetRange("RS ID", Rec."RS ID");
+        if revenueStructureSubPage.FindSet() then
+            repeat
+                Method2Total := 0;
+                TotalMonths := CalculateTotalMonths(revenueStructureSubPage."Period Start Date", revenueStructureSubPage."Period End Date");
 
-            // Initialize temporary record to store calculations
-            TempSubpageRecs[RecCount].Init();
-            LastEntryNo += 1; // Increment Entry No.
-            TempSubpageRecs[RecCount]."Entry No." := LastEntryNo;
-            TempSubpageRecs[RecCount]."RS Id" := Rec."RS Id";
-            TempSubpageRecs[RecCount]."Contract ID" := Rec."Contract ID";
-            TempSubpageRecs[RecCount]."Tenant Id" := Rec."Tenant Id";
+                TotalDays := revenueStructureSubPage."Number of Days";
+                DailyRate := revenueStructureSubPage."Final Annual Amount" / TotalDays;
 
-            // Format Month-Year
-            TempSubpageRecs[RecCount]."Month" := FORMAT(CurrentDate, 0, '<Month Text>') + '-' + FORMAT(CurrentDate, 0, '<Year>');
+                CurrentDate := revenueStructureSubPage."Period Start Date";
+                MonthlyRate := Round(revenueStructureSubPage."Final Annual Amount" / TotalMonths);
 
-            // Calculate the first day of the next month
-            if DATE2DMY(CurrentDate, 2) = 12 then
-                FirstDayNextMonth := DMY2DATE(1, 1, DATE2DMY(CurrentDate, 3) + 1) // January of next year
-            else
-                FirstDayNextMonth := DMY2DATE(1, DATE2DMY(CurrentDate, 2) + 1, DATE2DMY(CurrentDate, 3)); // Next month of the same year
+                // First pass - calculate all monthly values
+                while CurrentDate <= revenueStructureSubPage."Period End Date" do begin
+                    RecCount += 1;
 
-            LastDayOfMonth := FirstDayNextMonth - 1;
+                    // Initialize temporary record to store calculations
+                    TempSubpageRecs[RecCount].Init();
+                    TempSubpageRecs[RecCount]."RS Id" := Rec."RS Id";
+                    TempSubpageRecs[RecCount]."Contract ID" := Rec."Contract ID";
+                    TempSubpageRecs[RecCount]."Tenant Id" := Rec."Tenant Id";
 
-            if Rec."Contract End Date" < LastDayOfMonth then
-                MonthDays := Rec."Contract End Date" - CurrentDate + 1
-            else
-                MonthDays := LastDayOfMonth - CurrentDate + 1;
+                    // Format Month-Year
+                    TempSubpageRecs[RecCount]."Month" := FORMAT(CurrentDate, 0, '<Month Text>') + '-' + FORMAT(CurrentDate, 0, '<Year>');
 
-            if CurrentDate = Rec."Contract Start Date" then
-                if MonthDays > (Rec."Contract End Date" - CurrentDate + 1) then
-                    MonthDays := (Rec."Contract End Date" - CurrentDate + 1);
+                    // Calculate the first day of the next month
+                    if DATE2DMY(CurrentDate, 2) = 12 then
+                        FirstDayNextMonth := DMY2DATE(1, 1, DATE2DMY(CurrentDate, 3) + 1)// January of next year
+                    else
+                        FirstDayNextMonth := DMY2DATE(1, DATE2DMY(CurrentDate, 2) + 1, DATE2DMY(CurrentDate, 3)); // Next month of the same year
 
 
-            ActualDaysInMonth := GetDaysInMonthss(CurrentDate);
+                    LastDayOfMonth := FirstDayNextMonth - 1;
 
-            AllocatedAmount := MonthDays * DailyRate;
-            TempSubpageRecs[RecCount]."RR - Method 1 (Day)" := AllocatedAmount;
 
-            if MonthDays < ActualDaysInMonth then
-                MonthlyRate := Round(MonthlyRate2 / ActualDaysInMonth * MonthDays)
-            else
-                MonthlyRate := MonthlyRate2;
+                    if revenueStructureSubPage."Period End Date" < LastDayOfMonth then
+                        MonthDays := revenueStructureSubPage."Period End Date" - CurrentDate + 1
+                    else
+                        MonthDays := LastDayOfMonth - CurrentDate + 1;
 
-            Method2Total += MonthlyRate;
 
-            TempSubpageRecs[RecCount]."RR - Method 2 (Month)" := MonthlyRate;
-            TempSubpageRecs[RecCount]."No. of Days" := MonthDays;
+                    if CurrentDate = revenueStructureSubPage."Period Start Date" then
+                        if MonthDays > (revenueStructureSubPage."Period End Date" - CurrentDate + 1) then
+                            MonthDays := (revenueStructureSubPage."Period End Date" - CurrentDate + 1);
 
-            CurrentDate := FirstDayNextMonth;
-        end;
+                    ActualDaysInMonth := GetDaysInMonthss(CurrentDate);
 
-        // Adjust the last month's amount for Method 2 to ensure total matches contract amount
-        RemainingAmount := Rec.Amount - (Method2Total - TempSubpageRecs[RecCount]."RR - Method 2 (Month)");
-        TempSubpageRecs[RecCount]."RR - Method 2 (Month)" := RemainingAmount;
+                    AllocatedAmount := MonthDays * DailyRate;
+                    TempSubpageRecs[RecCount]."RR - Method 1 (Day)" := AllocatedAmount;
+
+
+                    TempSubpageRecs[RecCount]."RR - Method 2 (Month)" := MonthlyRate * (MonthDays / ActualDaysInMonth);
+                    Method2Total += TempSubpageRecs[RecCount]."RR - Method 2 (Month)";
+                    TempSubpageRecs[RecCount]."No. of Days" := MonthDays;
+
+                    CurrentDate := FirstDayNextMonth;
+                end;
+
+                // Adjust the last month's amount for Method 2 to ensure total matches contract amount
+                RemainingAmount := revenueStructureSubPage."Final Annual Amount" - (Method2Total - TempSubpageRecs[RecCount]."RR - Method 2 (Month)");
+                TempSubpageRecs[RecCount]."RR - Method 2 (Month)" := RemainingAmount;
+            until revenueStructureSubPage.Next() = 0;
 
         // Insert all records into the actual table
         for LastEntryNo := 1 to RecCount do begin
             SubpageRec.Init();
-            SubpageRec."Entry No." := TempSubpageRecs[LastEntryNo]."Entry No.";
             SubpageRec."RS Id" := TempSubpageRecs[RecCount]."RS Id";
             SubpageRec."Contract ID" := TempSubpageRecs[LastEntryNo]."Contract ID";
             SubpageRec."Tenant Id" := TempSubpageRecs[LastEntryNo]."Tenant Id";
@@ -245,6 +246,7 @@ page 50912 "Revenue Structure Card"
             SubpageRec."RR - Method 1 (Day)" := TempSubpageRecs[LastEntryNo]."RR - Method 1 (Day)";
             SubpageRec."RR - Method 2 (Month)" := TempSubpageRecs[LastEntryNo]."RR - Method 2 (Month)";
             SubpageRec.Insert();
+            Clear(SubpageRec);
         end;
     end;
     //-----------------Calculate Monthly Revenue-----------------//

@@ -449,13 +449,6 @@ page 50119 "Merge DifferentSqure SubPage"
 
     local procedure RecalculateFinalAnnualAmount()
     var
-        YearStart: Integer;
-        YearEnd: Integer;
-        CurrYear: Integer;
-        YearStartDate: Date;
-        YearEndDate: Date;
-        OverlapStart: Date;
-        OverlapEnd: Date;
         DaysInYear: Integer;
         DaysInPeriod: Integer;
         ProratedAmount: Decimal;
@@ -474,36 +467,18 @@ page 50119 "Merge DifferentSqure SubPage"
         if Rec."MD_End Date" < Rec."MD_Start Date" then
             Error('End Date cannot be earlier than Start Date.');
 
-        YearStart := Date2DMY(Rec."MD_Start Date", 3);
-        YearEnd := Date2DMY(Rec."MD_End Date", 3);
-        // Loop through each calendar year overlapping the period
-        for CurrYear := YearStart to YearEnd do begin
-            YearStartDate := DMY2Date(1, 1, CurrYear);
-            YearEndDate := DMY2Date(31, 12, CurrYear);
+        DaysInPeriod := Rec."MD_End Date" - Rec."MD_Start Date" + 1;
 
-            OverlapStart := Rec."MD_Start Date";
-            if OverlapStart < YearStartDate then
-                OverlapStart := YearStartDate;
+        DaysInYear := 365;
 
-            OverlapEnd := Rec."MD_End Date";
-            if OverlapEnd > YearEndDate then
-                OverlapEnd := YearEndDate;
+        if IsLeapYear(Date2DMY(Rec."MD_Start Date", 3)) then begin
+            LeapDay := DMY2Date(29, 2, Date2DMY(Rec."MD_Start Date", 3));
 
-            if OverlapEnd >= OverlapStart then begin
-                DaysInPeriod := OverlapEnd - OverlapStart + 1;
-                if IsLeapYear(CurrYear) then begin
-                    LeapDay := DMY2Date(29, 2, CurrYear);
-                    if (OverlapStart <= LeapDay) and (OverlapEnd >= LeapDay) then
-                        DaysInYear := 366
-                    else
-                        DaysInYear := 365;
-                end else
-                    DaysInYear := 365;
-
-                ProratedAmount += (Rec."MD_Annual Amount" * DaysInPeriod) / DaysInYear;
-            end;
+            if (LeapDay >= Rec."MD_Start Date") and (LeapDay <= Rec."MD_End Date") then
+                DaysInYear := 366;
         end;
 
+        ProratedAmount := (Rec."MD_Annual Amount" * DaysInPeriod) / DaysInYear;
         // Apply round off on top of the prorated sum
         Rec."MD_Final Annual Amount" := ProratedAmount + Rec."MD_Round off";
 

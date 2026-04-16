@@ -265,26 +265,29 @@ page 50927 "Payment Mode Card"
                 group(label)
                 {
                     ShowCaption = false;
+                    label(note2)
+                    {
+                        Caption = 'Note: Deposit Bank is required only if Payment Mode is Cheque, Bank Transfer, etc.';
+                        ApplicationArea = All;
+                        Style = Strong;
+                    }
+                    field("Deposit Bank"; Rec."C_Deposit_Bank")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Enter the Deposit Bank if Payment Mode is Cheque, Bank Transfer, etc.';
+                    }
+
                     label(note)
                     {
                         Caption = 'Note: Cheque details are required only if Payment Mode is Cheque.';
                         ApplicationArea = All;
                         Style = Strong;
                     }
-                }
-                group("ChequeDetails")
-                {
-                    ShowCaption = false;
 
-                    field("Cheque No"; Rec."C_Cheque_Number")
+                    field("cheque No"; Rec."C_Cheque_Number")
                     {
                         ApplicationArea = All;
-                        ToolTip = 'Specifies the cheque number for the combine payment.';
-                    }
-                    field("Deposit Bank"; Rec."C_Deposit_Bank")
-                    {
-                        ApplicationArea = All;
-                        ToolTip = 'Specifies the deposit bank for the combine payment.';
+                        ToolTip = 'Enter the Cheque Number if Payment Mode is Cheque.';
                     }
                 }
             }
@@ -330,44 +333,77 @@ page 50927 "Payment Mode Card"
             {
                 Visible = IsChangePaymodeVisible;
                 Caption = 'Change Payment Mode';
-                field("Change Payment Series"; Rec."Change Payment Series")
+
+                group(ChangePaymentMode1)
                 {
-                    ApplicationArea = All;
-                    ToolTip = 'Enter the Payment Series for changing payment mode.';
+                    ShowCaption = false;
+                    field("Change Payment Series"; Rec."Change Payment Series")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Enter the Payment Series for changing payment mode.';
 
-                    // Trasfer from Table Start
-                    trigger OnLookup(var Text: Text): Boolean
-                    var
-                        PaymentMode2Rec: Record "Payment Mode2";
-                        Selection: Page "Payment Mode2 List";
-                    begin
-                        // Ensure Contract ID is selected first
-                        if Rec."Contract ID" = 0 then
-                            Error('Please select a Contract ID first');
+                        // Trasfer from Table Start
+                        trigger OnLookup(var Text: Text): Boolean
+                        var
+                            PaymentMode2Rec: Record "Payment Mode2";
+                            Selection: Page "Payment Mode2 List";
+                        begin
+                            // Ensure Contract ID is selected first
+                            if Rec."Contract ID" = 0 then
+                                Error('Please select a Contract ID first');
 
-                        // Filter Payment Mode2 records based on Contract ID
-                        PaymentMode2Rec.Reset();
-                        PaymentMode2Rec.SetRange("Contract ID", Rec."Contract ID");
-                        PaymentMode2Rec.SetFilter("Payment Status", '<> %1 & <> %2', PaymentMode2Rec."Payment Status"::Cancelled, PaymentMode2Rec."Payment Status"::Received);
+                            // Filter Payment Mode2 records based on Contract ID
+                            PaymentMode2Rec.Reset();
+                            PaymentMode2Rec.SetRange("Contract ID", Rec."Contract ID");
+                            PaymentMode2Rec.SetFilter("Payment Status", '<> %1 & <> %2', PaymentMode2Rec."Payment Status"::Cancelled, PaymentMode2Rec."Payment Status"::Received);
 
-                        Selection.LookupMode(true);
-                        Selection.SetTableView(PaymentMode2Rec);
+                            Selection.LookupMode(true);
+                            Selection.SetTableView(PaymentMode2Rec);
 
-                        if Selection.RunModal() = ACTION::LookupOK then begin
-                            Selection.SetSelectionFilter(PaymentMode2Rec);
+                            if Selection.RunModal() = ACTION::LookupOK then begin
+                                Selection.SetSelectionFilter(PaymentMode2Rec);
 
-                            if PaymentMode2Rec.FindFirst() then
-                                Rec."Change Payment Series" := PaymentMode2Rec."Payment Series"; // Select only one value
+                                if PaymentMode2Rec.FindFirst() then
+                                    Rec."Change Payment Series" := PaymentMode2Rec."Payment Series"; // Select only one value
 
+                            end;
                         end;
-                    end;
-                    // Trasfer from Table End
-                }
+                        // Trasfer from Table End
+                    }
 
-                field("Change Payment Mode"; Rec."Change Payment Mode")
+                    field("Change Payment Mode"; Rec."Change Payment Mode")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Enter the Payment Mode for changing payment mode.';
+                    }
+                }
+                group(ChangePaymentMode2)
                 {
-                    ApplicationArea = All;
-                    ToolTip = 'Enter the Payment Mode for changing payment mode.';
+                    ShowCaption = false;
+                    label(CPnote1)
+                    {
+                        Caption = 'Note: Deposit Bank is required only if Payment Mode is Cheque, Bank Transfer, etc.';
+                        ApplicationArea = All;
+                        Style = Strong;
+                    }
+                    field(CP_Deposit_Bank; Rec.CP_Deposit_Bank)
+                    {
+                        Caption = 'Deposit Bank Name';
+                        ApplicationArea = All;
+                        ToolTip = 'Enter the Deposit Bank if Payment Mode is Cheque, Bank Transfer, etc.';
+                    }
+                    label(CPnote2)
+                    {
+                        Caption = 'Note: Cheque No. is only required if Payment Mode is Cheque';
+                        ApplicationArea = All;
+                        Style = Strong;
+                    }
+                    field(CP_Cheque_Number; Rec.CP_Cheque_Number)
+                    {
+                        Caption = 'Cheque No.';
+                        ApplicationArea = All;
+                        ToolTip = 'Enter the Cheque Number if Payment Mode is Cheque.';
+                    }
                 }
             }
         }
@@ -451,7 +487,7 @@ page 50927 "Payment Mode Card"
 
                 trigger OnAction()
                 var
-
+                    Paymentmode2: Record "Payment Mode2";
                     Approvalpayment: Record "Approval Payment Request";
                     SplitPayChange: Record "Split Payment Change";
                     MaxID: Integer;
@@ -511,11 +547,18 @@ page 50927 "Payment Mode Card"
                                         Approvalpayment."Payment Series" := SplitPayChange."Split Payment Series";
                                         Approvalpayment."Due Date" := SplitPayChange."Split Due Date";
                                         Approvalpayment."Payment Mode" := SplitPayChange."Split Payment Mode";
+                                        Approvalpayment.C_Cheque_Number := SplitPayChange."Cheque Number";
+
+                                        Approvalpayment.C_Deposit_Bank := SplitPayChange."Deposit Bank Name";
+
                                         Approvalpayment."Amount" := SplitPayChange."Split Amount";
                                         Approvalpayment."VAT Amount" := SplitPayChange."Split VAT Amount";
                                         Approvalpayment."Change Amount" := SplitPayChange."Split Amount Including VAT";
                                         Approvalpayment."Payment mode ID" := Rec."Contract ID";
-
+                                        Paymentmode2.SetRange("Contract ID", SplitPayChange."Contract ID");
+                                        Paymentmode2.SetRange("Payment Series", SplitPayChange."Split Payment Series");
+                                        if Paymentmode2.FindFirst() then
+                                            Approvalpayment."Old Cheque" := Paymentmode2."Cheque Number";
                                         Approvalpayment.Insert(); // Insert inside the loop
                                     end;
                                 until SplitPayChange.Next() = 0;
@@ -534,6 +577,9 @@ page 50927 "Payment Mode Card"
                                 Approvalpayment."Manual/Auto Status" := Format(Status);
                                 Approvalpayment."Payment Series" := Rec."Change Payment Series";
                                 Approvalpayment."Payment Mode" := Rec."Change Payment Mode";
+                                Approvalpayment.C_Cheque_Number := Rec.CP_Cheque_Number;
+                                Approvalpayment.C_Deposit_Bank := Rec.CP_Deposit_Bank;
+
                                 Approvalpayment."Payment mode ID" := Rec."Contract ID";
                                 Approvalpayment.Insert();
                             end;
@@ -548,7 +594,8 @@ page 50927 "Payment Mode Card"
                     Clear(SplitPayChange."Secondary Item Type");
                     Clear(SplitPayChange."Split VAT Amount");
                     Clear(SplitPayChange."Split Amount Including VAT");
-
+                    Clear(SplitPayChange."Cheque Number");
+                    Clear(SplitPayChange."Deposit Bank Name");
                     Clear(Rec."Combine Payment Series");
                     Clear(Rec."Combine Due Date");
                     Clear(Rec."Combine Payment Mode");
@@ -560,7 +607,8 @@ page 50927 "Payment Mode Card"
 
                     Clear(Rec."Change Payment Series");
                     Clear(Rec."Change Payment Mode");
-
+                    Clear(Rec.CP_Cheque_Number);
+                    Clear(Rec.CP_Deposit_Bank);
                     // Modify and update the record
                     Rec.Modify();
                 end;
@@ -669,6 +717,9 @@ page 50927 "Payment Mode Card"
                 SplitPaymentLogsub."New VAT Amount" := ApprovalPaymentRequest."Vat Amount";
                 SplitPaymentLogsub."Change Amount Including VAT" := ApprovalPaymentRequest."Change Amount";
                 SplitPaymentLogsub."Payment mode" := ApprovalPaymentRequest."Payment mode";
+                SplitPaymentLogsub."Cheque Number" := ApprovalPaymentRequest.C_Cheque_Number;
+                SplitPaymentLogsub."Deposit Bank Name" := ApprovalPaymentRequest.C_Deposit_Bank;
+
                 SplitPaymentLogsub."Due Date" := ApprovalPaymentRequest."Due Date";
                 SplitPaymentLogsub.Items := ApprovalPaymentRequest.Items;
                 SplitPaymentLogsub.Insert();
@@ -703,6 +754,9 @@ page 50927 "Payment Mode Card"
                 PaymentModeLogSub."Request Type" := ApprovalPaymentRequest."Request Type";
                 PaymentModeLogSub."Payment Series" := ApprovalPaymentRequest."Payment Series";
                 PaymentModeLogSub."Payment mode" := ApprovalPaymentRequest."Payment mode";
+                PaymentModeLogSub."Cheque Number" := ApprovalPaymentRequest.C_Cheque_Number;
+                PaymentModeLogSub."Deposit Bank Name" := ApprovalPaymentRequest.C_Deposit_Bank;
+
                 PaymentModeLogSub.Insert();
                 Clear(PaymentModeLogSub);
             until ApprovalPaymentRequest.Next() = 0;

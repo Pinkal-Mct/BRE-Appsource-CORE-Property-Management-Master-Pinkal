@@ -386,17 +386,10 @@ page 50329 "Single Unit Rent SubPage"
 
     local procedure RecalculateFinalAnnualAmount()
     var
-        YearStart: Integer;
-        YearEnd: Integer;
-        CurrYear: Integer;
-        YearStartDate: Date;
-        YearEndDate: Date;
-        OverlapStart: Date;
-        OverlapEnd: Date;
         DaysInYear: Integer;
         DaysInPeriod: Integer;
         ProratedAmount: Decimal;
-        LeapDay: Date;
+        LeapDay: Date; // date of Feb 29 for the current year (if applicable)
     begin
         ProratedAmount := 0;
 
@@ -411,37 +404,18 @@ page 50329 "Single Unit Rent SubPage"
         if Rec."End Date" < Rec."Start Date" then
             Error('End Date cannot be earlier than Start Date.');
 
-        YearStart := Date2DMY(Rec."Start Date", 3);
-        YearEnd := Date2DMY(Rec."End Date", 3);
+        DaysInPeriod := Rec."End Date" - Rec."Start Date" + 1;
 
-        // Loop through each calendar year overlapping the period
-        for CurrYear := YearStart to YearEnd do begin
-            YearStartDate := DMY2Date(1, 1, CurrYear);
-            YearEndDate := DMY2Date(31, 12, CurrYear);
+        DaysInYear := 365;
 
-            OverlapStart := Rec."Start Date";
-            if OverlapStart < YearStartDate then
-                OverlapStart := YearStartDate;
+        if IsLeapYear(Date2DMY(Rec."Start Date", 3)) then begin
+            LeapDay := DMY2Date(29, 2, Date2DMY(Rec."Start Date", 3));
 
-            OverlapEnd := Rec."End Date";
-            if OverlapEnd > YearEndDate then
-                OverlapEnd := YearEndDate;
-
-            if OverlapEnd >= OverlapStart then begin
-                DaysInPeriod := OverlapEnd - OverlapStart + 1;
-                // Use 366 only if the overlap for this calendar year actually includes Feb 29.
-                if IsLeapYear(CurrYear) then begin
-                    LeapDay := DMY2Date(29, 2, CurrYear);
-                    if (OverlapStart <= LeapDay) and (OverlapEnd >= LeapDay) then
-                        DaysInYear := 366
-                    else
-                        DaysInYear := 365;
-                end else
-                    DaysInYear := 365;
-
-                ProratedAmount += (Rec."Annual Amount" * DaysInPeriod) / DaysInYear;
-            end;
+            if (LeapDay >= Rec."Start Date") and (LeapDay <= Rec."End Date") then
+                DaysInYear := 366;
         end;
+
+        ProratedAmount := (Rec."Annual Amount" * DaysInPeriod) / DaysInYear;
 
         // Apply round off on top of the prorated sum
         Rec."Final Annual Amount" := ProratedAmount + Rec."Round off";

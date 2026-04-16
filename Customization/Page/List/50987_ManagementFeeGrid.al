@@ -42,6 +42,7 @@ page 50987 "Management Fee Grid ListPart"
                 {
                     ApplicationArea = All;
                     Caption = 'Owner ID';
+                    ToolTip = 'Specifies the unique identifier for the owner of the property.';
                 }
 
                 field("Company/Owner Name"; Rec."Company/Owner Name")
@@ -87,6 +88,7 @@ page 50987 "Management Fee Grid ListPart"
                         Amounteditablevalidation := AccessibleAmountfield();
                     end;
                 }
+
 
                 field("Calculation Sub-Type"; Rec."Calculation Sub-Type")
                 {
@@ -161,6 +163,7 @@ page 50987 "Management Fee Grid ListPart"
                     ApplicationArea = All;
                     Caption = 'Contract Document';
                     Editable = false;
+                    ToolTip = 'Upload the management fee contract document. Click to upload or view the document.';
                     DrillDown = true;
 
                     trigger OnDrillDown()
@@ -187,6 +190,7 @@ page 50987 "Management Fee Grid ListPart"
                     Caption = 'View Document';
                     Editable = false;
                     DrillDown = true;
+                    ToolTip = 'Click to view the uploaded management fee contract document.';
                     trigger OnDrillDown()
                     var
                         FileURL: Text;
@@ -207,6 +211,7 @@ page 50987 "Management Fee Grid ListPart"
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Displays the validity period of the management fee agreement, calculated from the Valid From and Valid To dates.';
                 }
             }
 

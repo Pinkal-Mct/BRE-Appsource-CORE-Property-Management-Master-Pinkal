@@ -19,13 +19,12 @@ codeunit 50116 GenerateInvoiceCreditNoteFC
                 if BillingCalcGrid.FindFirst() then begin
                     newsalesheader := CreateSalesHeader(BillingCalcGrid."Contract ID", BillingCalcGrid."Tenant ID", BillingCalcGrid."Property Classification");
                     customercard.SetRange("No.", newsalesheader."Sell-to Customer No.");
-                    if customercard.FindSet() then begin
+                    if customercard.FindSet() then
                         if newsalesheader."Property Classification" <> '' then begin
                             customercard.Validate("Gen. Bus. Posting Group", newsalesheader."Property Classification");
                             customercard.Validate("Customer Posting Group", newsalesheader."Property Classification");
                             customercard.Modify();
-                        end
-                    end;
+                        end;
                     if newsalesheader."Property Classification" <> '' then begin
                         newsalesheader.Validate("Gen. Bus. Posting Group", newsalesheader."Property Classification");
                         newsalesheader.Validate("Customer Posting Group", newsalesheader."Property Classification");
@@ -72,10 +71,10 @@ codeunit 50116 GenerateInvoiceCreditNoteFC
         SalesInvoiceHeader: Record "Sales Header";
         salesReciveable: Record "Sales & Receivables Setup";
         noseries: Codeunit "No. Series";
-        customercard: Record Customer;
+
     begin
         salesHeader.Init();
-        if salesReciveable.FindSet() then
+        if not salesReciveable.IsEmpty() then
             salesHeader."No." := noseries.GetNextNo(salesReciveable."Invoice Nos.", Today, true);
         salesHeader."Document Type" := SalesInvoiceHeader."Document Type"::Invoice;
         salesHeader.Validate("Sell-to Customer No.", pTenantID);
@@ -103,22 +102,21 @@ codeunit 50116 GenerateInvoiceCreditNoteFC
         newSaleslines.SetRange("Document No.", salesheader1."No.");
         newSaleslines.SetRange("Document Type", Enum::"Sales Document Type"::Invoice);
         newSaleslines.SetCurrentKey("Line No.");
-        if newSaleslines.FindLast() then begin
-            saleline."Line No." := newSaleslines."Line No." + 1000;
-        end
-        else begin
+        if newSaleslines.FindLast() then
+            saleline."Line No." := newSaleslines."Line No." + 1000
+
+        else
             saleline."Line No." := 1000;
-        end;
+
         saleline."Document No." := salesheader1."No.";
         saleline."Contract ID" := salesheader1."Contract ID";
         saleline.Type := saleline.Type::Item;
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
         item.SetRange(Description, Billingcalculation.RevenueDescription);
         item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
-        if item.FindSet() then begin
-
+        if not item.IsEmpty() then
             saleline.Validate("No.", item."No.");
-        end;
+
         saleline.Validate("Quantity (Base)", 1);
         saleline.Validate(Quantity, 1);
         RoundDecimal := Abs(Round(Billingcalculation.DifferenceAmount, 0.01));
@@ -141,22 +139,20 @@ codeunit 50116 GenerateInvoiceCreditNoteFC
         newSaleslines.SetRange("Document No.", salesheader1."No.");
         newSaleslines.SetRange("Document Type", Enum::"Sales Document Type"::Invoice);
         newSaleslines.SetCurrentKey("Line No.");
-        if newSaleslines.FindLast() then begin
-            saleline."Line No." := newSaleslines."Line No." + 1000;
-        end
-        else begin
+        if newSaleslines.FindLast() then
+            saleline."Line No." := newSaleslines."Line No." + 1000
+        else
             saleline."Line No." := 1000;
-        end;
+
         saleline."Document No." := salesheader1."No.";
         saleline."Contract ID" := salesheader1."Contract ID";
         saleline.Type := saleline.Type::Item;
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
         item.SetRange(Description, TerminationchargesGrid."Secondary Item Type");
         item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
-        if item.FindSet() then begin
-
+        if not item.IsEmpty() then
             saleline.Validate("No.", item."No.");
-        end;
+
         saleline.Validate("Quantity (Base)", 1);
         saleline.Validate(Quantity, 1);
         RoundDecimal := Abs(Round(TerminationchargesGrid.Amount, 0.01));
@@ -169,25 +165,17 @@ codeunit 50116 GenerateInvoiceCreditNoteFC
 
     procedure GenerateFinalAdjtContractReductionCreditNote(var pInvoiceCreditNoteSummaryRec: Record InvoiceCreditNoteSummary)
     var
-        PaymentScheduleRec: Record "Payment Schedule2";
+
         InvoiceCreditNoteSummaryRec: Record InvoiceCreditNoteSummary;
         InvoiceCreditNoteSummaryRec1: Record InvoiceCreditNoteSummary;
-        salesHeader: Record "Sales Header";
-        salesHeader1: Record "Sales Header";
-        SalesLine: Record "Sales Line";
+
         CustomerRec: Record Customer;
-        pendingReceivableRec: Record "Pending Receviable Grid";
+
         finalAdjContractRec: Record FinancialAdjContractReduction;
         BillingCalcGrid: Record "Final Billing Calculation Grid";
         BillingCalcGridRec: Record "Final Billing Calculation Grid";
         NewSalesHeader: Record "Sales Header";
-        pendingReceviablePage: Page "Pending Recevieable Grid";
-        item: Record Item;
-        LineNo: Integer;
-        CreditMemoNo: Code[20];
-        InvoiceNo: Code[20];
-        itemCreditMemoCreated: Boolean;
-        glCreditMemoCreated: Boolean;
+
     begin
         InvoiceCreditNoteSummaryRec.SetRange("Contract No.", pInvoiceCreditNoteSummaryRec."Contract No.");
         InvoiceCreditNoteSummaryRec.SetRange("Credit Noted", false);
@@ -199,13 +187,13 @@ codeunit 50116 GenerateInvoiceCreditNoteFC
                 NewSalesHeader := CreateCreditMemoSalesHeader(BillingCalcGrid."Contract ID", BillingCalcGrid."Tenant ID", BillingCalcGrid."Property Classification");
 
                 CustomerRec.SetRange("No.", NewSalesHeader."Sell-to Customer No.");
-                if CustomerRec.FindSet() then begin
+                if CustomerRec.FindSet() then
                     if NewSalesHeader."Property Classification" <> '' then begin
                         CustomerRec.Validate("Gen. Bus. Posting Group", NewSalesHeader."Property Classification");
                         CustomerRec.Validate("Customer Posting Group", NewSalesHeader."Property Classification");
                         CustomerRec.Modify();
-                    end
-                end;
+                    end;
+
                 if NewSalesHeader."Property Classification" <> '' then begin
 
                     NewSalesHeader.Validate("Gen. Bus. Posting Group", NewSalesHeader."Property Classification");
@@ -260,14 +248,11 @@ codeunit 50116 GenerateInvoiceCreditNoteFC
     procedure CreateCreditMemoSalesHeader(pContractID: Integer; pTenantID: Code[50]; pUnitType: Text[50]): Record "Sales Header";
     var
         SalesHeader: Record "Sales Header";
-        SalesLine: Record "Sales Line";
-        Customer: Record Customer;
         salesReciveable: Record "Sales & Receivables Setup";
         noseries: Codeunit "No. Series";
-        contractrec: Record "Tenancy Contract";
     begin
         salesHeader.Init();
-        if salesReciveable.FindSet() then
+        if not salesReciveable.IsEmpty() then
             salesHeader."No." := noseries.GetNextNo(salesReciveable."Credit Memo Nos.", Today, true);
         salesHeader."Document Type" := SalesHeader."Document Type"::"Credit Memo";
 
@@ -290,9 +275,6 @@ codeunit 50116 GenerateInvoiceCreditNoteFC
         saleline: Record "Sales Line";
         newSaleslines: Record "Sales Line";
         item: Record Item;
-        COASetup: Record "COA Setup Line";
-        CreditNoteRec: Record "Credit Note";
-        GenPostingSetup: Record "General Posting Setup";
         RoundAmount: Decimal;
     begin
 
@@ -303,22 +285,19 @@ codeunit 50116 GenerateInvoiceCreditNoteFC
         newSaleslines.SetRange("Document Type", Enum::"Sales Document Type"::"Credit Memo");
         //newSaleslines.SetRange("Contract ID", salesheader1."Contract ID");
         newSaleslines.SetCurrentKey("Line No.");
-        if newSaleslines.FindLast() then begin
-            saleline."Line No." := newSaleslines."Line No." + 1000;
-        end
-        else begin
+        if newSaleslines.FindLast() then
+            saleline."Line No." := newSaleslines."Line No." + 1000
+        else
             saleline."Line No." := 1000;
-        end;
+
         saleline."Document No." := salesheader1."No.";
         // saleline."Contract ID" := salesheader1."Contract ID";
         saleline.Type := saleline.Type::Item;
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
         item.SetRange(Description, BillingCalcSub.RevenueDescription);
         item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
-        if item.FindSet() then begin
-
+        if not item.IsEmpty() then
             saleline.Validate("No.", item."No.");
-        end;
         saleline.Validate("Quantity (Base)", 1);
         saleline.Validate(Quantity, 1);
         RoundAmount := Abs(Round(BillingCalcSub.DifferenceAmount, 0.01));
@@ -333,9 +312,7 @@ codeunit 50116 GenerateInvoiceCreditNoteFC
         saleline: Record "Sales Line";
         newSaleslines: Record "Sales Line";
         item: Record Item;
-        COASetup: Record "COA Setup Line";
-        CreditNoteRec: Record "Credit Note";
-        GenPostingSetup: Record "General Posting Setup";
+
         RoundAmount: Decimal;
     begin
 
@@ -346,21 +323,19 @@ codeunit 50116 GenerateInvoiceCreditNoteFC
         newSaleslines.SetRange("Document Type", Enum::"Sales Document Type"::"Credit Memo");
         //newSaleslines.SetRange("Contract ID", salesheader1."Contract ID");
         newSaleslines.SetCurrentKey("Line No.");
-        if newSaleslines.FindLast() then begin
-            saleline."Line No." := newSaleslines."Line No." + 1000;
-        end
-        else begin
+        if newSaleslines.FindLast() then
+            saleline."Line No." := newSaleslines."Line No." + 1000
+
+        else
             saleline."Line No." := 1000;
-        end;
         saleline."Document No." := salesheader1."No.";
         saleline.Type := saleline.Type::Item;
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
         item.SetRange(Description, financialAdjustReductionRec."Revenue Description");
         item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
-        if item.FindSet() then begin
-
+        if not item.IsEmpty() then
             saleline.Validate("No.", item."No.");
-        end;
+
         saleline.Validate("Quantity (Base)", 1);
         saleline.Validate(Quantity, 1);
         RoundAmount := Abs(Round(financialAdjustReductionRec.Amount, 0.01));

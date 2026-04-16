@@ -5,7 +5,7 @@ page 50103 "Free Unit List"
     ApplicationArea = All;
     Caption = 'Free Unit List';
     UsageCategory = Lists;
-    SourceTableView = where("Unit Status" = const(Free));
+    SourceTableView = where("Unit Status" = const(Free), "Item type template" = const("Item Type Template Enum"::"Unit Service"));
     InsertAllowed = false;
     ModifyAllowed = false;
     DeleteAllowed = false;
@@ -64,8 +64,5 @@ page 50103 "Free Unit List"
             }
         }
     }
-    trigger OnOpenPage();
-    begin
-        Rec.SetRange("Unit Status", Rec."Unit Status"::Free);
-    end;
+
 }

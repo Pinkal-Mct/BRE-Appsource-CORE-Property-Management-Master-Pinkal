@@ -250,6 +250,15 @@ page 50315 "Lease Proposal Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Select the start date of the lease. This field is mandatory.';
+
+                    trigger OnValidate()
+                    var
+                        revenueItemSub: Record "Revenue Item Subpage";
+                    begin
+                        revenueItemSub.SetRange(ProposalID, Rec."Proposal ID");
+                        if revenueItemSub.FindSet() then
+                            revenueItemSub.ModifyAll("Start Date", Rec."Lease Start Date");
+                    end;
                 }
                 field("Lease End Date"; rec."Lease End Date")
                 {
@@ -258,12 +267,17 @@ page 50315 "Lease Proposal Card"
 
                     trigger OnValidate()
                     var
+                        revenueItemSub: Record "Revenue Item Subpage";
                         docAttach: Page "Revenue Item Subpage Card";
                     begin
-                        EvaluateLeaseDuration();
+                        CalculateLeaseDuration1();
                         docAttach.SetStartEndDate(Rec."Lease Start Date", Rec."Lease End Date", Rec."Unit Name", Rec."Property Name", Rec."Unit Size", Rec."Tenant Full Name");
                         Rec."Payment Frequency" := Rec."Payment Frequency"::" ";
                         Rec."No of Installments" := 0;
+
+                        revenueItemSub.SetRange(ProposalID, Rec."Proposal ID");
+                        if revenueItemSub.FindSet() then
+                            revenueItemSub.ModifyAll("End Date", Rec."Lease End Date");
                     end;
                 }
                 field("Lease Duration"; rec."Lease Duration")
@@ -909,6 +923,24 @@ page 50315 "Lease Proposal Card"
         UpdateUnitEnableState();
     end;
 
+    local procedure GetTotalMonths(Duration: Text): Integer
+    var
+        Years: Integer;
+        YearPos: Integer;
+        YearStr: Text;
+    begin
+        YearPos := StrPos(Duration, 'year');
+
+        if YearPos > 0 then begin
+            YearStr := CopyStr(Duration, 1, YearPos - 1);
+            Evaluate(Years, DelChr(YearStr, '<>')); // Remove spaces
+        end;
+
+        // Convert years to months
+        exit(Years * 12);
+    end;
+
+
     trigger OnModifyRecord(): Boolean
     begin
         CurrPage."Revenue".Page.SetProposalId(Rec."Proposal ID");
@@ -991,7 +1023,7 @@ page 50315 "Lease Proposal Card"
         ShowLegalReasonFields4 := (Rec."Praposal Type Selected" = Rec."Praposal Type Selected"::"Merge Unit");
     end;
 
-    procedure EvaluateLeaseDuration()
+    procedure CalculateLeaseDuration1()
     var
         FetchMonth: Codeunit "Fetch Month";
         LeaseStartDate: Date;

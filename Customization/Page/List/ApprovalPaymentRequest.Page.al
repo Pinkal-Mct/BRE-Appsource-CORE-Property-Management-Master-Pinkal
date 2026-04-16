@@ -267,6 +267,10 @@ page 50710 "Approval Payment Request"
         PaymentSchedule: Record "Payment Schedule2";
         ApprovalRec: Record "Approval Payment Request";
         PaymentModeRec: Record "Payment Mode2";
+        pdcTransRec: Record "PDC Transaction";
+        PDCCashreceiptEntry: Codeunit "Cash Receipt Journal Entry";
+        selectDate: Page "Select Date";
+        TransactionDate: Date;
         itemList: List of [Text];
         NewPaymentCode: Text;
         PaymentSeries: Text[200];
@@ -274,6 +278,8 @@ page 50710 "Approval Payment Request"
         SequenceNo, increment : Integer;
         ItemSeries: Text;
         paymentSeriesNos: List of [Text];
+        oldChequeNumber: Text[100];
+
     begin
         ApprovalRec.Reset();
         ApprovalRec.SetRange("Contract ID", Rec."Contract ID");
@@ -325,8 +331,28 @@ page 50710 "Approval Payment Request"
 
                                 if PaymentModeTable.FindSet() then begin
                                     // repeat
-                                    PaymentModeTable."Payment Status" := PaymentModeTable."Payment Status"::Cancelled;
-                                    PaymentModeTable.Modify(true);
+                                    if PaymentModeTable."Payment Status" <> PaymentModeTable."Payment Status"::Cancelled then begin
+                                        PaymentModeTable."Payment Status" := PaymentModeTable."Payment Status"::Cancelled;
+                                        PaymentModeTable."Cheque Number" := '-';
+                                        if PaymentModeTable."Payment Mode" = 'Cheque' then begin
+                                            pdcTransRec.SetRange("Contract ID", PaymentModeTable."Contract ID");
+                                            pdcTransRec.SetRange("payment Series", PaymentModeTable."Payment Series");
+                                            pdcTransRec.SetFilter("Cheque Status", '%1', PaymentModeTable."Cheque Status"::"Cheque Received");
+                                            if pdcTransRec.FindFirst() then begin
+                                                Commit();
+                                                selectDate.Caption := 'Select Transaction Date';
+                                                if selectDate.RunModal() = Action::OK then
+                                                    TransactionDate := selectDate.GetDate()
+                                                else
+                                                    Error('Transaction Date selection is mandatory to proceed.');
+                                                PDCCashreceiptEntry.ReversePDCReceivedTransaction(pdcTransRec, 'Payment Split', TransactionDate);
+                                            end;
+                                            PaymentModeTable.Validate("Cheque Status", PaymentModeTable."Cheque Status"::Cancelled);
+                                        end;
+                                        PaymentModeTable.Modify(true);
+                                        // Message('Cancelled Payment Series: %1', PaymentModeTable."Payment Series");
+                                        // until PaymentModeTable.Next() = 0;
+                                    end;
                                     Clear(PaymentModeTable);
                                 end;
                             end;
@@ -345,8 +371,12 @@ page 50710 "Approval Payment Request"
                             PaymentModeTable."VAT Amount" := PaymentChangeReqTable."Vat Amount";
                             PaymentModeTable."Due Date" := PaymentChangeReqTable."Due Date";
                             PaymentModeTable."Payment Mode" := CopyStr(PaymentChangeReqTable."Payment Mode", 1, StrLen(PaymentChangeReqTable."Payment Mode"));
+                            PaymentModeTable."Deposit Bank" := PaymentChangeReqTable.C_Deposit_Bank;
+
                             PaymentModeTable."Payment Series" := CopyStr(NewPaymentCode, 1, StrLen(NewPaymentCode));
                             PaymentModeTable."Payment Status" := PaymentModeTable."Payment Status"::Scheduled;
+                            PaymentModeTable."Old Cheque #" := PaymentChangeReqTable."Old Cheque";
+
                             PaymentModeTable.Insert(true);
                             // PaymentModeRec.ModifyAll("Payment Mode", ApprovalRec."Payment Mode");
                             Clear(PaymentModeTable);
@@ -360,13 +390,13 @@ page 50710 "Approval Payment Request"
                                 PaymentSchedule.SetRange("Tenant ID", Rec."Tenant ID");
                                 PaymentSchedule.SetRange("Secondary Item Type", itemList.Get(increment));
                                 PaymentSchedule.SetRange("Payment Series", paymentSeries);
+                                if PaymentSchedule.FindFirst() then begin
 
-                                if PaymentSchedule.FindSet() then
-                                    repeat
-                                        PaymentSchedule."Payment Series" := CopyStr(NewPaymentCode, 1, StrLen(NewPaymentCode));
-                                        PaymentSchedule."Due Date" := PaymentChangeReqTable."Due Date";
-                                        PaymentSchedule.Modify(true);
-                                    until PaymentSchedule.Next() = 0;
+                                    PaymentSchedule."Payment Series" := CopyStr(NewPaymentCode, 1, StrLen(NewPaymentCode));
+                                    PaymentSchedule."Due Date" := PaymentChangeReqTable."Due Date";
+                                    PaymentSchedule.Modify(true);
+                                    //  until PaymentSchedule.Next() = 0;
+                                end;
 
                             end;
 
@@ -397,6 +427,8 @@ page 50710 "Approval Payment Request"
                                 PaymentChangeReqTable."Tenant ID", PaymentChangeReqTable."ID");
 
                             Clear(paymentSeriesNos);
+                            Clear(oldChequeNumber);
+
                             if PaymentChangeReqTable."Payment Series".Contains(',') then
                                 foreach paymentSeries in PaymentChangeReqTable."Payment Series".Split(',') do
                                     paymentSeriesNos.Add(DelChr(paymentSeries, '=', ' '))
@@ -413,6 +445,28 @@ page 50710 "Approval Payment Request"
                                 if PaymentModeTable.FindSet() then begin
                                     //repeat
                                     PaymentModeTable."Payment Status" := PaymentModeTable."Payment Status"::Cancelled;
+                                    if PaymentModeTable."Payment Mode" = 'Cheque' then begin
+                                        if oldChequeNumber = '' then
+                                            oldChequeNumber := PaymentModeTable."Cheque Number"
+                                        else
+                                            oldChequeNumber += ', ' + PaymentModeTable."Cheque Number";
+                                        PaymentModeTable."Cheque Number" := '-';
+                                        pdcTransRec.SetRange("Contract ID", PaymentModeTable."Contract ID");
+                                        pdcTransRec.SetRange("payment Series", PaymentModeTable."Payment Series");
+                                        pdcTransRec.SetFilter("Cheque Status", '%1', PaymentModeTable."Cheque Status"::"Cheque Received");
+                                        if pdcTransRec.FindFirst() then begin
+
+                                            Commit();
+                                            selectDate.Caption := 'Select Transaction Date';
+                                            if selectDate.RunModal() = Action::OK then
+                                                TransactionDate := selectDate.GetDate()
+                                            else
+                                                Error('Transaction Date selection is mandatory to proceed.');
+                                            PDCCashreceiptEntry.ReversePDCReceivedTransaction(pdcTransRec, 'Payment Combined', TransactionDate);
+                                        end;
+                                        PaymentModeTable.Validate("Cheque Status", PaymentModeTable."Cheque Status"::Cancelled);
+
+                                    end;
                                     PaymentModeTable.Modify(true);
                                     Clear(PaymentModeTable);
                                 end;
@@ -439,11 +493,14 @@ page 50710 "Approval Payment Request"
                                 PaymentModeTable."Payment Series" := CopyStr(NewPaymentCode, 1, StrLen(NewPaymentCode));
                                 PaymentModeTable."Payment Status" := PaymentModeTable."Payment Status"::Scheduled;
                                 PaymentModeTable."Approval Status" := PaymentModeTable."Approval Status"::Approved;
+                                PaymentModeTable."Old Cheque #" := oldChequeNumber;
                                 PaymentModeTable.Insert(true);
                                 // PaymentModeRec.ModifyAll("Payment Mode", ApprovalRec."Payment Mode");
                                 Clear(PaymentModeTable);
                             end else begin
                                 // Modify existing record
+                                PaymentModeTable."Deposit Bank" := PaymentChangeReqTable."C_Deposit_Bank";
+                                PaymentModeTable."Cheque Number" := PaymentChangeReqTable."C_Cheque_Number";
                                 PaymentModeTable."Amount Including VAT" := PaymentChangeReqTable."Change Amount";
                                 PaymentModeTable.Amount := PaymentChangeReqTable.Amount;
                                 PaymentModeTable."VAT Amount" := PaymentChangeReqTable."Vat Amount";
@@ -473,9 +530,32 @@ page 50710 "Approval Payment Request"
                     begin
                         PaymentModeRec.Reset();
                         PaymentModeRec.SetRange("Payment Series", PaymentSeries);
-                        if PaymentModeRec.FindSet() then
-                            PaymentModeRec.ModifyAll("Payment Mode", ApprovalRec."Payment Mode")
-                        else
+                        PaymentModeRec.SetRange("Contract ID", Rec."Contract ID");
+                        PaymentModeRec.SetRange("Tenant ID", Rec."Tenant ID");
+                        if PaymentModeRec.FindSet() then begin
+                            if PaymentModeRec."Payment Mode" = 'Cheque' then begin
+                                pdcTransRec.SetRange("Contract ID", PaymentModeRec."Contract ID");
+                                pdcTransRec.SetRange("payment Series", PaymentModeRec."Payment Series");
+                                pdcTransRec.SetFilter("Cheque Status", '%1', PaymentModeRec."Cheque Status"::"Cheque Received");
+                                if pdcTransRec.FindFirst() then begin
+
+                                    Commit();
+                                    selectDate.Caption := 'Select Transaction Date';
+                                    if selectDate.RunModal() = Action::OK then
+                                        TransactionDate := selectDate.GetDate()
+                                    else
+                                        Error('Transaction Date selection is mandatory to proceed.');
+
+                                    PDCCashreceiptEntry.ReversePDCReceivedTransaction(pdcTransRec, 'Payment Method Changed', TransactionDate);
+                                end;
+                                PaymentModeRec.Validate("Cheque Status", PaymentModeRec."Cheque Status"::Cancelled);
+                            end;
+                            PaymentModeRec."Payment Mode" := ApprovalRec."Payment mode";
+                            PaymentModeRec."Cheque Number" := ApprovalRec.C_Cheque_Number;
+                            PaymentModeRec."Deposit Bank" := ApprovalRec.C_Deposit_Bank;
+                            PaymentModeRec.Modify();
+                            //  Message('Updated Payment Mode for Series: %1', PaymentSeries);
+                        end else
                             Error('Payment Series %1 not found in Payment Mode Table.', PaymentSeries);
                     end;
             end;
