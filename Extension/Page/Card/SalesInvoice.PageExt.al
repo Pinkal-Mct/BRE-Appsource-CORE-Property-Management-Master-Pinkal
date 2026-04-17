@@ -50,7 +50,7 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
 
                         if Rec."Property Classification" <> '' then begin
                             Rec.Validate("Gen. Bus. Posting Group", Rec."Property Classification");
-                            Rec."Customer Posting Group" := CopyStr(Rec."Property Classification", 1, Strlen(Rec."Property Classification"));
+                            Rec.Validate("Customer Posting Group", Rec."Property Classification");
                             Rec.Modify();
                         end;
                     end;
@@ -140,19 +140,17 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
                     ToolTip = 'The Approval Status field indicates the current approval status of the sales invoice. It can be Approved, Pending, or Rejected.';
 
                     trigger OnValidate()
-
                     var
                         ShowDialogBox: Codeunit ShowDialogboxRejctionInvoice;
                         SalesPost: Codeunit "Sales-Post";
                     begin
-                        if Rec."Approval Status" = Rec."Approval Status"::Approved then
-                            SalesPost.Run(Rec)
-
-                        else
+                        if Rec."Approval Status" = Rec."Approval Status"::Approved then begin
+                            CurrPage.SaveRecord();
+                            SalesPost.Run(Rec);
+                            CurrPage.Close();
+                        end else
                             if Rec."Approval Status" = Rec."Approval Status"::Rejected then
                                 ShowDialogBox.DialogboxForRejection(Rec);
-                        // Rejectionmail.SendInvoiceToLeaseManager(Rec);
-
                         UpdateInvoiceApprovalStatus();
                     end;
                 }
@@ -294,13 +292,12 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
         if UserPersonalization1.Get(UserSecurityId()) then
             case UserPersonalization1."Profile ID" of
                 'PROPERTY MANAGER':
-                    exit(true);
-                'LEASE_MANAGER':
-                    exit(true);
-                'finance manager':
                     exit(false);
+                'LEASE_MANAGER':
+                    exit(false);
+                'finance manager':
+                    exit(true);
             end;
-        exit(false);
 
     end;
 
@@ -316,9 +313,6 @@ pageextension 50504 SalesInvoice extends "Sales Invoice"
         if customer.FindFirst() then begin
             Rec."Sell-to Customer Name" := customer.Name;
             Rec."Sell-to Address" := customer.Address;
-            Rec."Gen. Bus. Posting Group" := customer."Gen. Bus. Posting Group";
-            Rec."VAT Bus. Posting Group" := customer."VAT Bus. Posting Group";
-            Rec."Customer Posting Group" := customer."Customer Posting Group";
             Rec."Sell-to Phone No." := customer."Phone No.";
             Rec."Sell-to E-Mail" := customer."E-Mail";
             Rec."Bill-to Customer No." := customer."No.";

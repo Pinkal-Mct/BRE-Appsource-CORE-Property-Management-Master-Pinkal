@@ -129,11 +129,10 @@ pageextension 50103 ItemListExtension extends "Item List"
         exit(SelectedUnits);
     end;
 
-    // trigger OnOpenPage()
-    // var
-
-    // begin
-    //     Rec.SetRange(Type, Rec.Type::Service);
-    // end;
-
+    trigger OnOpenPage()
+    var
+    begin
+        // Set the filter to show only records where "Item type template" is "Unit Service"
+        Rec.SetRange("Item type template", Rec."Item type template"::"Unit Service");
+    end;
 }

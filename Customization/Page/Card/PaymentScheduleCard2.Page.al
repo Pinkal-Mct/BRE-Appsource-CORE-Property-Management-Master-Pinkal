@@ -312,8 +312,8 @@ page 50922 "Payment Schedule Card2"
                                 customercard.Modify();
                             end;
                         if newsalesheader."Property Classification" <> '' then begin
-                            newsalesheader."Gen. Bus. Posting Group" := CopyStr(newsalesheader."Property Classification", 1, StrLen(newsalesheader."Property Classification"));
-                            newsalesheader."Customer Posting Group" := CopyStr(newsalesheader."Property Classification", 1, StrLen(newsalesheader."Property Classification"));
+                            newsalesheader.Validate("Gen. Bus. Posting Group", newsalesheader."Property Classification");
+                            newsalesheader.Validate("Customer Posting Group", newsalesheader."Property Classification");
                             newsalesheader.Modify();
                         end;
 

@@ -6,7 +6,7 @@ page 50715 "Online Payment Request"
     Caption = 'Payment receive Approval';
     UsageCategory = Lists;
     InsertAllowed = false;
-    ModifyAllowed = true;
+    ModifyAllowed = false;
     DeleteAllowed = false;
     Permissions =
         tabledata OnlinePaymentApproval = RM,

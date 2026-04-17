@@ -60,7 +60,7 @@ page 50928 "Payment Mode Card2"
                 field("Cheque Number"; Rec."Cheque Number")
                 {
                     ApplicationArea = All;
-                    Editable = IsApproved AND (Rec."Payment Mode" = 'Cheque') and (Rec."Payment Status" <> Rec."Payment Status"::Cancelled);  // The ID is not editable since it's auto-incrementing
+                    Editable = IsApproved AND (Rec."Payment Mode" = 'Cheque') AND (Rec."Payment Status" <> Rec."Payment Status"::Cancelled);  // The ID is not editable since it's auto-incrementing
                     ToolTip = 'The Cheque Number is the unique identifier for the cheque payment.';
                 }
 
@@ -68,20 +68,21 @@ page 50928 "Payment Mode Card2"
                 {
                     ApplicationArea = All;
                     Lookup = true;
-                    Editable = IsApproved AND (Rec."Payment Mode" <> 'Cash');
                     ToolTip = 'The Deposit Bank indicates the bank where the payment is being made.';
                 }
 
                 field("Deposit Status"; Rec."Deposit Status")
                 {
                     ApplicationArea = All;
+                    Editable = not IsReceivedCancelled;
+
                     ToolTip = 'The Deposit Status indicates the status of the deposit.';
                 }
 
                 field("Payment Status"; Rec."Payment Status")
                 {
                     ApplicationArea = All;
-                    Editable = IsApproved or not IsReceivedCancelled and not (Rec."Payment Mode" = 'Cheque');
+                    Editable = (IsApproved or not IsReceivedCancelled) and not (Rec."Payment Mode" = 'Cheque');
                     ToolTip = 'The Payment Status indicates the status of the payment, such as Scheduled, Due, Received, or Cancelled.';
 
                     trigger OnValidate()
@@ -705,6 +706,7 @@ page 50928 "Payment Mode Card2"
 
 
 
+
     trigger OnAfterGetRecord()
     var
         paymentschedul2grid: Record "Payment Schedule2";
@@ -883,75 +885,7 @@ page 50928 "Payment Mode Card2"
             IsReceivedCancelled := false;
     end;
 
-    procedure CreateChequeEntry()
-    var
-        COASetup: Record "COA Setup";
-        GenJournalLine: Record "Gen. Journal Line";
-        GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line";
-        NextEntryNo: Integer;
-        GenJournalAccountType: Enum "Gen. Journal Account Type";
-        GenJournalDocumentType: Enum "Gen. Journal Document Type";
-        ChequeStatus: Enum "PDC Status Type Enum";
-        PDCAccount: Code[20];
-    begin
-        ///////////////////////// COA Setup /////////////////////////////
 
-        COASetup.Get();
-        if COASetup."PDC Received" <> '' then
-            PDCAccount := COASetup."PDC Received"
-
-        else
-            Error('COA Setup doest not exist for PDC Received account');
-        // Filter all records with Cheque Status = 'Cheque Received'
-        Rec.SetRange("Cheque Status", ChequeStatus::"Cheque Received");
-
-        if Rec.FindSet() then
-            repeat
-                // Get next line number for journal
-                GenJournalLine.Reset();
-                GenJournalLine.SetRange("Journal Template Name", 'CASH RECE');
-                GenJournalLine.SetRange("Journal Batch Name", 'DEFAULT');
-
-                if GenJournalLine.FindLast() then
-                    NextEntryNo := GenJournalLine."Line No." + 1
-                else
-                    NextEntryNo := 1;
-
-                Clear(GenJournalLine);
-                GenJournalLine.Init();
-                GenJournalLine."Journal Template Name" := 'CASH RECE';
-                GenJournalLine."Journal Batch Name" := 'DEFAULT';
-                GenJournalLine."Line No." := NextEntryNo;
-                GenJournalLine."Posting Date" := Today;
-                GenJournalLine."Document Type" := GenJournalDocumentType::Payment;
-                GenJournalLine."Document No." := CopyStr(Rec."Cheque Number", 1, StrLen(Rec."Cheque Number"));
-                GenJournalLine."Account Type" := GenJournalAccountType::Customer;
-                GenJournalLine."Account No." := Rec."Tenant Id";
-                GenJournalLine."Description" := Rec."Tenant Name";
-                GenJournalLine."Contract ID" := Rec."Contract ID";
-                GenJournalLine.Amount := -Rec."Amount Including VAT";
-                GenJournalLine."Amount (LCY)" := GenJournalLine.Amount;
-                GenJournalLine."Bal. Account Type" := GenJournalAccountType::"G/L Account";
-                GenJournalLine."Bal. Account No." := PDCAccount;
-                GenJournalLine.Insert(true);
-
-                // Optional: Post line
-                GenJnlPostLine.RunWithCheck(GenJournalLine);
-            until Rec.Next() = 0;
-
-        // Optional: Delete all posted lines in the batch
-        GenJournalLine.Reset();
-        GenJournalLine.SetRange("Journal Template Name", 'CASH RECE');
-        GenJournalLine.SetRange("Journal Batch Name", 'DEFAULT');
-        if GenJournalLine.FindSet() then
-            GenJournalLine.DeleteAll();
-
-        Message('Cash Receipt journal entries created successfully for all cheques received.');
-        Rec.SetRange("Cheque Status");
-
-        // Refresh the page so all records are visible again
-        CurrPage.Update(false);
-    end;
 
     procedure OverduePaymentSendRequest()
     var

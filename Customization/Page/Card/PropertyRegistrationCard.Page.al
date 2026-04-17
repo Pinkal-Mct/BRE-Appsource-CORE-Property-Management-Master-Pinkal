@@ -21,7 +21,16 @@ page 50305 "Property Registration Card"
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the property.';
                 }
+                field("Property Name"; rec."Property Name")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the name of the property.';
 
+                    trigger OnValidate()
+                    begin
+                        InsertWorkflowFrquencyData();
+                    end;
+                }
                 field("Company ID"; rec."Company ID")
                 {
                     ApplicationArea = All;
@@ -33,17 +42,6 @@ page 50305 "Property Registration Card"
                     end;
                 }
 
-
-                field("Property Name"; rec."Property Name")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the name of the property.';
-
-                    trigger OnValidate()
-                    begin
-                        InsertWorkflowFrquencyData();
-                    end;
-                }
 
 
                 field("Base Unit of Measure"; rec."Base Unit of Measure")
@@ -117,12 +115,14 @@ page 50305 "Property Registration Card"
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
+                    ToolTip = 'Specifies the country where the property is located.';
                     // Lookup = true;
                 }
                 field("Emirate"; rec."Emirate Name")
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
+                    ToolTip = 'Specifies the emirate where the property is located.';
                     // Lookup = true;
                 }
                 field("Community"; rec."Community")
@@ -130,6 +130,7 @@ page 50305 "Property Registration Card"
                     ApplicationArea = All;
                     ShowMandatory = true;
                     Lookup = true;
+                    ToolTip = 'Specifies the community where the property is located.';
                 }
 
                 field("Number of Units"; rec."Number of Units")
@@ -142,6 +143,7 @@ page 50305 "Property Registration Card"
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
+                    ToolTip = 'Specifies the classification of the property based on its characteristics and usage.';
                     Lookup = true;
                 }
 
@@ -150,6 +152,7 @@ page 50305 "Property Registration Card"
                     ApplicationArea = All;
                     ShowMandatory = true;
                     Lookup = true;
+                    ToolTip = 'Specifies the type of the property, such as residential, commercial, or industrial.';
                 }
 
 

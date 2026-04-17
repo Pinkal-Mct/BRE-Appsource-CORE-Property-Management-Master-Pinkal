@@ -504,27 +504,40 @@ page 50927 "Payment Mode Card"
                         MaxID := 1; // If no records exist, start from 1
 
                     if IsCombineVisible then begin
-                        Approvalpayment.Init();
-                        Approvalpayment.ID := MaxID; // Assign the new auto-incremented ID
-                        Approvalpayment."Contract ID" := Rec."Contract ID";
-                        Approvalpayment."Tenant ID" := Rec."Tenant ID";
-                        Approvalpayment."Status" := 'Pending';
-                        Approvalpayment."Request Type" := Format(RequestType);
-                        Approvalpayment."Manual/Auto Status" := Format(Status);
-                        Approvalpayment."Payment Series" := Rec."Combine Payment Series";
-                        Approvalpayment."Due Date" := Rec."Combine Due Date";
-                        Approvalpayment."Payment Mode" := Rec."Combine Payment Mode";
-                        Approvalpayment."Amount" := Rec."Combine Amount";
-                        Approvalpayment."VAT Amount" := Rec."Combine VAT Amount";
-                        Approvalpayment."Change Amount" := Rec."Combine Amount Including VAT";
-                        Approvalpayment."Payment mode ID" := Rec."Contract ID";
-                        Approvalpayment.C_Cheque_Number := Rec.C_Cheque_Number;
-                        Approvalpayment.C_Deposit_Bank := Rec.C_Deposit_Bank;
-                        Approvalpayment.Insert();
+                        if (Rec."Combine Payment Series" <> '') and (Rec."Combine Due Date" <> 0D) and (Rec."Combine Payment Mode" <> '') then begin
+                            //(SplitPayChange."Payment Mode" <> '') and
+                            Approvalpayment.Init();
+                            Approvalpayment.ID := MaxID; // Assign the new auto-incremented ID
+                            Approvalpayment."Contract ID" := Rec."Contract ID";
+                            Approvalpayment."Tenant ID" := Rec."Tenant ID";
+                            Approvalpayment."Status" := 'Pending';
+                            Approvalpayment."Request Type" := Format(RequestType);
+                            Approvalpayment."Manual/Auto Status" := Format(Status);
+                            Approvalpayment."Payment Series" := Rec."Combine Payment Series";
+                            Approvalpayment."Due Date" := Rec."Combine Due Date";
+                            Approvalpayment."Payment Mode" := Rec."Combine Payment Mode";
+                            Approvalpayment."Amount" := Rec."Combine Amount";
+                            Approvalpayment."VAT Amount" := Rec."Combine VAT Amount";
+                            Approvalpayment."Change Amount" := Rec."Combine Amount Including VAT";
+                            Approvalpayment."Payment mode ID" := Rec."Contract ID";
+                            Approvalpayment.C_Cheque_Number := Rec.C_Cheque_Number;
+                            Approvalpayment.C_Deposit_Bank := Rec.C_Deposit_Bank;
+                            Approvalpayment.Insert();
+                            Message('Approval Request Sent successfully!');
+                            Clear(Rec."Combine Payment Series");
+                            Clear(Rec."Combine Due Date");
+                            Clear(Rec."Combine Payment Mode");
+                            Clear(Rec."Combine Amount");
+                            Clear(Rec."Combine VAT Amount");
+                            Clear(Rec."Combine Amount Including VAT");
+                            Clear(Rec.C_Cheque_Number);
+                            Clear(Rec.C_Deposit_Bank);
+                        end else
+                            Message('Please ensure all required fields for Combine Payment are filled before sending the request.');
                     end
                     else
                         if IsSplitVisible then begin
-                            if SplitPayChange.FindSet() then begin
+                            if SplitPayChange.FindSet() then
                                 repeat
 
                                     if (SplitPayChange."Split Payment Series" <> '') and
@@ -560,59 +573,51 @@ page 50927 "Payment Mode Card"
                                         if Paymentmode2.FindFirst() then
                                             Approvalpayment."Old Cheque" := Paymentmode2."Cheque Number";
                                         Approvalpayment.Insert(); // Insert inside the loop
-                                    end;
+                                        Message('Approval Request Sent successfully!');
+                                        Clear(SplitPayChange."Split Payment Series");
+                                        Clear(SplitPayChange."Split Due Date");
+                                        Clear(SplitPayChange."Split Payment Mode");
+                                        Clear(SplitPayChange."Split Amount");
+                                        Clear(SplitPayChange."Secondary Item Type");
+                                        Clear(SplitPayChange."Split VAT Amount");
+                                        Clear(SplitPayChange."Split Amount Including VAT");
+                                        Clear(SplitPayChange."Cheque Number");
+                                        Clear(SplitPayChange."Deposit Bank Name");
+                                    end else
+                                        Message('Skipping incomplete split payment entry with Series %1. Please ensure all required fields are filled.',
+                                          SplitPayChange."Split Payment Series");
+
                                 until SplitPayChange.Next() = 0;
-                                SplitPayChange.Reset();
-                                SplitPayChange.DeleteAll(); // Delete all records from the grid
-                            end;
+                            SplitPayChange.Reset();
+                            SplitPayChange.DeleteAll(); // Delete all records from the grid
+
                         end
                         else
-                            if IsChangePaymodeVisible then begin
-                                Approvalpayment.Init();
-                                Approvalpayment.ID := MaxID;
-                                Approvalpayment."Contract ID" := Rec."Contract ID";
-                                Approvalpayment."Tenant ID" := Rec."Tenant ID";
-                                Approvalpayment."Status" := 'Pending';
-                                Approvalpayment."Request Type" := Format(RequestType);
-                                Approvalpayment."Manual/Auto Status" := Format(Status);
-                                Approvalpayment."Payment Series" := Rec."Change Payment Series";
-                                Approvalpayment."Payment Mode" := Rec."Change Payment Mode";
-                                Approvalpayment.C_Cheque_Number := Rec.CP_Cheque_Number;
-                                Approvalpayment.C_Deposit_Bank := Rec.CP_Deposit_Bank;
+                            if IsChangePaymodeVisible then
+                                if (Rec."Change Payment Series" <> '') and (Rec."Change Payment Mode" <> '') then begin
+                                    Approvalpayment.Init();
+                                    Approvalpayment.ID := MaxID;
+                                    Approvalpayment."Contract ID" := Rec."Contract ID";
+                                    Approvalpayment."Tenant ID" := Rec."Tenant ID";
+                                    Approvalpayment."Status" := 'Pending';
+                                    Approvalpayment."Request Type" := Format(RequestType);
+                                    Approvalpayment."Manual/Auto Status" := Format(Status);
+                                    Approvalpayment."Payment Series" := Rec."Change Payment Series";
+                                    Approvalpayment."Payment Mode" := Rec."Change Payment Mode";
+                                    Approvalpayment.C_Cheque_Number := Rec.CP_Cheque_Number;
+                                    Approvalpayment.C_Deposit_Bank := Rec.CP_Deposit_Bank;
+                                    Approvalpayment."Payment mode ID" := Rec."Contract ID";
+                                    Approvalpayment.Insert();
+                                    Message('Approval Request Sent successfully!');
+                                    Clear(Rec."Change Payment Series");
+                                    Clear(Rec."Change Payment Mode");
+                                    Clear(Rec.CP_Cheque_Number);
+                                    Clear(Rec.CP_Deposit_Bank);
+                                end else
+                                    Message('Please ensure all required fields for Change Payment Mode are filled before sending the request.');
 
-                                Approvalpayment."Payment mode ID" := Rec."Contract ID";
-                                Approvalpayment.Insert();
-                            end;
-
-                    Message('Approval Request Sent successfully!');
-
-                    // Clear relevant fields after sending request
-                    Clear(SplitPayChange."Split Payment Series");
-                    Clear(SplitPayChange."Split Due Date");
-                    Clear(SplitPayChange."Split Payment Mode");
-                    Clear(SplitPayChange."Split Amount");
-                    Clear(SplitPayChange."Secondary Item Type");
-                    Clear(SplitPayChange."Split VAT Amount");
-                    Clear(SplitPayChange."Split Amount Including VAT");
-                    Clear(SplitPayChange."Cheque Number");
-                    Clear(SplitPayChange."Deposit Bank Name");
-                    Clear(Rec."Combine Payment Series");
-                    Clear(Rec."Combine Due Date");
-                    Clear(Rec."Combine Payment Mode");
-                    Clear(Rec."Combine Amount");
-                    Clear(Rec."Combine VAT Amount");
-                    Clear(Rec."Combine Amount Including VAT");
-                    Clear(Rec.C_Cheque_Number);
-                    Clear(Rec.C_Deposit_Bank);
-
-                    Clear(Rec."Change Payment Series");
-                    Clear(Rec."Change Payment Mode");
-                    Clear(Rec.CP_Cheque_Number);
-                    Clear(Rec.CP_Deposit_Bank);
-                    // Modify and update the record
                     Rec.Modify();
                 end;
-
             }
         }
     }

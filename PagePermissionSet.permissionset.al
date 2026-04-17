@@ -19,14 +19,12 @@ permissionset 50101 PagePermissionSet
         codeunit ShowDialogboxRejctionInvoice = X,
         page "Active Contract List" = X,
         page "Additional Charges Sub Card" = X,
-        page "Adjustment Security Deposit" = X,
-        page Adjustment_Security_Deposit = X,
+
         page "Approval Contract Status Card" = X,
         page "Approval Contract Status List" = X,
         page "Approval Payment Request" = X,
         page "Approve FinalCalculation Req" = X,
-        page "Availability Status Card" = X,
-        page "Availability Status List" = X,
+
         page "Billing Calculation CN Card" = X,
         page "Brokerage Calculation Card" = X,
         page "Brokerage Calculation List" = X,
@@ -95,7 +93,7 @@ permissionset 50101 PagePermissionSet
         page "Payment Transaction Card" = X,
         page "Payment Transaction List" = X,
         page PaymentModeChangeLogCard = X,
-        page "PDC Approval" = X,
+
         page "PDC Transaction" = X,
         page "PDC Transactions" = X,
         page "PDR Revenue Allocation Grid" = X,

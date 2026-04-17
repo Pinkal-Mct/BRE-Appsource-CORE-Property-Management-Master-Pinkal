@@ -93,7 +93,6 @@ page 50508 "PDC Transactions"
                 field("Status"; Rec."Cheque Status") { ToolTip = 'Current status of the PDC transaction, such as Pending, Cleared, or Rejected.'; }
                 field("Approval Status"; Rec."Approval Status") { ToolTip = 'Approval status of the PDC transaction.'; }
 
-                field("Selected"; Rec."Selected") { ToolTip = 'Indicates whether the PDC transaction is selected for bulk operations.'; }
 
             }
         }
@@ -144,50 +143,6 @@ page 50508 "PDC Transactions"
                     DateToFilter := 0D;
 
                     CurrPage.UPDATE(false);
-                end;
-            }
-
-
-            action(BulkChangeStatus)
-            {
-                Caption = 'Change Status';
-                Image = Action;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                ToolTip = 'Change the status of selected PDC transactions to Deposited.';
-
-                trigger OnAction()
-                var
-                    UnitRec: Record "PDC Transaction";
-                    PaymentSeriesRec: Record "Payment Mode2";
-                    PDCStatusEnum: Enum "PDC Status Type Enum";
-
-                begin
-                    // Filter for selected records
-                    UnitRec.SetRange(Selected, true);
-
-                    if UnitRec.FindSet() then begin
-
-                        repeat
-                            UnitRec."Cheque Status" := PDCStatusEnum::Deposited; // Set the desired status
-                            UnitRec.Selected := false;    // Clear the selection
-                            UnitRec.Modify();
-                            PaymentSeriesRec.SetRange("Payment Series", UnitRec."payment Series");
-                            PaymentSeriesRec.SetRange("Contract ID", UnitRec."Contract ID");
-
-                            if PaymentSeriesRec.FindSet() then
-                                repeat
-                                    PaymentSeriesRec."Cheque Status" := PaymentSeriesRec."Cheque Status"::Deposited;
-                                    PaymentSeriesRec.Modify();
-                                until PaymentSeriesRec.Next() = 0
-                            else
-                                Error('The related Payment Series record was not found.');
-                        until UnitRec.Next() = 0;
-
-                        Message('Status updated for selected units.');
-                    end else
-                        Message('No units selected.');
                 end;
             }
 

@@ -6,6 +6,8 @@ page 50972 "OverduePaymentmodelist"
     Caption = 'Overdue Payment Approval List';
     UsageCategory = Lists;
     DeleteAllowed = true;
+    InsertAllowed = false;
+    ModifyAllowed = false;
 
     layout
     {

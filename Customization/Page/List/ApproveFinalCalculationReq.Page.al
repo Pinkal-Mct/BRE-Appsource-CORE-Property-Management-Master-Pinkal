@@ -136,13 +136,44 @@ page 50916 "Approve FinalCalculation Req"
                         Rec.Status := Rec.Status::Approved;
                         Rec.Modify();
 
-                        // Update main record status
-                        if FinalCalculation.Get(Rec."ID") then begin
+                        FinalCalculation.SetRange("Contract ID", Rec."Contract ID");
+                        if FinalCalculation.FindFirst() then begin
+
                             FinalCalculation.Status := FinalCalculation.Status::Approved;
                             FinalCalculation.Modify();
                         end;
 
                         Message('Entry has been approved successfully!');
+                    end;
+                end;
+            }
+            action(Reject)
+            {
+                ApplicationArea = All;
+                Caption = 'Reject';
+                Image = Cancel;
+                Visible = IsFinanceManager;
+                ToolTip = 'Click to reject the selected record. This action is available only to Finance Managers.';
+
+                trigger OnAction()
+                var
+                    FinalCalculation: Record "Final Calculation";
+                begin
+                    if Rec.Status = Rec.Status::Rejected then
+                        Error('This entry is already rejected');
+
+                    if Confirm('Do you want to reject this entry?') then begin
+                        // Update entry status
+                        Rec.Status := Rec.Status::Rejected;
+                        Rec.Modify();
+
+                        FinalCalculation.SetRange("Contract ID", Rec."Contract ID");
+                        if FinalCalculation.FindFirst() then begin
+                            FinalCalculation.Status := FinalCalculation.Status::Rejected;
+                            FinalCalculation.Modify();
+                        end;
+
+                        Message('Entry has been rejected.');
                     end;
                 end;
             }

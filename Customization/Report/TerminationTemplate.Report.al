@@ -94,7 +94,7 @@ report 50113 "Termination Template"
             GetRentBalancePending("Contract ID") +
                 GetTotalReceiptsAmount("Contract ID") - GetTotalReceiptsAmountIncludingVAT("Contract ID") +
                 GetTotalAdditionalCharges("Contract ID") +
-                -("Net Balance" + "Chiller Deposit" + "Other Deposit")
+                -(("Security Deposit" - "Adjustment Security Deposit") + "Chiller Deposit" + "Other Deposit")
             )
             {
             }
@@ -102,7 +102,7 @@ report 50113 "Termination Template"
             -(GetRentBalancePending("Contract ID") +
                 GetTotalReceiptsAmount("Contract ID") - GetTotalReceiptsAmountIncludingVAT("Contract ID") +
                 GetTotalAdditionalCharges("Contract ID") +
-                -("Net Balance" + "Chiller Deposit" + "Other Deposit"))
+                -(("Security Deposit" - "Adjustment Security Deposit") + "Chiller Deposit" + "Other Deposit"))
             )
             {
             }
@@ -111,7 +111,7 @@ report 50113 "Termination Template"
                     -(GetRentBalancePending("Contract ID") +
                       GetTotalReceiptsAmount("Contract ID") - GetTotalReceiptsAmountIncludingVAT("Contract ID") +
                       GetTotalAdditionalCharges("Contract ID") +
-                      -("Net Balance" + "Chiller Deposit" + "Other Deposit"))
+                      -(("Security Deposit" - "Adjustment Security Deposit") + "Chiller Deposit" + "Other Deposit"))
                 )
             )
             {

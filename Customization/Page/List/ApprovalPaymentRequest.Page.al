@@ -6,7 +6,7 @@ page 50710 "Approval Payment Request"
     Caption = 'Payment Change Request Status List';
     UsageCategory = Lists;
     InsertAllowed = false;
-    ModifyAllowed = true;
+    ModifyAllowed = false;
     DeleteAllowed = true;
 
     layout
@@ -191,8 +191,8 @@ page 50710 "Approval Payment Request"
                     if SelectedRecs.FindSet() then
                         repeat
                             if SelectedRecs.Status = 'Pending' then begin
-                                SelectedRecs.Status := 'Approve';
-                                SelectedRecs.Modify();
+                                // SelectedRecs.Status := 'Approve';
+                                // SelectedRecs.Modify();
                                 ApproveCount += 1;
                                 ProcessApprovalAndSplitRequest();
                                 GetNextSequenceNo();
@@ -269,6 +269,7 @@ page 50710 "Approval Payment Request"
         PaymentModeRec: Record "Payment Mode2";
         pdcTransRec: Record "PDC Transaction";
         PDCCashreceiptEntry: Codeunit "Cash Receipt Journal Entry";
+        SendmailToTenant: Codeunit "SplitCombinePaymentModemail";
         selectDate: Page "Select Date";
         TransactionDate: Date;
         itemList: List of [Text];
@@ -285,7 +286,6 @@ page 50710 "Approval Payment Request"
         ApprovalRec.SetRange("Contract ID", Rec."Contract ID");
         ApprovalRec.SetRange("Tenant ID", Rec."Tenant ID");
         ApprovalRec.SetRange("ID", Rec."ID");
-        ApprovalRec.SetRange(Status, 'Approve');
 
         if ApprovalRec.FindFirst() then begin
             RequestType := ApprovalRec."Request Type";
@@ -300,7 +300,6 @@ page 50710 "Approval Payment Request"
                         PaymentChangeReqTable.SetRange("Contract ID", Rec."Contract ID");
                         PaymentChangeReqTable.SetRange("Tenant ID", Rec."Tenant ID");
                         PaymentChangeReqTable.SetRange("ID", Rec."ID");
-                        PaymentChangeReqTable.SetRange(Status, 'Approve');
                         PaymentChangeReqTable.SetRange("Request Type", 'Split');
 
                         if not PaymentChangeReqTable.FindSet() then begin
@@ -342,10 +341,14 @@ page 50710 "Approval Payment Request"
                                                 Commit();
                                                 selectDate.Caption := 'Select Transaction Date';
                                                 if selectDate.RunModal() = Action::OK then
-                                                    TransactionDate := selectDate.GetDate()
+                                                    Rec."Transaction Date" := selectDate.GetDate();
+
+                                                if Rec."Transaction Date" = 0D then
+                                                    // Revert status change
+                                                    Error('Please enter Transaction Date before approval.')
                                                 else
-                                                    Error('Transaction Date selection is mandatory to proceed.');
-                                                PDCCashreceiptEntry.ReversePDCReceivedTransaction(pdcTransRec, 'Payment Split', TransactionDate);
+                                                    PDCCashreceiptEntry.ReversePDCReceivedTransaction(pdcTransRec, 'Payment Split', Rec."Transaction Date");
+
                                             end;
                                             PaymentModeTable.Validate("Cheque Status", PaymentModeTable."Cheque Status"::Cancelled);
                                         end;
@@ -401,7 +404,11 @@ page 50710 "Approval Payment Request"
                             end;
 
                         until PaymentChangeReqTable.Next() = 0;
+                        Rec.Status := 'Approve';
+                        SendmailToTenant.SendTenantEmail(Rec);
+                        Message('Payment split request approved and processed successfully. Tenant has been notified via email.');
 
+                        Rec.Modify();
                     end;
                 'Combine':
                     begin
@@ -459,10 +466,14 @@ page 50710 "Approval Payment Request"
                                             Commit();
                                             selectDate.Caption := 'Select Transaction Date';
                                             if selectDate.RunModal() = Action::OK then
-                                                TransactionDate := selectDate.GetDate()
+                                                Rec."Transaction Date" := selectDate.GetDate();
+
+                                            if Rec."Transaction Date" = 0D then
+                                                // Revert status change
+                                                Error('Please enter Transaction Date before approval.')
                                             else
-                                                Error('Transaction Date selection is mandatory to proceed.');
-                                            PDCCashreceiptEntry.ReversePDCReceivedTransaction(pdcTransRec, 'Payment Combined', TransactionDate);
+                                                PDCCashreceiptEntry.ReversePDCReceivedTransaction(pdcTransRec, 'Payment Combined', Rec."Transaction Date");
+
                                         end;
                                         PaymentModeTable.Validate("Cheque Status", PaymentModeTable."Cheque Status"::Cancelled);
 
@@ -524,6 +535,11 @@ page 50710 "Approval Payment Request"
 
                             end;
                         until PaymentChangeReqTable.Next() = 0;
+                        Rec.Status := 'Approve';
+                        SendmailToTenant.SendTenantEmail(Rec);
+                        Message('Payment combine request approved and processed successfully. Tenant has been notified via email.');
+
+                        Rec.Modify();
                     end;
 
                 'Payment Mode':
@@ -542,19 +558,29 @@ page 50710 "Approval Payment Request"
                                     Commit();
                                     selectDate.Caption := 'Select Transaction Date';
                                     if selectDate.RunModal() = Action::OK then
-                                        TransactionDate := selectDate.GetDate()
-                                    else
-                                        Error('Transaction Date selection is mandatory to proceed.');
+                                        Rec."Transaction Date" := selectDate.GetDate();
 
-                                    PDCCashreceiptEntry.ReversePDCReceivedTransaction(pdcTransRec, 'Payment Method Changed', TransactionDate);
+                                    if Rec."Transaction Date" = 0D then
+                                        // Revert status change
+                                        Error('Please enter Transaction Date before approval.')
+                                    else
+                                        PDCCashreceiptEntry.ReversePDCReceivedTransaction(pdcTransRec, 'Payment Method Changed', Rec."Transaction Date");
+
                                 end;
                                 PaymentModeRec.Validate("Cheque Status", PaymentModeRec."Cheque Status"::Cancelled);
                             end;
+                            PaymentModeRec.Validate("Cheque Status", PaymentModeRec."Cheque Status"::" ");
                             PaymentModeRec."Payment Mode" := ApprovalRec."Payment mode";
                             PaymentModeRec."Cheque Number" := ApprovalRec.C_Cheque_Number;
                             PaymentModeRec."Deposit Bank" := ApprovalRec.C_Deposit_Bank;
                             PaymentModeRec.Modify();
                             //  Message('Updated Payment Mode for Series: %1', PaymentSeries);
+                            Rec.Status := 'Approve';
+                            SendmailToTenant.SendTenantEmail(Rec);
+                            Message('Payment mode change request approved and processed successfully. Tenant has been notified via email.');
+
+                            Rec.Modify();
+
                         end else
                             Error('Payment Series %1 not found in Payment Mode Table.', PaymentSeries);
                     end;

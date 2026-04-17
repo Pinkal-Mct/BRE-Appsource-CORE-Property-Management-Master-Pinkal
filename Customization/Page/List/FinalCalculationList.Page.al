@@ -6,6 +6,8 @@ page 50900 "Final Calculation List"
     Caption = 'Final Calculation List';
     UsageCategory = Lists;
     CardPageId = 50903;
+    insertAllowed = false;
+    modifyAllowed = false;
 
 
     layout
