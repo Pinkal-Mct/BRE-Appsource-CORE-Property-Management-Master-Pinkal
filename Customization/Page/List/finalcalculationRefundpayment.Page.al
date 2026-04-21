@@ -5,8 +5,8 @@ page 50739 "finalcalculation_Refundpayment"
     ApplicationArea = All;
     Caption = 'Final Calculation Refund Approval';
     UsageCategory = Lists;
-    InsertAllowed = true;
-    ModifyAllowed = true;
+    InsertAllowed = false;
+    ModifyAllowed = false;
     DeleteAllowed = true;
 
     layout

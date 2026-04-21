@@ -5,8 +5,8 @@ page 50732 "final payment approval"
     ApplicationArea = All;
     Caption = 'Final Payment Approval';
     UsageCategory = Lists;
-    InsertAllowed = true;
-    ModifyAllowed = true;
+    InsertAllowed = false;
+    ModifyAllowed = false;
     DeleteAllowed = true;
 
     layout

@@ -77,19 +77,19 @@ page 50145 "Adjustment Deposits"
     {
         area(Processing)
         {
-            action(Preview)
+            action(PrevireRefund)
             {
-                Caption = 'Post Refund';
-                Image = PrepaymentPost;
-                ToolTip = 'Previews the refund journal entry before posting.';
+                Caption = 'Preview Refund';
+                Image = View;
+                ToolTip = 'Preview the refund journal lines before posting.';
                 trigger OnAction()
                 var
                     adjustmentDepositsRec: Record "Adjustment Deposits";
                     GenJournalLineRec: Record "Gen. Journal Line";
-                    GenJnlPost: Codeunit "Gen. Jnl.-Post";
+                    Previewed: Boolean;
                 begin
                     GenJournalLineRec.SetRange("Journal Template Name", 'GENERAL');
-                    GenJournalLineRec.SetRange("Journal Batch Name", 'DEFAULT');
+                    GenJournalLineRec.SetRange("Journal Batch Name", 'REFUND');
                     if GenJournalLineRec.FindSet() then
                         GenJournalLineRec.DeleteAll();
 
@@ -98,17 +98,52 @@ page 50145 "Adjustment Deposits"
                     adjustmentDepositsRec.SetRange(Adjusted, false);
                     if adjustmentDepositsRec.FindSet() then
                         repeat
-                            RefundDepositAmount(adjustmentDepositsRec);
+                            Previewed := true;
+                            RefundDepositAmount(adjustmentDepositsRec, Previewed);
                         until adjustmentDepositsRec.Next() = 0
                     else
                         Error('No refund entries found to post for this contract or all entries have already been refunded.');
 
-                    Commit();
-                    GenJournalLineRec.Reset();
+                end;
+            }
+            action(PostRefund)
+            {
+                Caption = 'Post Refund';
+                Image = PrepaymentPost;
+                ToolTip = 'Previews the refund journal entry before posting.';
+                trigger OnAction()
+                var
+                    adjustmentDepositsRec: Record "Adjustment Deposits";
+                    GenJournalLineRec: Record "Gen. Journal Line";
+                    TenancyContractRec: Record "Tenancy Contract";
+                    GenJnlPost: Codeunit "Gen. Jnl.-Post";
+                    Previewed: Boolean;
+                begin
+
                     GenJournalLineRec.SetRange("Journal Template Name", 'GENERAL');
-                    GenJournalLineRec.SetRange("Journal Batch Name", 'DEFAULT');
-                    if GenJournalLineRec.FindFirst() then
-                        GenJnlPost.Preview(GenJournalLineRec);
+                    GenJournalLineRec.SetRange("Journal Batch Name", 'REFUND');
+                    if GenJournalLineRec.FindSet() then
+                        GenJournalLineRec.DeleteAll();
+
+                    adjustmentDepositsRec.SetRange("Contract ID", Rec."Contract ID");
+                    adjustmentDepositsRec.SetRange("Transaction Type", Rec."Transaction Type"::Refund);
+                    adjustmentDepositsRec.SetRange(Adjusted, false);
+                    if adjustmentDepositsRec.FindSet() then
+                        repeat
+                            Previewed := false;
+                            RefundDepositAmount(adjustmentDepositsRec, Previewed);
+                            if adjustmentDepositsRec."Item Description" = adjustmentDepositsRec."Item Description"::"Security Deposit" then begin
+                                TenancyContractRec.SetRange("Contract ID", adjustmentDepositsRec."Contract ID");
+                                if not TenancyContractRec.IsEmpty() then begin
+                                    TenancyContractRec.Validate(Refund, TenancyContractRec.Refund + adjustmentDepositsRec.Amount);
+                                    TenancyContractRec.Modify();
+                                end;
+                            end;
+                        until adjustmentDepositsRec.Next() = 0
+                    else
+                        Error('No refund entries found to post for this contract or all entries have already been refunded.');
+
+
                 end;
             }
             action(Post)
@@ -346,7 +381,7 @@ page 50145 "Adjustment Deposits"
         LastLineNo += 10000;
     end;
 
-    procedure RefundDepositAmount(adjustmentDepositsRec: Record "Adjustment Deposits")
+    procedure RefundDepositAmount(adjustmentDepositsRec: Record "Adjustment Deposits"; Previewed: Boolean)
     var
         GenJnlLine: Record "Gen. Journal Line";
         finalcalculation: Record "Final Calculation";
@@ -357,6 +392,8 @@ page 50145 "Adjustment Deposits"
         CustomerCard: Record Customer;
 
         COASetupLine: Record "COA Setup Line";
+        GenJnlPost: Codeunit "Gen. Jnl.-Post";
+
         PostingDate: Date;
         DocumentNo: Code[20];
 
@@ -373,7 +410,7 @@ page 50145 "Adjustment Deposits"
 
     begin
         JournalTemplateName := 'GENERAL';
-        JournalBatchName := 'DEFAULT';
+        JournalBatchName := 'REFUND';
 
         // Validate Journal Template and Batch
         if not GenJnlTemplate.Get(JournalTemplateName) then
@@ -474,6 +511,14 @@ page 50145 "Adjustment Deposits"
         // Do not set Applies-to fields since we don't need Posted Invoice IDs for adjustments
         GenJnlLine.Insert(true);
         LastLineNo += 10000;
+
+        if not Previewed then
+            GenJnlPost.Run(GenJnlLine)
+        else begin
+
+            Commit();
+            GenJnlPost.Preview(GenJnlLine);
+        end;
     end;
 
 

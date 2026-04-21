@@ -268,9 +268,10 @@ page 50315 "Lease Proposal Card"
                     trigger OnValidate()
                     var
                         revenueItemSub: Record "Revenue Item Subpage";
+                        fetchMonth: Codeunit "Fetch Month";
                         docAttach: Page "Revenue Item Subpage Card";
                     begin
-                        CalculateLeaseDuration1();
+                        Rec."Lease Duration" := fetchMonth.CalculateLeaseDuration(Rec."Lease Start Date", Rec."Lease End Date");
                         docAttach.SetStartEndDate(Rec."Lease Start Date", Rec."Lease End Date", Rec."Unit Name", Rec."Property Name", Rec."Unit Size", Rec."Tenant Full Name");
                         Rec."Payment Frequency" := Rec."Payment Frequency"::" ";
                         Rec."No of Installments" := 0;
@@ -321,11 +322,12 @@ page 50315 "Lease Proposal Card"
                 {
                     ApplicationArea = All;
                     Caption = 'Frequency of payment';
-                    ToolTip = 'Select the frequency of payment for the lease proposal. This field determines how often the rent is paid, such as monthly, quarterly, half-yearly, or yearly.';
 
                     trigger OnValidate()
+                    var
+                        installmentCalcEng: Codeunit "Installment Calculation Engine";
                     begin
-                        Rec."No of Installments" := CalculateInstallments(Rec."Lease Duration", Format(Rec."Payment Frequency"));
+                        Rec."No of Installments" := installmentCalcEng.CalculateInstallments(Rec."Lease Duration", Format(Rec."Payment Frequency"));
                     end;
                 }
                 field("No of Installments"; rec."No of Installments")
@@ -923,23 +925,6 @@ page 50315 "Lease Proposal Card"
         UpdateUnitEnableState();
     end;
 
-    local procedure GetTotalMonths(Duration: Text): Integer
-    var
-        Years: Integer;
-        YearPos: Integer;
-        YearStr: Text;
-    begin
-        YearPos := StrPos(Duration, 'year');
-
-        if YearPos > 0 then begin
-            YearStr := CopyStr(Duration, 1, YearPos - 1);
-            Evaluate(Years, DelChr(YearStr, '<>')); // Remove spaces
-        end;
-
-        // Convert years to months
-        exit(Years * 12);
-    end;
-
 
     trigger OnModifyRecord(): Boolean
     begin
@@ -1023,99 +1008,5 @@ page 50315 "Lease Proposal Card"
         ShowLegalReasonFields4 := (Rec."Praposal Type Selected" = Rec."Praposal Type Selected"::"Merge Unit");
     end;
 
-    procedure CalculateLeaseDuration1()
-    var
-        FetchMonth: Codeunit "Fetch Month";
-        LeaseStartDate: Date;
-        LeaseEndDate: Date;
-        Years: Integer;
-        Months: Integer;
-        Days: Integer;
-        DurationText: Text[50];
-        TempStartDate: Date;
-        daysInMonth: Integer;
-    begin
-        LeaseStartDate := Rec."Lease Start Date";
-        LeaseEndDate := Rec."Lease End Date";
 
-        if (LeaseStartDate <> 0D) and (LeaseEndDate <> 0D) then begin
-            if LeaseEndDate >= LeaseStartDate then begin
-
-                TempStartDate := LeaseStartDate;
-
-                Years := 0;
-                while (CALCDATE('<+1Y>', TempStartDate) <= LeaseEndDate) or
-                      (CALCDATE('<+1Y-1D>', TempStartDate) = LeaseEndDate) do begin
-                    TempStartDate := CALCDATE('<+1Y>', TempStartDate);
-                    Years := Years + 1;
-                end;
-
-                // Calculate the months
-                Months := 0;
-                while CALCDATE('<+1M>', TempStartDate) <= LeaseEndDate do begin
-                    TempStartDate := CALCDATE('<+1M>', TempStartDate);
-                    Months := Months + 1;
-                end;
-
-                // Calculate the remaining days
-                Days := LeaseEndDate - TempStartDate + 1;
-
-                if Days >= 28 then begin
-                    daysInMonth := FetchMonth.GetNoofDaysInMonth(Date2DMY(TempStartDate, 2), Date2DMY(TempStartDate, 3));
-                    if Days = daysInMonth then begin
-                        Months := Months + 1;
-                        Days := 0;
-                    end
-                    else
-                        if Days > daysInMonth then begin
-                            Months := Months + 1;
-                            Days := Days - daysInMonth;
-                        end;
-                end;
-
-                if Months = 12 then begin
-                    Years := Years + 1;
-                    Months := 0;
-                end
-                else
-                    if Months > 12 then begin
-                        Years := Years + (Months div 12);
-                        Months := Months mod 12;
-                    end;
-
-                DurationText := '';
-                if Years > 0 then
-                    DurationText := Format(Years) + ' year(s) ';
-
-                if Months > 0 then
-                    DurationText := CopyStr(DurationText, 1, StrLen(DurationText)) + Format(Months) + ' month(s) ';
-
-                if Days > 0 then
-                    DurationText := CopyStr(DurationText, 1, StrLen(DurationText)) + Format(Days) + ' day(s)';
-
-                Rec."Lease Duration" := DelChr(DurationText, '<>', ' ');
-            end else
-                Rec."Lease Duration" := '';
-        end else
-            Rec."Lease Duration" := '';
-    end;
-
-    procedure CalculateInstallments(DurationText: Text; Frequency: Text): Integer
-    var
-        fetchMonth: Codeunit "Fetch Month";
-        Years, Months, Days : Integer;
-        TotalMonths, MonthsPerInstallment, Installments : Integer;
-    begin
-        fetchMonth.ParseDuration(DurationText, Years, Months, Days);
-
-        TotalMonths := (Years * 12) + Months;
-
-        MonthsPerInstallment := fetchMonth.GetNoofMonthsFromFrequency(Frequency);
-
-        Installments := TotalMonths DIV MonthsPerInstallment;
-        if (TotalMonths MOD MonthsPerInstallment > 0) or (Days > 0) then
-            Installments += 1;
-
-        exit(Installments);
-    end;
 }
