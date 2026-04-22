@@ -1,4 +1,4 @@
-pageextension 50513 CustomerLedgerEntriesExt extends "Customer Ledger Entries"
+pageextension 73209590 CustomerLedgerEntriesExt extends "Customer Ledger Entries"
 {
     layout
     {

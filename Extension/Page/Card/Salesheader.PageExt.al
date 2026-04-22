@@ -1,4 +1,4 @@
-pageextension 50107 "Sales Header" extends "Sales Credit Memo"
+pageextension 73209586 "Sales Header" extends "Sales Credit Memo"
 {
     actions
     {

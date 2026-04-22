@@ -1,4 +1,4 @@
-pageextension 50514 GeneralLedgerEntriesExt extends "General Ledger Entries"
+pageextension 73209591 GeneralLedgerEntriesExt extends "General Ledger Entries"
 {
     layout
     {

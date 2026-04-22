@@ -1,4 +1,4 @@
-pageextension 50520 GeneralJournalExt extends "General Journal"
+pageextension 73209597 GeneralJournalExt extends "General Journal"
 {
     layout
     {

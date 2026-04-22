@@ -1,4 +1,4 @@
-pageextension 50518 VATEntryExt extends "VAT Entries"
+pageextension 73209595 VATEntryExt extends "VAT Entries"
 {
     layout
     {

@@ -1,4 +1,4 @@
-pageextension 50103 ItemListExtension extends "Item List"
+pageextension 73209600 ItemListExtension extends "Item List"
 {
     Caption = 'Unit list';
 

@@ -1,4 +1,4 @@
-pageextension 50516 ValueEntryExt extends "Value Entries"
+pageextension 73209593 ValueEntryExt extends "Value Entries"
 {
     layout
     {

@@ -2,7 +2,7 @@ namespace PropertyManagement.PropertyManagement;
 
 using Microsoft.Foundation.Attachment;
 
-pageextension 50500 MyDocumentAttachmentFactbox extends "Doc. Attachment List Factbox"
+pageextension 73209603 MyDocumentAttachmentFactbox extends "Doc. Attachment List Factbox"
 {
     layout
     {

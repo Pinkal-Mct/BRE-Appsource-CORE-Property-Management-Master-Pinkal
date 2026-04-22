@@ -1,4 +1,4 @@
-pageextension 50521 ApplyEntriesPageExt extends "Apply Customer Entries"
+pageextension 73209598 ApplyEntriesPageExt extends "Apply Customer Entries"
 {
     layout
     {

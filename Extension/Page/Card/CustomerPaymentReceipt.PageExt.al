@@ -1,4 +1,4 @@
-pageextension 50106 CustomerPaymentReceipt extends "Cash Receipt Journal"
+pageextension 73209578 CustomerPaymentReceipt extends "Cash Receipt Journal"
 {
     actions
     {

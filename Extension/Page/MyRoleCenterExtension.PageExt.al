@@ -1,4 +1,4 @@
-pageextension 50104 "MyRoleCenterExtension" extends "Business Manager Role Center"
+pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Center"
 {
     actions
     {
