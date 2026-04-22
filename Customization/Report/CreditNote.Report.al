@@ -4,7 +4,7 @@ using Microsoft.Sales.History;
 using Microsoft.Sales.Document;
 using Microsoft.Sales.Customer;
 using System.Text;
-report 50116 "Credit Note"
+report 73209580 "Credit Note"
 {
     ApplicationArea = All;
     Caption = 'Credit Note';

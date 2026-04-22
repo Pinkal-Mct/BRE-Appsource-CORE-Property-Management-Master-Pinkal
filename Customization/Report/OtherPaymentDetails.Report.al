@@ -1,6 +1,6 @@
 namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
-report 50110 "Other Payment Details"
+report 73209585 "Other Payment Details"
 {
     ApplicationArea = All;
     Caption = 'Other Payment Details';

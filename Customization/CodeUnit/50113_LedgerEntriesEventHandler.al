@@ -1,4 +1,4 @@
-codeunit 50113 "Ledger Entries Event Handler"
+codeunit 73209621 "Ledger Entries Event Handler"
 {
     Permissions = TableData "VAT Entry" = rimd;
 

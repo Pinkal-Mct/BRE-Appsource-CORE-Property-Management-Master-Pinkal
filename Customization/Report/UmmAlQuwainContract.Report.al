@@ -2,7 +2,7 @@ namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
 using Microsoft.Inventory.Item;
 using Microsoft.Sales.Customer;
-report 50115 UmmAlQuwainContract
+report 73209594 UmmAlQuwainContract
 {
     ApplicationArea = All;
     Caption = 'Umm Al Quwain Contract';

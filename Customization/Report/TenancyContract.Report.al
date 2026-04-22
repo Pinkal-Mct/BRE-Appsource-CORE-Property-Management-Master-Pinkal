@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 using Microsoft.Foundation.Company;
-report 50101 "Tenancy Contract"
+report 73209591 "Tenancy Contract"
 {
     ApplicationArea = All;
     Caption = 'Tenancy Contract';

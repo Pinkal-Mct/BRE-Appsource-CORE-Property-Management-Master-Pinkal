@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 using Microsoft.Foundation.Company;
-report 50108 "Contract Renewal"
+report 73209579 "Contract Renewal"
 {
     ApplicationArea = All;
     Caption = 'Contract Renewal';

@@ -1,4 +1,4 @@
-report 50118 "Unearned Rent Revenue"
+report 73209588 "Unearned Rent Revenue"
 {
     ApplicationArea = All;
     Caption = 'Unearned Rent Revenue';

@@ -4,7 +4,7 @@ using Microsoft.Sales.Customer;
 using Microsoft.Sales.Receivables;
 using Microsoft.Sales.History;
 using Microsoft.Foundation.Company;
-report 50112 PaymentReceipt
+report 73209586 PaymentReceipt
 {
     ApplicationArea = All;
     Caption = 'Payment Receipt';

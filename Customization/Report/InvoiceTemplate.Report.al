@@ -4,7 +4,7 @@ using Microsoft.Sales.Document;
 using System.Text;
 using Microsoft.Sales.History;
 using Microsoft.Bank.Check;
-report 50104 InvoiceTemplate
+report 73209583 InvoiceTemplate
 {
     ApplicationArea = All;
     Caption = 'InvoiceTemplate';

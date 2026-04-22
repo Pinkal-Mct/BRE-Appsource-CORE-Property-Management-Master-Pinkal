@@ -1,4 +1,4 @@
-codeunit 53752 "SendListPendingCreditNoteInv"
+codeunit 73209629 "SendListPendingCreditNoteInv"
 {
     trigger OnRun()
     var

@@ -1,4 +1,4 @@
-codeunit 50900 ShowDialogboxRejctionInvoice
+codeunit 73209630 ShowDialogboxRejctionInvoice
 {
     procedure DialogboxForRejection(var Rec: Record "Sales Header")
     var

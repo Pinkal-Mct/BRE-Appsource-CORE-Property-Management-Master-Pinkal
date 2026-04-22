@@ -1,4 +1,4 @@
-codeunit 50116 GenerateInvoiceCreditNoteFC
+codeunit 73209628 GenerateInvoiceCreditNoteFC
 {
     procedure GenerateBillingInvoice(var pInvoiceCreditNoteSummaryRec: Record InvoiceCreditNoteSummary)
     var

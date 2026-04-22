@@ -1,4 +1,4 @@
-codeunit 50905 "DialogboxRejectionCreditMemo"
+codeunit 73209627 "DialogboxRejectionCreditMemo"
 {
     procedure Dialogboxcreditmemo(var Rec: Record "Sales Header")
     var

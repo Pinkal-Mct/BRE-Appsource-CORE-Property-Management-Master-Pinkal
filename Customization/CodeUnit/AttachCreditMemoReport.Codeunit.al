@@ -1,4 +1,4 @@
-codeunit 50112 "Attach Credit Memo Report"
+codeunit 73209625 "Attach Credit Memo Report"
 {
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterSalesCrMemoHeaderInsert, '', false, false)]

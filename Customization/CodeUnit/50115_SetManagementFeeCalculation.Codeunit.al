@@ -1,4 +1,4 @@
-codeunit 50115 "SetManagementFeeCalculation"
+codeunit 73209623 "SetManagementFeeCalculation"
 {
     procedure BuildPropertyFilter(PropertyText: Text): Text
     var

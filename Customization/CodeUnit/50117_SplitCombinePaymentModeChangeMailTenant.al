@@ -1,4 +1,4 @@
-codeunit 50118 "SplitCombinePaymentModemail"
+codeunit 73209624 "SplitCombinePaymentModemail"
 {
     procedure SendTenantEmail(Rec: Record "Approval Payment Request")
     var

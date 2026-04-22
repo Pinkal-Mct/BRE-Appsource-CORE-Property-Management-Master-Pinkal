@@ -2,7 +2,7 @@ namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
 using System.Text;
 using Microsoft.Sales.Customer;
-report 50113 "Termination Template"
+report 73209593 "Termination Template"
 {
     ApplicationArea = All;
     Caption = 'Termination Template';

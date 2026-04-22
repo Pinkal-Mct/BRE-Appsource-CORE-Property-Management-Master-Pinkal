@@ -1,5 +1,5 @@
 namespace PropertyManagement.PropertyManagement;
-report 50107 "Revenue Allocation"
+report 73209589 "Revenue Allocation"
 {
     ApplicationArea = All;
     Caption = 'Revenue Allocation';

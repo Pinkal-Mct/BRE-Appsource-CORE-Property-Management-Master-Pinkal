@@ -1,5 +1,5 @@
 namespace PropertyManagement.PropertyManagement;
-report 50105 RevenueManagement
+report 73209590 RevenueManagement
 {
     ApplicationArea = All;
     Caption = 'RevenueManagement';

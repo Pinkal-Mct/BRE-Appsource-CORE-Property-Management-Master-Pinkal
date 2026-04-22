@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 using Microsoft.Foundation.Company;
-report 50102 "Proposal Report"
+report 73209587 "Proposal Report"
 {
     ApplicationArea = All;
     Caption = 'Proposal Report';

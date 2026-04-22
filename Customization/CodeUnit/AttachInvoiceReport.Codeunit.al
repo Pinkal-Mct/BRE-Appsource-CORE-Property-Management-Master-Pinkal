@@ -1,4 +1,4 @@
-codeunit 50111 "Attach Invoice Report"
+codeunit 73209626 "Attach Invoice Report"
 {
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterSalesInvHeaderInsert, '', false, false)]

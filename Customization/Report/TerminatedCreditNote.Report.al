@@ -3,7 +3,7 @@ using Microsoft.Foundation.Company;
 using Microsoft.Sales.Document;
 using Microsoft.Sales.Customer;
 using System.Text;
-report 50117 "Terminated Credit Note"
+report 73209592 "Terminated Credit Note"
 {
     ApplicationArea = All;
     Caption = 'Terminated Credit Note';
