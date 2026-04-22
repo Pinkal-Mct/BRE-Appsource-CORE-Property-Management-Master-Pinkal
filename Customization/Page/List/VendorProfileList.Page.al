@@ -1,11 +1,11 @@
-page 50944 "Vendor Profile List"
+page 73209815 "Vendor Profile List"
 {
     PageType = List;
     SourceTable = "Vendor Profile";
     ApplicationArea = All;
     Caption = 'Vendor Profiles';
     UsageCategory = Lists;
-    CardPageId = 50942;
+    CardPageId = 73209749;
 
     layout
     {

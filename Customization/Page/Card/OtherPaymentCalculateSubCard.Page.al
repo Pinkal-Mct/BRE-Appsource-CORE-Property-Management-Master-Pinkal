@@ -1,4 +1,4 @@
-page 50914 "OtherPayment Calculate SubCard"
+page 73209703 "OtherPayment Calculate SubCard"
 {
     PageType = ListPart;
     ApplicationArea = All;

@@ -1,4 +1,4 @@
-page 50150 "Base Amount Report Grid"
+page 73209751 "Base Amount Report Grid"
 {
     PageType = ListPart;
     SourceTable = "Base Amount Data";

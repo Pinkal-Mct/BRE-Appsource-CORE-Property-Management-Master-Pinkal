@@ -1,4 +1,4 @@
-page 50952 "Pending Recevieable Grid"
+page 73209715 "Pending Recevieable Grid"
 {
     PageType = ListPart;
     SourceTable = "Pending Receviable Grid";

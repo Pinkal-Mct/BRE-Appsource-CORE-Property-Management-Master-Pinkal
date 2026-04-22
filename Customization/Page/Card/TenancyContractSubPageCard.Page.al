@@ -1,4 +1,4 @@
-page 50939 "Tenancy Contract SubPage Card"
+page 73209746 "Tenancy Contract SubPage Card"
 {
     PageType = ListPart;
     ApplicationArea = All;

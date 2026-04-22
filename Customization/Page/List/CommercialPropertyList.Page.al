@@ -1,4 +1,4 @@
-page 50108 "Commercial Property List"
+page 73209768 "Commercial Property List"
 {
     PageType = List;
     SourceTable = "Property Registration";

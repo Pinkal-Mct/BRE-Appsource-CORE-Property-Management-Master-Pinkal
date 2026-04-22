@@ -1,11 +1,11 @@
-page 50925 "Payment Schedule Grid"
+page 73209793 "Payment Schedule Grid"
 {
     PageType = List;
     SourceTable = "Payment Schedule2";
     ApplicationArea = All;
     Caption = 'Payment Schedule Grid List';
     UsageCategory = None;
-    CardPageId = 50922;
+    CardPageId = 73209710;
 
     layout
     {

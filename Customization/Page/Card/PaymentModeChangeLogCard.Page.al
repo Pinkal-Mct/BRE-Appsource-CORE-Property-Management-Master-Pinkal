@@ -1,4 +1,4 @@
-page 50935 "PaymentModeChangeLogCard"
+page 73209707 "PaymentModeChangeLogCard"
 {
     PageType = ListPart;
     SourceTable = "PaymentModeChangeLog";

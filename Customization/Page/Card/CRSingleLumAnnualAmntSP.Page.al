@@ -1,4 +1,4 @@
-page 50344 "CR Single LumAnnualAmnt SP"
+page 73209686 "CR Single LumAnnualAmnt SP"
 {
     PageType = ListPart;
     SourceTable = "CR Single LumAnnualAmnt SP";

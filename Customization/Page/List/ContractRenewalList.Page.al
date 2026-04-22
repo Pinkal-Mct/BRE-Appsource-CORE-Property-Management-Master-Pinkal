@@ -1,10 +1,10 @@
-page 50336 "Contract Renewal List"
+page 73209773 "Contract Renewal List"
 {
     PageType = List;
     ApplicationArea = All;
     SourceTable = "Contract Renewal";
     Caption = 'Contract Renewal List';
-    CardPageId = 50335;
+    CardPageId = 73209680;
     UsageCategory = Lists;
 
     layout

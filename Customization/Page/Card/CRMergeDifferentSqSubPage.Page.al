@@ -1,4 +1,4 @@
-page 50341 "CR Merge DifferentSq SubPage"
+page 73209682 "CR Merge DifferentSq SubPage"
 {
     PageType = ListPart;
     SourceTable = "CR Merge DifferentSq SubPage";

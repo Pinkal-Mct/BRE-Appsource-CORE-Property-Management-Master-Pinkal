@@ -1,4 +1,4 @@
-page 50315 "Lease Proposal Card"
+page 73209697 "Lease Proposal Card"
 {
     PageType = Card;
     SourceTable = "Lease Proposal Details";

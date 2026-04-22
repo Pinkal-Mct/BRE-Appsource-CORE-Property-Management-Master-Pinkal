@@ -1,4 +1,4 @@
-page 50346 "CR Sub Lease Merged Units Card"
+page 73209688 "CR Sub Lease Merged Units Card"
 {
     PageType = ListPart;
     ApplicationArea = All;

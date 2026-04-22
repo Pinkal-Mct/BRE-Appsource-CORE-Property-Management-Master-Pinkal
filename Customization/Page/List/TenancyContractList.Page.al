@@ -1,11 +1,11 @@
-page 50314 "Tenancy Contract List"
+page 73209813 "Tenancy Contract List"
 {
     PageType = List;
     ApplicationArea = All;
     SourceTable = "Tenancy Contract";
     Caption = 'Tenancy Contract List';
     UsageCategory = Lists;
-    CardPageId = 50313;
+    CardPageId = 73209745;
 
     layout
     {

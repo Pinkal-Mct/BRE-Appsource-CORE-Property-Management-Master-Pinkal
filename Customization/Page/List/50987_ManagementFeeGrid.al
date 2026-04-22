@@ -1,4 +1,4 @@
-page 50987 "Management Fee Grid ListPart"
+page 73209752 "Management Fee Grid ListPart"
 {
     PageType = ListPart;
     SourceTable = "Management Fee Grid";

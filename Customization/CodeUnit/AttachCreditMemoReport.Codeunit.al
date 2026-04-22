@@ -32,7 +32,7 @@ codeunit 73209625 "Attach Credit Memo Report"
 
         SASUrlBase := ConfigRecord."SAS URL";
         FileExtension := '.pdf';
-        ReportID := 50116;
+        ReportID := 73209580;
         SalesHeader1.Reset();
         SalesHeader1.SetRange("No.", SalesHeader."No.");
         SalesHeader1.SetRange("Document Type", SalesHeader."Document Type"::"Credit Memo");

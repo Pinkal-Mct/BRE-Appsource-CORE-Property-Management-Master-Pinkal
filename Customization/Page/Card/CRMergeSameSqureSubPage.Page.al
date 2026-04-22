@@ -1,4 +1,4 @@
-page 50340 "CR Merge SameSqure SubPage"
+page 73209684 "CR Merge SameSqure SubPage"
 {
     PageType = ListPart;
     SourceTable = "CR Merge SameSqure SubPage";

@@ -1,4 +1,4 @@
-page 50965 "Brokerage Calculation Sub Card"
+page 73209676 "Brokerage Calculation Sub Card"
 {
     PageType = ListPart;
     SourceTable = "Brokerage Calculation Sub";

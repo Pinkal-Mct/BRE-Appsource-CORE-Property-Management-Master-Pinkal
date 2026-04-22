@@ -1,4 +1,4 @@
-page 50329 "Single Unit Rent SubPage"
+page 73209733 "Single Unit Rent SubPage"
 {
     PageType = ListPart;
     SourceTable = "Single Unit Rent SubPage";

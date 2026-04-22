@@ -1,11 +1,11 @@
-page 50913 "Revenue Structure List"
+page 73209805 "Revenue Structure List"
 {
     PageType = List;
     SourceTable = "Revenue Structure";
     ApplicationArea = All;
     Caption = 'Revenue Structure List';
     UsageCategory = Lists;
-    CardPageId = 50912;
+    CardPageId = 73209730;
 
 
     layout

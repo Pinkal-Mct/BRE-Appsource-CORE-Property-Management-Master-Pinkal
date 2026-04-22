@@ -1,4 +1,4 @@
-page 50327 "Suspend Reason Card"
+page 73209738 "Suspend Reason Card"
 {
     PageType = Card;
     SourceTable = SuspendReasonTable;

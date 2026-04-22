@@ -1,4 +1,4 @@
-page 50342 "CR Merge Lum_AnnualAmount SP"
+page 73209683 "CR Merge Lum_AnnualAmount SP"
 {
     PageType = ListPart;
     SourceTable = "CR Merge LumAnnualAmount SP";

@@ -1,4 +1,4 @@
-page 50981 "Request CreditNote Grid"
+page 73209800 "Request CreditNote Grid"
 {
     PageType = ListPart;
     SourceTable = "Request Credit Note Grid";

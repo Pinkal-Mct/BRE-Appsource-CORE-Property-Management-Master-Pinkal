@@ -1,4 +1,4 @@
-page 50510 "Cheque Management List"
+page 73209767 "Cheque Management List"
 {
     PageType = List;
     ApplicationArea = All;

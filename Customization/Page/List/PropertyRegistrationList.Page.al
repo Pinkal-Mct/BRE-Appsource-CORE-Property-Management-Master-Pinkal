@@ -1,10 +1,10 @@
-page 50306 "Property Registration List"
+page 73209797 "Property Registration List"
 {
     PageType = List;
     SourceTable = "Property Registration";
     ApplicationArea = All;
     UsageCategory = Lists;
-    CardPageId = 50305;
+    CardPageId = 73209717;
 
     layout
     {

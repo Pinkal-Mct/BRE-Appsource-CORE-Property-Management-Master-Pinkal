@@ -1,4 +1,4 @@
-page 50109 "Common Property List"
+page 73209770 "Common Property List"
 {
     PageType = List;
     SourceTable = "Property Registration";

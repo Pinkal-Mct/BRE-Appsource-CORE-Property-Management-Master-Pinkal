@@ -1,4 +1,4 @@
-page 50930 "Revenue Recognition Card"
+page 73209727 "Revenue Recognition Card"
 {
     PageType = Card;
     SourceTable = "Revenue Recognition";

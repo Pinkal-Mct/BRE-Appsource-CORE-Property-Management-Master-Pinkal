@@ -1,4 +1,4 @@
-page 50917 "Revenue Payment Schedule"
+page 73209726 "Revenue Payment Schedule"
 {
     PageType = ListPart;
     ApplicationArea = All;

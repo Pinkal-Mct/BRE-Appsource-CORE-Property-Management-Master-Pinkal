@@ -1,4 +1,4 @@
-page 50349 "TC Merge DifferentSq SubPage"
+page 73209739 "TC Merge DifferentSq SubPage"
 {
     PageType = ListPart;
     SourceTable = "TC Merge DifferentSq SubPage";

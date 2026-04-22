@@ -1,4 +1,4 @@
-page 50963 "Brokerage Calculation Card"
+page 73209675 "Brokerage Calculation Card"
 {
     PageType = Card;
     SourceTable = "Brokerage Calculation";

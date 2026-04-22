@@ -1,4 +1,4 @@
-page 50350 "TC Merge Lum_AnnualAmount SP"
+page 73209740 "TC Merge Lum_AnnualAmount SP"
 {
     PageType = ListPart;
     SourceTable = "TC Merge LumAnnualAmount SP";

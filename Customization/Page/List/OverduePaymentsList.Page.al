@@ -1,4 +1,4 @@
-page 50136 "Overdue Payments List" // Use an appropriate page number
+page 73209789 "Overdue Payments List" // Use an appropriate page number
 {
     PageType = List;
     SourceTable = "Payment Mode2"; // Replace with your actual payment table

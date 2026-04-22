@@ -1,11 +1,11 @@
-page 50508 "PDC Transactions"
+page 73209796 "PDC Transactions"
 {
     PageType = List;
     SourceTable = "PDC Transaction";
     ApplicationArea = All;
     Caption = 'PDC Transactions List';
     UsageCategory = Lists;
-    CardPageId = 50509;
+    CardPageId = 73209713;
     layout
     {
         area(content)

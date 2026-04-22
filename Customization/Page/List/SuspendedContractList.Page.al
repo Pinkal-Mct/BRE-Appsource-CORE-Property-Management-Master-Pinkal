@@ -1,4 +1,4 @@
-page 50133 "Suspended Contract List"
+page 73209811 "Suspended Contract List"
 {
     PageType = List;
     SourceTable = SuspendReasonTable;

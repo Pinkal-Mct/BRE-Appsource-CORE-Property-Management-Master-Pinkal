@@ -1,4 +1,4 @@
-page 50334 "Per Day Rent for Revenue Card"
+page 73209716 "Per Day Rent for Revenue Card"
 {
 
     PageType = ListPart;

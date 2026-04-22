@@ -1,4 +1,4 @@
-page 50928 "Payment Mode Card2"
+page 73209706 "Payment Mode Card2"
 {
     PageType = ListPart;
     SourceTable = "Payment Mode2";

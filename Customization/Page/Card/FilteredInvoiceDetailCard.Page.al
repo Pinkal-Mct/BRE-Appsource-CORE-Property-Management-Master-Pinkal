@@ -1,4 +1,4 @@
-page 50968 "Filtered Invoice Detail Card"
+page 73209690 "Filtered Invoice Detail Card"
 {
     PageType = ListPart;
     SourceTable = "Filtered Invoice Detail";

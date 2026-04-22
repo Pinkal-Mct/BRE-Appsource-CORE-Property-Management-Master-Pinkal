@@ -1,4 +1,4 @@
-page 50945 "Rent Calculation Card"
+page 73209720 "Rent Calculation Card"
 {
     PageType = Card;
     SourceTable = "Rent Calculation";

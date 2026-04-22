@@ -1,4 +1,4 @@
-page 50903 "Final Calculation Card"
+page 73209692 "Final Calculation Card"
 {
     PageType = Card;
     SourceTable = "Final Calculation";

@@ -1,4 +1,4 @@
-page 50331 "Sub Merged Units Card"
+page 73209737 "Sub Merged Units Card"
 {
     PageType = ListPart;
     ApplicationArea = All;

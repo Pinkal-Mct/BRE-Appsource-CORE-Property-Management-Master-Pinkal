@@ -1,4 +1,4 @@
-page 50502 "Property Registration SubPage"
+page 73209718 "Property Registration SubPage"
 {
     PageType = ListPart;
     ApplicationArea = All;

@@ -1,4 +1,4 @@
-page 50988 "Management Fee Calc Grid"
+page 73209753 "Management Fee Calc Grid"
 {
     PageType = ListPart;
     SourceTable = "Management Fee Calc. Line";
@@ -213,7 +213,7 @@ page 50988 "Management Fee Calc Grid"
                     //     Report.Run(50119, false, false, MgtFeeCalc);
                     // MgtFeeCalc.Reset();
                     MgtFeeCalc.SetRange("Entry No.", Rec."Header No.");
-                    Report.Run(50119, false, false, MgtFeeCalc);
+                    Report.Run(73209584, false, false, MgtFeeCalc);
                 end;
 
             }

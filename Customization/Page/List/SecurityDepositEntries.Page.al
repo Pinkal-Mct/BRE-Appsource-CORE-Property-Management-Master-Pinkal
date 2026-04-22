@@ -1,4 +1,4 @@
-page 50129 "Security Deposit Entries"
+page 73209807 "Security Deposit Entries"
 {
     PageType = List;
     ApplicationArea = All;

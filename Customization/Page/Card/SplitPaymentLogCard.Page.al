@@ -1,4 +1,4 @@
-page 50934 "SplitPaymentLogCard"
+page 73209735 "SplitPaymentLogCard"
 {
     PageType = ListPart;
     SourceTable = "SplitPaymentLog";

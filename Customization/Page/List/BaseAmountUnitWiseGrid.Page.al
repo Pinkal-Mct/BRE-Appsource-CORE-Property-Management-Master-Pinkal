@@ -1,4 +1,4 @@
-page 50151 "Base Amount Unit Wise Grid"
+page 73209763 "Base Amount Unit Wise Grid"
 {
     PageType = ListPart;
     SourceTable = "Base Amount Data Unit Wise";

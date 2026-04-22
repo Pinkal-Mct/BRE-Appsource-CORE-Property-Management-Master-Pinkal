@@ -1,4 +1,4 @@
-page 50909 "Revenue Item SubPage Card"
+page 73209725 "Revenue Item SubPage Card"
 {
     PageType = ListPart;
     ApplicationArea = All;

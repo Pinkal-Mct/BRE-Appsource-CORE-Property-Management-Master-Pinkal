@@ -1,4 +1,4 @@
-page 50131 "Customer Payment Receipt"
+page 73209774 "Customer Payment Receipt"
 {
     PageType = List;
     ApplicationArea = All;

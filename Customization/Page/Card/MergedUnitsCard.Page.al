@@ -1,4 +1,4 @@
-page 50317 "Merged Units Card"
+page 73209700 "Merged Units Card"
 {
     PageType = Card;
     ApplicationArea = All;

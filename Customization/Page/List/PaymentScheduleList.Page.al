@@ -1,11 +1,11 @@
-page 50923 "Payment Schedule List"
+page 73209794 "Payment Schedule List"
 {
     PageType = List;
     SourceTable = "Payment Schedule";
     ApplicationArea = All;
     Caption = 'Payment Schedule List';
     UsageCategory = Lists;
-    CardPageId = 50921;
+    CardPageId = 73209709;
 
 
     layout

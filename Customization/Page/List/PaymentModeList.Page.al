@@ -1,11 +1,11 @@
-page 50926 "Payment Mode List"
+page 73209791 "Payment Mode List"
 {
     PageType = List;
     SourceTable = "Payment Mode";
     ApplicationArea = All;
     Caption = 'Payment Mode List';
     UsageCategory = Lists;
-    CardPageId = 50927;
+    CardPageId = 73209705;
 
 
     layout

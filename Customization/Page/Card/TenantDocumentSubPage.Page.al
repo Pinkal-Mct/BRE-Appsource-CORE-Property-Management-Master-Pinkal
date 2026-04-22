@@ -1,4 +1,4 @@
-page 50503 "Tenant Document SubPage"
+page 73209747 "Tenant Document SubPage"
 {
     PageType = ListPart;
     ApplicationArea = All;

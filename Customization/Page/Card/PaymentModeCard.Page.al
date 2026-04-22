@@ -1,4 +1,4 @@
-page 50927 "Payment Mode Card"
+page 73209705 "Payment Mode Card"
 {
     PageType = Card;
     SourceTable = "Payment Mode";

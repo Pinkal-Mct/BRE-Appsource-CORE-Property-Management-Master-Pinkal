@@ -1,4 +1,4 @@
-page 50990 "InvoiceCreditNoteSummary"
+page 73209755 "InvoiceCreditNoteSummary"
 {
     PageType = ListPart;
     SourceTable = InvoiceCreditNoteSummary;

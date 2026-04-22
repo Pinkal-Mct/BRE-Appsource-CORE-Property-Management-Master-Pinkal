@@ -1,10 +1,10 @@
-page 50328 SuspendReasonList
+page 73209812 SuspendReasonList
 {
     PageType = List;
     ApplicationArea = All;
     SourceTable = SuspendReasonTable;
     Caption = 'Suspend Reason List';
-    CardPageId = 50327;
+    CardPageId = 73209738;
 
     UsageCategory = Lists;
 

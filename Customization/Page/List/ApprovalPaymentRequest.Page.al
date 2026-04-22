@@ -1,4 +1,4 @@
-page 50710 "Approval Payment Request"
+page 73209761 "Approval Payment Request"
 {
     PageType = List;
     SourceTable = "Approval Payment Request";

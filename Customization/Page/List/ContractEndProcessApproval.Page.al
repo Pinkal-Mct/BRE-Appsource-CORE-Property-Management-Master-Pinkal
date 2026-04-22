@@ -1,4 +1,4 @@
-page 50719 "Contract End Process Approval"
+page 73209772 "Contract End Process Approval"
 {
     PageType = List;
     SourceTable = ContractEndProcessApproval;

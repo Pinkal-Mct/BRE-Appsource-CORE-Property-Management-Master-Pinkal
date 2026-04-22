@@ -1,4 +1,4 @@
-page 50305 "Property Registration Card"
+page 73209717 "Property Registration Card"
 {
     PageType = Card;
     SourceTable = "Property Registration";

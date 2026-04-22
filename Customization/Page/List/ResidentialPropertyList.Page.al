@@ -1,4 +1,4 @@
-page 50107 "Residential Property List"
+page 73209802 "Residential Property List"
 {
     PageType = List;
     SourceTable = "Property Registration";

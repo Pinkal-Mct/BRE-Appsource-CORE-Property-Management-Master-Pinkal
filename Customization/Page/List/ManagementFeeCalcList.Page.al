@@ -1,11 +1,11 @@
-page 50148 "Management Fee Calc. List"
+page 73209782 "Management Fee Calc. List"
 {
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Administration;
     SourceTable = "Management Fee Calc. Header";
     Caption = 'Management Fee Calculation List';
-    CardPageId = 50146;
+    CardPageId = 73209698;
     ModifyAllowed = false;
     Editable = false;
 

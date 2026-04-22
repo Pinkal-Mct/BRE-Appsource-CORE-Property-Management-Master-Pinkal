@@ -1,4 +1,4 @@
-page 50929 "Split Payment Change Card"
+page 73209734 "Split Payment Change Card"
 {
     PageType = ListPart;
     SourceTable = "Split Payment Change";

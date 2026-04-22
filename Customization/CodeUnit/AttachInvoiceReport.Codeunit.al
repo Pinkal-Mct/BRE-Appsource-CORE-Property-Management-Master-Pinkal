@@ -32,7 +32,7 @@ codeunit 73209626 "Attach Invoice Report"
 
         SASUrlBase := ConfigRecord."SAS URL";
         FileExtension := '.pdf';
-        ReportID := 50104;
+        ReportID := 73209583;
         SalesHeader1.Reset();
         SalesHeader1.SetRange("No.", SalesHeader."No.");
         SalesHeader1.SetRange("Document Type", SalesHeader."Document Type"::Invoice);

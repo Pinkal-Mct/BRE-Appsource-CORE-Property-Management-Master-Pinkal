@@ -1,4 +1,4 @@
-page 50989 "FinalAdjuContractReduction"
+page 73209754 "FinalAdjuContractReduction"
 {
     PageType = ListPart;
     SourceTable = FinancialAdjContractReduction;

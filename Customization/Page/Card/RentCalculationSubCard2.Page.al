@@ -1,4 +1,4 @@
-page 50947 "Rent Calculation SubCard2"
+page 73209722 "Rent Calculation SubCard2"
 {
     PageType = ListPart;
     ApplicationArea = All;

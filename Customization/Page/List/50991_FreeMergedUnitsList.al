@@ -1,4 +1,4 @@
-page 50991 "Free Merged Unit list"
+page 73209756 "Free Merged Unit list"
 {
     PageType = List;
     SourceTable = "Merged Units";

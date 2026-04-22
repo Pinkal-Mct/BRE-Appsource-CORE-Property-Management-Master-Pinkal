@@ -1,4 +1,4 @@
-page 50333 "Single Lum_AnnualAmnt SubPage"
+page 73209732 "Single Lum_AnnualAmnt SubPage"
 {
     PageType = ListPart;
     SourceTable = "Single Lum_AnnualAmnt SubPage";

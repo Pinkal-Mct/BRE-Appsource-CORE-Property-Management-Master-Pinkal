@@ -1,4 +1,4 @@
-page 50347 "TC PerDayRent for Revenue Card"
+page 73209742 "TC PerDayRent for Revenue Card"
 {
     PageType = ListPart;
     ApplicationArea = All;

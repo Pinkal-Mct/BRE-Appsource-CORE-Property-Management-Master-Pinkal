@@ -1,4 +1,4 @@
-page 50135 "Upcoming Payments List" // Use an appropriate page number
+page 73209814 "Upcoming Payments List" // Use an appropriate page number
 {
     PageType = List;
     SourceTable = "Payment Mode2"; // Replace with your actual payment table

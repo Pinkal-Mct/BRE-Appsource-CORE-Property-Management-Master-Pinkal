@@ -1,10 +1,10 @@
-page 50338 "Security Deposit List"
+page 73209809 "Security Deposit List"
 {
     PageType = List;
     SourceTable = "Security Deposit";
     ApplicationArea = All;
     Caption = 'Security Deposits';
-    CardPageId = 50337;
+    CardPageId = 73209731;
     UsageCategory = Lists;
 
     layout

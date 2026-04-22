@@ -1,4 +1,4 @@
-page 50911 "Revenue Calculate Sub Card"
+page 73209724 "Revenue Calculate Sub Card"
 {
     PageType = ListPart;
     ApplicationArea = All;

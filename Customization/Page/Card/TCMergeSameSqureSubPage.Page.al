@@ -1,4 +1,4 @@
-page 50348 "TC Merge SameSqure SubPage"
+page 73209741 "TC Merge SameSqure SubPage"
 {
     PageType = ListPart;
     SourceTable = "TC Merge SameSqure SubPage";

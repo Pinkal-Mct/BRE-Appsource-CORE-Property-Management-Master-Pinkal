@@ -1,4 +1,4 @@
-page 50106 "Common Unit List"
+page 73209771 "Common Unit List"
 {
     PageType = List;
     SourceTable = item;

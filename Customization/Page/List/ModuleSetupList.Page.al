@@ -1,4 +1,4 @@
-page 50507 "Module Setup List"
+page 73209785 "Module Setup List"
 {
     PageType = List;
     ApplicationArea = All;

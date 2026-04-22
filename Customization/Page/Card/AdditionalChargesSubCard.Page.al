@@ -1,4 +1,4 @@
-page 50906 "Additional Charges Sub Card"
+page 73209672 "Additional Charges Sub Card"
 {
     PageType = ListPart;
     ApplicationArea = All;

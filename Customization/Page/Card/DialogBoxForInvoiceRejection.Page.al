@@ -1,4 +1,4 @@
-page 50949 DialogBoxForInvoiceRejection
+page 73209689 DialogBoxForInvoiceRejection
 {
     PageType = StandardDialog;
     Caption = 'Enter Reason Rejection';

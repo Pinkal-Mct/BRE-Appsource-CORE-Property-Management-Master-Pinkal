@@ -1,4 +1,4 @@
-page 50938 "FinalSettlemtCard"
+page 73209694 "FinalSettlemtCard"
 {
     PageType = ListPart;
     SourceTable = "FinalSettlement";

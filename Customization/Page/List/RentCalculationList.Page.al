@@ -1,11 +1,11 @@
-page 50948 "Rent Calculation List"
+page 73209798 "Rent Calculation List"
 {
     PageType = List;
     SourceTable = "Rent Calculation";
     ApplicationArea = All;
     Caption = 'Rent Calculation List';
     UsageCategory = Lists;
-    CardPageId = 50945;
+    CardPageId = 73209720;
 
 
     layout

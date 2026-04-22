@@ -1,4 +1,4 @@
-page 50337 "Security Deposit Card"
+page 73209731 "Security Deposit Card"
 {
     PageType = Card;
     SourceTable = "Security Deposit";

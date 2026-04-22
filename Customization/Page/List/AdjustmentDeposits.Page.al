@@ -1,4 +1,4 @@
-page 50145 "Adjustment Deposits"
+page 73209759 "Adjustment Deposits"
 {
     PageType = ListPart;
     ApplicationArea = All;

@@ -1,4 +1,4 @@
-page 50146 "Management Fee Calc."
+page 73209698 "Management Fee Calc."
 {
     PageType = Card;
     ApplicationArea = All;

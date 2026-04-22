@@ -1,4 +1,4 @@
-page 50101 "Residential Unit List"
+page 73209803 "Residential Unit List"
 {
     PageType = List;
     SourceTable = item;

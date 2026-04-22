@@ -1,4 +1,4 @@
-page 50986 "Mangement Fee Master Card"
+page 73209671 "Mangement Fee Master Card"
 {
     SourceTable = "Management Fee MasterData";
     ApplicationArea = All;

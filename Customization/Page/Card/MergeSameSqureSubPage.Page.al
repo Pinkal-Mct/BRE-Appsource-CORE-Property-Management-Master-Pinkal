@@ -1,4 +1,4 @@
-page 50118 "Merge SameSqure SubPage"
+page 73209702 "Merge SameSqure SubPage"
 {
     PageType = ListPart;
     SourceTable = "Merge SameSqure SubPage";

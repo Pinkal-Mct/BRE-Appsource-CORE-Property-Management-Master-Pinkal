@@ -1,11 +1,11 @@
-page 50954 "Management Fee MasterData List"
+page 73209783 "Management Fee MasterData List"
 {
     PageType = List;
     SourceTable = "Management Fee MasterData";
     ApplicationArea = All;
     Caption = 'Management Fee Master Data';
     UsageCategory = Lists;
-    CardPageId = 50986;
+    CardPageId = 73209671;
     layout
     {
         area(Content)

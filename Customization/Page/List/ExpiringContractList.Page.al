@@ -1,4 +1,4 @@
-page 50134 "Expiring Contract List"
+page 73209775 "Expiring Contract List"
 {
     PageType = List;
     SourceTable = "Tenancy Contract";

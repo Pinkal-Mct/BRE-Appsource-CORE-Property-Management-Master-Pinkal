@@ -1,4 +1,4 @@
-page 50120 "Merge Lum_AnnualAmount SubPage"
+page 73209701 "Merge Lum_AnnualAmount SubPage"
 {
     PageType = ListPart;
     SourceTable = "Merge Lum_AnnualAmount SubPage";

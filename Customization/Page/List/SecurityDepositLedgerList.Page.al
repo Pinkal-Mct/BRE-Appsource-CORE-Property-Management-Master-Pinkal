@@ -1,4 +1,4 @@
-page 50521 "Security Deposit Ledger List"
+page 73209808 "Security Deposit Ledger List"
 {
     PageType = List;
     ApplicationArea = All;

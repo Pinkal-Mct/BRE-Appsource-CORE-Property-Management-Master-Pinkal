@@ -1,4 +1,4 @@
-page 50972 "OverduePaymentmodelist"
+page 73209788 "OverduePaymentmodelist"
 {
     PageType = List;
     SourceTable = "OverDuePaymentmode";

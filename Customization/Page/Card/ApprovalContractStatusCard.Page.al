@@ -1,4 +1,4 @@
-page 50320 "Approval Contract Status Card"
+page 73209673 "Approval Contract Status Card"
 {
     PageType = Card;
     SourceTable = "Approval Contract Status";

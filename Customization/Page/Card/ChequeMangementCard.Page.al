@@ -1,4 +1,4 @@
-page 50511 "Cheque Mangement Card"
+page 73209678 "Cheque Mangement Card"
 {
     PageType = Card;
     ApplicationArea = All;

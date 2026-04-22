@@ -1,4 +1,4 @@
-page 50149 "Base Amount Card"
+page 73209670 "Base Amount Card"
 {
     PageType = Card;
     ApplicationArea = All;

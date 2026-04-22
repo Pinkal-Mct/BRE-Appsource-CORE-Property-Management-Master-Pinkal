@@ -1,5 +1,5 @@
 #pragma warning disable AW0006
-page 50335 "Contract Renewal Card"
+page 73209680 "Contract Renewal Card"
 #pragma warning restore AW0006
 {
     PageType = Card;

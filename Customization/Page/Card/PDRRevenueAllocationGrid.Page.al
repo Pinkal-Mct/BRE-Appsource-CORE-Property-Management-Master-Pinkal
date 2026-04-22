@@ -1,4 +1,4 @@
-page 50121 "PDR Revenue Allocation Grid"
+page 73209714 "PDR Revenue Allocation Grid"
 {
     PageType = List;
     SourceTable = "PDR Revenue Allocation Details";

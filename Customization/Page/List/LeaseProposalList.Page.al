@@ -1,10 +1,10 @@
-page 50316 "Lease Proposal List"
+page 73209780 "Lease Proposal List"
 {
     PageType = List;
     ApplicationArea = All;
     SourceTable = "Lease Proposal Details";
     Caption = 'Lease Proposals';
-    CardPageId = 50315;
+    CardPageId = 73209697;
     UsageCategory = Lists;
 
     layout

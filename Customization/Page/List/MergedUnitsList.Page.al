@@ -1,11 +1,11 @@
-page 50318 "Merged Units List"
+page 73209784 "Merged Units List"
 {
     PageType = List;
     ApplicationArea = All;
     SourceTable = "Merged Units";
     Caption = 'Merged Units';
     UsageCategory = Lists;
-    CardPageId = 50317;
+    CardPageId = 73209700;
 
     layout
     {

@@ -1,4 +1,4 @@
-page 50920 "Workflow Frequency PR Card"
+page 73209750 "Workflow Frequency PR Card"
 {
     PageType = ListPart;
     SourceTable = "Workflow Frequency PR";

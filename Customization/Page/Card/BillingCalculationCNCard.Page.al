@@ -1,4 +1,4 @@
-page 50970 "Billing Calculation CN Card"
+page 73209674 "Billing Calculation CN Card"
 {
     PageType = ListPart;
     SourceTable = "Billing Calculation CN";

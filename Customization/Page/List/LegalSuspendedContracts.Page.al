@@ -1,4 +1,4 @@
-page 50137 "Legal Suspended Contracts" // Use an appropriate page number
+page 73209781 "Legal Suspended Contracts" // Use an appropriate page number
 {
     PageType = List;
     SourceTable = SuspendReasonTable;

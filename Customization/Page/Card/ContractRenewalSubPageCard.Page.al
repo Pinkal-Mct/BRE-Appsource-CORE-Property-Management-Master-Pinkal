@@ -1,4 +1,4 @@
-page 50941 "Contract Renewal SubPage Card"
+page 73209681 "Contract Renewal SubPage Card"
 {
     PageType = ListPart;
     ApplicationArea = All;

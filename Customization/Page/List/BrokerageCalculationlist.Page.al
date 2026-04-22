@@ -1,11 +1,11 @@
-page 50962 "Brokerage Calculation List"
+page 73209764 "Brokerage Calculation List"
 {
     PageType = List;
     SourceTable = "Brokerage Calculation";
     ApplicationArea = All;
     Caption = 'Brokerage Calculation List';
     UsageCategory = Lists;
-    CardPageId = 50963;
+    CardPageId = 73209675;
 
     layout
     {

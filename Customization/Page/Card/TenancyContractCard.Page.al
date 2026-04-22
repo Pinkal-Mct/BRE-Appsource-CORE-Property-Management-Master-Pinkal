@@ -1,4 +1,4 @@
-page 50313 "Tenancy Contract Card"
+page 73209745 "Tenancy Contract Card"
 {
     PageType = Card;
     ApplicationArea = All;

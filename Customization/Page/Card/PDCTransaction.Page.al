@@ -1,4 +1,4 @@
-page 50509 "PDC Transaction"
+page 73209713 "PDC Transaction"
 {
     PageType = Card;
     ApplicationArea = All;

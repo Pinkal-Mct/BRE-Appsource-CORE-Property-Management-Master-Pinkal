@@ -1,4 +1,4 @@
-page 50971 "RevenueRecognition Othercharge"
+page 73209729 "RevenueRecognition Othercharge"
 {
     PageType = ListPart;
     SourceTable = "RevenueRecognition Othercharge";

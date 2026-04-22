@@ -1,4 +1,4 @@
-page 50980 "Request Credit Note Card"
+page 73209723 "Request Credit Note Card"
 {
     PageType = Card;
     SourceTable = "Request Credit Note";

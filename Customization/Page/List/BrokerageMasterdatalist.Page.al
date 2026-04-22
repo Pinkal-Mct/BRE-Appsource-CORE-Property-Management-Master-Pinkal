@@ -1,4 +1,4 @@
-page 50961 "Brokerage Master Data List"
+page 73209765 "Brokerage Master Data List"
 {
     PageType = List;
     SourceTable = "Brokerage Master Data";

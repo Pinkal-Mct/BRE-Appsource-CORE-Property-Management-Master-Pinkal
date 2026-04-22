@@ -1,11 +1,11 @@
-page 50900 "Final Calculation List"
+page 73209776 "Final Calculation List"
 {
     PageType = List;
     SourceTable = "Final Calculation";
     ApplicationArea = All;
     Caption = 'Final Calculation List';
     UsageCategory = Lists;
-    CardPageId = 50903;
+    CardPageId = 73209692;
     insertAllowed = false;
     modifyAllowed = false;
 

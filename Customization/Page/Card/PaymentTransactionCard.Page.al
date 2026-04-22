@@ -1,4 +1,4 @@
-page 50516 "Payment Transaction Card"
+page 73209712 "Payment Transaction Card"
 {
     PageType = Card;
     ApplicationArea = All;

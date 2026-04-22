@@ -1,4 +1,4 @@
-page 50517 "Payment Series Grid"
+page 73209711 "Payment Series Grid"
 {
     PageType = ListPart;
     ApplicationArea = All;

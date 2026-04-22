@@ -1,4 +1,4 @@
-page 50128 "Termination Charges Sub Card"
+page 73209748 "Termination Charges Sub Card"
 {
     PageType = ListPart;
     ApplicationArea = All;
