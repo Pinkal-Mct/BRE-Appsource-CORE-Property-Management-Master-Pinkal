@@ -573,7 +573,7 @@ page 73209706 "Payment Mode Card2"
                     PrePDCTransRec: Record "PDC Transaction";
                     PDCTransRec: Record "PDC Transaction";
                     paymentRec: Record "Payment Mode";
-                    approvalflow: Codeunit 50510;
+                    approvalflow: Codeunit 73209605;
                     Isupdate: Boolean;
                 begin
                     Isupdate := false;
@@ -651,7 +651,7 @@ page 73209706 "Payment Mode Card2"
                     PDCTransRec: Record "PDC Transaction";
                     PrePDCTransRec: Record "PDC Transaction";
                     PaymentModeRec: Record "Payment Mode2";
-                    approvalflow: Codeunit 50510;
+                    approvalflow: Codeunit 73209605;
                     Isupdate: Boolean;
                     approvalEnum: Enum "Approval Status Enum";
                 begin

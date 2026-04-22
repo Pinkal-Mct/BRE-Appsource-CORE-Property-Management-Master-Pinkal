@@ -86,7 +86,7 @@ page 73209718 "Property Registration SubPage"
                     begin
                         // Find the attachment record
                         AttachmentRec.SetRange("No.", Format(Rec.PropertyID));
-                        AttachmentRec.SetRange("Table ID", 50501); // Adjust to match your table ID
+                        AttachmentRec.SetRange("Table ID", 73209660); // Adjust to match your table ID
                         AttachmentRec.SetRange("File Name", Rec."Upload Document");
 
                         if AttachmentRec.FindSet() then begin

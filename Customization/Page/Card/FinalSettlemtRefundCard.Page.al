@@ -160,7 +160,7 @@ page 73209695 "FinalSettlemtRefundCard"
 
                                 Email.SendEmail(Rec);
 
-                                ReportID := 50120;
+                                ReportID := 73209582;
                                 //  RecRef.Open(DATABASE::"Sales Header"); // Open the table reference
                                 // RecRef.GetTable(Rec);
                                 finalSettlementRefund.Reset();
