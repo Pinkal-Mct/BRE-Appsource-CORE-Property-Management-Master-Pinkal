@@ -408,7 +408,7 @@ page 73209807 "Security Deposit Entries"
         GenJnlBatch.Reset();
         GenJnlBatch.SetRange("Journal Template Name", JournalTemplateName);
         GenJnlBatch.SetRange(Name, JournalBatchName);
-        if not GenJnlBatch.IsEmpty() then
+        if GenJnlBatch.IsEmpty() then
             Error('The Journal Batch %1 does not exist for template %2.', JournalBatchName, JournalTemplateName);
 
         PostingDate := Today();
