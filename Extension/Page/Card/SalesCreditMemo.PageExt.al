@@ -207,9 +207,9 @@ pageextension 73209585 SalesCreditMemo extends "Sales Credit Memo"
             case UserPersonalization."Profile ID" of
                 'PROPERTY MANAGER':
                     exit(false);
-                'LEASE_MANAGER':
+                'LEASE MANAGER':
                     exit(false);
-                'finance manager':
+                'FINANCE MANAGER':
                     exit(true);
             end;
         exit(false);

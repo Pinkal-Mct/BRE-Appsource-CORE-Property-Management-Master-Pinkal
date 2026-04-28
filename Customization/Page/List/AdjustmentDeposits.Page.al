@@ -134,7 +134,7 @@ page 73209759 "Adjustment Deposits"
                             RefundDepositAmount(adjustmentDepositsRec, Previewed);
                             if adjustmentDepositsRec."Item Description" = adjustmentDepositsRec."Item Description"::"Security Deposit" then begin
                                 TenancyContractRec.SetRange("Contract ID", adjustmentDepositsRec."Contract ID");
-                                if not TenancyContractRec.IsEmpty() then begin
+                                if TenancyContractRec.FindFirst() then begin
                                     TenancyContractRec.Validate(Refund, TenancyContractRec.Refund + adjustmentDepositsRec.Amount);
                                     TenancyContractRec.Modify();
                                 end;

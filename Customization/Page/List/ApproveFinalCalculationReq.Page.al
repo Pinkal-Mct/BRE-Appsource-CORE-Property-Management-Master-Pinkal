@@ -185,7 +185,7 @@ page 73209762 "Approve FinalCalculation Req"
     var
 
     begin
-        // Check if the current user has the 'LEASE_MANAGER' permission set
+        // Check if the current user has the 'LEASE MANAGER' permission set
 
         IsFinanceManager := VisibleApproveAction();
     end;
@@ -199,9 +199,9 @@ page 73209762 "Approve FinalCalculation Req"
             case UserPersonalization."Profile ID" of
                 'PROPERTY MANAGER':
                     exit(false);
-                'LEASE_MANAGER':
+                'LEASE MANAGER':
                     exit(false);
-                'finance manager':
+                'FINANCE MANAGER':
                     exit(true);
             end;
 

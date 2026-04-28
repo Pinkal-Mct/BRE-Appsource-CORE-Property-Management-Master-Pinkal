@@ -172,7 +172,7 @@ page 73209708 "Payment Schedule"
                     begin
 
                         RevenueStructure1.SetRange("RS ID", Rec."RS ID");
-                        if not RevenueStructure1.IsEmpty() then
+                        if RevenueStructure1.FindFirst() then
                             if RevenueStructure1.Amount <> Rec."Total Amount" then
                                 Error('Total Amount (%1) must match the Amount field (%2). Please correct the values.', Rec."Total Amount", RevenueStructure1.Amount)
                             else begin

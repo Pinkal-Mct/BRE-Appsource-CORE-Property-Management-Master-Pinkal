@@ -64,10 +64,10 @@ page 73209712 "Payment Transaction Card"
     var
         PermissionSet: Record "User Personalization";
     begin
-        // Check if the current user has the 'LEASE_MANAGER' permission set
+        // Check if the current user has the 'LEASE MANAGER' permission set
         IsFinanceManager := false;
         PermissionSet.SetRange("User ID", UserId());
-        // PermissionSet.SetRange("Profile ID", 'LEASE_MANAGER');
+        // PermissionSet.SetRange("Profile ID", 'LEASE MANAGER');
         if PermissionSet.FindFirst() then
             if PermissionSet."Profile ID" = 'FINANCE MANAGER' then
                 IsFinanceManager := true;

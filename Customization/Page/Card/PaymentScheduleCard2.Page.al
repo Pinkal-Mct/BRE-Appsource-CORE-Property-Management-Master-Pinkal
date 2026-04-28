@@ -400,9 +400,9 @@ page 73209710 "Payment Schedule Card2"
             case UserPersonalization1."Profile ID" of
                 'PROPERTY MANAGER':
                     exit(false);
-                'LEASE_MANAGER':
+                'LEASE MANAGER':
                     exit(false);
-                'finance manager':
+                'FINANCE MANAGER':
                     exit(true);
             end;
         exit(false);

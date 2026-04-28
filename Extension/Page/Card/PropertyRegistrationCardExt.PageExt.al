@@ -10,7 +10,7 @@ pageextension 73209584 PropertyRegistrationCardExt extends "Property Registratio
 
     trigger OnOpenPage()
     begin
-        ShowDocAttachment := not (IsUserInProfile('LEASE_MANAGER') or IsUserInProfile('FINANCE MANAGER'));
+        ShowDocAttachment := not (IsUserInProfile('LEASE MANAGER') or IsUserInProfile('FINANCE MANAGER'));
     end;
 
     var

@@ -132,6 +132,9 @@ page 73209713 "PDC Transaction"
                         // if (xRec."Cheque Status" = xRec."Cheque Status"::Cancelled) and (Rec."Cheque Status" = Rec."Cheque Status"::Cleared) OR (Rec."Cheque Status" = Rec."Cheque Status"::Deposited) OR (Rec."Cheque Status" = Rec."Cheque Status"::Returned) OR (Rec."Cheque Status" = Rec."Cheque Status"::Deferred) OR (Rec."Cheque Status" = Rec."Cheque Status"::"Replaced & Received") OR (Rec."Cheque Status" = Rec."Cheque Status"::Retrieved) OR (Rec."Cheque Status" = Rec."Cheque Status"::"Cheque Received") then
                         //     Error('Cannot change Cancelled status to %1', Rec."Cheque Status");
 
+                        if (xRec."Cheque Status" = xRec."Cheque Status"::Deposited) then
+                            if (Rec."Cheque Status" = Rec."Cheque Status"::"Cheque Received") then
+                                Error('Cannot change Deposited status to %1', Rec."Cheque Status");
 
                         if (xRec."Cheque Status" = xRec."Cheque Status"::Cleared) then
                             Error('Cannot change Cleared status to %1', Rec."Cheque Status");
@@ -518,12 +521,12 @@ page 73209713 "PDC Transaction"
     var
         PermissionSet: Record "User Personalization";
     begin
-        // Check if the current user has the 'LEASE_MANAGER' permission set
+        // Check if the current user has the 'LEASE MANAGER' permission set
         IsFinanceManager := false;
         PermissionSet.SetRange("User ID", UserId());
-        // PermissionSet.SetRange("Profile ID", 'LEASE_MANAGER');
-        if not PermissionSet.IsEmpty() then
-            if PermissionSet."Profile ID" = 'LEASE_MANAGER' then
+        // PermissionSet.SetRange("Profile ID", 'LEASE MANAGER');
+        if PermissionSet.FindFirst() then
+            if PermissionSet."Profile ID" = 'LEASE MANAGER' then
                 IsLeaseManager := true
 
             else

@@ -19,8 +19,8 @@ pageextension 73209580 OwnerProfileCardExt extends "Owner Profile Card"
 
     trigger OnOpenPage()
     begin
-        ShowBankingInfo := not (IsUserInProfile('LEASE_MANAGER') or IsUserInProfile('PROPERTY MANAGER'));
-        ShowOwnerDocs := not IsUserInProfile('LEASE_MANAGER');
+        ShowBankingInfo := not (IsUserInProfile('LEASE MANAGER') or IsUserInProfile('PROPERTY MANAGER'));
+        ShowOwnerDocs := not IsUserInProfile('LEASE MANAGER');
     end;
 
     var

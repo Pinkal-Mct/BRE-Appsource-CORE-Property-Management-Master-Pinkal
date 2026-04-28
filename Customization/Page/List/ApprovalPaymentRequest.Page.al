@@ -418,7 +418,6 @@ page 73209761 "Approval Payment Request"
                         PaymentChangeReqTable.SetRange("Contract ID", Rec."Contract ID");
                         PaymentChangeReqTable.SetRange("Tenant ID", Rec."Tenant ID");
                         PaymentChangeReqTable.SetRange("ID", Rec."ID");
-                        PaymentChangeReqTable.SetRange(Status, 'Approve');
                         PaymentChangeReqTable.SetRange("Request Type", 'Combine');
 
                         if not PaymentChangeReqTable.FindSet() then begin
@@ -635,7 +634,7 @@ page 73209761 "Approval Payment Request"
 
     trigger OnOpenPage()
     begin
-        // Check if the current user has the 'LEASE_MANAGER' permission set
+        // Check if the current user has the 'LEASE MANAGER' permission set
         IsFinanceManager := VisibleApproveAction();
     end;
 
@@ -648,9 +647,9 @@ page 73209761 "Approval Payment Request"
             case UserPersonalization."Profile ID" of
                 'PROPERTY MANAGER':
                     exit(false);
-                'LEASE_MANAGER':
+                'LEASE MANAGER':
                     exit(false);
-                'finance manager':
+                'FINANCE MANAGER':
                     exit(true);
             end;
 

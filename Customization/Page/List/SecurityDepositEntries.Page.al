@@ -736,7 +736,7 @@ page 73209807 "Security Deposit Entries"
         GenJnlLine.Reset();
         GenJnlLine.SetRange("Journal Template Name", JournalTemplateName);
         GenJnlLine.SetRange("Journal Batch Name", JournalBatchName);
-        if not GenJnlLine.IsEmpty() then begin
+        if GenJnlLine.FindFirst() then begin
             if Confirm('Do you want to post journal lines?', true) then begin
                 Codeunit.Run(Codeunit::"Gen. Jnl.-Post", GenJnlLine);
                 Message('Journal entries have been created and posted successfully');

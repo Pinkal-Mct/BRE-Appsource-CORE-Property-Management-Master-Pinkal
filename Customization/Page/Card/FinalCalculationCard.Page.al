@@ -244,88 +244,10 @@ page 73209692 "Final Calculation Card"
                     ToolTip = 'Stores the URL for the credit note document.';
                 }
 
-                // field("Credit Note"; Rec."Credit Note")
-                // {
-                //     ApplicationArea = All;
-                //     Editable = false;
-                //     DrillDown = true;
-                //     trigger OnDrillDown()
-                //     var
-                //         finalcalculation: Record "Final Calculation";
-                //         creditnote: Record "Credit Note";
-                //         creditnoteid: Integer;
-                //         creditnotecard: Page "Credit Note Card";
-                //     begin
-                //         creditnote.SetRange("Contract ID", Rec."Contract ID");
 
-                //         if creditnote.FindSet() then begin
-                //             creditnote."Contract ID" := Rec."Contract ID";
-                //             creditnote."FC ID" := Rec."FC ID";
-                //             creditnote."Contract Start Date" := Rec."Contract Start Date";
-                //             creditnote."Contract End Date" := Rec."Contract End Date";
-                //             creditnote."Contract Amount" := Rec."Contract Amount";
-                //             creditnote."Unit Type" := Rec."Unit Type";
-                //             creditnote."Tenant ID" := Rec."Tenant ID";
-                //             creditnote."Tenant Email" := Rec."Tenant Email";
-                //             creditnote."Tenant Name" := Rec."Tenant Name";
-                //             creditnote."Credit Note Type" := creditnote."Credit Note Type"::"Termination Credit Note";
-                //             creditnote.Modify();
-                //             Message('Credit Note Modify Successfully');
-                //             creditnote."FC ID" := Rec."FC ID";
-                //         end else begin
-                //             creditnote.Init();
-                //             creditnote."Contract ID" := Rec."Contract ID";
-                //             creditnote."FC ID" := Rec."FC ID";
-                //             creditnote."Contract Start Date" := Rec."Contract Start Date";
-                //             creditnote."Contract End Date" := Rec."Contract End Date";
-                //             creditnote."Contract Amount" := Rec."Contract Amount";
-                //             creditnote."Unit Type" := Rec."Unit Type";
-                //             creditnote."Tenant ID" := Rec."Tenant ID";
-                //             creditnote."Tenant Email" := Rec."Tenant Email";
-                //             creditnote."Tenant Name" := Rec."Tenant Name";
-                //             creditnote."Credit Note Type" := creditnote."Credit Note Type"::"Termination Credit Note";
-                //             creditnote.Insert();
-                //             Message('Credit Note Insert Successfully');
-                //             Clear(creditnote);
-
-                //             if creditnote.FindLast() then begin
-                //                 // If found, get the latest RS ID
-                //                 creditnoteid := creditnote."ID";
-                //             end else begin
-                //                 // If no record is found, create a new Revenue Structure record
-                //                 creditnote.Init();
-                //                 creditnote.Insert(true);
-                //                 creditnote.Modify(true);  // Insert the new record and generate the RS ID
-                //             end;
-                //             Rec."Credit Note ID" := creditnoteid;
-                //         end;
-                //     end;
-                // }
-                // field("Credit Note ID"; Rec."Credit Note ID")
-                // {
-                //     ApplicationArea = All;
-                //     Editable = false;
-                //     DrillDown = true;
-                //     trigger OnDrillDown()
-                //     var
-                //         creditnote: Record "Credit Note";
-                //     begin
-                //         if creditnote.Get(Rec."Credit Note ID") then
-                //             PAGE.RUN(PAGE::"Credit Note Card", creditnote)
-                //         else
-                //             Message('The related Credit Note does not exist.');
-                //     end;
-                // }
             }
 
-            // group("Final Revenue Calculation")
-            // {
-            //     part("FinalRevenueCalculation"; "Final Revenue Calculation Grid")
-            //     {
-            //         SubPageLink = "Contract ID" = FIELD("Contract ID");
-            //         ApplicationArea = All;
-            //     }
-            // }
+
             part("FinalRevenueCalculation"; "Final Revenue Calculation Grid")
             {
                 SubPageLink = "Contract ID" = FIELD("Contract ID");
@@ -378,18 +300,7 @@ page 73209692 "Final Calculation Card"
                     Editable = false;
                     ToolTip = 'Shows the amount of the carried forward security deposit.';
                 }
-                // field("Adjustment Security Deposit"; Rec."Adjustment Security Deposit")
-                // {
-                //     ApplicationArea = All;
-                //     Editable = false;
-                //     ToolTip = 'Displays the adjusted security deposit amount.';
-                // }
-                // field("Net Balance"; Rec."Net Balance")
-                // {
-                //     ApplicationArea = All;
-                //     Editable = false;
-                //     ToolTip = 'Shows the net balance after adjustments.';
-                // }
+
             }
             part("Carry Forward"; "Carry Forward Grid")
             {
@@ -1887,7 +1798,7 @@ page 73209692 "Final Calculation Card"
         pendingReceiveable: Record "Pending Receviable Grid";
     begin
         finalAdj.SetRange("Contract No.", Rec."Contract ID");
-        if not finalAdj.IsEmpty() then
+        if finalAdj.FindFirst() then
             exit;
         tenancyContractSub.SetRange("ContractID", Rec."Contract ID");
         if tenancyContractSub.FindSet() then

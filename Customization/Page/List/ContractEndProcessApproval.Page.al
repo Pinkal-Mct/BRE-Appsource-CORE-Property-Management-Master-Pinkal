@@ -189,7 +189,7 @@ page 73209772 "Contract End Process Approval"
                 trigger OnAction()
                 var
                     SelectedRecs: Record "ContractEndProcessApproval";
-                    EmailSender: Codeunit 50302;
+                    EmailSender: Codeunit 73209610;
                     ApproveCount: Integer;
                     ErrorCount: Integer;
                 begin
@@ -338,7 +338,7 @@ page 73209772 "Contract End Process Approval"
     begin
         if UserPersonalization.Get(UserSecurityId()) then
             case UserPersonalization."Profile ID" of
-                'LEASE_MANAGER':
+                'LEASE MANAGER':
                     exit(true);  // Only property managers can approve/reject
                 else
                     exit(false);

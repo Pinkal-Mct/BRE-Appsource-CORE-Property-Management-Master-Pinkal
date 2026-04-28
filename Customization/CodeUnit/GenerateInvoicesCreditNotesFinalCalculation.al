@@ -69,13 +69,13 @@ codeunit 73209628 GenerateInvoiceCreditNoteFC
     var
         salesHeader: Record "Sales Header";
         SalesInvoiceHeader: Record "Sales Header";
-        salesReciveable: Record "Sales & Receivables Setup";
+        SalesReceivables: Record "Sales & Receivables Setup";
         noseries: Codeunit "No. Series";
 
     begin
         salesHeader.Init();
-        if not salesReciveable.IsEmpty() then
-            salesHeader."No." := noseries.GetNextNo(salesReciveable."Invoice Nos.", Today, true);
+        if SalesReceivables.Get() then
+            salesHeader."No." := noseries.GetNextNo(SalesReceivables."Invoice Nos.", Today, true);
         salesHeader."Document Type" := SalesInvoiceHeader."Document Type"::Invoice;
         salesHeader.Validate("Sell-to Customer No.", pTenantID);
         salesHeader."Document Date" := Today;
@@ -84,7 +84,7 @@ codeunit 73209628 GenerateInvoiceCreditNoteFC
         salesHeader."Posting Date" := Today;
         salesHeader."Due Date" := Today;
         salesHeader."Property Classification" := PropertyClassification;
-        salesHeader."Posting No. Series" := salesReciveable."Posted Invoice Nos.";
+        salesHeader."Posting No. Series" := SalesReceivables."Posted Invoice Nos.";
         salesHeader.Insert();
         exit(salesHeader);
     end;
@@ -114,7 +114,7 @@ codeunit 73209628 GenerateInvoiceCreditNoteFC
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
         item.SetRange(Description, Billingcalculation.RevenueDescription);
         item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
-        if not item.IsEmpty() then
+        if item.FindFirst() then
             saleline.Validate("No.", item."No.");
 
         saleline.Validate("Quantity (Base)", 1);
@@ -150,7 +150,7 @@ codeunit 73209628 GenerateInvoiceCreditNoteFC
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
         item.SetRange(Description, TerminationchargesGrid."Secondary Item Type");
         item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
-        if not item.IsEmpty() then
+        if item.FindFirst() then
             saleline.Validate("No.", item."No.");
 
         saleline.Validate("Quantity (Base)", 1);
@@ -248,12 +248,12 @@ codeunit 73209628 GenerateInvoiceCreditNoteFC
     procedure CreateCreditMemoSalesHeader(pContractID: Integer; pTenantID: Code[50]; pUnitType: Text[50]): Record "Sales Header";
     var
         SalesHeader: Record "Sales Header";
-        salesReciveable: Record "Sales & Receivables Setup";
+        SalesReceivables: Record "Sales & Receivables Setup";
         noseries: Codeunit "No. Series";
     begin
         salesHeader.Init();
-        if not salesReciveable.IsEmpty() then
-            salesHeader."No." := noseries.GetNextNo(salesReciveable."Credit Memo Nos.", Today, true);
+        if SalesReceivables.Get() then
+            salesHeader."No." := noseries.GetNextNo(SalesReceivables."Credit Memo Nos.", Today, true);
         salesHeader."Document Type" := SalesHeader."Document Type"::"Credit Memo";
 
         salesHeader.Validate("Sell-to Customer No.", pTenantID);
@@ -263,7 +263,7 @@ codeunit 73209628 GenerateInvoiceCreditNoteFC
         salesHeader."Posting Date" := Today;
         salesHeader."Due Date" := Today;
         salesHeader."Property Classification" := pUnitType;
-        SalesHeader."Posting No. Series" := salesReciveable."Posted Credit Memo Nos.";
+        SalesHeader."Posting No. Series" := SalesReceivables."Posted Credit Memo Nos.";
         // SalesHeader."Approval Status for CreditNote" := SalesHeader."Approval Status for CreditNote"::Approved;
         SalesHeader."Terminated Credit Note" := true;
         salesHeader.Insert();
@@ -296,7 +296,7 @@ codeunit 73209628 GenerateInvoiceCreditNoteFC
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
         item.SetRange(Description, BillingCalcSub.RevenueDescription);
         item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
-        if not item.IsEmpty() then
+        if item.FindFirst() then
             saleline.Validate("No.", item."No.");
         saleline.Validate("Quantity (Base)", 1);
         saleline.Validate(Quantity, 1);
@@ -333,7 +333,7 @@ codeunit 73209628 GenerateInvoiceCreditNoteFC
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
         item.SetRange(Description, financialAdjustReductionRec."Revenue Description");
         item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
-        if not item.IsEmpty() then
+        if item.FindFirst() then
             saleline.Validate("No.", item."No.");
 
         saleline.Validate("Quantity (Base)", 1);

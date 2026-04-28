@@ -275,9 +275,9 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
             case UserPersonalization."Profile ID" of
                 'PROPERTY MANAGER':
                     exit(false);
-                'LEASE_MANAGER':
+                'LEASE MANAGER':
                     exit(false);
-                'finance manager':
+                'FINANCE MANAGER':
                     exit(true);
             end;
         exit(false);
@@ -293,9 +293,9 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
             case UserPersonalization1."Profile ID" of
                 'PROPERTY MANAGER':
                     exit(false);
-                'LEASE_MANAGER':
+                'LEASE MANAGER':
                     exit(false);
-                'finance manager':
+                'FINANCE MANAGER':
                     exit(true);
             end;
 

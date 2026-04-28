@@ -68,6 +68,7 @@ page 73209706 "Payment Mode Card2"
                 {
                     ApplicationArea = All;
                     Lookup = true;
+                    Editable = not editdepositbank;
                     ToolTip = 'The Deposit Bank indicates the bank where the payment is being made.';
                 }
 
@@ -250,7 +251,7 @@ page 73209706 "Payment Mode Card2"
                 field("Old Cheque #"; Rec."Old Cheque #")
                 {
                     ApplicationArea = All;
-                    Editable = IsApproved AND (Rec."Payment Mode" = 'Cheque') and (Rec."Payment Status" <> Rec."Payment Status"::Cancelled);
+                    Editable = false;
                     ToolTip = 'The Old Cheque # is the previous cheque number if the payment mode was changed from Cheque to another mode.';
 
                     trigger OnValidate()
@@ -578,14 +579,15 @@ page 73209706 "Payment Mode Card2"
                 begin
                     Isupdate := false;
 
-                    // Update Approval Status in the grid
-                    PaymentModeRec.SetRange("Contract ID", Rec."Contract ID"); // Filter by Contract ID
-                    if PaymentModeRec.FindSet() then
-                        repeat
-                            PaymentModeRec."Approval Status" := PaymentModeRec."Approval Status"::Pending; // Set Approval Status to Pending
+                    // // Update Approval Status in the grid
+                    // PaymentModeRec.SetRange("Contract ID", Rec."Contract ID"); // Filter by Contract ID
+                    // if PaymentModeRec.FindSet() then
+                    //     repeat
 
-                            PaymentModeRec.Modify();
-                        until PaymentModeRec.Next() = 0;
+                    //         PaymentModeRec."Approval Status" := PaymentModeRec."Approval Status"::Pending; // Set Approval Status to Pending
+
+                    //         PaymentModeRec.Modify();
+                    //     until PaymentModeRec.Next() = 0;
 
                     paymentRec.SetRange("Contract ID", Rec."Contract ID");
                     paymentRec.SetRange("Tenant Id", Rec."Tenant Id");
@@ -714,7 +716,7 @@ page 73209706 "Payment Mode Card2"
         PaymentStatus: Enum "Payment Status";
     begin
         IsApproved := (Rec."Approval Status" <> Rec."Approval Status"::Approved);
-
+        editdepositbank := (Rec."Payment Mode" = 'Cash');
         if (Rec."Payment Status" = Rec."Payment Status"::Cancelled) or (Rec."Payment Status" = Rec."Payment Status"::Received) then
             IsReceivedCancelled := true
         else
@@ -784,6 +786,7 @@ page 73209706 "Payment Mode Card2"
     var
         paymentschedul2grid: Record "Payment Schedule2";
     begin
+        editdepositbank := (Rec."Payment Mode" = 'Cash');
         paymentschedul2grid.SetRange("Contract ID", Rec."Contract ID");
         paymentschedul2grid.SetRange("Payment Series", Rec."Payment Series");
         paymentschedul2grid.SetRange(Invoiced, true);
@@ -856,18 +859,20 @@ page 73209706 "Payment Mode Card2"
         IsFinanceManager: Boolean;
         IsReceivedCancelled: Boolean;
 
+        editdepositbank: Boolean;
+
     trigger OnOpenPage()
     var
         PermissionSet: Record "User Personalization";
 
     begin
-        // Check if the current user has the 'LEASE_MANAGER' permission set
+        // Check if the current user has the 'LEASE MANAGER' permission set
         IsLeaseManager := false;
         IsFinanceManager := false;
         PermissionSet.SetRange("User ID", UserId());
 
         if PermissionSet.FindFirst() then begin
-            if PermissionSet."Profile ID" = 'LEASE_MANAGER' then
+            if PermissionSet."Profile ID" = 'LEASE MANAGER' then
                 IsLeaseManager := true;
             if PermissionSet."Profile ID" = 'FINANCE MANAGER' then
                 IsFinanceManager := true;

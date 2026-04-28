@@ -783,10 +783,10 @@ page 73209705 "Payment Mode Card"
         PermissionSet: Record "User Personalization";
     begin
         IsFieldEditable := (Rec."Approval Status" <> Rec."Approval Status"::Approved);
-        // Check if the current user has the 'LEASE_MANAGER' permission set
+        // Check if the current user has the 'LEASE MANAGER' permission set
         IsFinanceManager := false;
         PermissionSet.SetRange("User ID", UserId());
-        // PermissionSet.SetRange("Profile ID", 'LEASE_MANAGER');
+        // PermissionSet.SetRange("Profile ID", 'LEASE MANAGER');
         if PermissionSet.FindFirst() then
             if PermissionSet."Profile ID" = 'FINANCE MANAGER' then
                 IsFinanceManager := true;

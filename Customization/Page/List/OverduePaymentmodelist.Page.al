@@ -171,9 +171,9 @@ page 73209788 "OverduePaymentmodelist"
             case UserPersonalization."Profile ID" of
                 'PROPERTY MANAGER':
                     exit(false);
-                'LEASE_MANAGER':
+                'LEASE MANAGER':
                     exit(false);
-                'finance manager':
+                'FINANCE MANAGER':
                     exit(true);
             end;
 
