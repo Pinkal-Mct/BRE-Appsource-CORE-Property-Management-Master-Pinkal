@@ -107,6 +107,7 @@ page 73209694 "FinalSettlemtCard"
                 {
                     ApplicationArea = All;
                     ToolTip = 'The cheque number for the receivable payment.';
+                    Editable = Rec."Receivable Payment mode" = 'Cheque';
 
                     trigger OnValidate()
                     var
@@ -122,7 +123,7 @@ page 73209694 "FinalSettlemtCard"
                     ApplicationArea = All;
                     Lookup = true;
                     ToolTip = 'The bank where the deposit is made.';
-
+                    Editable = not (Rec."Receivable Payment mode" = 'Cash') and not (Rec."Receivable Payment mode" = 'Pending');
                     trigger OnValidate()
                     var
 
@@ -191,16 +192,7 @@ page 73209694 "FinalSettlemtCard"
                     Editable = false;
                     ToolTip = 'The name of the tenant associated with this payment.';
                 }
-                field(Invoiced; Rec.Invoiced)
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Indicates whether the payment has been invoiced.';
-                }
-                field("Invoice ID"; Rec."Invoice ID")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'The unique identifier for the invoice associated with this payment.';
-                }
+
             }
         }
     }
@@ -325,6 +317,22 @@ page 73209694 "FinalSettlemtCard"
         end;
     end;
 
+
+    trigger OnAfterGetCurrRecord()
+    var
+    begin
+        editablelogic := editablelogicfield();
+    end;
+
+
+    procedure editablelogicfield(): Boolean
+    begin
+        if Rec."Receivable Payment mode" = 'Cash' then
+            exit(false)
+        else
+            exit(true);
+    end;
+
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     var
         finalCalculationgrid: Record "Final Calculation";
@@ -402,5 +410,7 @@ page 73209694 "FinalSettlemtCard"
         tenantID: Code[20];
 
         PaymentStatus: Enum "Payment Status";
+
+        editablelogic: Boolean;
 
 }

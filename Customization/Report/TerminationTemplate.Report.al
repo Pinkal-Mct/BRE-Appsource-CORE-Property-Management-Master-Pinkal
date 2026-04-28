@@ -78,16 +78,16 @@ report 73209593 "Termination Template"
             column(Ad_Sec_De; "Adjustment Security Deposit")
             {
             }
-            column(Net_Ba; "Net Balance")
+            column(Net_Ba; ("Security Deposit" - "Adjustment Security Deposit"))
             {
             }
             column(Oth_De; "Chiller Deposit" + "Other Deposit")
             {
             }
-            column(T_Deposit; "Net Balance" + "Chiller Deposit" + "Other Deposit")
+            column(T_Deposit; "Security Deposit" + "Chiller Deposit" + "Other Deposit")
             {
             }
-            column(T_RE_Deposit; -("Net Balance" + "Chiller Deposit" + "Other Deposit"))
+            column(T_RE_Deposit; -(("Security Deposit" - "Adjustment Security Deposit") + "Chiller Deposit" + "Other Deposit"))
             {
             }
             column(Total_Settlement;
