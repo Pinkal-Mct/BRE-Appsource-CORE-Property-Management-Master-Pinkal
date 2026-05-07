@@ -112,8 +112,10 @@ page 73209760 "Approval Contract Status List"
                         SelectedRec := Rec;
                         SelectedRec.Status := 'Approved';
                         SelectedRec.Modify();
-                        StatusUpdateCU.SyncToTenancyContract(SelectedRec); // ✅
-                        ContractRenewal.SyncToTenancyContractRenewal(SelectedRec);
+                        if (SelectedRec."Contract ID" <> 0) and (SelectedRec."Renewal Contract ID" = 0) then
+                            StatusUpdateCU.SyncToTenancyContract(SelectedRec)
+                        else
+                            ContractRenewal.SyncToTenancyContractRenewal(SelectedRec);
 
 
                         Message('Request Approved Successfully');
@@ -146,8 +148,10 @@ page 73209760 "Approval Contract Status List"
 
                         Commit();
                         CurrPage.Update();
-                        StatusUpdateCU.SyncToTenancyContract(SelectedRec); // ✅
-                        ContractRenewal.SyncToTenancyContractRenewal(SelectedRec);
+                        if (SelectedRec."Contract ID" <> 0) and (SelectedRec."Renewal Contract ID" = 0) then
+                            StatusUpdateCU.SyncToTenancyContract(SelectedRec)
+                        else
+                            ContractRenewal.SyncToTenancyContractRenewal(SelectedRec);
 
                     end else
                         Message('Selected record is not in "Pending" status.');
@@ -169,7 +173,6 @@ page 73209760 "Approval Contract Status List"
                     TenancyContractRec: Record "Tenancy Contract"; // Replace with the correct table name for Tenancy Contract
                 begin
                     // Debugging: Log the Contract ID value
-                    Message('Checking Contract ID: %1', Rec."Contract ID");
 
                     // Use SetRange and FindFirst to locate the record
                     TenancyContractRec.SetRange("Contract ID", Rec."Contract ID");
@@ -197,7 +200,6 @@ page 73209760 "Approval Contract Status List"
                     RenewalContractRec: Record "Contract Renewal"; // Replace with the correct table name for the Renewal Contract
                 begin
                     // Debugging: Log the Renewal Contract ID value
-                    Message('Checking Renewal Contract ID: %1', Rec."Renewal Contract ID");
 
                     // Use SetRange and FindFirst to locate the record
                     RenewalContractRec.SetRange("ID", Rec."Renewal Contract ID");

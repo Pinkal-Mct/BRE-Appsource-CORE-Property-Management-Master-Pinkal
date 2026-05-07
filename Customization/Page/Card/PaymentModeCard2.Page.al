@@ -68,7 +68,7 @@ page 73209706 "Payment Mode Card2"
                 {
                     ApplicationArea = All;
                     Lookup = true;
-                    Editable = not editdepositbank;
+                    Editable = not (Rec."Payment Mode" = 'Cash');
                     ToolTip = 'The Deposit Bank indicates the bank where the payment is being made.';
                 }
 
@@ -716,7 +716,6 @@ page 73209706 "Payment Mode Card2"
         PaymentStatus: Enum "Payment Status";
     begin
         IsApproved := (Rec."Approval Status" <> Rec."Approval Status"::Approved);
-        editdepositbank := (Rec."Payment Mode" = 'Cash');
         if (Rec."Payment Status" = Rec."Payment Status"::Cancelled) or (Rec."Payment Status" = Rec."Payment Status"::Received) then
             IsReceivedCancelled := true
         else
@@ -786,7 +785,6 @@ page 73209706 "Payment Mode Card2"
     var
         paymentschedul2grid: Record "Payment Schedule2";
     begin
-        editdepositbank := (Rec."Payment Mode" = 'Cash');
         paymentschedul2grid.SetRange("Contract ID", Rec."Contract ID");
         paymentschedul2grid.SetRange("Payment Series", Rec."Payment Series");
         paymentschedul2grid.SetRange(Invoiced, true);

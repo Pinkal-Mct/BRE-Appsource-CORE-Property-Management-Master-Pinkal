@@ -89,7 +89,7 @@ page 73209759 "Adjustment Deposits"
                     Previewed: Boolean;
                 begin
                     GenJournalLineRec.SetRange("Journal Template Name", 'GENERAL');
-                    GenJournalLineRec.SetRange("Journal Batch Name", 'REFUND');
+                    GenJournalLineRec.SetRange("Journal Batch Name", 'DEFAULT');
                     if GenJournalLineRec.FindSet() then
                         GenJournalLineRec.DeleteAll();
 
@@ -410,7 +410,7 @@ page 73209759 "Adjustment Deposits"
 
     begin
         JournalTemplateName := 'GENERAL';
-        JournalBatchName := 'REFUND';
+        JournalBatchName := 'DEFAULT';
 
         // Validate Journal Template and Batch
         if not GenJnlTemplate.Get(JournalTemplateName) then
