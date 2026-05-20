@@ -2,7 +2,7 @@ namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
 using Microsoft.Sales.Customer;
 using System.Text;
-report 50114 FS_Receivable_PaymentReceipt
+report 73209581 FS_Receivable_PaymentReceipt
 {
     ApplicationArea = All;
     Caption = 'FS_Receivable_PaymentReceipt';

@@ -2,7 +2,7 @@ namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
 using Microsoft.Sales.Customer;
 using System.Text;
-report 50121 "FS Refundable Payment Receipt"
+report 73209582 "FS Refundable Payment Receipt"
 {
     ApplicationArea = All;
     Caption = 'FS Refundable PaymentReceipt';
