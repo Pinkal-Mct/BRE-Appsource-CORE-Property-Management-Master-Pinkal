@@ -171,5 +171,12 @@ permissionset 73209576 PagePermissionSet
           page "Base Amount Card" = X,
         page "Base Amount Report Grid" = X,
         report "FS Refundable Payment Receipt" = X,
-        page "Base Amount Unit Wise Grid" = X;
+               page "Base Amount Unit Wise Grid" = X,
+        codeunit SplitCombinePaymentModemail = X,
+        page "Additional Terms Subpage" = X,
+        page "Free Merged Unit list" = X,
+        page "Occupied Merged Unit list" = X,
+        page "Renewal AdditionalTermsSubpage" = X,
+        page "Secondary Items" = X,
+        page "TC Additional Terms Subpage" = X;
 }

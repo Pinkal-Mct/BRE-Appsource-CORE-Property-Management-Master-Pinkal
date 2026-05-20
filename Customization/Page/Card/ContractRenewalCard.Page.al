@@ -276,7 +276,11 @@ page 73209680 "Contract Renewal Card"
                     Editable = false;
                     ToolTip = 'Specifies the makani number of the property.';
                 }
-
+                field("Municipality Number"; Rec."Municipality Number")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
                 field(Emirate; Rec.Emirate)
                 {
                     ApplicationArea = All;
@@ -396,7 +400,13 @@ page 73209680 "Contract Renewal Card"
                     ToolTip = 'Renewal Charges';
                 }
             }
-
+            part("Additional Terms"; "Renewal AdditionalTermsSubpage")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Document No." = FIELD(Id);
+                Caption = 'Additional Terms';
+                //SubPageLink = "Tenant ID" = FIELD("Tenant ID");
+            }
             group("Deposit and Fees")
             {
                 field("Security Deposit Amount"; Rec."Security Deposit Amount")

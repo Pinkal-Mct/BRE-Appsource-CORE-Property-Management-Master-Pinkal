@@ -1,6 +1,7 @@
 namespace PropertyManagement.PropertyManagement;
 using Microsoft.Foundation.Company;
-report 73209591 "Tenancy Contract"
+
+report 50101 "Tenancy Contract"
 {
     ApplicationArea = All;
     Caption = 'Tenancy Contract';
@@ -130,12 +131,40 @@ report 73209591 "Tenancy Contract"
             column(Contract_Start_Date; Format("Contract Start Date", 0, '<Day,2>/<Month,2>/<Year4>'))
             {
             }
+
             column(Contract_End_Date; Format("Contract End Date", 0, '<Day,2>/<Month,2>/<Year4>'))
             {
             }
+
             column(No_of_Installments; "No of Installments")
             {
             }
+            column(Res; GetRadioButton("Property Classification" = 'Residential'))
+            { }
+            column(Comm; GetRadioButton("Property Classification" = 'Commercial'))
+            { }
+            column(Ind; GetRadioButton("Property Classification" = 'Industrial'))
+            { }
+
+            dataitem("TC Additional Terms"; "TC Additional Terms")
+            {
+                DataItemLink = "Document No." = field("Contract ID");
+                DataItemLinkReference = TenancyContract;
+                column(Description; Description)
+                {
+                }
+                column(no; number)
+                { }
+                column(arb; arabicNos)
+                { }
+
+                trigger OnAfterGetRecord()
+                begin
+                    number += 1;
+                    arabicNos := GetArabicNumbers(number);
+                end;
+            }
+            // column(p1; )
         }
     }
     requestpage
@@ -165,15 +194,66 @@ report 73209591 "Tenancy Contract"
             Caption = 'TenancyContract (Word)';
             Summary = 'The TenancyContract (Word) provides a simple layout that is also relatively easy for an end-user to modify.';
         }
+
     }
     trigger OnInitReport()
     begin
-        if not CompanyInfo.Get() then
-            Error('Company Information not found.')
-        else
+        if not CompanyInfo.Get() then begin
+            Error('Company Information not found.');
+        end else begin
+            // CompanyAddress := CompanyInfo.City + ', ' + CompanyInfo.County + ' ' + CompanyInfo."Post Code";
             CompanyInfo.CalcFields(Picture);
+        end;
+        number := 0;
     end;
 
     var
         CompanyInfo: Record "Company Information";
+        number: Integer;
+        arabicNos: Text;
+
+    procedure GetPropertyClassification(Selected: Boolean): Text
+    begin
+        if Selected then
+            exit('◉')
+        else
+            exit('○');
+    end;
+
+    procedure GetArabicNumbers(Input: Integer): Text
+    begin
+        case
+            Input of
+            0:
+                exit('٠');
+            1:
+                exit('١');
+            2:
+                exit('٢');
+            3:
+                exit('٣');
+            4:
+                exit('٤');
+            5:
+                exit('٥');
+            6:
+                exit('٦');
+            7:
+                exit('٧');
+            8:
+                exit('٨');
+            9:
+                exit('٩');
+            else
+                exit('');
+        end;
+    end;
+
+    local procedure GetRadioButton(Selected: Boolean): Text
+    begin
+        if Selected then
+            exit('◉')
+        else
+            exit('○');
+    end;
 }

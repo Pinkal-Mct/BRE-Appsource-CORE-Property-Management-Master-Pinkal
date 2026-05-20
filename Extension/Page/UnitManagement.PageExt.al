@@ -60,7 +60,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                         item: Record Item; // Replace with your actual Property Table
                         itemListPage: Page "Item List"; // Replace with your actual Item List Page
                     begin
-                        item.SetRange("Item Template", item."Item Template"::Service); // Assuming you have a field to filter units
+                        // Assuming you have a field to filter units
                         item.SetRange("Item type template", item."Item type template"::"Unit Service"); // Filter by Free status
                         // Drill down to the vacant property list page
                         itemListPage.SetTableView(item); // Set the filtered view
@@ -393,7 +393,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
-        PropertyRec.SetRange("Item Template", PropertyRec."Item Template"::Service); // Assuming you have a field to filter units
+
         propertyRec.SetRange("Item type template", PropertyRec."Item type template"::"Unit Service"); // Filter by Free status
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
@@ -468,6 +468,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
         PropertyRec.SetRange("Unit Status", PropertyRec."Unit Status"::Free);
+        PropertyRec.SetRange("Item type template", "Item Type Template Enum"::"Unit Service"); // Filter by Free status
 
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;

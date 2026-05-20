@@ -315,6 +315,11 @@ page 73209745 "Tenancy Contract Card"
                     Editable = false;
                     ToolTip = 'Enter the Makani number associated with this tenancy contract.';
                 }
+                field("Municipality Number"; Rec."Municipality Number")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
 
                 field(Emirate; Rec.Emirate)
                 {
@@ -422,6 +427,13 @@ page 73209745 "Tenancy Contract Card"
                     Caption = 'No of Installments';
                     ToolTip = 'Enter the number of installments for the tenancy contract.';
                 }
+            }
+            part("Additional Terms"; "TC Additional Terms Subpage")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Document No." = FIELD("Contract ID");
+                Caption = 'Additional Terms';
+
             }
             group("Security Deposit")
             {

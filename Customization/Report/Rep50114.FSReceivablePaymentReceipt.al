@@ -2,7 +2,7 @@ namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
 using Microsoft.Sales.Customer;
 using System.Text;
-report 73209581 FS_Receivable_PaymentReceipt
+report 50114 FS_Receivable_PaymentReceipt
 {
     ApplicationArea = All;
     Caption = 'FS_Receivable_PaymentReceipt';
@@ -13,6 +13,9 @@ report 73209581 FS_Receivable_PaymentReceipt
         dataitem(FinalSettlement; FinalSettlement)
         {
             column(CompanyPicture; CompanyInfo.Picture)
+            {
+            }
+            column(Receipt__; "Payment Receipt")
             {
             }
             column(CompanyName; CompanyInfo.Name)
@@ -39,7 +42,7 @@ report 73209581 FS_Receivable_PaymentReceipt
             column(CompanyTRN; CompanyInfo."VAT Registration No.")
             {
             }
-            column(CurrentDate; Format(CurrentDateTime, 0, '<Day,2>/<Month,2>/<Year4>'))
+            column(CurrentDate; Format(CurrentDateTime, 0, '<Day,2>/<Month,2>/<Year4>'))  // Add a column to hold the current date
             {
             }
             column(Contract_ID; "Contract ID")
@@ -60,6 +63,12 @@ report 73209581 FS_Receivable_PaymentReceipt
             column(Final_Settlement_Words; ConvertFinalSettlementToWords("Receivable Total Amount"))
             {
             }
+            // column(Contract_Start_Date; "Contract Start Date")
+            // {
+            // }
+            // column(Contract_End_Date; "Contract End Date")
+            // {
+            // }
             dataitem(Customer; Customer)
             {
                 DataItemLink = "No." = field("Tenant ID");
@@ -101,6 +110,23 @@ report 73209581 FS_Receivable_PaymentReceipt
                 column(Contract_End_Date; "Contract End Date")
                 {
                 }
+                // column(Payment_mode; "Receivable Payment mode")
+                // {
+                // }
+                // column(Cheque_No_; "Receivable Cheque No.")
+                // {
+                // }
+                // column(Total_Amount; "Receivable Total Amount")
+                // {
+                // }
+                // column(AmountInWords; AmountInWordsText)
+                // {
+                // }
+                // trigger OnAfterGetRecord()
+                // begin
+                //     // Convert amount to words and store in variable
+                //     AmountToWords("Receivable Total Amount");
+                // end;
             }
         }
     }
@@ -134,15 +160,20 @@ report 73209581 FS_Receivable_PaymentReceipt
     }
     trigger OnInitReport()
     begin
-        if not CompanyInfo.Get() then
-            Error('Company Information not found.')
-        else
+        if not CompanyInfo.Get() then begin
+            Error('Company Information not found.');
+        end else begin
+            // CompanyAddress := CompanyInfo.City + ', ' + CompanyInfo.County + ' ' + CompanyInfo."Post Code";
             CompanyInfo.CalcFields(Picture);
+        end;
     end;
 
     var
         CompanyInfo: Record "Company Information";
+        TotalAmountInclVAT: Decimal;
+        AutoFormat: Codeunit "Auto Format";
 
+    // Function to convert number to words
     procedure ConvertFinalSettlementToWords(Amount: Decimal): Text
     var
         WholeNumber: Integer;
@@ -151,13 +182,25 @@ report 73209581 FS_Receivable_PaymentReceipt
         DecimalPart: Text;
         FinalText: Text;
     begin
+        // Take absolute value to handle negative amounts
         Amount := Abs(Amount);
-        WholeNumber := Round(Amount, 1, '<');
+
+        // Split into whole number and decimal parts
+        WholeNumber := Round(Amount, 1, '<');  // Rounds down to nearest integer
         Decimals := Round((Amount - WholeNumber) * 100, 1);
+
+        // Convert whole number to words
         WholePart := ConvertNumberToWords(WholeNumber);
-        if Decimals > 0 then
+
+        // Convert decimal part to words if exists
+        if Decimals > 0 then begin
             DecimalPart := ' and ' + ConvertNumberToWords(Decimals) + ' fils';
+        end;
+
+        // Combine whole and decimal parts, and add 'Only'
         FinalText := WholePart + DecimalPart + ' Only';
+
+        // Ensure first letter is capitalized
         exit(UpperCaseFirstLetter(FinalText));
     end;
 
@@ -168,8 +211,10 @@ report 73209581 FS_Receivable_PaymentReceipt
     begin
         if StrLen(InputText) = 0 then
             exit(InputText);
-        FirstChar := Format(UpperCase(InputText[1]));
+
+        FirstChar := UpperCase(InputText[1]);
         RemainingText := CopyStr(InputText, 2);
+
         exit(FirstChar + RemainingText);
     end;
 
@@ -181,6 +226,7 @@ report 73209581 FS_Receivable_PaymentReceipt
         N: Integer;
         Result: Text;
     begin
+        // Initialize arrays for number words
         Ones[1] := 'One';
         Ones[2] := 'Two';
         Ones[3] := 'Three';
@@ -200,6 +246,7 @@ report 73209581 FS_Receivable_PaymentReceipt
         Ones[17] := 'Seventeen';
         Ones[18] := 'Eighteen';
         Ones[19] := 'Nineteen';
+
         Tens[2] := 'Twenty';
         Tens[3] := 'Thirty';
         Tens[4] := 'Forty';
@@ -208,30 +255,44 @@ report 73209581 FS_Receivable_PaymentReceipt
         Tens[7] := 'Seventy';
         Tens[8] := 'Eighty';
         Tens[9] := 'Ninety';
+
         Thousands[1] := '';
         Thousands[2] := 'Thousand';
         Thousands[3] := 'Million';
         Thousands[4] := 'Billion';
+
         N := Number;
+
+        // Handle zero
         if N = 0 then
             exit('Zero');
+
+        // Process billions
         if N div 1000000000 > 0 then begin
             Result += ConvertNumberToWords(N div 1000000000) + ' Billion ';
             N := N mod 1000000000;
         end;
+
+        // Process millions
         if N div 1000000 > 0 then begin
             Result += ConvertNumberToWords(N div 1000000) + ' Million ';
             N := N mod 1000000;
         end;
+
+        // Process thousands
         if N div 1000 > 0 then begin
             Result += ConvertNumberToWords(N div 1000) + ' Thousand ';
             N := N mod 1000;
         end;
+
+        // Process hundreds
         if N div 100 > 0 then begin
             Result += Ones[N div 100] + ' Hundred ';
             N := N mod 100;
         end;
-        if N > 0 then
+
+        // Process tens and ones
+        if N > 0 then begin
             if N <= 19 then
                 Result += Ones[N]
             else begin
@@ -239,6 +300,9 @@ report 73209581 FS_Receivable_PaymentReceipt
                 if N mod 10 > 0 then
                     Result += ' ' + Ones[N mod 10];
             end;
+        end;
+
         exit(Result.Trim());
     end;
+
 }

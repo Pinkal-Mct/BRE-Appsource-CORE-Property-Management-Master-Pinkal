@@ -2,7 +2,7 @@ namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
 using Microsoft.Sales.Customer;
 using System.Text;
-report 73209582 "FS Refundable Payment Receipt"
+report 50121 "FS Refundable Payment Receipt"
 {
     ApplicationArea = All;
     Caption = 'FS Refundable PaymentReceipt';
@@ -16,6 +16,7 @@ report 73209582 "FS Refundable Payment Receipt"
             column(CompanyPicture; CompanyInfo.Picture)
             {
             }
+
             column(CompanyName; CompanyInfo.Name)
             {
             }
@@ -53,6 +54,9 @@ report 73209582 "FS Refundable Payment Receipt"
             {
             }
             column(Total_Amount; "Refund Total Amount")
+            {
+            }
+            column(Receipt__; "Receipt #")
             {
             }
 
@@ -101,6 +105,8 @@ report 73209582 "FS Refundable Payment Receipt"
                 {
                 }
             }
+
+
         }
     }
     requestpage
@@ -271,5 +277,7 @@ report 73209582 "FS Refundable Payment Receipt"
 
         exit(Result.Trim());
     end;
+
+
 
 }

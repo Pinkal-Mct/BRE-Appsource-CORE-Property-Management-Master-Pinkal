@@ -157,7 +157,10 @@ page 73209695 "FinalSettlemtRefundCard"
 
                             if Confirm('Do you want to post journal lines?', true) then begin
                                 RefundPostingMgt.PostRefundJournalLines(Rec);
+                                Rec."Receipt #" := 'Receipt_' + Format(Rec."Contract ID") + '-' + Format(Rec."FC ID");
 
+                                Rec.Modify(true);
+                                Commit();
                                 Email.SendEmail(Rec);
 
                                 ReportID := 73209582;
@@ -165,11 +168,13 @@ page 73209695 "FinalSettlemtRefundCard"
                                 // RecRef.GetTable(Rec);
                                 finalSettlementRefund.Reset();
                                 finalSettlementRefund.SetRange("Tenant ID", Rec."Tenant ID");
-                                finalSettlementRefund.SetRange("Contract ID", Rec."Contract ID"); // Ensure filtering on unique ID
-                                if not finalSettlementRefund.FindFirst() then
-                                    Error('Not avavilable');
+                                finalSettlementRefund.SetRange("Contract ID", Rec."Contract ID");
+                                if not finalSettlementRefund.FindFirst() then begin
+                                    Rec."Refund Payment Status" := xRec."Refund Payment Status";
+                                    exit;
+                                end;
+
                                 RecRef.GetTable(finalSettlementRefund);
-                                RecRef.GetTable(Rec);
                                 TempBlob.CreateOutStream(OutStream);
                                 Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
                                 TempBlob.CreateInStream(inStream);
@@ -179,17 +184,12 @@ page 73209695 "FinalSettlemtRefundCard"
                                 folderName := 'Payment Receipt';
                                 uploadResult := azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName);
                                 if fileName <> '' then begin
-                                    Rec."Payment Receipt/Proof" := CopyStr(fileName, 1, StrLen(fileName));
+                                    Rec."Payment Receipt/Proof" := fileName;
                                     Rec."Pay Receipt/Proof document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
-                                    Rec.Modify();
+                                    Rec.Modify(true);
                                     Message('File uploaded successfully: %1', fileName);
                                 end;
-                                Rec.Modify();
                             end
-                            else begin
-                                Rec."Refund Payment Status" := xRec."Refund Payment Status";
-                                exit;
-                            end;
                         end;
                     end;
                 }

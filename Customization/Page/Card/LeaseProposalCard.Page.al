@@ -170,6 +170,13 @@ page 73209697 "Lease Proposal Card"
                     Editable = false;
                     ToolTip = 'This field displays the Makani number, a unique identifier for the property in Dubai.';
                 }
+                field("Municipality Number"; Rec."Municipality Number")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    Caption = 'Municipality Number';
+                    ToolTip = 'This field displays the municipality number associated with the property.';
+                }
                 field(Emirate; Rec.Emirate)
                 {
                     ApplicationArea = All;
@@ -189,6 +196,13 @@ page 73209697 "Lease Proposal Card"
                     ToolTip = 'This field displays the Dubai Electricity and Water Authority (DEWA) number associated with the property.';
                 }
             }
+            part(AdditionalTerms; "Additional Terms Subpage")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Document No." = FIELD("Proposal ID");
+                Caption = 'Additional Terms';
+            }
+
 
             group("Tenant Details")
             {

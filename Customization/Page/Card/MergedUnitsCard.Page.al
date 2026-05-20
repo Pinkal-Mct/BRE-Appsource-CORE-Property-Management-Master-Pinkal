@@ -96,6 +96,9 @@ page 73209700 "Merged Units Card"
                         UnitNames: Text; // To store concatenated Unit Names
                         confirmDialog: Boolean;
                         UnitNumber: Code[1024]; // To store concatenated Unit Numbers
+                        MakaniNumber: Text[100]; // To store concatenated Makani Numbers
+                        MunicipalityNumber: Text[100]; // To store concatenated Municipality Numbers
+                        DewaNumber: Text[100];
                     begin
                         if Rec."Property ID" = '' then begin
                             Message('Please select a Property ID first.');
@@ -142,9 +145,25 @@ page 73209700 "Merged Units Card"
                                         TotalUnitSize += UnitRec."Unit Size"; // Sum the unit sizes
                                         TotalMarketRate += UnitRec."Market Rate per Sq. Ft."; // Sum the market rate per square values
                                         TotalAmount += UnitRec."Unit Size" * UnitRec."Market Rate per Sq. Ft."; // Calculate total amount based on market rate per square
-                                        UnitNames += UnitRec."Unit Name" + ', '; // Concatenate unit names (using "Unit Name" field)
-                                        UnitNumber += UnitRec."Unit Number" + ', '; // Concatenate unit numbers (using "No." field)
+                                        if StrLen(UnitNames) > 0 then
+                                            UnitNames += ', ';
+                                        UnitNames += UnitRec."Unit Name";
 
+                                        if StrLen(UnitNumber) > 0 then
+                                            UnitNumber += ', ';
+                                        UnitNumber += UnitRec."Unit Number";
+
+                                        if StrLen(MakaniNumber) > 0 then
+                                            MakaniNumber += ', ';
+                                        MakaniNumber += UnitRec."Makani Number";
+
+                                        if StrLen(MunicipalityNumber) > 0 then
+                                            MunicipalityNumber += ', ';
+                                        MunicipalityNumber += UnitRec."Municipality Number";
+
+                                        if StrLen(DewaNumber) > 0 then
+                                            DewaNumber += ', ';
+                                        DewaNumber += UnitRec."DEWA Number";
                                         // Insert into Sub Merged Units table
                                         SubMergedUnitRec.Init();
                                         SubMergedUnitRec."Merged Unit ID" := Rec."Merged Unit ID";
@@ -177,7 +196,9 @@ page 73209700 "Merged Units Card"
                                 Rec."Unit ID" := CopyStr(SelectedUnits, 1, StrLen(SelectedUnits)); // Remove the last comma
                                 Rec."Single Unit Name" := CopyStr(UnitNames, 1, StrLen(UnitNames));
                                 Rec."Unit Number" := CopyStr(UnitNumber, 1, StrLen(UnitNumber));
-
+                                Rec."Makani Number" := MakaniNumber;
+                                Rec."Municipality Number" := MunicipalityNumber;
+                                Rec."DEWA Number" := DewaNumber;
                                 Rec."Spliting Status" := Rec."Spliting Status"::"Merge";
                                 Rec.Modify(); // Explicitly save changes to the current record
                             end;
@@ -237,6 +258,24 @@ page 73209700 "Merged Units Card"
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Unit Number is the number of the unit associated with the merged unit.';
+                }
+                field("Makani Number"; Rec."Makani Number")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+
+                }
+                field("Municipality Number"; Rec."Municipality Number")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+
+                }
+                field("DEWA Number"; Rec."DEWA Number")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+
                 }
 
                 field("Status"; Rec."Status")
