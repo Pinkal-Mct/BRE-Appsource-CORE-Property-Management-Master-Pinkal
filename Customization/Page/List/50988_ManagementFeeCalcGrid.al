@@ -1,7 +1,7 @@
-page 73209753 "Management Fee Calc Grid"
+page 73209753 "BLRManagement Fee Calc Grid"
 {
     PageType = ListPart;
-    SourceTable = "Management Fee Calc. Line";
+    SourceTable = "BLRManagementFeeCalcLine";
     ApplicationArea = All;
     Caption = 'Management Fee Agreements';
     UsageCategory = None;
@@ -14,7 +14,7 @@ page 73209753 "Management Fee Calc Grid"
         {
             repeater(General)
             {
-                field("Entry No."; Rec."Entry No.")
+                field("Entry No."; Rec."BLREntry No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Entry No.';
@@ -23,7 +23,7 @@ page 73209753 "Management Fee Calc Grid"
                     Visible = false;
 
                 }
-                field("Vendor ID"; Rec."Vendor ID")
+                field("Vendor ID"; Rec."BLRVendor ID")
                 {
                     ApplicationArea = All;
                     Caption = 'PMC Vendor ID';
@@ -31,7 +31,7 @@ page 73209753 "Management Fee Calc Grid"
                     Editable = false;
                     Visible = false;
                 }
-                field("Owner ID"; Rec."Owner ID")
+                field("Owner ID"; Rec."BLROwner ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Owner ID';
@@ -39,14 +39,14 @@ page 73209753 "Management Fee Calc Grid"
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the property owner. This field is used when the management fee agreement is specific to a single owner.';
                 }
-                field("Property Management Company"; Rec."Property Management Company")
+                field("Property Management Company"; Rec."BLRProperty Management Company")
                 {
                     ApplicationArea = All;
                     Caption = 'Property Management Company';
                     ToolTip = 'Specifies the name of the property management company responsible for managing the property.';
                     Editable = false;
                 }
-                field("Company/Owner Name"; Rec."Company/Owner Name")
+                field("Company/Owner Name"; Rec."BLRCompany/Owner Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Company / Owner Name';
@@ -56,7 +56,7 @@ page 73209753 "Management Fee Calc Grid"
 
                 }
 
-                field("Property Name"; Rec."Property Name")
+                field("Property Name"; Rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Property Name';
@@ -64,7 +64,7 @@ page 73209753 "Management Fee Calc Grid"
                     Editable = false;
                 }
 
-                field("Property Type"; Rec."Property Type")
+                field("BLRPropertyType"; Rec."BLRProperty Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Property Type';
@@ -72,7 +72,7 @@ page 73209753 "Management Fee Calc Grid"
                     Editable = false;
                 }
 
-                field("Calculation Method"; Rec."Calculation Method")
+                field("Calculation Method"; Rec."BLRCalculation Method")
                 {
                     ApplicationArea = All;
                     Caption = 'Calculation Method';
@@ -81,7 +81,7 @@ page 73209753 "Management Fee Calc Grid"
 
                 }
 
-                field("Calculation Sub-Type"; Rec."Calculation Sub-Type")
+                field("Calculation Sub-Type"; Rec."BLRCalculation Sub-Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Calculation Sub-Type';
@@ -89,21 +89,21 @@ page 73209753 "Management Fee Calc Grid"
                     Editable = false;
                 }
 
-                field("Percentage Type"; Rec."Percentage Type")
+                field("Percentage Type"; Rec."BLRPercentage Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Percentage Type';
                     ToolTip = 'Specifies whether the percentage applied is fixed or variable.';
                     Editable = false;
                 }
-                field(Percentage; Rec.Percentage)
+                field(Percentage; Rec.BLRPercentage)
                 {
                     ApplicationArea = All;
                     Caption = 'Percentage';
                     ToolTip = 'Specifies the agreed Percentage for management fee calculation.';
                     Editable = false;
                 }
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
@@ -111,7 +111,7 @@ page 73209753 "Management Fee Calc Grid"
                     Editable = false;
                 }
 
-                field("Base Amount Source"; Rec."Base Amount Source")
+                field("Base Amount Source"; Rec."BLRBase Amount Source")
                 {
                     ApplicationArea = All;
                     Caption = 'Base Amount Source';
@@ -119,21 +119,21 @@ page 73209753 "Management Fee Calc Grid"
                     Editable = false;
                 }
 
-                field("Base Amount"; Rec."Base Amount")
+                field("Base Amount"; Rec."BLRBase Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'Base Amount';
                     Editable = false;
                     ToolTip = 'Specifies the calculated base amount used for management fee calculation based on the selected source.';
                 }
-                field("Management Fee"; Rec."Management Fee")
+                field("Management Fee"; Rec."BLRManagement Fee")
                 {
                     ApplicationArea = All;
                     Caption = 'Management Fee';
                     Editable = false;
                     ToolTip = 'Specifies the calculated management fee based on the calculation method, percentage, and base amount.';
                 }
-                field("Base Amount Details"; Rec."Base Amount Details")
+                field("Base Amount Details"; Rec."BLRBase Amount Details")
                 {
                     ApplicationArea = All;
                     Caption = 'Base Amount Details';
@@ -142,16 +142,16 @@ page 73209753 "Management Fee Calc Grid"
 
                     trigger OnDrillDown()
                     var
-                        baseAmountHeader: Record "Base Amount Data Header";
-                        baseAmountDetailsPage: Page "Base Amount Card";
+                        baseAmountHeader: Record "BLRBaseAmountDataHeader";
+                        baseAmountDetailsPage: Page "BLRBase Amount Card";
                     begin
-                        baseAmountHeader.SetRange("Header No.", Rec."Header No.");
-                        baseAmountHeader.SetRange("Line No.", Rec."Entry No.");
+                        baseAmountHeader.SetRange("BLRHeader No.", Rec."BLRHeader No.");
+                        baseAmountHeader.SetRange("BLRLine No.", Rec."BLREntry No.");
                         baseAmountDetailsPage.SetTableView(baseAmountHeader);
                         baseAmountDetailsPage.Run();
                     end;
                 }
-                field("Validity Period"; Rec."Validity Period")
+                field("Validity Period"; Rec."BLRValidity Period")
                 {
                     ApplicationArea = All;
                     Caption = 'Validity Period';
@@ -159,7 +159,7 @@ page 73209753 "Management Fee Calc Grid"
                     ToolTip = 'Specifies the date range during which this management fee agreement is valid.';
                     Visible = false;
                 }
-                field("Valid From"; Rec."Valid From")
+                field("Valid From"; Rec."BLRValid From")
                 {
                     ApplicationArea = All;
                     Caption = 'Valid From';
@@ -168,7 +168,7 @@ page 73209753 "Management Fee Calc Grid"
                     Visible = false;
                 }
 
-                field("Valid To"; Rec."Valid To")
+                field("Valid To"; Rec."BLRValid To")
                 {
                     ApplicationArea = All;
                     Caption = 'Valid To';
@@ -177,7 +177,7 @@ page 73209753 "Management Fee Calc Grid"
                     Visible = false;
                 }
 
-                field("Contract Status"; Rec."Contract Status")
+                field("Contract Status"; Rec."BLRContract Status")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Status';
@@ -187,7 +187,7 @@ page 73209753 "Management Fee Calc Grid"
                 }
             }
 
-            field("Total Mgt. Fee"; Rec."Total Mgt. Fee")
+            field("Total Mgt. Fee"; Rec."BLRTotal Mgt. Fee")
             {
                 ApplicationArea = All;
                 ToolTip = 'Indicates the Total Managment Fee';
@@ -207,12 +207,12 @@ page 73209753 "Management Fee Calc Grid"
                 Image = Report;
                 trigger OnAction()
                 var
-                    MgtFeeCalc: Record "Management Fee Calc. Header";
+                    MgtFeeCalc: Record "BLRManagementFeeCalcHeader";
                 begin
-                    // if MgtFeeCalc.Get(Rec."Header No.") then
+                    // if MgtFeeCalc.Get(Rec."BLRHeader No.") then
                     //     Report.Run(50119, false, false, MgtFeeCalc);
                     // MgtFeeCalc.Reset();
-                    MgtFeeCalc.SetRange("Entry No.", Rec."Header No.");
+                    MgtFeeCalc.SetRange("BLREntry No.", Rec."BLRHeader No.");
                     Report.Run(73209584, false, false, MgtFeeCalc);
                 end;
 
@@ -222,7 +222,7 @@ page 73209753 "Management Fee Calc Grid"
 
     trigger OnAfterGetCurrRecord()
     begin
-        Rec.CalcFields("Total Mgt. Fee");
+        Rec.CalcFields("BLRTotal Mgt. Fee");
     end;
 
     trigger OnOpenPage()

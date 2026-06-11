@@ -1,7 +1,7 @@
-page 73209777 "finalcalculation_Refundpayment"
+page 73209777 "BLRfinalcalc_Refundpayment"
 {
     PageType = List;
-    SourceTable = finalcalculation_refunApproval;
+    SourceTable = BLRFinalCalcRefundApproval;
     ApplicationArea = All;
     Caption = 'Final Calculation Refund Approval';
     UsageCategory = Lists;
@@ -15,98 +15,98 @@ page 73209777 "finalcalculation_Refundpayment"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the final calculation refund approval record.';
                 }
-                field(Status; Rec.Status)
+                field(Status; Rec.BLRStatus)
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the current status of the final calculation refund approval.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the tenant associated with this refund approval.';
                 }
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the name of the tenant associated with this refund approval.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the contract associated with this refund approval.';
                 }
-                field(fcID; Rec.fcID)
+                field(fcID; Rec.BLRfcID)
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the final calculation associated with this refund approval.';
                 }
-                field("Due Date"; Rec."Due Date")
+                field("Due Date"; Rec."BLRDue Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the due date for the final calculation refund approval.';
                 }
-                field("Total Amount"; Rec."Total Amount")
+                field("Total Amount"; Rec."BLRTotal Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the total amount of the final calculation refund approval.';
                 }
-                field("Bank Name"; Rec."Bank Name")
+                field("Bank Name"; Rec."BLRBank Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the name of the bank associated with this refund approval.';
                 }
-                field("Branch Address"; Rec."Branch Address")
+                field("Branch Address"; Rec."BLRBranch Address")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the address of the bank branch associated with this refund approval.';
                 }
-                field("Account Holder Name"; Rec."Account Holder Name")
+                field("Account Holder Name"; Rec."BLRAccount Holder Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the name of the account holder for the bank account associated with this refund approval.';
                 }
-                field("Account Number"; Rec."Account Number")
+                field("Account Number"; Rec."BLRAccount Number")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the bank account number associated with this refund approval.';
                 }
-                field("Swift Code"; Rec."Swift Code")
+                field("Swift Code"; Rec."BLRSwift Code")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the SWIFT code for the bank associated with this refund approval.';
                 }
-                field("IBAN number"; Rec."IBAN number")
+                field("IBAN number"; Rec."BLRIBAN number")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the IBAN number for the bank account associated with this refund approval.';
                 }
-                field(Description; Rec.Description)
+                field(Description; Rec."BLRDescription")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies any additional description or notes related to the final calculation refund approval.';
                 }
-                field("Request Date"; Rec."Request Date")
+                field("Request Date"; Rec."BLRRequest Date")
                 {
                     ApplicationArea = All;
                     Editable = true;
@@ -130,8 +130,8 @@ page 73209777 "finalcalculation_Refundpayment"
 
                 trigger OnAction()
                 var
-                    FinalsettlementRefund: Record "FinalSettlementRefund";
-                    SelectedRecs: Record "finalcalculation_refunApproval";
+                    FinalsettlementRefund: Record "BLRFinalSettlementRefund";
+                    SelectedRecs: Record "BLRFinalCalcRefundApproval";
                     ApproveCount: Integer;
                     ErrorCount: Integer;
                 begin
@@ -147,14 +147,14 @@ page 73209777 "finalcalculation_Refundpayment"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs.Status = 'Pending' then begin
-                                SelectedRecs.Status := 'paid';
+                            if SelectedRecs."BLRStatus" = 'Pending' then begin
+                                SelectedRecs."BLRStatus" := 'paid';
                                 SelectedRecs.Modify();
 
-                                FinalsettlementRefund.SetRange("Contract ID", SelectedRecs."Contract ID");
+                                FinalsettlementRefund.SetRange("BLRContract ID", SelectedRecs."BLRContract ID");
 
                                 if FinalsettlementRefund.FindSet() then begin
-                                    FinalsettlementRefund."Refund Payment Status" := FinalsettlementRefund."Refund Payment Status"::Paid;
+                                    FinalsettlementRefund."BLRRefund Payment Status" := FinalsettlementRefund."BLRRefund Payment Status"::Paid;
                                     FinalsettlementRefund.Modify(true);
                                 end;
 
@@ -177,7 +177,7 @@ page 73209777 "finalcalculation_Refundpayment"
 
                 trigger OnAction()
                 var
-                    SelectedRecs: Record "finalcalculation_refunApproval";
+                    SelectedRecs: Record "BLRFinalCalcRefundApproval";
                     RejectCount: Integer;
                     ErrorCount: Integer;
                 begin
@@ -194,8 +194,8 @@ page 73209777 "finalcalculation_Refundpayment"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs.Status = 'Pending' then begin
-                                SelectedRecs.Status := 'Not Paid'; // Set status to "Declined"
+                            if SelectedRecs."BLRStatus" = 'Pending' then begin
+                                SelectedRecs."BLRStatus" := 'Not Paid'; // Set status to "Declined"
                                 SelectedRecs.Modify();
                                 RejectCount += 1;
                             end else

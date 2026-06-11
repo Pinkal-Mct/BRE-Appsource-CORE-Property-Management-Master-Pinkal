@@ -1,4 +1,4 @@
-pageextension 73209584 PropertyRegistrationCardExt extends "Property Registration Card"
+pageextension 73209584 BLRPropertyRegistrationCardExt extends "BLRProperty Registration Card"
 {
     layout
     {

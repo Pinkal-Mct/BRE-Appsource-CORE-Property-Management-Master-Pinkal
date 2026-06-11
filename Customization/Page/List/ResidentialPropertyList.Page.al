@@ -1,11 +1,11 @@
-page 73209802 "Residential Property List"
+page 73209802 "BLRResidential Property List"
 {
     PageType = List;
-    SourceTable = "Property Registration";
+    SourceTable = "BLRPropertyRegistration";
     ApplicationArea = All;
     Caption = 'Residential Property List';
     UsageCategory = Lists;
-    SourceTableView = where("Property Classification" = const('Residential'));
+    SourceTableView = where("BLRProperty Classification" = const('Residential'));
     InsertAllowed = false;
     ModifyAllowed = false;
     DeleteAllowed = false;
@@ -15,19 +15,19 @@ page 73209802 "Residential Property List"
         {
             repeater(Group)
             {
-                field("Property ID"; Rec."Property ID")
+                field("Property ID"; Rec."BLRProperty ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Property ID';
                     ToolTip = 'Specifies the unique identifier for the property.';
                 }
-                field("Property Name"; Rec."Property Name")
+                field("Property Name"; Rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Property Name';
                     ToolTip = 'Specifies the name of the property.';
                 }
-                field("Property Type"; Rec."Property Classification")
+                field("BLRPropertyType"; Rec."BLRProperty Classification")
                 {
                     ApplicationArea = All;
                     Caption = 'Property Type';
@@ -38,6 +38,6 @@ page 73209802 "Residential Property List"
     }
     trigger OnOpenPage();
     begin
-        Rec.SetRange("Property Classification", 'Residential');
+        Rec.SetRange("BLRProperty Classification", 'Residential');
     end;
 }

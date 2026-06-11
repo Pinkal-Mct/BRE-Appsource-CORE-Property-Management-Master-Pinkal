@@ -1,7 +1,7 @@
-page 73209709 "Payment Schedule Card"
+page 73209709 "BLRPayment Schedule Card"
 {
     PageType = Card;
-    SourceTable = "Payment Schedule";
+    SourceTable = "BLRPaymentSchedule";
     ApplicationArea = All;
     Caption = 'Payment Schedule Card';
 
@@ -11,7 +11,7 @@ page 73209709 "Payment Schedule Card"
         {
             group(Group)
             {
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = true; // The ID is not editable since it's auto-incrementing
@@ -20,7 +20,7 @@ page 73209709 "Payment Schedule Card"
                     ToolTip = 'Enter the Contract ID.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -28,32 +28,32 @@ page 73209709 "Payment Schedule Card"
                     ToolTip = 'The ID of the tenant associated with this payment schedule.';
                 }
 
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The name of the tenant associated with this payment schedule.';
                 }
-                field("Contract Status"; Rec."Contract Status")
+                field("Contract Status"; Rec."BLRContract Status")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Status';
                     Editable = false;
                     ToolTip = 'The status of the contract associated with this payment schedule.';
                 }
-                field("Contract Start date"; Rec."Contract Start date")
+                field("Contract Start date"; Rec."BLRContract Start date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The start date of the contract associated with this payment schedule.';
                 }
-                field("Contract End date"; Rec."Contract End date")
+                field("Contract End date"; Rec."BLRContract End date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The end date of the contract associated with this payment schedule.';
                 }
-                field("Property ID"; Rec."Property ID")
+                field("Property ID"; Rec."BLRProperty ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -62,10 +62,10 @@ page 73209709 "Payment Schedule Card"
 
             }
 
-            part("PaymentSchedule"; "Payment Schedule Card2")
+            part("PaymentSchedule"; "BLRPayment Schedule Card2")
             {
-                SubPageLink = "Contract ID" = FIELD("Contract ID"),
-                  "Tenant ID" = FIELD("Tenant ID");
+                SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"),
+                  "BLRTenant ID" = FIELD("BLRTenant ID");
                 ApplicationArea = All;
                 Caption = 'Payment Schedule';
 
@@ -74,19 +74,19 @@ page 73209709 "Payment Schedule Card"
             group(TotalAmountCalculation)
             {
                 Caption = 'Total Amount Calculation';
-                field("Total Amount"; Rec."Total Amount")
+                field("Total Amount"; Rec."BLRTotal Amount")
                 {
                     Caption = 'Total Amount';
                     Editable = false;
                     ToolTip = 'The total amount for the payment schedule.';
                 }
-                field("Total VAT Amount"; Rec."Total VAT Amount")
+                field("Total VAT Amount"; Rec."BLRTotal VAT Amount")
                 {
                     Caption = 'Total VAT Amount';
                     Editable = false;
                     ToolTip = 'The total VAT amount for the payment schedule.';
                 }
-                field("Total Amount Including VAT"; Rec."Total Amount Including VAT")
+                field("Total Amount Including VAT"; Rec."BLRTotal Amount Including VAT")
                 {
                     Caption = 'Total Amount Including VAT';
                     Editable = false;

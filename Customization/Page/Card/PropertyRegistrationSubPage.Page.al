@@ -1,9 +1,9 @@
-page 73209718 "Property Registration SubPage"
+page 73209718 "BLRPropertyRegistrationSubPage"
 {
     PageType = ListPart;
     ApplicationArea = All;
     UsageCategory = Administration;
-    SourceTable = "Property Document Details";
+    SourceTable = "BLRPropertyDocumentDetails";
     Caption = 'Property Registration SubPage';
 
     layout
@@ -12,18 +12,18 @@ page 73209718 "Property Registration SubPage"
         {
             repeater(Group)
             {
-                field("Document Type"; Rec."Document Type")
+                field("Document Type"; Rec."BLRDocument Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the type of document being registered for the property.';
                 }
 
-                field("Document Name"; Rec."Document Name")
+                field("Document Name"; Rec."BLRDocument Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the document being registered for the property.';
                 }
-                field("Upload Document"; Rec."Upload Document")
+                field("Upload Document"; Rec."BLRUpload Document")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -31,7 +31,7 @@ page 73209718 "Property Registration SubPage"
                     ToolTip = 'Click to upload a document related to the property.';
                     trigger OnDrillDown()
                     var
-                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                         fileName: Text;
                         uploadResult: Text;
                         folderName: Text;
@@ -39,15 +39,15 @@ page 73209718 "Property Registration SubPage"
                         folderName := 'PropertyDocuments';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Upload Document" := CopyStr(fileName, 1, StrLen(fileName));
-                            Rec."View Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                            Rec."BLRUpload Document" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."BLRView Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
                     end;
                 }
 
-                field("View & Download"; Rec."View & Download")
+                field("View & Download"; Rec."BLRView & Download")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -58,7 +58,7 @@ page 73209718 "Property Registration SubPage"
                         FileURL: Text;
                     begin
                         // Get the URL of the uploaded document
-                        FileURL := Rec."View Document URL";
+                        FileURL := Rec."BLRView Document URL";
 
                         // Check if the file URL is not empty
                         if FileURL = '' then
@@ -69,7 +69,7 @@ page 73209718 "Property Registration SubPage"
                     end;
                 }
 
-                field(Download; Rec.Download)
+                field(Download; Rec."BLRDownload")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -85,9 +85,9 @@ page 73209718 "Property Registration SubPage"
                         ToFile: Text;
                     begin
                         // Find the attachment record
-                        AttachmentRec.SetRange("No.", Format(Rec.PropertyID));
+                        AttachmentRec.SetRange("No.", Format(Rec."BLRPropertyID"));
                         AttachmentRec.SetRange("Table ID", 73209660); // Adjust to match your table ID
-                        AttachmentRec.SetRange("File Name", Rec."Upload Document");
+                        AttachmentRec.SetRange("File Name", Rec."BLRUpload Document");
 
                         if AttachmentRec.FindSet() then begin
                             FileName := AttachmentRec."File Name";
@@ -121,7 +121,7 @@ page 73209718 "Property Registration SubPage"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.PropertyID := PropertyId;
+        Rec."BLRPropertyID" := PropertyId;
     end;
 
     var

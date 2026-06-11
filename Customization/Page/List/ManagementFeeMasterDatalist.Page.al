@@ -1,7 +1,7 @@
-page 73209783 "Management Fee MasterData List"
+page 73209783 "BLRManagementFeeMasterDataList"
 {
     PageType = List;
-    SourceTable = "Management Fee MasterData";
+    SourceTable = "BLRManagementFeeMasterData";
     ApplicationArea = All;
     Caption = 'Management Fee Master Data';
     UsageCategory = Lists;
@@ -12,13 +12,13 @@ page 73209783 "Management Fee MasterData List"
         {
             repeater(Group)
             {
-                field("Management Fee Number"; Rec."Management Fee Number")
+                field("Management Fee Number"; Rec."BLRManagement Fee Number")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the management fee. This field is auto-generated and cannot be edited.';
                 }
-                field("Vendor ID"; Rec."Vendor ID")
+                field("Vendor ID"; Rec."BLRVendor ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -29,15 +29,15 @@ page 73209783 "Management Fee MasterData List"
                     var
                         VendorProfile: Record "Vendor";
                     begin
-                        VendorProfile.SetRange("No.", Rec."Vendor ID");
+                        VendorProfile.SetRange("No.", Rec."BLRVendor ID");
                         if VendorProfile.FindSet() then
-                            PAGE.RunModal(PAGE::"Vendor Profile Card", VendorProfile)
+                            PAGE.RunModal(PAGE::"BLRVendor Profile Card", VendorProfile)
                         else
                             Message('No Vendor Profile found using FindFirst either.');
                     end;
 
                 }
-                field("Vendor Name"; Rec."Vendor Name")
+                field("Vendor Name"; Rec."BLRVendor Name")
                 {
                     ApplicationArea = All;
                     Editable = false;

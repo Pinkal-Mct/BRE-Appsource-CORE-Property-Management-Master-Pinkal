@@ -1,6 +1,6 @@
-page 73209671 "Mangement Fee Master Card"
+page 73209671 "BLRMangement Fee Master Card"
 {
-    SourceTable = "Management Fee MasterData";
+    SourceTable = "BLRManagementFeeMasterData";
     ApplicationArea = All;
     Caption = 'Management Fee Master Card';
     UsageCategory = None;
@@ -11,12 +11,12 @@ page 73209671 "Mangement Fee Master Card"
         {
             group(Group)
             {
-                field("Vendor ID"; Rec."Vendor ID")
+                field("Vendor ID"; Rec."BLRVendor ID")
                 {
                     ApplicationArea = All;
                     TableRelation = Vendor;
                 }
-                field("Vendor Name"; Rec."Vendor Name")
+                field("Vendor Name"; Rec."BLRVendor Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -24,9 +24,9 @@ page 73209671 "Mangement Fee Master Card"
 
                 }
             }
-            part(ManagementFeeGrid; "Management Fee Grid ListPart")
+            part(ManagementFeeGrid; "BLRManagement Fee GridListPart")
             {
-                SubPageLink = "Management Fee Number" = FIELD("Management Fee Number"); // Link to filter attachments for this owner only
+                SubPageLink = "BLRManagement Fee Number" = FIELD("BLRManagement Fee Number"); // Link to filter attachments for this owner only
                 ApplicationArea = All;
                 Caption = 'Management Fee Details';
                 UpdatePropagation = Both;

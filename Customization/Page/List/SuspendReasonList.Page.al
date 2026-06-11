@@ -1,8 +1,8 @@
-page 73209812 SuspendReasonList
+page 73209812 BLRSuspendReasonList
 {
     PageType = List;
     ApplicationArea = All;
-    SourceTable = SuspendReasonTable;
+    SourceTable = BLRSuspendReasonTable;
     Caption = 'Suspend Reason List';
     CardPageId = 73209738;
 
@@ -14,34 +14,34 @@ page 73209812 SuspendReasonList
         {
             repeater(Group)
             {
-                field(ID; Rec.ID)
+                field(ID; Rec.BLRID)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Unique identifier for the suspend reason.';
                 }
-                field(DateEffective; Rec.DateEffective)
+                field(DateEffective; Rec.BLRDateEffective)
                 {
                     ApplicationArea = All;
                     ToolTip = 'The date from which the suspend reason is effective.';
                 }
-                field(Reason; Rec.Reason)
+                field(Reason; Rec.BLRReason)
                 {
                     ApplicationArea = All;
                     ToolTip = 'The reason for suspending the contract.';
                 }
-                field(Description; Rec.Description)
+                field(Description; Rec.BLRDescription)
                 {
                     ApplicationArea = All;
                     ToolTip = 'A detailed description of the suspend reason.';
                 }
 
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The identifier of the contract associated with this suspend reason.';
                 }
 
-                field("Tenant Contract Status"; Rec."Tenant Contract Status")
+                field("Tenant Contract Status"; Rec."BLRTenant Contract Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The status of the tenant contract when this suspend reason is applied.';
@@ -63,7 +63,7 @@ page 73209812 SuspendReasonList
 
                 trigger OnAction()
                 begin
-                    PAGE.Run(PAGE::"Suspend Reason Card");
+                    PAGE.Run(PAGE::"BLRSuspend Reason Card");
                 end;
             }
         }

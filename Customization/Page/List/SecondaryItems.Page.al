@@ -1,8 +1,8 @@
-page 73209806 "Secondary Items"
+page 73209806 "BLRSecondary Items"
 {
     PageType = List;
     SourceTable = Item;
-    SourceTableView = where("Item type template" = const("Item Type Template Enum"::"Secondary Item"));
+    SourceTableView = where("BLRItem type template" = const("BLRItem Type Template Enum"::"Secondary Item"));
     ApplicationArea = All;
     Caption = 'Secondary Items';
     UsageCategory = Lists;
@@ -30,15 +30,15 @@ page 73209806 "Secondary Items"
                 {
                     ApplicationArea = All;
                 }
-                field("Item type template"; Rec."Item type template")
+                field("Item type template"; Rec."BLRItem type template")
                 {
                     ApplicationArea = All;
                 }
-                field("Primary Item Type"; Rec."Primary Item Type")
+                field("Primary Item Type"; Rec."BLRPrimary Item Type")
                 {
                     ApplicationArea = All;
                 }
-                field("Charges Status"; Rec."Charges Status")
+                field("Charges Status"; Rec."BLRCharges Status")
                 {
                     ApplicationArea = All;
                 }

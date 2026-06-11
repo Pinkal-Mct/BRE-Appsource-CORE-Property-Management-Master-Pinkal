@@ -1,4 +1,4 @@
-pageextension 73209605 UnitManagement extends "O365 Activities"
+pageextension 73209605 BLRUnitManagement extends "O365 Activities"
 {
     layout
     {
@@ -46,7 +46,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the vacant property list page
-                        PAGE.RUN(PAGE::"Property Registration List");
+                        PAGE.RUN(PAGE::"BLRProperty Registration List");
                     end;
                 }
                 field("All Unit"; GetAllUnitsCount())
@@ -61,7 +61,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                         itemListPage: Page "Item List"; // Replace with your actual Item List Page
                     begin
                         // Assuming you have a field to filter units
-                        item.SetRange("Item type template", item."Item type template"::"Unit Service"); // Filter by Free status
+                        item.SetRange("BLRItem type template", item."BLRItem type template"::"Unit Service"); // Filter by Free status
                         // Drill down to the vacant property list page
                         itemListPage.SetTableView(item); // Set the filtered view
                         // PAGE.RUN(PAGE::"Item List");
@@ -69,7 +69,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     end;
                 }
             }
-            cuegroup("Property Type")
+            cuegroup("BLRPropertyType")
             {
                 Caption = 'Property Type';
                 field("Residential Property Count"; GetResidentialPropertiesCount())
@@ -81,7 +81,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the vacant property list page
-                        PAGE.RUN(PAGE::"Residential Property List");
+                        PAGE.RUN(PAGE::"BLRResidential Property List");
                     end;
                 }
                 field("Commercial Property Count"; GetCommercialPropertiesCount())
@@ -93,7 +93,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the vacant property list page
-                        PAGE.RUN(PAGE::"Commercial Property List");
+                        PAGE.RUN(PAGE::"BLRCommercial Property List");
                     end;
                 }
                 field("Common Property Count"; GetCommonPropertiesCount())
@@ -105,7 +105,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the vacant property list page
-                        PAGE.RUN(PAGE::"Common Property List");
+                        PAGE.RUN(PAGE::"BLRCommon Property List");
                     end;
                 }
             }
@@ -121,7 +121,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the vacant property list page
-                        PAGE.RUN(PAGE::"Residential Unit List");
+                        PAGE.RUN(PAGE::"BLRResidential Unit List");
                     end;
                 }
                 field("Commercial Unit Count"; GetCommercialunitsCount())
@@ -133,7 +133,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the vacant property list page
-                        PAGE.RUN(PAGE::"Commercial Unit List");
+                        PAGE.RUN(PAGE::"BLRCommercial Unit List");
                     end;
                 }
                 field("Common Unit Count"; GetCommonunitsCount())
@@ -145,7 +145,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the vacant property list page
-                        PAGE.RUN(PAGE::"Common Unit List");
+                        PAGE.RUN(PAGE::"BLRCommon Unit List");
                     end;
                 }
             }
@@ -161,7 +161,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the vacant property list page
-                        PAGE.RUN(PAGE::"Free Unit List");
+                        PAGE.RUN(PAGE::"BLRFree Unit List");
                     end;
                 }
                 field("Selected units Count"; GetSelectedunitsCount())
@@ -173,7 +173,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the vacant property list page
-                        PAGE.RUN(PAGE::"Selected Unit List");
+                        PAGE.RUN(PAGE::"BLRSelected Unit List");
                     end;
                 }
                 field("Occupied units Count"; GetOccupiedunitsCount())
@@ -185,7 +185,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the vacant property list page
-                        PAGE.RUN(PAGE::"Occupied Unit List");
+                        PAGE.RUN(PAGE::"BLROccupied Unit List");
                     end;
                 }
             }
@@ -201,7 +201,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the free merged unit list page
-                        PAGE.RUN(PAGE::"Free Merged Unit list");
+                        PAGE.RUN(PAGE::"BLRFree Merged Unit list");
                     end;
                 }
                 field("Occupied Merged units Count"; GetOccupiedMergedUnitsCount())
@@ -213,7 +213,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the occupied merged unit list page
-                        PAGE.RUN(PAGE::"Occupied Merged Unit list");
+                        PAGE.RUN(PAGE::"BLROccupied Merged Unit list");
                     end;
                 }
             }
@@ -228,7 +228,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the proposals list page
-                        PAGE.RUN(PAGE::"Lease Proposal List");
+                        PAGE.RUN(PAGE::"BLRLease Proposal List");
                     end;
                 }
                 field("Active Contracts Count"; GetActiveContractsCount())
@@ -240,7 +240,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the active contracts list page
-                        PAGE.RUN(PAGE::"Active Contract List");
+                        PAGE.RUN(PAGE::"BLRActive Contract List");
                     end;
                 }
                 field("Suspended Contracts Count"; GetSuspendedContractsCount())
@@ -252,7 +252,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the active contracts list page
-                        PAGE.RUN(PAGE::"Suspended Contract List");
+                        PAGE.RUN(PAGE::"BLRSuspended Contract List");
                     end;
                 }
                 field("Contracts Expiring Soon"; GetExpiringContractsCount())
@@ -264,7 +264,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the expiring contracts list page
-                        PAGE.RUN(PAGE::"Expiring Contract List");
+                        PAGE.RUN(PAGE::"BLRExpiring Contract List");
                     end;
                 }
             }
@@ -320,7 +320,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the upcoming payments list page
-                        PAGE.RUN(PAGE::"Upcoming Payments List");
+                        PAGE.RUN(PAGE::"BLRUpcoming Payments List");
                     end;
                 }
                 field("Overdue Payments"; GetOverduePaymentsCount())
@@ -333,7 +333,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the overdue payments list page
-                        PAGE.RUN(PAGE::"Overdue Payments List");
+                        PAGE.RUN(PAGE::"BLROverdue Payments List");
                     end;
                 }
             }
@@ -348,7 +348,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the active contracts list page
-                        PAGE.RUN(PAGE::"Suspended Contract List");
+                        PAGE.RUN(PAGE::"BLRSuspended Contract List");
                     end;
                 }
                 field("Legally Suspended Contracts"; GetLegallySuspendedContractsCount())
@@ -361,7 +361,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the legally suspended contracts list page
-                        PAGE.RUN(PAGE::"Legal Suspended Contracts");
+                        PAGE.RUN(PAGE::"BLRLegal Suspended Contracts");
                     end;
                 }
                 field("Business Suspended Contracts"; GetBusinessSuspendedContractsCount())
@@ -374,7 +374,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
                     trigger OnDrillDown()
                     begin
                         // Drill down to the business suspended contracts list page
-                        PAGE.RUN(PAGE::"Business Suspended Contracts");
+                        PAGE.RUN(PAGE::"BLRBusiness SuspendedContracts");
                     end;
                 }
 
@@ -384,7 +384,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
 
     procedure GetAllPropertiesCount(): Integer;
     var
-        PropertyRec: Record "Property Registration"; // Replace with your actual Property Table
+        PropertyRec: Record "BLRPropertyRegistration"; // Replace with your actual Property Table
     begin
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
@@ -394,31 +394,31 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
 
-        propertyRec.SetRange("Item type template", PropertyRec."Item type template"::"Unit Service"); // Filter by Free status
+        propertyRec.SetRange("BLRItem type template", PropertyRec."BLRItem type template"::"Unit Service"); // Filter by Free status
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
     procedure GetResidentialPropertiesCount(): Integer;
     var
-        PropertyRec: Record "Property Registration"; // Replace with your actual Property Table
+        PropertyRec: Record "BLRPropertyRegistration"; // Replace with your actual Property Table
     begin
-        PropertyRec.SetRange("Property Classification", 'Residential'); // Filter by Vacant status
+        PropertyRec.SetRange("BLRProperty Classification", 'Residential'); // Filter by Vacant status
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
     procedure GetCommercialPropertiesCount(): Integer;
     var
-        PropertyRec: Record "Property Registration"; // Replace with your actual Property Table
+        PropertyRec: Record "BLRPropertyRegistration"; // Replace with your actual Property Table
     begin
-        PropertyRec.SetRange("Property Classification", 'Commercial'); // Filter by Vacant status
+        PropertyRec.SetRange("BLRProperty Classification", 'Commercial'); // Filter by Vacant status
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
     procedure GetCommonPropertiesCount(): Integer;
     var
-        PropertyRec: Record "Property Registration"; // Replace with your actual Property Table
+        PropertyRec: Record "BLRPropertyRegistration"; // Replace with your actual Property Table
     begin
-        PropertyRec.SetRange("Property Classification", 'Common'); // Filter by Vacant status
+        PropertyRec.SetRange("BLRProperty Classification", 'Common'); // Filter by Vacant status
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
@@ -426,23 +426,23 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
-        PropertyRec.SetRange("Usage Type", 'Residential'); // Filter by Vacant status
+        PropertyRec.SetRange("BLRUsage Type", 'Residential'); // Filter by Vacant status
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
     procedure GetFreeMergedUnitsCount(): Integer;
     var
-        MergedUnitsRec: Record "Merged Units";
+        MergedUnitsRec: Record "BLRMergedUnits";
     begin
-        MergedUnitsRec.SetRange(Status, MergedUnitsRec.Status::Free);
+        MergedUnitsRec.SetRange(BLRStatus, MergedUnitsRec."BLRStatus"::Free);
         exit(MergedUnitsRec.Count());
     end;
 
     procedure GetOccupiedMergedUnitsCount(): Integer;
     var
-        MergedUnitsRec: Record "Merged Units";
+        MergedUnitsRec: Record "BLRMergedUnits";
     begin
-        MergedUnitsRec.SetRange(Status, MergedUnitsRec.Status::Occupied);
+        MergedUnitsRec.SetRange(BLRStatus, MergedUnitsRec."BLRStatus"::Occupied);
         exit(MergedUnitsRec.Count());
     end;
 
@@ -451,7 +451,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
-        PropertyRec.SetRange("Usage Type", 'Commercial'); // Filter by Vacant status
+        PropertyRec.SetRange("BLRUsage Type", 'Commercial'); // Filter by Vacant status
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
@@ -459,7 +459,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
-        PropertyRec.SetRange("Usage Type", 'Common'); // Filter by Vacant status
+        PropertyRec.SetRange("BLRUsage Type", 'Common'); // Filter by Vacant status
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
@@ -467,8 +467,8 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
-        PropertyRec.SetRange("Unit Status", PropertyRec."Unit Status"::Free);
-        PropertyRec.SetRange("Item type template", "Item Type Template Enum"::"Unit Service"); // Filter by Free status
+        PropertyRec.SetRange("BLRUnit Status", PropertyRec."BLRUnit Status"::Free);
+        PropertyRec.SetRange("BLRItem type template", "BLRItem Type Template Enum"::"Unit Service"); // Filter by Free status
 
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
@@ -477,7 +477,7 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
-        PropertyRec.SetRange("Unit Status", PropertyRec."Unit Status"::Selected);
+        PropertyRec.SetRange("BLRUnit Status", PropertyRec."BLRUnit Status"::Selected);
 
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
@@ -486,14 +486,14 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
-        PropertyRec.SetRange("Unit Status", PropertyRec."Unit Status"::Occupied);
+        PropertyRec.SetRange("BLRUnit Status", PropertyRec."BLRUnit Status"::Occupied);
 
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
     procedure GetAllProposalsCount(): Integer;
     var
-        ProposalRec: Record "Lease Proposal Details"; // Replace with your actual Proposal Table
+        ProposalRec: Record "BLRLeaseProposalDetails"; // Replace with your actual Proposal Table
     begin
         // You can add filters here if needed
         exit(ProposalRec.Count()); // Return the count of all proposals
@@ -501,38 +501,38 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
 
     procedure GetActiveContractsCount(): Integer;
     var
-        ContractRec: Record "Tenancy Contract"; // Replace with your actual Contract Table
+        ContractRec: Record "BLRTenancyContract"; // Replace with your actual Contract Table
     begin
-        ContractRec.SetRange("Tenant Contract Status", ContractRec."Tenant Contract Status"::Active); // Using the Option value instead of text
+        ContractRec.SetRange("BLRTenant Contract Status", ContractRec."BLRTenant Contract Status"::Active); // Using the Option value instead of text
         exit(ContractRec.Count()); // Return the count of active contracts
     end;
 
     procedure GetSuspendedContractsCount(): Integer;
     var
-        ContractRec: Record SuspendReasonTable; // Replace with your actual Contract Table
+        ContractRec: Record BLRSuspendReasonTable; // Replace with your actual Contract Table
     begin
-        ContractRec.SetRange("Tenant Contract Status", ContractRec."Tenant Contract Status"::Suspended); // Using the Option value instead of text
-        ContractRec.SetFilter(SuspensionEndDate, '%1', 0D); // Filter for empty date
+        ContractRec.SetRange("BLRTenant Contract Status", ContractRec."BLRTenant Contract Status"::Suspended); // Using the Option value instead of text
+        ContractRec.SetFilter(BLRSuspensionEndDate, '%1', 0D); // Filter for empty date
         exit(ContractRec.Count()); // Return the count of active contracts
     end;
 
     procedure GetExpiringContractsCount(): Integer;
     var
-        ContractRec: Record "Tenancy Contract";
+        ContractRec: Record "BLRTenancyContract";
         CurrentDate: Date;
         OneMonthLater: Date;
     begin
         CurrentDate := TODAY;
         OneMonthLater := CALCDATE('<+1M>', CurrentDate);
 
-        ContractRec.SetRange("Tenant Contract Status", ContractRec."Tenant Contract Status"::Active);
-        ContractRec.SetFilter("Contract End Date", '%1..%2', CurrentDate, OneMonthLater);
+        ContractRec.SetRange("BLRTenant Contract Status", ContractRec."BLRTenant Contract Status"::Active);
+        ContractRec.SetFilter("BLRContract End Date", '%1..%2', CurrentDate, OneMonthLater);
         exit(ContractRec.Count());
     end;
 
     procedure GetPaymentsDueCount(): Integer;
     var
-        PaymentRec: Record "Payment Mode2"; // Replace with your actual payment table name
+        PaymentRec: Record "BLRPaymentMode2"; // Replace with your actual payment table name
         CurrentDate: Date;
         TenDaysLater: Date;
     begin
@@ -540,36 +540,36 @@ pageextension 73209605 UnitManagement extends "O365 Activities"
         TenDaysLater := CALCDATE('<+10D>', CurrentDate);
 
         // Only filter by due date, ignore payment status
-        PaymentRec.SetFilter("Due Date", '%1..%2', CurrentDate, TenDaysLater);
+        PaymentRec.SetFilter("BLRDue Date", '%1..%2', CurrentDate, TenDaysLater);
         exit(PaymentRec.Count());
     end;
 
     procedure GetOverduePaymentsCount(): Integer;
     var
-        PaymentRec: Record "Payment Mode2"; // Replace with your actual payment table name
+        PaymentRec: Record "BLRPaymentMode2"; // Replace with your actual payment table name
     begin
         // Filter for payments with status Overdue
-        PaymentRec.SetRange("Payment Status", PaymentRec."Payment Status"::Overdue);
+        PaymentRec.SetRange("BLRPayment Status", PaymentRec."BLRPayment Status"::Overdue);
         exit(PaymentRec.Count());
     end;
 
     procedure GetLegallySuspendedContractsCount(): Integer;
     var
-        ContractRec: Record SuspendReasonTable;
+        ContractRec: Record BLRSuspendReasonTable;
     begin
-        ContractRec.SetRange("Tenant Contract Status", ContractRec."Tenant Contract Status"::Suspended);
-        ContractRec.SetRange(Reason, ContractRec.Reason::"Legal Reason"); // Adjust the field name and value as per your table structure
-        ContractRec.SetFilter(SuspensionEndDate, '%1', 0D); // Filter for empty date
+        ContractRec.SetRange("BLRTenant Contract Status", ContractRec."BLRTenant Contract Status"::Suspended);
+        ContractRec.SetRange(BLRReason, ContractRec.BLRReason::"Legal Reason"); // Adjust the field name and value as per your table structure
+        ContractRec.SetFilter(BLRSuspensionEndDate, '%1', 0D); // Filter for empty date
         exit(ContractRec.Count());
     end;
 
     procedure GetBusinessSuspendedContractsCount(): Integer;
     var
-        ContractRec: Record SuspendReasonTable;
+        ContractRec: Record BLRSuspendReasonTable;
     begin
-        ContractRec.SetRange("Tenant Contract Status", ContractRec."Tenant Contract Status"::Suspended);
-        ContractRec.SetRange(Reason, ContractRec.Reason::"Business Reason"); // Adjust the field name and value as per your table structure
-        ContractRec.SetFilter(SuspensionEndDate, '%1', 0D); // Filter for empty date
+        ContractRec.SetRange("BLRTenant Contract Status", ContractRec."BLRTenant Contract Status"::Suspended);
+        ContractRec.SetRange(BLRReason, ContractRec.BLRReason::"Business Reason"); // Adjust the field name and value as per your table structure
+        ContractRec.SetFilter(BLRSuspensionEndDate, '%1', 0D); // Filter for empty date
         exit(ContractRec.Count());
     end;
 

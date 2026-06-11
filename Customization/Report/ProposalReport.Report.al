@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 using Microsoft.Foundation.Company;
-report 73209587 "Proposal Report"
+report 73209587 "BLRProposal Report"
 {
     ApplicationArea = All;
     Caption = 'Proposal Report';
@@ -8,27 +8,27 @@ report 73209587 "Proposal Report"
     DefaultRenderingLayout = "LeaseProposal.docx";
     dataset
     {
-        dataitem(LeaseProposalDetails; "Lease Proposal Details")
+        dataitem(LeaseProposalDetails; "BLRLeaseProposalDetails")
         {
-            column(PropertyName; "Property Name")
+            column(PropertyName; "BLRProperty Name")
             {
             }
-            column(UnitNumber; "Unit Number")
+            column(UnitNumber; "BLRUnit Number")
             {
             }
-            column(LeaseDuration; "Lease Duration")
+            column(LeaseDuration; "BLRLease Duration")
             {
             }
-            column(Unit_Size; "Unit Size")
+            column(Unit_Size; "BLRUnit Size")
             {
             }
-            column(Annual_Rent_Amount; "Annual Rent Amount")
+            column(Annual_Rent_Amount; "BLRAnnual Rent Amount")
             {
             }
-            column(Tenant_Full_Name; "Tenant Full Name")
+            column(Tenant_Full_Name; "BLRTenant Full Name")
             {
             }
-            column(Property_Size; "Property Size")
+            column(Property_Size; "BLRProperty Size")
             {
             }
             column(CompanyPicture; CompanyInfo.Picture)

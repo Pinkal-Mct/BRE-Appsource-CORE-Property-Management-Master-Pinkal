@@ -1,8 +1,8 @@
-page 73209681 "Contract Renewal SubPage Card"
+page 73209681 "BLRContract RenewalSubPageCard"
 {
     PageType = ListPart;
     ApplicationArea = All;
-    SourceTable = "Contract Renewal Subpage";
+    SourceTable = "BLRContractRenewalSubpage";
     Caption = 'Other Payments';
 
     layout
@@ -11,7 +11,7 @@ page 73209681 "Contract Renewal SubPage Card"
         {
             repeater(Group)
             {
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Secondary Item Type';
@@ -19,7 +19,7 @@ page 73209681 "Contract Renewal SubPage Card"
                     ShowMandatory = true;
                     NotBlank = true;
                 }
-                field("Amount"; Rec.Amount)
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
@@ -33,7 +33,7 @@ page 73209681 "Contract Renewal SubPage Card"
                     end;
                 }
 
-                field("VAT %"; Rec."VAT %")
+                field("VAT %"; Rec."BLRVAT %")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the VAT percentage.';
@@ -43,21 +43,21 @@ page 73209681 "Contract Renewal SubPage Card"
                     end;
                 }
 
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT Amount';
                     ToolTip = 'Enter the VAT Amount.';
                 }
 
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount Including VAT';
                     ToolTip = 'Enter the Amount Including VAT.';
                 }
 
-                field("Start Date"; Rec."Start Date")
+                field("Start Date"; Rec."BLRStart Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Start Date';
@@ -65,14 +65,14 @@ page 73209681 "Contract Renewal SubPage Card"
                     ToolTip = 'Enter the Start Date.';
                 }
 
-                field("End Date"; Rec."End Date")
+                field("End Date"; Rec."BLREnd Date")
                 {
                     ApplicationArea = All;
                     Caption = 'End Date';
                     Lookup = true;
                     ToolTip = 'Enter the End Date.';
                 }
-                field("Generate Payment Schedule"; Rec."Generate Payment Schedule")
+                field("Generate Payment Schedule"; Rec."BLRGenerate Payment Schedule")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -81,8 +81,8 @@ page 73209681 "Contract Renewal SubPage Card"
                     ToolTip = 'Click to generate the payment schedule for installment payments.';
                     trigger OnDrillDown()
                     var
-                        RevenueStructure: Record "Revenue Structure Subpage";
-                        TargetRecord: Record "Revenue Structure";
+                        RevenueStructure: Record "BLRRevenueStructureSubpage";
+                        TargetRecord: Record "BLRRevenueStructure";
                         StartDate: Date;
                         EndDate: Date;
                         AnnualAmount: Decimal;
@@ -99,34 +99,34 @@ page 73209681 "Contract Renewal SubPage Card"
 
                     begin
 
-                        if Rec."Payment Type" = Rec."Payment Type"::Installment then begin
+                        if Rec."BLRPayment Type" = Rec."BLRPayment Type"::Installment then begin
 
-                            TargetRecord.SetRange("Secondary Item Type", Rec."Secondary Item Type");
-                            TargetRecord.SetRange("Tenant ID", Rec."TenantID");
+                            TargetRecord.SetRange("BLRSecondary Item Type", Rec."BLRSecondary Item Type");
+                            TargetRecord.SetRange("BLRTenant ID", Rec."BLRTenantID");
 
                             if TargetRecord.FindSet() then begin
-                                TargetRecord."Contract Start Date" := Rec."Start Date";
-                                TargetRecord."Contract End Date" := Rec."End Date";
-                                TargetRecord."Amount" := Rec."Amount";
-                                TargetRecord."VAT Amount" := Rec."VAT Amount";
-                                TargetRecord."Amount Including VAT" := Rec."Amount Including VAT";
-                                TargetRecord."VAT %" := Rec."VAT %";
+                                TargetRecord."BLRContract Start Date" := Rec."BLRStart Date";
+                                TargetRecord."BLRContract End Date" := Rec."BLREnd Date";
+                                TargetRecord."BLRAmount" := Rec."BLRAmount";
+                                TargetRecord."BLRVAT Amount" := Rec."BLRVAT Amount";
+                                TargetRecord."BLRAmount Including VAT" := Rec."BLRAmount Including VAT";
+                                TargetRecord."BLRVAT %" := Rec."BLRVAT %";
                                 TargetRecord.Modify();
                             end else begin
                                 TargetRecord.Init();
-                                TargetRecord."Tenant ID" := Rec."TenantID";
-                                TargetRecord."Secondary Item Type" := Rec."Secondary Item Type";
-                                TargetRecord."Contract Start Date" := Rec."Start Date";
-                                TargetRecord."Contract End Date" := Rec."End Date";
-                                TargetRecord."Amount" := Rec."Amount";
-                                TargetRecord."VAT Amount" := Rec."VAT Amount";
-                                TargetRecord."Amount Including VAT" := Rec."Amount Including VAT";
-                                TargetRecord."VAT %" := Rec."VAT %";
+                                TargetRecord."BLRTenant ID" := Rec."BLRTenantID";
+                                TargetRecord."BLRSecondary Item Type" := Rec."BLRSecondary Item Type";
+                                TargetRecord."BLRContract Start Date" := Rec."BLRStart Date";
+                                TargetRecord."BLRContract End Date" := Rec."BLREnd Date";
+                                TargetRecord."BLRAmount" := Rec."BLRAmount";
+                                TargetRecord."BLRVAT Amount" := Rec."BLRVAT Amount";
+                                TargetRecord."BLRAmount Including VAT" := Rec."BLRAmount Including VAT";
+                                TargetRecord."BLRVAT %" := Rec."BLRVAT %";
                                 TargetRecord.Insert();
 
-                                StartDate := TargetRecord."Contract Start Date";
-                                EndDate := TargetRecord."Contract End Date";
-                                AnnualAmount := TargetRecord."Amount";
+                                StartDate := TargetRecord."BLRContract Start Date";
+                                EndDate := TargetRecord."BLRContract End Date";
+                                AnnualAmount := TargetRecord."BLRAmount";
 
                                 if (StartDate = 0D) or (EndDate = 0D) or (AnnualAmount = 0) then
                                     Error('Start Date, End Date, and Amount must be populated.');
@@ -136,21 +136,21 @@ page 73209681 "Contract Renewal SubPage Card"
 
                                 while PeriodStartDate <= EndDate do begin
                                     RevenueStructure.Init();
-                                    RevenueStructure."RS ID" := TargetRecord."RS ID";
-                                    RevenueStructure."Tenant Id" := TargetRecord."Tenant ID";
-                                    RevenueStructure."Year" := YearCounter;
-                                    RevenueStructure."Period Start Date" := PeriodStartDate;
-                                    RevenueStructure."VAT Amount" := TargetRecord."VAT Amount";
-                                    RevenueStructure."Amount Including VAT" := TargetRecord."Amount Including VAT";
-                                    RevenueStructure."Secondary Item Type" := TargetRecord."Secondary Item Type";
-                                    RevenueStructure."VAT %" := TargetRecord."VAT %";
+                                    RevenueStructure."BLRRS ID" := TargetRecord."BLRRS ID";
+                                    RevenueStructure."BLRTenant Id" := TargetRecord."BLRTenant ID";
+                                    RevenueStructure."BLRYear" := YearCounter;
+                                    RevenueStructure."BLRPeriod Start Date" := PeriodStartDate;
+                                    RevenueStructure."BLRVAT Amount" := TargetRecord."BLRVAT Amount";
+                                    RevenueStructure."BLRAmount Including VAT" := TargetRecord."BLRAmount Including VAT";
+                                    RevenueStructure."BLRSecondary Item Type" := TargetRecord."BLRSecondary Item Type";
+                                    RevenueStructure."BLRVAT %" := TargetRecord."BLRVAT %";
 
                                     if PeriodStartDate + 365 > EndDate then
                                         PeriodEndDate := EndDate
                                     else
                                         PeriodEndDate := PeriodStartDate + 365 - 1;
 
-                                    RevenueStructure."Period End Date" := PeriodEndDate;
+                                    RevenueStructure."BLRPeriod End Date" := PeriodEndDate;
 
                                     NumDays := PeriodEndDate - PeriodStartDate + 1;
 
@@ -174,7 +174,7 @@ page 73209681 "Contract Renewal SubPage Card"
                                         NumDays := NumDays + 1;
 
 
-                                    RevenueStructure."Number of Days" := NumDays;
+                                    RevenueStructure."BLRNumber of Days" := NumDays;
 
                                     RevenueStructure.Insert();
                                     RevenueStructure.Modify();
@@ -184,7 +184,7 @@ page 73209681 "Contract Renewal SubPage Card"
                                     YearCounter += 1;
 
                                     if TargetRecord.FindLast() then
-                                        Revenuestructureid := TargetRecord."RS ID"
+                                        Revenuestructureid := TargetRecord."BLRRS ID"
                                     else begin
                                         // If no record is found, create a new Revenue Structure record
                                         TargetRecord.Init();
@@ -192,10 +192,10 @@ page 73209681 "Contract Renewal SubPage Card"
                                         TargetRecord.Modify(true);  // Insert the new record and generate the RS ID
 
                                         // Get the newly created RS ID
-                                        Revenuestructureid := TargetRecord."RS ID";
+                                        Revenuestructureid := TargetRecord."BLRRS ID";
                                     end;
 
-                                    Rec."Link" := Revenuestructureid;
+                                    Rec."BLRLink" := Revenuestructureid;
 
                                 end;
 
@@ -212,7 +212,7 @@ page 73209681 "Contract Renewal SubPage Card"
                     end;
                 }
 
-                field("Link"; Rec."Link")
+                field("Link"; Rec."BLRLink")
                 {
                     ApplicationArea = All;
                     Caption = 'Link';
@@ -222,12 +222,12 @@ page 73209681 "Contract Renewal SubPage Card"
 
                     trigger OnDrillDown()
                     var
-                        RevenueStructureRec: Record "Revenue Structure";
+                        RevenueStructureRec: Record "BLRRevenueStructure";
                     begin
-                        if Rec."Payment Type" = Rec."Payment Type"::Installment then begin
+                        if Rec."BLRPayment Type" = Rec."BLRPayment Type"::Installment then begin
 
-                            if RevenueStructureRec.Get(Rec."Link") then
-                                PAGE.RUN(PAGE::"Revenue Structure Card", RevenueStructureRec)
+                            if RevenueStructureRec.Get(Rec."BLRLink") then
+                                PAGE.RUN(PAGE::"BLRRevenue Structure Card", RevenueStructureRec)
                             else
                                 Message('The related Revenue Structure does not exist.');
                         end
@@ -265,11 +265,11 @@ page 73209681 "Contract Renewal SubPage Card"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.Id := Id;
-        Rec.TenantID := tenantID;
+        Rec."BLRId" := Id;
+        Rec."BLRTenantID" := tenantID;
 
-        Rec."Start Date" := startDate;
-        Rec."End Date" := endDate;
+        Rec."BLRStart Date" := startDate;
+        Rec."BLREnd Date" := endDate;
 
     end;
 
@@ -281,26 +281,26 @@ page 73209681 "Contract Renewal SubPage Card"
 
     procedure UpdateLeaseProposalAmount()
     var
-        LeaseProposal: Record "Contract Renewal";
+        LeaseProposal: Record "BLRContractRenewal";
     begin
 
-        if (Rec."Secondary Item Type" = 'Security Deposit') or
-           (Rec."Secondary Item Type" = 'Rera Fees') or
-           (Rec."Secondary Item Type" = 'Ejari Processing Fees') or
-           (Rec."Secondary Item Type" = 'Renewal Amount') then begin
-            LeaseProposal.SetRange("ID", Rec."ID");
+        if (Rec."BLRSecondary Item Type" = 'Security Deposit') or
+           (Rec."BLRSecondary Item Type" = 'Rera Fees') or
+           (Rec."BLRSecondary Item Type" = 'Ejari Processing Fees') or
+           (Rec."BLRSecondary Item Type" = 'Renewal Amount') then begin
+            LeaseProposal.SetRange("BLRID", Rec."BLRID");
 
             if LeaseProposal.FindSet() then begin
 
-                case Rec."Secondary Item Type" of
+                case Rec."BLRSecondary Item Type" of
                     'Security Deposit':
-                        LeaseProposal."Security Deposit Amount" := Rec."Amount Including VAT";
+                        LeaseProposal."BLRSecurity Deposit Amount" := Rec."BLRAmount Including VAT";
                     'Rera Fees':
-                        LeaseProposal."Rera" := Rec."Amount Including VAT";
+                        LeaseProposal."BLRRera" := Rec."BLRAmount Including VAT";
                     'Ejari Processing Fees':
-                        LeaseProposal."Ejari Processing Charges" := Rec."Amount Including VAT";
+                        LeaseProposal."BLREjari Processing Charges" := Rec."BLRAmount Including VAT";
                     'Renewal Amount':
-                        LeaseProposal."Renewal Charges" := Rec."Amount Including VAT";
+                        LeaseProposal."BLRRenewal Charges" := Rec."BLRAmount Including VAT";
                 end;
 
                 LeaseProposal.Modify();

@@ -1,4 +1,4 @@
-pageextension 73209600 ItemListExtension extends "Item List"
+pageextension 73209600 BLRItemListExtension extends "Item List"
 {
     Caption = 'Unit list';
 
@@ -47,44 +47,44 @@ pageextension 73209600 ItemListExtension extends "Item List"
 
         addbefore(Description)
         {
-            field("Unit Name"; Rec."Unit Name")
+            field("Unit Name"; Rec."BLRUnit Name")
             {
                 ApplicationArea = All;
                 Caption = 'Unit Name';
                 ToolTip = 'Name of the unit';
             }
-            field("Property Name"; Rec."Property Name")
+            field("Property Name"; Rec."BLRProperty Name")
             {
                 ApplicationArea = All;
                 Caption = 'Property Name';
                 ToolTip = 'Name of the property to which the unit belongs';
             }
-            field("Usage Type"; Rec."Usage Type")
+            field("Usage Type"; Rec."BLRUsage Type")
             {
                 ApplicationArea = All;
                 Caption = 'Usage Type';
                 ToolTip = 'Type of usage for the unit, e.g., Residential, Commercial';
             }
-            field("Unit Status"; Rec."Unit Status")
+            field("Unit Status"; Rec."BLRUnit Status")
             {
                 ApplicationArea = All;
                 Caption = 'Unit Status';
                 ToolTip = 'Current status of the unit, e.g., Free, Occupied, Under Maintenance';
             }
 
-            field("Merging/Splitting"; rec."MergeSplitOption")
+            field("Merging/Splitting"; rec."BLRMergeSplitOption")
             {
                 ApplicationArea = All;
                 ToolTip = 'Indicates if the unit is available for merging or splitting';
             }
 
-            field("Market Rate per Sq. Ft."; rec."Market Rate per Sq. Ft.")
+            field("Market Rate per Sq. Ft."; rec."BLRMarket Rate per Sq. Ft.")
             {
                 ApplicationArea = All;
                 ToolTip = 'Market rate per square foot for the unit';
             }
 
-            field("Amount"; Rec."Amount")
+            field("Amount"; Rec."BLRAmount")
             {
                 ApplicationArea = All;
                 Caption = 'Amount';
@@ -98,7 +98,7 @@ pageextension 73209600 ItemListExtension extends "Item List"
                 ToolTip = 'Date when the unit was last modified';
             }
 
-            field("Merged Unit ID"; Rec."Merged Unit ID")
+            field("Merged Unit ID"; Rec."BLRMerged Unit ID")
             {
                 ApplicationArea = All;
                 Caption = 'Merged Unit ID';
@@ -133,6 +133,6 @@ pageextension 73209600 ItemListExtension extends "Item List"
     var
     begin
         // Set the filter to show only records where "Item type template" is "Unit Service"
-        Rec.SetRange("Item type template", Rec."Item type template"::"Unit Service");
+        Rec.SetRange("BLRItem type template", Rec."BLRItem type template"::"Unit Service");
     end;
 }

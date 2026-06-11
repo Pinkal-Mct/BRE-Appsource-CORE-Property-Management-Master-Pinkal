@@ -1,10 +1,10 @@
-pageextension 73209595 VATEntryExt extends "VAT Entries"
+pageextension 73209595 BLRVATEntryExt extends "VAT Entries"
 {
     layout
     {
         addafter("Document No.")
         {
-            field("Contract ID"; Rec."Contract ID")
+            field("Contract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
                 Caption = 'Contract ID';

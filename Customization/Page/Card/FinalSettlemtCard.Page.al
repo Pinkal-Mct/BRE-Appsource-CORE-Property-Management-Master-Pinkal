@@ -1,7 +1,7 @@
-page 73209694 "FinalSettlemtCard"
+page 73209694 "BLRFinalSettlemtCard"
 {
     PageType = ListPart;
-    SourceTable = "FinalSettlement";
+    SourceTable = "BLRFinalSettlement";
     ApplicationArea = All;
     Caption = 'Final Settlement Details';
 
@@ -12,28 +12,28 @@ page 73209694 "FinalSettlemtCard"
             group(ReceivableDetails)
             {
                 Caption = 'Receivable Details';
-                field("Receivable from the Tenant"; Rec."Receivable from the Tenant")
+                field("Receivable from the Tenant"; Rec."BLRReceivable from the Tenant")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'The total amount receivable from the tenant.';
                 }
 
-                field("Payment Processed"; Rec."Payment Processed")
+                field("Payment Processed"; Rec."BLRPayment Processed")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'The total amount processed for payment.';
                 }
 
-                field("Balance Receivable"; Rec."Balance Receivable")
+                field("Balance Receivable"; Rec."BLRBalance Receivable")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'The balance amount receivable from the tenant.';
                 }
 
-                field("PaymentStatus"; Rec."PaymentStatus")
+                field("PaymentStatus"; Rec."BLRPaymentStatus")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -45,8 +45,8 @@ page 73209694 "FinalSettlemtCard"
             repeater(ReceivablePaymentDetails)
             {
                 Caption = 'Receivable Payment Details';
-                // Editable = (Rec."Receivable Payment Status" <> PaymentStatus::Received);
-                field("FC ID"; Rec."FC ID")
+                // Editable = (Rec."BLRReceivable Payment Status" <> PaymentStatus::Received);
+                field("FC ID"; Rec."BLRFC ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -54,7 +54,7 @@ page 73209694 "FinalSettlemtCard"
                     Caption = 'FC ID';
                     ToolTip = 'The unique identifier for the final calculation associated with this payment.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -62,78 +62,78 @@ page 73209694 "FinalSettlemtCard"
                     Caption = 'Contract ID';
                     ToolTip = 'The unique identifier for the contract associated with this payment.';
                 }
-                field("Receivable Total Amount"; Rec."Receivable Total Amount")
+                field("Receivable Total Amount"; Rec."BLRReceivable Total Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The total amount receivable from the tenant for this payment.';
                 }
-                field("Receivable Due Date"; Rec."Receivable Due Date")
+                field("Receivable Due Date"; Rec."BLRReceivable Due Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The due date for the receivable payment.';
                 }
-                field("Receivable Payment mode"; Rec."Receivable Payment mode")
+                field("Receivable Payment mode"; Rec."BLRReceivable Payment mode")
                 {
                     ApplicationArea = All;
                     Lookup = true;
                     ToolTip = 'The payment mode for the receivable payment.';
                 }
 
-                field("Receivable Payment Status"; Rec."Receivable Payment Status")
+                field("Receivable Payment Status"; Rec."BLRReceivable Payment Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The current payment status of the receivable payment.';
 
                     trigger OnValidate()
                     var
-                        PaymentStatus: Enum "Payment Status";
+                        PaymentStatus: Enum "BLRPayment Status";
                     begin
                         // Check if Receivable Payment Status is 'Received'
-                        if Rec."Receivable Payment Status" = PaymentStatus::Received then begin
+                        if Rec."BLRReceivable Payment Status" = PaymentStatus::Received then begin
                             // Set PaymentStatus to 'Received' as well
-                            Rec."PaymentStatus" := Rec."PaymentStatus"::Received;
+                            Rec."BLRPaymentStatus" := Rec."BLRPaymentStatus"::Received;
                             Rec.Modify();  // Save changes to the current record
                         end;
 
-                        if Rec."Receivable Payment Status" <> PaymentStatus::Received then begin
+                        if Rec."BLRReceivable Payment Status" <> PaymentStatus::Received then begin
                             // Set PaymentStatus to 'Received' as well
-                            Rec."PaymentStatus" := Rec."PaymentStatus"::Pending;
+                            Rec."BLRPaymentStatus" := Rec."BLRPaymentStatus"::Pending;
                             Rec.Modify();  // Save changes to the current record
                         end;
                     end;
                 }
-                field("Receivable Cheque No."; Rec."Receivable Cheque No.")
+                field("Receivable Cheque No."; Rec."BLRReceivable Cheque No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The cheque number for the receivable payment.';
-                    Editable = Rec."Receivable Payment mode" = 'Cheque';
+                    Editable = Rec."BLRReceivable Payment mode" = 'Cheque';
 
                     trigger OnValidate()
                     var
 
                     begin
-                        if Rec."Receivable Payment Mode" <> 'Cheque' then
+                        if Rec."BLRReceivable Payment Mode" <> 'Cheque' then
                             Error('Cheque number can only be entered when Payment Mode is set to Cheque.');
                     end;
                 }
 
-                field("Deposit Bank"; Rec."Deposit Bank")
+                field("Deposit Bank"; Rec."BLRDeposit Bank")
                 {
                     ApplicationArea = All;
                     Lookup = true;
                     ToolTip = 'The bank where the deposit is made.';
-                    Editable = not (Rec."Receivable Payment mode" = 'Cash') and not (Rec."Receivable Payment mode" = 'Pending');
+                    Editable = not (Rec."BLRReceivable Payment mode" = 'Cash') and not (Rec."BLRReceivable Payment mode" = 'Pending');
                     trigger OnValidate()
                     var
 
                     begin
-                        if Rec."Receivable Payment Mode" = 'Cash' then
+                        if Rec."BLRReceivable Payment Mode" = 'Cash' then
                             Error('Deposit Bank is not valid for Cash');
                     end;
                 }
 
-                field("Deposit Status"; Rec."Deposit Status")
+                field("Deposit Status"; Rec."BLRDeposit Status")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -143,12 +143,12 @@ page 73209694 "FinalSettlemtCard"
                     var
 
                     begin
-                        if Rec."Receivable Payment Mode" = 'Cash' then
+                        if Rec."BLRReceivable Payment Mode" = 'Cash' then
                             Error('Deposit Bank is not valid for Cash');
                     end;
                 }
 
-                field("Payment Receipt"; Rec."Payment Receipt")
+                field("Payment Receipt"; Rec."BLRPayment Receipt")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Receipt';
@@ -159,34 +159,34 @@ page 73209694 "FinalSettlemtCard"
                         FileURL: Text;
                     begin
 
-                        FileURL := Rec."Payment Receipt document URL";
+                        FileURL := Rec."BLRPmtRcptDocURL";
                         if FileURL = '' then
                             Error('No document is available to view.');
                         OpenFileInBrowser1(FileURL);
                     end;
                 }
-                field("Payment Receipt document URL"; Rec."Payment Receipt document URL")
+                field("Payment Receipt document URL"; Rec."BLRPmtRcptDocURL")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Receipt document URL';
                     ToolTip = 'The URL of the payment receipt document.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     Visible = false;
                     ToolTip = 'The unique identifier for the tenant associated with this payment.';
                 }
-                field("Tenant Email"; Rec."Tenant Email")
+                field("Tenant Email"; Rec."BLRTenant Email")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     Visible = false;
                     ToolTip = 'The email address of the tenant associated with this payment.';
                 }
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -209,55 +209,55 @@ page 73209694 "FinalSettlemtCard"
 
     trigger OnModifyRecord(): Boolean
     var
-        finalCalculationgrid: Record "Final Calculation";
-        paymentTypeRec: Record "Payment Type"; // Record variable for Payment Type
-        lPaymentStatus: Enum "Payment Status";
+        finalCalculationgrid: Record "BLRFinalCalculation";
+        paymentTypeRec: Record "BLRPaymentType"; // Record variable for Payment Type
+        lPaymentStatus: Enum "BLRPayment Status";
     begin
 
         /////////////////////////// Receivable final settlement /////////////////////////////////
 
-        if Rec."Receivable Cheque No." = '' then
-            Rec."Receivable Cheque No." := '-';
+        if Rec."BLRReceivable Cheque No." = '' then
+            Rec."BLRReceivable Cheque No." := '-';
 
-        if Rec."Receivable Payment mode" = '' then
+        if Rec."BLRReceivable Payment mode" = '' then
             if paymentTypeRec.FindFirst() then
-                Rec."Receivable Payment mode" := paymentTypeRec."Payment Method"; // Set the first Payment Method as default
+                Rec."BLRReceivable Payment mode" := paymentTypeRec."BLRPayment Method"; // Set the first Payment Method as default
 
 
-        finalCalculationgrid.SetRange("FC ID", Rec."FC ID");
+        finalCalculationgrid.SetRange("BLRFC ID", Rec."BLRFC ID");
         if finalCalculationgrid.FindFirst() then begin
-            Rec."Contract ID" := finalCalculationgrid."Contract ID";
-            Rec."Tenant ID" := finalCalculationgrid."Tenant ID";
-            Rec."Receivable from the Tenant" := finalCalculationgrid."Net Receivable From The Tenant";
-            Rec."Balance Receivable" := Rec."Receivable from the Tenant";
-            Rec."Receivable Total Amount" := Rec."Receivable from the Tenant";
-            if Rec."Receivable Payment Status" = lPaymentStatus::" " then
-                Rec."Receivable Payment Status" := lPaymentStatus::Scheduled;
+            Rec."BLRContract ID" := finalCalculationgrid."BLRContract ID";
+            Rec."BLRTenant ID" := finalCalculationgrid."BLRTenant ID";
+            Rec."BLRReceivable from the Tenant" := finalCalculationgrid."BLRNetRecvFromTheTenant";
+            Rec."BLRBalance Receivable" := Rec."BLRReceivable from the Tenant";
+            Rec."BLRReceivable Total Amount" := Rec."BLRReceivable from the Tenant";
+            if Rec."BLRReceivable Payment Status" = lPaymentStatus::" " then
+                Rec."BLRReceivable Payment Status" := lPaymentStatus::Scheduled;
 
-            if Rec."Receivable Payment Status" = lPaymentStatus::Received then begin
-                Rec."PaymentStatus" := Rec."PaymentStatus"::Received;
-                Rec."Balance Receivable" := 0;
-                Rec."Payment Processed" := Rec."Receivable from the Tenant";
+            if Rec."BLRReceivable Payment Status" = lPaymentStatus::Received then begin
+                Rec."BLRPaymentStatus" := Rec."BLRPaymentStatus"::Received;
+                Rec."BLRBalance Receivable" := 0;
+                Rec."BLRPayment Processed" := Rec."BLRReceivable from the Tenant";
                 Rec.Modify();
             end;
 
-            if Rec."Receivable Payment Status" = lPaymentStatus::Received then
+            if Rec."BLRReceivable Payment Status" = lPaymentStatus::Received then
                 exit;
 
-            if Rec."Receivable Due Date" = Today() then
-                Rec."Receivable Payment Status" := lPaymentStatus::Due
+            if Rec."BLRReceivable Due Date" = Today() then
+                Rec."BLRReceivable Payment Status" := lPaymentStatus::Due
 
             else
-                if Rec."Receivable Due Date" > Today() then
-                    Rec."Receivable Payment Status" := lPaymentStatus::Scheduled
+                if Rec."BLRReceivable Due Date" > Today() then
+                    Rec."BLRReceivable Payment Status" := lPaymentStatus::Scheduled
 
                 else
-                    if Rec."Receivable Due Date" = 0D then
-                        Rec."Receivable Payment Status" := lPaymentStatus::Scheduled
+                    if Rec."BLRReceivable Due Date" = 0D then
+                        Rec."BLRReceivable Payment Status" := lPaymentStatus::Scheduled
 
                     else
-                        if Rec."Receivable Due Date" < Today() then
-                            Rec."Receivable Payment Status" := lPaymentStatus::Overdue;
+                        if Rec."BLRReceivable Due Date" < Today() then
+                            Rec."BLRReceivable Payment Status" := lPaymentStatus::Overdue;
 
             Rec.Modify();
         end;
@@ -265,52 +265,52 @@ page 73209694 "FinalSettlemtCard"
 
     trigger OnAfterGetRecord()
     var
-        finalCalculationgrid: Record "Final Calculation";
-        paymentTypeRec: Record "Payment Type"; // Record variable for Payment Type
-        lPaymentStatus: Enum "Payment Status";
+        finalCalculationgrid: Record "BLRFinalCalculation";
+        paymentTypeRec: Record "BLRPaymentType"; // Record variable for Payment Type
+        lPaymentStatus: Enum "BLRPayment Status";
     begin
 
         /////////////////////////// Receivable final settlement /////////////////////////////////
 
-        if Rec."Receivable Cheque No." = '' then
-            Rec."Receivable Cheque No." := '-';
+        if Rec."BLRReceivable Cheque No." = '' then
+            Rec."BLRReceivable Cheque No." := '-';
 
-        if Rec."Receivable Payment mode" = '' then
+        if Rec."BLRReceivable Payment mode" = '' then
             if paymentTypeRec.FindFirst() then
-                Rec."Receivable Payment mode" := paymentTypeRec."Payment Method"; // Set the first Payment Method as default
+                Rec."BLRReceivable Payment mode" := paymentTypeRec."BLRPayment Method"; // Set the first Payment Method as default
 
 
-        finalCalculationgrid.SetRange("FC ID", Rec."FC ID");
+        finalCalculationgrid.SetRange("BLRFC ID", Rec."BLRFC ID");
         if finalCalculationgrid.FindFirst() then begin
-            Rec."Contract ID" := finalCalculationgrid."Contract ID";
-            Rec."Tenant ID" := finalCalculationgrid."Tenant ID";
-            Rec."Receivable from the Tenant" := finalCalculationgrid."Net Receivable From The Tenant";
-            Rec."Balance Receivable" := Rec."Receivable from the Tenant";
-            Rec."Receivable Total Amount" := Rec."Receivable from the Tenant";
-            if Rec."Receivable Payment Status" = lPaymentStatus::" " then
-                Rec."Receivable Payment Status" := lPaymentStatus::Scheduled;
+            Rec."BLRContract ID" := finalCalculationgrid."BLRContract ID";
+            Rec."BLRTenant ID" := finalCalculationgrid."BLRTenant ID";
+            Rec."BLRReceivable from the Tenant" := finalCalculationgrid."BLRNetRecvFromTheTenant";
+            Rec."BLRBalance Receivable" := Rec."BLRReceivable from the Tenant";
+            Rec."BLRReceivable Total Amount" := Rec."BLRReceivable from the Tenant";
+            if Rec."BLRReceivable Payment Status" = lPaymentStatus::" " then
+                Rec."BLRReceivable Payment Status" := lPaymentStatus::Scheduled;
 
-            if Rec."Receivable Payment Status" = lPaymentStatus::Received then begin
-                Rec."PaymentStatus" := Rec."PaymentStatus"::Received;
-                Rec."Balance Receivable" := 0;
-                Rec."Payment Processed" := Rec."Receivable from the Tenant";
+            if Rec."BLRReceivable Payment Status" = lPaymentStatus::Received then begin
+                Rec."BLRPaymentStatus" := Rec."BLRPaymentStatus"::Received;
+                Rec."BLRBalance Receivable" := 0;
+                Rec."BLRPayment Processed" := Rec."BLRReceivable from the Tenant";
                 Rec.Modify();
             end;
 
-            if Rec."Receivable Payment Status" = lPaymentStatus::Received then
+            if Rec."BLRReceivable Payment Status" = lPaymentStatus::Received then
                 exit;
 
-            if Rec."Receivable Due Date" = Today() then
-                Rec."Receivable Payment Status" := lPaymentStatus::Due
+            if Rec."BLRReceivable Due Date" = Today() then
+                Rec."BLRReceivable Payment Status" := lPaymentStatus::Due
             else
-                if Rec."Receivable Due Date" > Today() then
-                    Rec."Receivable Payment Status" := lPaymentStatus::Scheduled
+                if Rec."BLRReceivable Due Date" > Today() then
+                    Rec."BLRReceivable Payment Status" := lPaymentStatus::Scheduled
                 else
-                    if Rec."Receivable Due Date" = 0D then
-                        Rec."Receivable Payment Status" := lPaymentStatus::Scheduled
+                    if Rec."BLRReceivable Due Date" = 0D then
+                        Rec."BLRReceivable Payment Status" := lPaymentStatus::Scheduled
                     else
-                        if Rec."Receivable Due Date" < Today() then
-                            Rec."Receivable Payment Status" := lPaymentStatus::Overdue;
+                        if Rec."BLRReceivable Due Date" < Today() then
+                            Rec."BLRReceivable Payment Status" := lPaymentStatus::Overdue;
 
             Rec.Modify();
 
@@ -327,7 +327,7 @@ page 73209694 "FinalSettlemtCard"
 
     procedure editablelogicfield(): Boolean
     begin
-        if Rec."Receivable Payment mode" = 'Cash' then
+        if Rec."BLRReceivable Payment mode" = 'Cash' then
             exit(false)
         else
             exit(true);
@@ -335,58 +335,58 @@ page 73209694 "FinalSettlemtCard"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     var
-        finalCalculationgrid: Record "Final Calculation";
-        paymentTypeRec: Record "Payment Type"; // Record variable for Payment Type
-        lPaymentStatus: Enum "Payment Status";
+        finalCalculationgrid: Record "BLRFinalCalculation";
+        paymentTypeRec: Record "BLRPaymentType"; // Record variable for Payment Type
+        lPaymentStatus: Enum "BLRPayment Status";
     begin
 
-        Rec."Contract ID" := ContractID;
-        Rec."Tenant ID" := tenantID;
+        Rec."BLRContract ID" := ContractID;
+        Rec."BLRTenant ID" := tenantID;
 
         /////////////////////////// Receivable final settlement /////////////////////////////////
 
-        if Rec."Receivable Cheque No." = '' then
-            Rec."Receivable Cheque No." := '-';
+        if Rec."BLRReceivable Cheque No." = '' then
+            Rec."BLRReceivable Cheque No." := '-';
 
-        if Rec."Receivable Payment mode" = '' then
+        if Rec."BLRReceivable Payment mode" = '' then
             if paymentTypeRec.FindFirst() then
-                Rec."Receivable Payment mode" := paymentTypeRec."Payment Method"; // Set the first Payment Method as default
+                Rec."BLRReceivable Payment mode" := paymentTypeRec."BLRPayment Method"; // Set the first Payment Method as default
 
-        finalCalculationgrid.SetRange("FC ID", Rec."FC ID");
+        finalCalculationgrid.SetRange("BLRFC ID", Rec."BLRFC ID");
         if finalCalculationgrid.FindFirst() then begin
-            Rec."Contract ID" := finalCalculationgrid."Contract ID";
-            Rec."Tenant ID" := finalCalculationgrid."Tenant ID";
-            Rec."Receivable from the Tenant" := finalCalculationgrid."Net Receivable From The Tenant";
-            Rec."Balance Receivable" := Rec."Receivable from the Tenant";
-            Rec."Receivable Total Amount" := Rec."Receivable from the Tenant";
+            Rec."BLRContract ID" := finalCalculationgrid."BLRContract ID";
+            Rec."BLRTenant ID" := finalCalculationgrid."BLRTenant ID";
+            Rec."BLRReceivable from the Tenant" := finalCalculationgrid."BLRNetRecvFromTheTenant";
+            Rec."BLRBalance Receivable" := Rec."BLRReceivable from the Tenant";
+            Rec."BLRReceivable Total Amount" := Rec."BLRReceivable from the Tenant";
 
-            if Rec."Receivable Payment Status" = lPaymentStatus::" " then
-                Rec."Receivable Payment Status" := lPaymentStatus::Scheduled;
+            if Rec."BLRReceivable Payment Status" = lPaymentStatus::" " then
+                Rec."BLRReceivable Payment Status" := lPaymentStatus::Scheduled;
 
-            if Rec."Receivable Payment Status" = lPaymentStatus::Received then begin
-                Rec."PaymentStatus" := Rec."PaymentStatus"::Received;
-                Rec."Balance Receivable" := 0;
-                Rec."Payment Processed" := Rec."Receivable from the Tenant";
+            if Rec."BLRReceivable Payment Status" = lPaymentStatus::Received then begin
+                Rec."BLRPaymentStatus" := Rec."BLRPaymentStatus"::Received;
+                Rec."BLRBalance Receivable" := 0;
+                Rec."BLRPayment Processed" := Rec."BLRReceivable from the Tenant";
                 Rec.Modify();
             end;
 
-            if Rec."Receivable Payment Status" = lPaymentStatus::Received then
+            if Rec."BLRReceivable Payment Status" = lPaymentStatus::Received then
                 exit;
 
-            if Rec."Receivable Due Date" = Today() then
-                Rec."Receivable Payment Status" := lPaymentStatus::Due
+            if Rec."BLRReceivable Due Date" = Today() then
+                Rec."BLRReceivable Payment Status" := lPaymentStatus::Due
 
             else
-                if Rec."Receivable Due Date" > Today() then
-                    Rec."Receivable Payment Status" := lPaymentStatus::Scheduled
+                if Rec."BLRReceivable Due Date" > Today() then
+                    Rec."BLRReceivable Payment Status" := lPaymentStatus::Scheduled
 
                 else
-                    if Rec."Receivable Due Date" = 0D then
-                        Rec."Receivable Payment Status" := lPaymentStatus::Scheduled
+                    if Rec."BLRReceivable Due Date" = 0D then
+                        Rec."BLRReceivable Payment Status" := lPaymentStatus::Scheduled
 
                     else
-                        if Rec."Receivable Due Date" < Today() then
-                            Rec."Receivable Payment Status" := lPaymentStatus::Overdue;
+                        if Rec."BLRReceivable Due Date" < Today() then
+                            Rec."BLRReceivable Payment Status" := lPaymentStatus::Overdue;
 
             Rec.Modify();
 
@@ -409,7 +409,7 @@ page 73209694 "FinalSettlemtCard"
         contractID: Integer;
         tenantID: Code[20];
 
-        PaymentStatus: Enum "Payment Status";
+        PaymentStatus: Enum "BLRPayment Status";
 
         editablelogic: Boolean;
 

@@ -1,7 +1,7 @@
-page 73209760 "Approval Contract Status List"
+page 73209760 "BLRApproval ContractStatusList"
 {
     PageType = List;
-    SourceTable = "Approval Contract Status";
+    SourceTable = "BLRApprovalContractStatus";
     ApplicationArea = All;
     Caption = 'Approval Request Contract Status List';
     UsageCategory = Lists;
@@ -14,18 +14,18 @@ page 73209760 "Approval Contract Status List"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the approval request.';
                 }
-                field("Status"; Rec."Status")
+                field("Status"; Rec."BLRStatus")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Current status of the approval request.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Identifier for the associated tenancy contract.';
@@ -33,55 +33,55 @@ page 73209760 "Approval Contract Status List"
                     // DrillDown trigger to navigate to the Tenancy Contract Card
                     trigger OnDrillDown()
                     var
-                        TenancyContractRec: Record "Tenancy Contract"; // Replace with the correct table name for Tenancy Contract
+                        TenancyContractRec: Record "BLRTenancyContract"; // Replace with the correct table name for Tenancy Contract
                     begin
                         // Debugging: Log the Contract ID value
-                        Message('Checking Contract ID: %1', Rec."Contract ID");
+                        Message('Checking Contract ID: %1', Rec."BLRContract ID");
 
                         // Use SetRange and FindFirst to locate the record
-                        TenancyContractRec.SetRange("Contract ID", Rec."Contract ID");
+                        TenancyContractRec.SetRange("BLRContract ID", Rec."BLRContract ID");
 
                         if TenancyContractRec.FindFirst() then
                             // Record found, open the Tenancy Contract Card page
-                            PAGE.Run(PAGE::"Tenancy Contract Card", TenancyContractRec) // Replace with the correct card page ID or name
+                            PAGE.Run(PAGE::"BLRTenancy Contract Card", TenancyContractRec) // Replace with the correct card page ID or name
                         else
                             // Record not found
-                            Message('The selected Contract ID (%1) does not exist in the Tenancy Contract table.', Rec."Contract ID");
+                            Message('The selected Contract ID (%1) does not exist in the Tenancy Contract table.', Rec."BLRContract ID");
 
                     end;
                 }
 
-                field("Renewal Contract ID"; Rec."Renewal Contract ID")
+                field("Renewal Contract ID"; Rec."BLRRenewal Contract ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Identifier for the associated renewal contract.';
 
                     trigger OnDrillDown()
                     var
-                        RenewalContractRec: Record "Contract Renewal"; // Replace with the correct table name for Contract Renewal
+                        RenewalContractRec: Record "BLRContractRenewal"; // Replace with the correct table name for Contract Renewal
                     begin
                         // Debugging: Log the Renewal Contract ID value
-                        Message('Checking Renewal Contract ID: %1', Rec."Renewal Contract ID");
+                        Message('Checking Renewal Contract ID: %1', Rec."BLRRenewal Contract ID");
 
                         // Use SetRange and FindFirst to locate the record
-                        RenewalContractRec.SetRange("ID", Rec."Renewal Contract ID");
+                        RenewalContractRec.SetRange("BLRID", Rec."BLRRenewal Contract ID");
 
                         if RenewalContractRec.FindFirst() then
                             // Record found, open the Contract Renewal Card page
-                            PAGE.Run(PAGE::"Contract Renewal Card", RenewalContractRec) // Replace with the correct card page ID or name
+                            PAGE.Run(PAGE::"BLRContract Renewal Card", RenewalContractRec) // Replace with the correct card page ID or name
                         else
                             // Record not found
-                            Message('The selected Contract Renewal ID (%1) does not exist in the Contract Renewal table.', Rec."Renewal Contract ID");
+                            Message('The selected Contract Renewal ID (%1) does not exist in the Contract Renewal table.', Rec."BLRRenewal Contract ID");
 
                     end;
                 }
 
-                field("Lease ID"; Rec."Lease ID")
+                field("Lease ID"; Rec."BLRLease ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Identifier for the associated lease.';
                 }
-                field("Tenancy Contract Status"; Rec."Tenancy Contract Status")
+                field("Tenancy Contract Status"; Rec."BLRTenancy Contract Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Status of the associated tenancy contract.';
@@ -104,15 +104,15 @@ page 73209760 "Approval Contract Status List"
 
                 trigger OnAction()
                 var
-                    SelectedRec: Record "Approval Contract Status";
-                    StatusUpdateCU: Codeunit "Contract Status Synchronizer";
-                    ContractRenewal: Codeunit "Contract Renewal Response";
+                    SelectedRec: Record "BLRApprovalContractStatus";
+                    StatusUpdateCU: Codeunit "BLRContractStatusSynchronizer";
+                    ContractRenewal: Codeunit "BLRContract Renewal Response";
                 begin
-                    if Rec.Status = 'Pending' then begin
+                    if Rec."BLRStatus" = 'Pending' then begin
                         SelectedRec := Rec;
-                        SelectedRec.Status := 'Approved';
+                        SelectedRec."BLRStatus" := 'Approved';
                         SelectedRec.Modify();
-                        if (SelectedRec."Contract ID" <> 0) and (SelectedRec."Renewal Contract ID" = 0) then
+                        if (SelectedRec."BLRContract ID" <> 0) and (SelectedRec."BLRRenewal Contract ID" = 0) then
                             StatusUpdateCU.SyncToTenancyContract(SelectedRec)
                         else
                             ContractRenewal.SyncToTenancyContractRenewal(SelectedRec);
@@ -137,18 +137,18 @@ page 73209760 "Approval Contract Status List"
 
                 trigger OnAction()
                 var
-                    SelectedRec: Record "Approval Contract Status";
-                    StatusUpdateCU: Codeunit "Contract Status Synchronizer";
-                    ContractRenewal: Codeunit "Contract Renewal Response";
+                    SelectedRec: Record "BLRApprovalContractStatus";
+                    StatusUpdateCU: Codeunit "BLRContractStatusSynchronizer";
+                    ContractRenewal: Codeunit "BLRContract Renewal Response";
                 begin
-                    if Rec.Status = 'Pending' then begin
+                    if Rec."BLRStatus" = 'Pending' then begin
                         SelectedRec := Rec;
-                        SelectedRec.Status := 'Declined';
+                        SelectedRec."BLRStatus" := 'Declined';
                         SelectedRec.Modify();
 
                         Commit();
                         CurrPage.Update();
-                        if (SelectedRec."Contract ID" <> 0) and (SelectedRec."Renewal Contract ID" = 0) then
+                        if (SelectedRec."BLRContract ID" <> 0) and (SelectedRec."BLRRenewal Contract ID" = 0) then
                             StatusUpdateCU.SyncToTenancyContract(SelectedRec)
                         else
                             ContractRenewal.SyncToTenancyContractRenewal(SelectedRec);
@@ -170,19 +170,19 @@ page 73209760 "Approval Contract Status List"
 
                 trigger OnAction()
                 var
-                    TenancyContractRec: Record "Tenancy Contract"; // Replace with the correct table name for Tenancy Contract
+                    TenancyContractRec: Record "BLRTenancyContract"; // Replace with the correct table name for Tenancy Contract
                 begin
                     // Debugging: Log the Contract ID value
 
                     // Use SetRange and FindFirst to locate the record
-                    TenancyContractRec.SetRange("Contract ID", Rec."Contract ID");
+                    TenancyContractRec.SetRange("BLRContract ID", Rec."BLRContract ID");
 
                     if TenancyContractRec.FindFirst() then
                         // Record found, open the Tenancy Contract Card page
-                        PAGE.Run(PAGE::"Tenancy Contract Card", TenancyContractRec) // Replace with the correct card page ID or name
+                        PAGE.Run(PAGE::"BLRTenancy Contract Card", TenancyContractRec) // Replace with the correct card page ID or name
                     else
                         // Record not found
-                        Message('The selected Contract ID (%1) does not exist in the Tenancy Contract table.', Rec."Contract ID");
+                        Message('The selected Contract ID (%1) does not exist in the Tenancy Contract table.', Rec."BLRContract ID");
 
                 end;
             }
@@ -197,19 +197,19 @@ page 73209760 "Approval Contract Status List"
 
                 trigger OnAction()
                 var
-                    RenewalContractRec: Record "Contract Renewal"; // Replace with the correct table name for the Renewal Contract
+                    RenewalContractRec: Record "BLRContractRenewal"; // Replace with the correct table name for the Renewal Contract
                 begin
                     // Debugging: Log the Renewal Contract ID value
 
                     // Use SetRange and FindFirst to locate the record
-                    RenewalContractRec.SetRange("ID", Rec."Renewal Contract ID");
+                    RenewalContractRec.SetRange("BLRID", Rec."BLRRenewal Contract ID");
 
                     if RenewalContractRec.FindFirst() then
                         // Record found, open the Renewal Contract Card page
-                        PAGE.Run(PAGE::"Contract Renewal Card", RenewalContractRec) // Replace with the correct card page ID or name
+                        PAGE.Run(PAGE::"BLRContract Renewal Card", RenewalContractRec) // Replace with the correct card page ID or name
                     else
                         // Record not found
-                        Message('The selected Renewal Contract ID (%1) does not exist in the Contract Renewal table.', Rec."Renewal Contract ID");
+                        Message('The selected Renewal Contract ID (%1) does not exist in the Contract Renewal table.', Rec."BLRRenewal Contract ID");
 
                 end;
             }

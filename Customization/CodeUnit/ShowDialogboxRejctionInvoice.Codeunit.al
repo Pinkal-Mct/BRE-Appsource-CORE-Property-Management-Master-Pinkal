@@ -1,10 +1,10 @@
-codeunit 73209630 ShowDialogboxRejctionInvoice
+codeunit 73209630 BLRShowDialogboxRejectInvoice
 {
     procedure DialogboxForRejection(var Rec: Record "Sales Header")
     var
         salesheader1: Record "Sales Header";
-        Rejectionmail: Codeunit RejectSalesInvoice;
-        dialogpage: Page DialogBoxForInvoiceRejection;
+        Rejectionmail: Codeunit BLRRejectSalesInvoice;
+        dialogpage: Page BLRDialogBoxInvoiceRejection;
         ReasonForRejection: Text[1000];
     begin
         salesheader1.SetRange(salesheader1."Document Type", Rec."Document Type"::Invoice);
@@ -12,7 +12,7 @@ codeunit 73209630 ShowDialogboxRejctionInvoice
         if not salesheader1.IsEmpty() then
             if dialogpage.RunModal() = Action::OK then begin
                 ReasonForRejection := dialogpage.GetReason();
-                Rec."Reason for Rejection" := ReasonForRejection;
+                Rec."BLRReason for Rejection" := ReasonForRejection;
                 Rec.Modify();
                 Rejectionmail.SendInvoiceToLeaseManager(Rec);
             end else

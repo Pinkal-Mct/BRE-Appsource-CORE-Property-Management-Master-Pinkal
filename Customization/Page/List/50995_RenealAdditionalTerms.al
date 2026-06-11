@@ -1,7 +1,7 @@
-page 50995 "Renewal AdditionalTermsSubpage"
+page 73209818 "BLRRenewalAdditionalTerms"
 {
     PageType = ListPart;
-    SourceTable = "Renewal Additional Terms";
+    SourceTable = "BLRRenewalAdditionalTerms";
     ApplicationArea = All;
 
     layout
@@ -11,7 +11,7 @@ page 50995 "Renewal AdditionalTermsSubpage"
             repeater(Group)
             {
 
-                field(Description; Rec.Description)
+                field(Description; Rec.BLRDescription)
                 {
                     ApplicationArea = All;
                 }

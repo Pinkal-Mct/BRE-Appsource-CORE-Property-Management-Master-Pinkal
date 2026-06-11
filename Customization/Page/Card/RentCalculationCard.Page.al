@@ -1,7 +1,7 @@
-page 73209720 "Rent Calculation Card"
+page 73209720 "BLRRent Calculation Card"
 {
     PageType = Card;
-    SourceTable = "Rent Calculation";
+    SourceTable = "BLRRentCalculation";
     ApplicationArea = All;
     Caption = 'Rent Calculation Card';
 
@@ -11,7 +11,7 @@ page 73209720 "Rent Calculation Card"
         {
             group(Group)
             {
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -19,40 +19,40 @@ page 73209720 "Rent Calculation Card"
                     ToolTip = 'The unique identifier for the contract associated with this rent calculation.';
                 }
 
-                field("RC ID"; Rec."RC ID")
+                field("RC ID"; Rec."BLRRC ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The unique identifier for the rent calculation.';
                 }
 
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Secondary Item Type';
                     ToolTip = 'Enter the Secondary Item Type.';
                 }
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
                     ToolTip = 'Enter the Amount.';
                 }
 
-                field("Contract Start Date"; Rec."Contract Start Date")
+                field("Contract Start Date"; Rec."BLRContract Start Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Start Date';
                     ToolTip = 'Enter the Contract Start Date.';
                 }
-                field("Contract End Date"; Rec."Contract End Date")
+                field("Contract End Date"; Rec."BLRContract End Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract End Date';
                     ToolTip = 'Enter the Contract End Date.';
                 }
 
-                field("Number of Installments"; Rec."Number of Installments")
+                field("Number of Installments"; Rec."BLRNumber of Installments")
                 {
                     ApplicationArea = All;
                     Caption = 'Number of Instalments';
@@ -60,21 +60,21 @@ page 73209720 "Rent Calculation Card"
                     Editable = false;
                 }
 
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT Amount';
                     ToolTip = 'Enter the VAT Amount.';
                 }
 
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount Including VAT';
                     ToolTip = 'Enter the Amount Including VAT.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Tenant ID';
@@ -82,14 +82,14 @@ page 73209720 "Rent Calculation Card"
                     Visible = false;
                     ToolTip = 'The unique identifier for the tenant associated with this rent calculation.';
                 }
-                field("Rent Calculation Type"; Rec."Rent Calculation Type")
+                field("Rent Calculation Type"; Rec."BLRRent Calculation Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Rent Calculation Type';
                     ToolTip = 'Enter the Rent Calculation Type.';
                 }
 
-                field("VAT %"; Rec."VAT %")
+                field("VAT %"; Rec."BLRVAT %")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT %';
@@ -97,7 +97,7 @@ page 73209720 "Rent Calculation Card"
                     Editable = false;
                 }
 
-                field("Property Classification"; Rec."Property Classification")
+                field("Property Classification"; Rec."BLRProperty Classification")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -105,20 +105,20 @@ page 73209720 "Rent Calculation Card"
                 }
             }
 
-            group("Payment Schedule")
+            group("BLRPaymentSchedule")
             {
-                part("Rent Calculation"; "Rent Calculation SubCard")
+                part("BLRRentCalculation"; "BLRRent Calculation SubCard")
                 {
-                    SubPageLink = "RC ID" = FIELD("RC ID");
+                    SubPageLink = "BLRRC ID" = FIELD("BLRRC ID");
                     ApplicationArea = All;
                 }
             }
             group("Rent Payment Schedule")
             {
                 part("Rent Calculation2";
-                "Rent Calculation SubCard2")
+                "BLRRent Calculation SubCard2")
                 {
-                    SubPageLink = "RC ID" = FIELD("RC ID");
+                    SubPageLink = "BLRRC ID" = FIELD("BLRRC ID");
                     ApplicationArea = All;
                 }
             }

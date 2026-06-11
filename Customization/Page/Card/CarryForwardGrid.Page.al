@@ -1,9 +1,9 @@
-page 73209677 "Carry Forward Grid"
+page 73209677 "BLRCarryForwardGrid"
 {
     PageType = ListPart;
     ApplicationArea = All;
     // UsageCategory = Administration;
-    SourceTable = "Security Deposit";
+    SourceTable = "BLRSecurityDeposit";
     Caption = 'Carry Forward To';
 
     layout
@@ -12,18 +12,18 @@ page 73209677 "Carry Forward Grid"
         {
             repeater(Group)
             {
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Visible = false;
                     ToolTip = 'Contract ID';
                 }
-                field("New Contract ID"; Rec."New_Contract ID")
+                field("New Contract ID"; Rec."BLRNew_Contract ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'New Contract ID';
                 }
-                field("Total Amount"; Rec."Carry Forward Amount")
+                field("Total Amount"; Rec."BLRCarry Forward Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total Amount to be carried forward to new contract.';
@@ -43,9 +43,9 @@ page 73209677 "Carry Forward Grid"
                 ToolTip = 'Carry forward the security deposit amount to new contract.';
                 trigger OnAction()
                 var
-                    securityDepositRec: Record "Security Deposit";
+                    securityDepositRec: Record "BLRSecurityDeposit";
 
-                    securityDepositCard: Page "Security Deposit Card";
+                    securityDepositCard: Page "BLRSecurity Deposit Card";
                     userConfirmed: Boolean;
                 begin
                     userConfirmed := Confirm('Do you want Carry forwad secuirty deposit amount?', false);
@@ -72,20 +72,20 @@ page 73209677 "Carry Forward Grid"
         contractId := pContractId;
     end;
 
-    procedure PopulateContractDetails(var pSecurityDepositRec: Record "Security Deposit"; pContractId: Integer): Boolean
+    procedure PopulateContractDetails(var pSecurityDepositRec: Record "BLRSecurityDeposit"; pContractId: Integer): Boolean
     var
-        tenancyContractRec: Record "Tenancy Contract";
+        tenancyContractRec: Record "BLRTenancyContract";
     begin
 
         if tenancyContractRec.Get(pContractId) then begin
-            pSecurityDepositRec."Contract ID" := pContractId;
-            pSecurityDepositRec."Tenant Full Name" := tenancyContractRec."Customer Name";
-            pSecurityDepositRec."Tenant ID" := tenancyContractRec."Tenant ID";
-            pSecurityDepositRec."Property Classification" := tenancyContractRec."Property Classification";
-            pSecurityDepositRec."Contract Start Date" := tenancyContractRec."Contract Start Date";
-            pSecurityDepositRec."Contract End Date" := tenancyContractRec."Contract End Date";
-            pSecurityDepositRec."Security Deposit Amount" := tenancyContractRec."Security Deposit Amount";
-            pSecurityDepositRec."Balance Amount" := tenancyContractRec."Security Balanced Amount";
+            pSecurityDepositRec."BLRContract ID" := pContractId;
+            pSecurityDepositRec."BLRTenant Full Name" := tenancyContractRec."BLRCustomer Name";
+            pSecurityDepositRec."BLRTenant ID" := tenancyContractRec."BLRTenant ID";
+            pSecurityDepositRec."BLRProperty Classification" := tenancyContractRec."BLRProperty Classification";
+            pSecurityDepositRec."BLRContract Start Date" := tenancyContractRec."BLRContract Start Date";
+            pSecurityDepositRec."BLRContract End Date" := tenancyContractRec."BLRContract End Date";
+            pSecurityDepositRec."BLRSecurity Deposit Amount" := tenancyContractRec."BLRSecurity Deposit Amount";
+            pSecurityDepositRec."BLRBalance Amount" := tenancyContractRec."BLRSecurity Balanced Amount";
             pSecurityDepositRec.Insert(true);
             exit(true);
         end;

@@ -1,7 +1,7 @@
 // page 50966 "Credit Note Card"
 // {
 //     PageType = Card;
-//     SourceTable = "Credit Note";
+//     SourceTable = "BLRCreditNote";
 //     ApplicationArea = All;
 //     Caption = 'Credit Note Card';
 //     // UsageCategory = Administration;
@@ -12,7 +12,7 @@
 //         {
 //             group("Contract Details")
 //             {
-//                 field("Credit Note Type"; Rec."Credit Note Type")
+//                 field("Credit Note Type"; Rec."BLRCredit Note Type")
 //                 {
 //                     ApplicationArea = All;
 //                     Caption = 'Credit Note Type';
@@ -28,67 +28,67 @@
 //                 //     Visible = ShowTermination;
 //                 // }
 
-//                 field("ID"; Rec."ID")
+//                 field("ID"; Rec."BLRID")
 //                 {
 //                     ApplicationArea = All;
 //                     Visible = false;
 //                 }
-//                 field("Credit Note No."; Rec."Credit Note No.")
+//                 field("Credit Note No."; Rec."BLRCredit Note No.")
 //                 {
 //                     ApplicationArea = All;
 //                 }
-//                 field("FC ID"; Rec."FC ID")
+//                 field("FC ID"; Rec."BLRFC ID")
 //                 {
 //                     ApplicationArea = All;
 //                     Editable = false;
 //                 }
-//                 field("Contract ID"; Rec."Contract ID")
+//                 field("Contract ID"; Rec."BLRContract ID")
 //                 {
 //                     ApplicationArea = All;
 //                     Lookup = true;
-//                     TableRelation = "Final Calculation"."Contract ID";
+//                     TableRelation = "BLRFinalCalculation"."Contract ID";
 
 
 //                     trigger OnValidate()
 //                     var
-//                         finalcalculation: Record "Final Calculation";
-//                         creditnote: Record "Credit Note";
+//                         finalcalculation: Record "BLRFinalCalculation";
+//                         creditnote: Record "BLRCreditNote";
 
 //                     begin
 //                         creditnote.Reset();
-//                         creditnote.SetRange("Contract ID", Rec."Contract ID");
+//                         creditnote.SetRange("BLRContract ID", Rec."BLRContract ID");
 //                         if creditnote.FindFirst() then
-//                             Error('This Contract ID %1 is already used in another record.', Rec."Contract ID");
+//                             Error('This Contract ID %1 is already used in another record.', Rec."BLRContract ID");
 
-//                         finalcalculation.SetRange("Contract ID", Rec."Contract ID");
+//                         finalcalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
 //                         if finalcalculation.FindSet() then begin
-//                             Rec."Credit Note Type" := Rec."Credit Note Type"::"Termination Credit Note";
-//                             Rec."Contract Start Date" := finalcalculation."Contract Start Date";
-//                             Rec."Contract End Date" := finalcalculation."Contract End Date"; // Convert Integer to Text
-//                             Rec."Unit Type" := finalcalculation."Unit Type";
-//                             Rec."Contract Amount" := finalcalculation."Contract Amount";
-//                             Rec."Tenant ID" := finalcalculation."Tenant ID";
-//                             Rec."Tenant Name" := finalcalculation."Tenant Name";
-//                             Rec."Tenant Email" := finalcalculation."Tenant Email"; // Convert Integer to Text
-//                             Rec."FC ID" := finalcalculation."FC ID";
+//                             Rec."BLRCredit Note Type" := Rec."BLRCredit Note Type"::"Termination Credit Note";
+//                             Rec."BLRContract Start Date" := finalcalculation."BLRContract Start Date";
+//                             Rec."BLRContract End Date" := finalcalculation."BLRContract End Date"; // Convert Integer to Text
+//                             Rec."BLRUnit Type" := finalcalculation."BLRUnit Type";
+//                             Rec."BLRContract Amount" := finalcalculation."BLRContract Amount";
+//                             Rec."BLRTenant ID" := finalcalculation."BLRTenant ID";
+//                             Rec."BLRTenant Name" := finalcalculation."BLRTenant Name";
+//                             Rec."BLRTenant Email" := finalcalculation."BLRTenant Email"; // Convert Integer to Text
+//                             Rec."BLRFC ID" := finalcalculation."BLRFC ID";
 //                             BillingCalculationSub();
 
 //                         end else begin // Clear the fields if no record is found
-//                             Rec."Credit Note Type" := Rec."Credit Note Type"::"Termination Credit Note";
-//                             Rec."Contract Start Date" := 0D;
-//                             Rec."Contract End Date" := 0D; // Convert Integer to Text
-//                             Rec."Unit Type" := '';
-//                             Rec."Contract Amount" := 0;
-//                             Rec."Tenant ID" := '';
-//                             Rec."Tenant Name" := '';
-//                             Rec."Tenant Email" := ''; // Convert Integer to Text
-//                             Rec."FC ID" := 0;
+//                             Rec."BLRCredit Note Type" := Rec."BLRCredit Note Type"::"Termination Credit Note";
+//                             Rec."BLRContract Start Date" := 0D;
+//                             Rec."BLRContract End Date" := 0D; // Convert Integer to Text
+//                             Rec."BLRUnit Type" := '';
+//                             Rec."BLRContract Amount" := 0;
+//                             Rec."BLRTenant ID" := '';
+//                             Rec."BLRTenant Name" := '';
+//                             Rec."BLRTenant Email" := ''; // Convert Integer to Text
+//                             Rec."BLRFC ID" := 0;
 //                         end;
 
 //                     end;
 //                 }
 
-//                 field("Credit Note Document"; Rec."Credit Note Document")
+//                 field("Credit Note Document"; Rec."BLRCredit Note Document")
 //                 {
 //                     ApplicationArea = All;
 //                     Caption = 'Credit Note Document';
@@ -100,7 +100,7 @@
 //                         FileURL: Text;
 //                     begin
 //                         // Get the URL of the uploaded document
-//                         FileURL := Rec."Credit Note URL";
+//                         FileURL := Rec."BLRCredit Note URL";
 
 //                         // Check if the file URL is not empty
 //                         if FileURL = '' then
@@ -112,41 +112,41 @@
 //                     end;
 //                 }
 
-//                 field("Credit Note URL"; Rec."Credit Note URL")
+//                 field("Credit Note URL"; Rec."BLRCredit Note URL")
 //                 {
 //                     ApplicationArea = All;
 //                     Editable = false;
 //                     Visible = false;
 //                 }
-//                 field("Contract Start Date"; Rec."Contract Start Date")
+//                 field("Contract Start Date"; Rec."BLRContract Start Date")
 //                 {
 //                     ApplicationArea = All;
 //                     Caption = 'Contract Start Date';
 //                     ToolTip = 'Enter the Contract Start Date.';
 //                     Editable = false;
 //                 }
-//                 field("Contract End Date"; Rec."Contract End Date")
+//                 field("Contract End Date"; Rec."BLRContract End Date")
 //                 {
 //                     ApplicationArea = All;
 //                     Caption = 'Contract End Date';
 //                     ToolTip = 'Enter the Contract End Date.';
 //                     Editable = false;
 //                 }
-//                 field("Unit Type"; Rec."Unit Type")
+//                 field("Unit Type"; Rec."BLRUnit Type")
 //                 {
 //                     ApplicationArea = All;
 //                     Caption = 'Unit Type';
 //                     ToolTip = 'Enter the Unit Type.';
 //                     Editable = false;
 //                 }
-//                 field("Contract Amount"; Rec."Contract Amount")
+//                 field("Contract Amount"; Rec."BLRContract Amount")
 //                 {
 //                     ApplicationArea = All;
 //                     Caption = 'Contract Amount';
 //                     ToolTip = 'Enter the Contract Amount.';
 //                     Editable = false;
 //                 }
-//                 field("Status"; Rec."Status")
+//                 field("Status"; Rec."BLRStatus")
 //                 {
 //                     ApplicationArea = All;
 //                     Editable = false;
@@ -155,26 +155,26 @@
 //             }
 //             group("Customer Details")
 //             {
-//                 field("Tenant ID"; Rec."Tenant ID")
+//                 field("Tenant ID"; Rec."BLRTenant ID")
 //                 {
 //                     ApplicationArea = All;
 //                     Caption = 'Tenant ID';
 //                     Editable = false;
 //                 }
-//                 field("Tenant Email"; Rec."Tenant Email")
+//                 field("Tenant Email"; Rec."BLRTenant Email")
 //                 {
 //                     ApplicationArea = All;
 //                     Caption = 'Tenant Email';
 //                     Editable = false;
 //                 }
-//                 field("Tenant Name"; Rec."Tenant Name")
+//                 field("Tenant Name"; Rec."BLRTenant Name")
 //                 {
 //                     ApplicationArea = All;
 //                     Caption = 'Tenant Name';
 //                     Editable = false;
 //                 }
 //             }
-//             field("Reason for Rejection"; Rec."Reason for Rejection")
+//             field("Reason for Rejection"; Rec."BLRReason for Rejection")
 //             {
 //                 Caption = 'Reason for Rejection';
 //                 Editable = false;
@@ -183,7 +183,7 @@
 //             {
 //                 part("Billing-Calculations"; "Billing Calculation CN Card")
 //                 {
-//                     SubPageLink = "Contract ID" = FIELD("Contract ID"); // Link to filter attachments for this owner only
+//                     SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"); // Link to filter attachments for this owner only
 //                     ApplicationArea = All;
 //                     // Visible = isVisible;
 //                 }
@@ -208,7 +208,7 @@
 //             //     // Visible = IsStandardCreditNoteType;
 //             //     part("Invoice-CreditNote"; "Invoice-Credit Note Card")
 //             //     {
-//             //         SubPageLink = "ID" = FIELD("ID"); // Link to filter attachments for this owner only
+//             //         SubPageLink = "BLRID" = FIELD("BLRID"); // Link to filter attachments for this owner only
 //             //         ApplicationArea = All;
 //             //         // Visible = isVisible;
 //             //     }
@@ -218,7 +218,7 @@
 //             //     // Visible = IsStandardCreditNoteType;
 //             //     part("Final Invoice-CreditNote"; "Filtered Invoice Detail Card")
 //             //     {
-//             //         SubPageLink = "ID" = FIELD("ID"); // Link to filter attachments for this owner only
+//             //         SubPageLink = "BLRID" = FIELD("BLRID"); // Link to filter attachments for this owner only
 //             //         ApplicationArea = All;
 //             //         // Visible = isVisible;
 //             //     }
@@ -239,73 +239,73 @@
 //                 Promoted = true;
 //                 PromotedCategory = Process;
 //                 PromotedIsBig = true;
-//                 Enabled = Rec.Status = Rec.Status::Pending;
+//                 Enabled = Rec."BLRStatus" = Rec."BLRStatus"::Pending;
 
 
 //                 trigger OnAction()
 //                 var
-//                     ApprovalCreditNote: Record "Credit Note Approval";
-//                     CreditNote: Record "Credit Note";
-//                     billingcalculation: Record "Billing Calculation CN";
+//                     ApprovalCreditNote: Record "BLRCreditNoteApproval";
+//                     CreditNote: Record "BLRCreditNote";
+//                     billingcalculation: Record "BLRBillingCalculationCN";
 //                     creditnoteamount: Decimal;
 //                 begin
 //                     // Validate required fields
-//                     if Rec."Contract ID" = 0 then
+//                     if Rec."BLRContract ID" = 0 then
 //                         Error('Contract ID must be specified');
 
 //                     // Get the actual Credit Note record
-//                     if not CreditNote.Get(Rec."ID") then
+//                     if not CreditNote.Get(Rec."BLRID") then
 //                         Error('Credit Note record not found.');
 
-//                     ApprovalCreditNote.SetRange("Contract ID", Rec."Contract ID");
+//                     ApprovalCreditNote.SetRange("BLRContract ID", Rec."BLRContract ID");
 
 //                     if ApprovalCreditNote.FindSet() then begin
 //                         // Modify existing approval record
-//                         ApprovalCreditNote."ID" := CreditNote."ID";
-//                         ApprovalCreditNote."FC ID" := CreditNote."FC ID";
-//                         ApprovalCreditNote."Contract ID" := CreditNote."Contract ID";
-//                         ApprovalCreditNote."Tenant ID" := CreditNote."Tenant ID";
-//                         ApprovalCreditNote."Status" := CreditNote."Status";
-//                         ApprovalCreditNote."Contract Start Date" := CreditNote."Contract Start Date";
-//                         ApprovalCreditNote."Contract End Date" := CreditNote."Contract End Date";
-//                         ApprovalCreditNote."Tenant Name" := CreditNote."Tenant Name";
-//                         ApprovalCreditNote."Credit Note Type" := CreditNote."Credit Note Type"::"Termination Credit Note";
+//                         ApprovalCreditNote."BLRID" := CreditNote."BLRID";
+//                         ApprovalCreditNote."BLRFC ID" := CreditNote."BLRFC ID";
+//                         ApprovalCreditNote."BLRContract ID" := CreditNote."BLRContract ID";
+//                         ApprovalCreditNote."BLRTenant ID" := CreditNote."BLRTenant ID";
+//                         ApprovalCreditNote."BLRStatus" := CreditNote."BLRStatus";
+//                         ApprovalCreditNote."BLRContract Start Date" := CreditNote."BLRContract Start Date";
+//                         ApprovalCreditNote."BLRContract End Date" := CreditNote."BLRContract End Date";
+//                         ApprovalCreditNote."BLRTenant Name" := CreditNote."BLRTenant Name";
+//                         ApprovalCreditNote."BLRCredit Note Type" := CreditNote."BLRCredit Note Type"::"Termination Credit Note";
 //                         ApprovalCreditNote.Modify();
 
-//                         billingcalculation.SetRange("Contract ID", Rec."Contract ID");
+//                         billingcalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
 //                         if billingcalculation.FindSet() then begin
 //                             // Modify existing approval record
 //                             repeat
-//                                 creditnoteamount += billingcalculation."Amount Including VAT";
+//                                 creditnoteamount += billingcalculation."BLRAmount Including VAT";
 //                             until billingcalculation.Next() = 0;
 
-//                             ApprovalCreditNote."Credit Note Amount" := creditnoteamount;
+//                             ApprovalCreditNote."BLRCredit Note Amount" := creditnoteamount;
 //                             ApprovalCreditNote.Modify();
 //                         end;
 //                         Message('Approval Request Modified successfully!');
 //                     end else begin
 //                         // Insert new approval record
 //                         ApprovalCreditNote.Init();
-//                         ApprovalCreditNote."ID" := CreditNote."ID";
-//                         ApprovalCreditNote."FC ID" := CreditNote."FC ID";
-//                         ApprovalCreditNote."Contract ID" := CreditNote."Contract ID";
-//                         ApprovalCreditNote."Tenant ID" := CreditNote."Tenant ID";
-//                         ApprovalCreditNote."Status" := CreditNote."Status";
-//                         ApprovalCreditNote."Contract Start Date" := CreditNote."Contract Start Date";
-//                         ApprovalCreditNote."Contract End Date" := CreditNote."Contract End Date";
-//                         ApprovalCreditNote."Tenant Name" := CreditNote."Tenant Name";
-//                         ApprovalCreditNote."Credit Note Type" := CreditNote."Credit Note Type"::"Termination Credit Note";
+//                         ApprovalCreditNote."BLRID" := CreditNote."BLRID";
+//                         ApprovalCreditNote."BLRFC ID" := CreditNote."BLRFC ID";
+//                         ApprovalCreditNote."BLRContract ID" := CreditNote."BLRContract ID";
+//                         ApprovalCreditNote."BLRTenant ID" := CreditNote."BLRTenant ID";
+//                         ApprovalCreditNote."BLRStatus" := CreditNote."BLRStatus";
+//                         ApprovalCreditNote."BLRContract Start Date" := CreditNote."BLRContract Start Date";
+//                         ApprovalCreditNote."BLRContract End Date" := CreditNote."BLRContract End Date";
+//                         ApprovalCreditNote."BLRTenant Name" := CreditNote."BLRTenant Name";
+//                         ApprovalCreditNote."BLRCredit Note Type" := CreditNote."BLRCredit Note Type"::"Termination Credit Note";
 //                         ApprovalCreditNote.Insert(true);
 //                         //  Message('Approval Request Sent successfully!');
 
-//                         billingcalculation.SetRange("Contract ID", Rec."Contract ID");
+//                         billingcalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
 //                         if billingcalculation.FindSet() then begin
 //                             // Modify existing approval record
 //                             repeat
-//                                 creditnoteamount += billingcalculation."Amount Including VAT";
+//                                 creditnoteamount += billingcalculation."BLRAmount Including VAT";
 //                             until billingcalculation.Next() = 0;
 
-//                             ApprovalCreditNote."Credit Note Amount" := creditnoteamount;
+//                             ApprovalCreditNote."BLRCredit Note Amount" := creditnoteamount;
 //                             ApprovalCreditNote.Modify();
 //                         end;
 //                         Message('Approval Request Sent successfully!');
@@ -325,23 +325,23 @@
 
 //                 trigger OnAction()
 //                 var
-//                     CreditNotetable: Record "Credit Note";
+//                     CreditNotetable: Record "BLRCreditNote";
 //                     CreditNoteReport: Report "Terminated Credit Note";
 //                     azureBlobUploader: Codeunit "Azure AD Blob Storage";
 //                     fileName: Text;
 //                     uploadResult: Text;
 //                     folderName: Text;
 //                     inStream: InStream;
-//                     Billingcalculationgrid: Record "Final Billing Calculation Grid";
+//                     Billingcalculationgrid: Record "BLRFinalBillingCalculationGrid";
 //                     TempBlob: Codeunit "Temp Blob";
 //                     OutStream: OutStream;
 //                 begin
 //                     // Credit Note table માં filter set કરો
 //                     CreditNotetable.Reset();
-//                     CreditNotetable.SetRange(ID, Rec.ID);
+//                     CreditNotetable.SetRange(ID, Rec."BLRID");
 
 //                     if not CreditNotetable.FindFirst() then
-//                         Error('Credit Note record not found for ID: %1', Rec.ID);
+//                         Error('Credit Note record not found for ID: %1', Rec."BLRID");
 
 //                     // Report માં table view set કરો
 //                     CreditNoteReport.SetTableView(CreditNotetable);
@@ -352,24 +352,24 @@
 //                     CreditNoteReport.SaveAs('', ReportFormat::Pdf, OutStream);
 //                     TempBlob.CreateInStream(InStream);
 
-//                     FileName := 'CreditNote_' + Format(Rec.ID) + '.pdf';
+//                     FileName := 'CreditNote_' + Format(Rec."BLRID") + '.pdf';
 
 //                     folderName := 'Payment Receipt';
 //                     uploadResult := azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName);
 
 //                     if uploadResult <> '' then begin
-//                         Rec."Credit Note Document" := fileName;
-//                         Rec."Credit Note URL" := uploadResult;
+//                         Rec."BLRCredit Note Document" := fileName;
+//                         Rec."BLRCredit Note URL" := uploadResult;
 //                         Rec.Modify();
 //                         Message('File uploaded successfully: %1', fileName);
 //                     end else
 //                         Error('File upload failed');
 
 //                     // Update Billing Calculation Grid
-//                     Billingcalculationgrid.SetRange("Contract ID", Rec."Contract ID");
+//                     Billingcalculationgrid.SetRange("BLRContract ID", Rec."BLRContract ID");
 //                     if Billingcalculationgrid.FindSet() then begin
-//                         Billingcalculationgrid."Credit Note Document" := Rec."Credit Note Document";
-//                         Billingcalculationgrid."Credit Note Document URL" := Rec."Credit Note URL";
+//                         Billingcalculationgrid."Credit Note Document" := Rec."BLRCredit Note Document";
+//                         Billingcalculationgrid."Credit Note Document URL" := Rec."BLRCredit Note URL";
 //                         Billingcalculationgrid.Modify(true);
 //                     end;
 //                 end;
@@ -382,7 +382,7 @@
 
 //     // trigger OnAfterGetRecord()
 //     // begin
-//     //     if Rec."Credit Note Type" = Rec."Credit Note Type"::"Standard Credit Note" then begin
+//     //     if Rec."BLRCredit Note Type" = Rec."BLRCredit Note Type"::"Standard Credit Note" then begin
 //     //         IsStandardCreditNoteType := true;
 //     //     end else begin
 //     //         IsStandardCreditNoteType := false;
@@ -391,16 +391,16 @@
 
 //     // trigger OnNewRecord(BelowxRec: Boolean)
 //     // var
-//     //     CreditNoteRec: Record "Credit Note";
+//     //     CreditNoteRec: Record "BLRCreditNote";
 //     //     NextID: Integer;
 //     // begin
-//     //     if Rec.ID = 0 then begin
+//     //     if Rec."BLRID" = 0 then begin
 //     //         if CreditNoteRec.FindLast() then
-//     //             NextID := CreditNoteRec.ID + 1
+//     //             NextID := CreditNoteRec."BLRID" + 1
 //     //         else
 //     //             NextID := 1;
 
-//     //         Rec.ID := NextID;
+//     //         Rec."BLRID" := NextID;
 
 //     //     end;
 //     // end;
@@ -408,29 +408,29 @@
 
 //     procedure BillingCalculationSub()
 //     var
-//         BillingCalculationSubCN: Record "Billing Calculation CN";
-//         BillingCalculationSubFC: Record "Final Billing Calculation Grid";
+//         BillingCalculationSubCN: Record "BLRBillingCalculationCN";
+//         BillingCalculationSubFC: Record "BLRFinalBillingCalculationGrid";
 //     begin
 
 
-//         BillingCalculationSubCN.SetRange("Contract ID", Rec."Contract ID");
+//         BillingCalculationSubCN.SetRange("BLRContract ID", Rec."BLRContract ID");
 //         if BillingCalculationSubCN.FindSet() then begin
 //             BillingCalculationSubCN.DeleteAll();
 //         end;
 
 //         // TenancyContractLine.Reset();
-//         BillingCalculationSubFC.SetRange("Contract ID", Rec."Contract ID");
+//         BillingCalculationSubFC.SetRange("BLRContract ID", Rec."BLRContract ID");
 //         if BillingCalculationSubFC.FindSet() then begin
 //             repeat
 //                 if BillingCalculationSubFC."DifferenceAmount" > 0 then begin
 //                     BillingCalculationSubCN.Init();
-//                     BillingCalculationSubCN."Credit Note ID" := Rec."ID";
-//                     BillingCalculationSubCN."Contract ID" := Rec."Contract ID";
-//                     BillingCalculationSubCN."Tenant ID" := Rec."Tenant ID";
-//                     BillingCalculationSubCN."Item" := BillingCalculationSubFC."RevenueDescription";
-//                     BillingCalculationSubCN."Amount" := BillingCalculationSubFC."DifferenceAmount";
-//                     BillingCalculationSubCN."VAT Amount" := BillingCalculationSubFC."DifferenceVAT";
-//                     BillingCalculationSubCN."Amount Including VAT" := BillingCalculationSubFC."DifferenceAmountInclVAT";
+//                     BillingCalculationSubCN."BLRCredit Note ID" := Rec."BLRID";
+//                     BillingCalculationSubCN."BLRContract ID" := Rec."BLRContract ID";
+//                     BillingCalculationSubCN."BLRTenant ID" := Rec."BLRTenant ID";
+//                     BillingCalculationSubCN."BLRItem" := BillingCalculationSubFC."RevenueDescription";
+//                     BillingCalculationSubCN."BLRAmount" := BillingCalculationSubFC."DifferenceAmount";
+//                     BillingCalculationSubCN."BLRVAT Amount" := BillingCalculationSubFC."DifferenceVAT";
+//                     BillingCalculationSubCN."BLRAmount Including VAT" := BillingCalculationSubFC."DifferenceAmountInclVAT";
 //                     BillingCalculationSubCN.Insert();
 //                     Clear(BillingCalculationSubCN);
 //                 end;
@@ -441,25 +441,25 @@
 
 //     procedure ShowCreditNoteInBillingCalculationGrid()
 //     var
-//         Billingcalculationgrid: Record "Final Billing Calculation Grid";
+//         Billingcalculationgrid: Record "BLRFinalBillingCalculationGrid";
 //     begin
-//         Billingcalculationgrid.SetRange("Contract ID", Rec."Contract ID");
+//         Billingcalculationgrid.SetRange("BLRContract ID", Rec."BLRContract ID");
 //         if Billingcalculationgrid.FindSet() then begin
-//             Billingcalculationgrid."Credit Note ID" := Rec."Credit Note No.";
-//             // Billingcalculationgrid."Credit Note Document" := Rec."Credit Note Document";
-//             // Billingcalculationgrid."Credit Note Document URL" := Rec."Credit Note URL";
+//             Billingcalculationgrid."BLRCredit Note ID" := Rec."BLRCredit Note No.";
+//             // Billingcalculationgrid."Credit Note Document" := Rec."BLRCredit Note Document";
+//             // Billingcalculationgrid."Credit Note Document URL" := Rec."BLRCredit Note URL";
 //             Billingcalculationgrid.Modify();
 //         end;
 //     end;
 
 //     procedure ShowCreditNoteInBillingCalculationSubGrid()
 //     var
-//         Billingcalculationgrid: Record "Billing Calculation CN";
+//         Billingcalculationgrid: Record "BLRBillingCalculationCN";
 //     begin
-//         Billingcalculationgrid.SetRange("Contract ID", Rec."Contract ID");
+//         Billingcalculationgrid.SetRange("BLRContract ID", Rec."BLRContract ID");
 //         if Billingcalculationgrid.FindSet() then begin
 //             repeat
-//                 Billingcalculationgrid."Credit Note ID" := Rec.ID;
+//                 Billingcalculationgrid."BLRCredit Note ID" := Rec."BLRID";
 //                 Billingcalculationgrid.Modify();
 //             until Billingcalculationgrid.Next() = 0;
 

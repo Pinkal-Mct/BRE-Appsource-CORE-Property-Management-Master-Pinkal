@@ -1,7 +1,7 @@
-page 73209762 "Approve FinalCalculation Req"
+page 73209762 "BLRApprove FinalCalculationReq"
 {
     PageType = List;
-    SourceTable = "Approval Final Calculation";
+    SourceTable = "BLRApprovalFinalCalculation";
     ApplicationArea = All;
     Caption = 'Approval Final Calculation List';
     UsageCategory = Lists;
@@ -14,41 +14,41 @@ page 73209762 "Approve FinalCalculation Req"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the approval final calculation.';
                 }
-                field("Status"; Rec."Status")
+                field("Status"; Rec."BLRStatus")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Current status of the approval final calculation.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the tenant associated with the approval final calculation.';
                 }
 
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the contract associated with the approval final calculation.';
                 }
 
-                field("FC ID"; Rec."FC ID")
+                field("FC ID"; Rec."BLRFC ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the final calculation associated with the approval.';
                 }
 
-                field("Link"; Rec."Link")
+                field("Link"; Rec."BLRLink")
                 {
                     ApplicationArea = All;
                     DrillDown = true;
@@ -57,40 +57,40 @@ page 73209762 "Approve FinalCalculation Req"
 
                     trigger OnDrillDown()
                     var
-                        FinalCalculation: Record "Final Calculation";
+                        FinalCalculation: Record "BLRFinalCalculation";
                     begin
 
                         // Navigate to the Revenue Structure Card page
-                        if FinalCalculation.Get(Rec."Link") then
-                            PAGE.RUN(PAGE::"Final Calculation Card", FinalCalculation)
+                        if FinalCalculation.Get(Rec."BLRLink") then
+                            PAGE.RUN(PAGE::"BLRFinalCalculationCard", FinalCalculation)
                         else
                             Message('The related Revenue Structure does not exist.')
                     end;
 
                 }
 
-                field("Contract Start Date"; Rec."Contract Start Date")
+                field("Contract Start Date"; Rec."BLRContract Start Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Start date of the contract associated with the approval final calculation.';
                 }
 
-                field("Contract End Date"; Rec."Contract End Date")
+                field("Contract End Date"; Rec."BLRContract End Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'End date of the contract associated with the approval final calculation.';
                 }
 
-                field("Termination Date"; Rec."Termination Date")
+                field("Termination Date"; Rec."BLRTermination Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Date when the contract associated with the approval final calculation was terminated.';
                 }
 
-                field("Contract Amount"; Rec."Contract Amount")
+                field("Contract Amount"; Rec."BLRContract Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -126,20 +126,20 @@ page 73209762 "Approve FinalCalculation Req"
 
                 trigger OnAction()
                 var
-                    FinalCalculation: Record "Final Calculation";
+                    FinalCalculation: Record "BLRFinalCalculation";
                 begin
-                    if Rec.Status = Rec.Status::Approved then
+                    if Rec.BLRStatus = Rec.BLRStatus::Approved then
                         Error('This entry is already approved');
 
                     if Confirm('Do you want to approve this entry?') then begin
                         // Update entry status
-                        Rec.Status := Rec.Status::Approved;
+                        Rec.BLRStatus := Rec.BLRStatus::Approved;
                         Rec.Modify();
 
-                        FinalCalculation.SetRange("Contract ID", Rec."Contract ID");
+                        FinalCalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
                         if FinalCalculation.FindFirst() then begin
 
-                            FinalCalculation.Status := FinalCalculation.Status::Approved;
+                            FinalCalculation.BLRStatus := FinalCalculation.BLRStatus::Approved;
                             FinalCalculation.Modify();
                         end;
 
@@ -157,19 +157,19 @@ page 73209762 "Approve FinalCalculation Req"
 
                 trigger OnAction()
                 var
-                    FinalCalculation: Record "Final Calculation";
+                    FinalCalculation: Record "BLRFinalCalculation";
                 begin
-                    if Rec.Status = Rec.Status::Rejected then
+                    if Rec.BLRStatus = Rec.BLRStatus::Rejected then
                         Error('This entry is already rejected');
 
                     if Confirm('Do you want to reject this entry?') then begin
                         // Update entry status
-                        Rec.Status := Rec.Status::Rejected;
+                        Rec.BLRStatus := Rec.BLRStatus::Rejected;
                         Rec.Modify();
 
-                        FinalCalculation.SetRange("Contract ID", Rec."Contract ID");
+                        FinalCalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
                         if FinalCalculation.FindFirst() then begin
-                            FinalCalculation.Status := FinalCalculation.Status::Rejected;
+                            FinalCalculation.BLRStatus := FinalCalculation.BLRStatus::Rejected;
                             FinalCalculation.Modify();
                         end;
 

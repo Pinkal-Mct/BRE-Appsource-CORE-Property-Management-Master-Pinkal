@@ -1,4 +1,4 @@
-pageextension 73209589 Vendor extends "Vendor Card"
+pageextension 73209589 BLRVendor extends "Vendor Card"
 {
     layout
     {
@@ -26,43 +26,43 @@ pageextension 73209589 Vendor extends "Vendor Card"
 
         addafter("Blocked")
         {
-            field("Vendor Category"; Rec."Vendor Category")
+            field("BLRVendorCategory"; Rec."BLRVendor Category")
             {
                 ApplicationArea = All;
                 Caption = 'Vendor Category';
-                TableRelation = "Vendor Category"."Vendor Category Type";
+                TableRelation = "BLRVendorCategory"."BLRVendor Category Type";
                 ToolTip = 'Specifies the vendor category for this vendor.';
             }
         }
 
         addafter("Address 2")
         {
-            field("Country"; Rec."Country")
+            field("BLRCountry"; Rec."BLRCountry")
             {
                 ApplicationArea = All;
                 Caption = 'Country';
-                TableRelation = Country."Country Code";
+                TableRelation = "BLRCountry"."BLRCountry Code";
                 ToolTip = 'Specifies the country in which the vendor is located.';
             }
         }
-        addafter("Country")
+        addafter("BLRCountry")
         {
-            field("Emirate"; Rec."Emirate Name")
+            field("BLREmirate"; Rec."BLREmirate Name")
             {
                 ApplicationArea = All;
                 Caption = 'Emirate';
-                TableRelation = Emirate."Emirate Name" where("Country Code" = field(Country));
+                TableRelation = BLREmirate."BLREmirate Name" where("BLRCountry Code" = field("BLRCountry"));
                 ToolTip = 'Specifies the emirate in which the vendor is located.';
             }
         }
 
-        addafter("Emirate")
+        addafter("BLREmirate")
         {
-            field("Community"; Rec."Community")
+            field("BLRCommunity"; Rec."BLRCommunity")
             {
                 ApplicationArea = All;
                 Caption = 'Community';
-                TableRelation = Community."Community Name" where("Emirate Name" = field("Emirate Name"));
+                TableRelation = BLRCommunity."BLRCommunity Name" where("BLREmirate Name" = field("BLREmirate Name"));
                 ToolTip = 'Specifies the community in which the vendor is located.';
             }
         }

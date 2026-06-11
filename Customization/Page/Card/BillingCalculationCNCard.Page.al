@@ -1,7 +1,7 @@
-page 73209674 "Billing Calculation CN Card"
+page 73209674 "BLRBilling Calculation CN Card"
 {
     PageType = ListPart;
-    SourceTable = "Billing Calculation CN";
+    SourceTable = "BLRBillingCalculationCN";
     ApplicationArea = All;
     Caption = 'Billing Calculation CN Card';
     layout
@@ -10,55 +10,55 @@ page 73209674 "Billing Calculation CN Card"
         {
             repeater("Contract Details")
             {
-                field("Credit Note ID"; Rec."Credit Note ID")
+                field("Credit Note ID"; Rec."BLRCredit Note ID")
                 {
                     ToolTip = 'The unique identifier for the credit note associated with the billing calculation.';
                     ApplicationArea = all;
                     Caption = 'Credit Note ID';
                     Editable = false;
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ToolTip = 'The unique identifier for the contract associated with the billing calculation.';
                     ApplicationArea = All;
                     Editable = false;
                 }
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ToolTip = 'The unique identifier for the tenant associated with the billing calculation.';
                     ApplicationArea = All;
                     Caption = 'Tenant ID';
                     Editable = false;
                 }
-                field("Item"; Rec."Item")
+                field("Item"; Rec."BLRItem")
                 {
                     ToolTip = 'The name of the item associated with the billing calculation.';
                     ApplicationArea = All;
                     Caption = 'Item';
                     Editable = false;
                 }
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ToolTip = 'The amount of the item associated with the billing calculation.';
                     ApplicationArea = All;
                     Caption = 'Amount';
                     Editable = false;
                 }
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ToolTip = 'The VAT amount associated with the billing calculation.';
                     ApplicationArea = All;
                     Caption = 'VAT Amount';
                     Editable = false;
                 }
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ToolTip = 'The total amount including VAT for the billing calculation.';
                     ApplicationArea = All;
                     Caption = 'Amount Including VAT';
                     Editable = false;
                 }
-                field("VAT %"; Rec."VAT %")
+                field("VAT %"; Rec."BLRVAT %")
                 {
                     ToolTip = 'The VAT percentage applied to the billing calculation.';
                     ApplicationArea = All;
@@ -66,7 +66,7 @@ page 73209674 "Billing Calculation CN Card"
                     Editable = false;
                 }
             }
-            field("Total Amount"; Rec."Total Amount")
+            field("Total Amount"; Rec."BLRTotal Amount")
             {
                 ToolTip = 'The total amount calculated for the billing calculation.';
                 ApplicationArea = All;

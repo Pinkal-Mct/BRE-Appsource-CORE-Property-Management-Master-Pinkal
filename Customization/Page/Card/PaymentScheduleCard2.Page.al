@@ -1,7 +1,7 @@
-page 73209710 "Payment Schedule Card2"
+page 73209710 "BLRPayment Schedule Card2"
 {
     PageType = ListPart;
-    SourceTable = "Payment Schedule2";
+    SourceTable = "BLRPaymentSchedule2";
     ApplicationArea = All;
     Caption = 'Payment Schedule Details';
     DeleteAllowed = false;
@@ -13,28 +13,28 @@ page 73209710 "Payment Schedule Card2"
         {
             repeater(Group)
             {
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Item Types';
                     Editable = false;
                     ToolTip = 'The type of secondary item associated with this payment schedule.';
                 }
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     Caption = 'Amount';
                     ToolTip = 'The amount for the payment schedule.';
                 }
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     Caption = 'VAT Amount';
                     ToolTip = 'The VAT amount for the payment schedule.';
                 }
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -42,7 +42,7 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The amount including VAT for the payment schedule.';
                 }
 
-                field("Installment Start Date"; Rec."Installment Start Date")
+                field("Installment Start Date"; Rec."BLRInstallment Start Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -50,7 +50,7 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The start date of the installment for this payment schedule.';
                 }
 
-                field("Installment End Date"; Rec."Installment End Date")
+                field("Installment End Date"; Rec."BLRInstallment End Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -58,7 +58,7 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The end date of the installment for this payment schedule.';
                 }
 
-                field("Due Date"; Rec."Due Date")
+                field("Due Date"; Rec."BLRDue Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -66,7 +66,7 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The due date for the payment schedule.';
                 }
 
-                field("Installment No."; Rec."Installment No.")
+                field("Installment No."; Rec."BLRInstallment No.")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -74,7 +74,7 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The installment number for this payment schedule.';
                 }
 
-                field("Payment Series"; Rec."Payment Series")
+                field("Payment Series"; Rec."BLRPayment Series")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -82,7 +82,7 @@ page 73209710 "Payment Schedule Card2"
                     Caption = 'Payment Series';
                     ToolTip = 'The series of the payment associated with this payment schedule.';
                 }
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -91,7 +91,7 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The name of the tenant associated with this payment schedule.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -100,7 +100,7 @@ page 73209710 "Payment Schedule Card2"
                     Caption = 'Tenant ID';
                     ToolTip = 'The ID of the tenant associated with this payment schedule.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -108,14 +108,14 @@ page 73209710 "Payment Schedule Card2"
                     Caption = 'Contract ID';
                     ToolTip = 'The ID of the contract associated with this payment schedule.';
                 }
-                field(Invoiced; Rec.Invoiced)
+                field(Invoiced; Rec."BLRInvoiced")
                 {
                     ApplicationArea = All;
                     Caption = 'Invoiced';
                     Editable = InvoicedField;
                     ToolTip = 'Indicates whether the payment schedule has been invoiced.';
                 }
-                field("Invoice ID"; Rec."Invoice ID")
+                field("Invoice ID"; Rec."BLRInvoice ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Invoice ID';
@@ -127,22 +127,22 @@ page 73209710 "Payment Schedule Card2"
                         SalesHeader: Record "Sales Header";
                         postedsalesinvoice: Record "Sales Invoice Header";
                     begin
-                        if SalesHeader.Get(Enum::"Sales Document Type"::Invoice, Rec."Invoice ID") then
+                        if SalesHeader.Get(Enum::"Sales Document Type"::Invoice, Rec."BLRInvoice ID") then
                             PAGE.Run(PAGE::"Sales Invoice", SalesHeader)
                         else
-                            if postedsalesinvoice.Get(Rec."Invoice ID") then
+                            if postedsalesinvoice.Get(Rec."BLRInvoice ID") then
                                 PAGE.Run(PAGE::"Posted Sales Invoice", postedsalesinvoice);
 
                     end;
                 }
-                field("Invoice Approval Status"; Rec."Invoice Approval Status")
+                field("Invoice Approval Status"; Rec."BLRInvoice Approval Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The approval status of the invoice associated with this payment schedule.';
                     Caption = 'Invoice Approval Status';
                     Editable = false;
                 }
-                field("Contract Status"; Rec."Contract Status")
+                field("Contract Status"; Rec."BLRContract Status")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Status';
@@ -151,7 +151,7 @@ page 73209710 "Payment Schedule Card2"
                     Visible = false;
 
                 }
-                field("Overdue Invoice"; Rec."Overdue Invoice")
+                field("Overdue Invoice"; Rec."BLROverdue Invoice")
                 {
                     ApplicationArea = All;
                     Caption = 'Overdue Invoice';
@@ -159,35 +159,35 @@ page 73209710 "Payment Schedule Card2"
                     Editable = false;
                     Visible = false;
                 }
-                field("Property ID"; Rec."Property ID")
+                field("Property ID"; Rec."BLRProperty ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The ID of the property associated with this payment schedule.';
                     Visible = false;
                 }
-                field("No of Days"; Rec."No of Days")
+                field("No of Days"; Rec."BLRNo of Days")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The number of days for the payment schedule.';
                     Visible = false;
                 }
-                field("Workflow frequency date"; Rec."Workflow frequency date")
+                field("Workflow frequency date"; Rec."BLRWorkflow frequency date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The date for the workflow frequency associated with this payment schedule.';
                     Visible = false;
                 }
-                field("Contract start date"; Rec."Contract start date")
+                field("Contract start date"; Rec."BLRContract start date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The start date of the contract associated with this payment schedule.';
                     Visible = false;
                 }
-                field("VAT%"; Rec."VAT%")
+                field("VAT%"; Rec."BLRVAT%")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT%';
@@ -195,13 +195,13 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The VAT percentage for the payment schedule.';
                     Visible = false;
                 }
-                field("Payment Status"; Rec."Payment Status")
+                field("Payment Status"; Rec."BLRPayment Status")
                 {
                     ApplicationArea = All;
                     Visible = false;
                     ToolTip = 'The status of the payment associated with this payment schedule.';
                 }
-                field("Payment Received Date"; Rec."Payment Recieved Date")
+                field("Payment Received Date"; Rec."BLRPayment Recieved Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Received Date';
@@ -209,7 +209,7 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The date when the payment was received for this payment schedule.';
                     Visible = false;
                 }
-                field("Property Classification"; Rec."Property Classification")
+                field("Property Classification"; Rec."BLRProperty Classification")
                 {
                     ApplicationArea = All;
                     Caption = 'Property Classification';
@@ -218,7 +218,7 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The classification of the property associated with this payment schedule.';
                 }
 
-                field("Payment Mode"; Rec."Payment Mode")
+                field("BLRPaymentMode"; Rec."BLRPayment Mode")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Mode';
@@ -226,7 +226,7 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The mode of payment for this payment schedule.';
                     Visible = false;
                 }
-                field("Cheque Number"; Rec."Cheque Number")
+                field("Cheque Number"; Rec."BLRCheque Number")
                 {
                     ApplicationArea = All;
                     Caption = 'Cheque Number';
@@ -234,7 +234,7 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The cheque number for this payment schedule.';
                     Visible = false;
                 }
-                field("Credit Note No."; Rec."Credit Note No.")
+                field("Credit Note No."; Rec."BLRCredit Note No.")
                 {
                     ApplicationArea = All;
                     Caption = '"Credit Note No."';
@@ -243,7 +243,7 @@ page 73209710 "Payment Schedule Card2"
                     Visible = false;
                 }
 
-                field("Credit Note Amount"; Rec."Credit Note Amount")
+                field("Credit Note Amount"; Rec."BLRCredit Note Amount")
                 {
                     ApplicationArea = All;
                     Caption = '"Credit Note Amount"';
@@ -252,7 +252,7 @@ page 73209710 "Payment Schedule Card2"
                     Visible = false;
                 }
 
-                field("Final Rent Amount"; Rec."Final Rent Amount")
+                field("Final Rent Amount"; Rec."BLRFinal Rent Amount")
                 {
                     ApplicationArea = All;
                     Caption = '"Final Rent Amount"';
@@ -260,7 +260,7 @@ page 73209710 "Payment Schedule Card2"
                     ToolTip = 'The final rent amount after adjustments for this payment schedule.';
                     Visible = false;
                 }
-                field("Final RentAmountIncludingVAT"; Rec."Final RentAmountIncludingVAT")
+                field("Final RentAmountIncludingVAT"; Rec."BLRFinalRentAmtInclVAT")
                 {
                     ApplicationArea = All;
                     Caption = '"Final Rent Amount Including VAT"';
@@ -286,16 +286,16 @@ page 73209710 "Payment Schedule Card2"
                 trigger OnAction()
                 var
                     newsalesheader: Record "Sales Header";
-                    PaymentScheduleGrid: Record "Payment Schedule2";
-                    PaymentscheduleGridRec: Record "Payment Schedule2";
+                    PaymentScheduleGrid: Record "BLRPaymentSchedule2";
+                    PaymentscheduleGridRec: Record "BLRPaymentSchedule2";
                     customercard: Record Customer;
                     userConfirmed: Boolean;
                 begin
-                    PaymentScheduleGrid.SetRange("Contract ID", Rec."Contract ID");
-                    PaymentScheduleGrid.SetRange("Tenant ID", Rec."Tenant ID");
-                    PaymentScheduleGrid.SetFilter(Invoiced, '=false');
-                    PaymentScheduleGrid.SetRange(Year, 1);
-                    PaymentScheduleGrid.SetRange("Installment No.", 1);
+                    PaymentScheduleGrid.SetRange("BLRContract ID", Rec."BLRContract ID");
+                    PaymentScheduleGrid.SetRange("BLRTenant ID", Rec."BLRTenant ID");
+                    PaymentScheduleGrid.SetFilter(BLRInvoiced, '=false');
+                    PaymentScheduleGrid.SetRange(BLRYear, 1);
+                    PaymentScheduleGrid.SetRange("BLRInstallment No.", 1);
                     if not PaymentScheduleGrid.FindFirst() then begin
                         Message('No uninvoiced first installment records found.');
                         exit;
@@ -303,30 +303,30 @@ page 73209710 "Payment Schedule Card2"
                         userConfirmed := Confirm('Do you want to create the invoice?', false);
                         if not userConfirmed then
                             exit;
-                        newsalesheader := CreateSalesHeader(PaymentScheduleGrid."Contract ID", PaymentScheduleGrid."Tenant ID", PaymentScheduleGrid."Property Classification", PaymentScheduleGrid."Due Date");
+                        newsalesheader := CreateSalesHeader(PaymentScheduleGrid."BLRContract ID", PaymentScheduleGrid."BLRTenant ID", PaymentScheduleGrid."BLRProperty Classification", PaymentScheduleGrid."BLRDue Date");
                         customercard.SetRange("No.", newsalesheader."Sell-to Customer No.");
                         if customercard.FindSet() then
-                            if newsalesheader."Property Classification" <> '' then begin
-                                customercard.Validate("Gen. Bus. Posting Group", newsalesheader."Property Classification");
-                                customercard.Validate("Customer Posting Group", newsalesheader."Property Classification");
+                            if newsalesheader."BLRProperty Classification" <> '' then begin
+                                customercard.Validate("Gen. Bus. Posting Group", newsalesheader."BLRProperty Classification");
+                                customercard.Validate("Customer Posting Group", newsalesheader."BLRProperty Classification");
                                 customercard.Modify();
                             end;
-                        if newsalesheader."Property Classification" <> '' then begin
-                            newsalesheader.Validate("Gen. Bus. Posting Group", newsalesheader."Property Classification");
-                            newsalesheader.Validate("Customer Posting Group", newsalesheader."Property Classification");
+                        if newsalesheader."BLRProperty Classification" <> '' then begin
+                            newsalesheader.Validate("Gen. Bus. Posting Group", newsalesheader."BLRProperty Classification");
+                            newsalesheader.Validate("Customer Posting Group", newsalesheader."BLRProperty Classification");
                             newsalesheader.Modify();
                         end;
 
-                        PaymentscheduleGridRec.SetRange("Contract ID", Rec."Contract ID");
-                        PaymentscheduleGridRec.SetRange("Tenant ID", Rec."Tenant ID");
-                        PaymentscheduleGridRec.SetFilter(Invoiced, '=false');
-                        PaymentscheduleGridRec.SetRange(Year, 1);
-                        PaymentscheduleGridRec.SetRange("Installment No.", 1);
+                        PaymentscheduleGridRec.SetRange("BLRContract ID", Rec."BLRContract ID");
+                        PaymentscheduleGridRec.SetRange("BLRTenant ID", Rec."BLRTenant ID");
+                        PaymentscheduleGridRec.SetFilter(BLRInvoiced, '=false');
+                        PaymentscheduleGridRec.SetRange(BLRYear, 1);
+                        PaymentscheduleGridRec.SetRange("BLRInstallment No.", 1);
                         if PaymentscheduleGridRec.FindSet() then
                             repeat
                                 Saleslinecreate(newsalesheader, PaymentscheduleGridRec);
-                                PaymentscheduleGridRec.Invoiced := true;
-                                PaymentscheduleGridRec."Invoice ID" := newsalesheader."No.";
+                                PaymentscheduleGridRec."BLRInvoiced" := true;
+                                PaymentscheduleGridRec."BLRInvoice ID" := newsalesheader."No.";
                                 PaymentscheduleGridRec.Modify();
                             until PaymentscheduleGridRec.Next() = 0;
                         Message('Invoice %1 created successfully for first installment.', newsalesheader."No.");
@@ -349,16 +349,16 @@ page 73209710 "Payment Schedule Card2"
         salesHeader."Document Type" := SalesInvoiceHeader."Document Type"::Invoice;
         salesHeader.Validate("Sell-to Customer No.", pTenantID);
         salesHeader."Document Date" := Today;
-        salesHeader.Validate("Contract ID", pcontractid);
+        salesHeader.Validate("BLRContract ID", pcontractid);
         salesHeader."Posting Date" := Today;
         salesHeader."Due Date" := pDueDate;
-        salesHeader."Property Classification" := pUnitType;
+        salesHeader."BLRProperty Classification" := pUnitType;
         salesHeader."Posting No. Series" := salesReciveable."Posted Invoice Nos.";
         salesHeader.Insert();
         exit(salesHeader);
     end;
 
-    procedure Saleslinecreate(var salesheader1: Record "Sales Header"; var PaymentscheduleGridLine: Record "Payment Schedule2")
+    procedure Saleslinecreate(var salesheader1: Record "Sales Header"; var PaymentscheduleGridLine: Record "BLRPaymentSchedule2")
     var
         saleline: Record "Sales Line";
         newSaleslines: Record "Sales Line";
@@ -375,19 +375,19 @@ page 73209710 "Payment Schedule Card2"
         else
             saleline."Line No." := 1000;
         saleline."Document No." := salesheader1."No.";
-        saleline."Contract ID" := salesheader1."Contract ID";
+        saleline."BLRContract ID" := salesheader1."BLRContract ID";
         saleline.Type := saleline.Type::Item;
         saleline."Sell-to Customer No." := salesheader1."Sell-to Customer No.";
-        item.SetRange(Description, PaymentscheduleGridLine."Secondary Item Type");
-        item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
+        item.SetRange(Description, PaymentscheduleGridLine."BLRSecondary Item Type");
+        item.SetFilter("BLRCharges Status", '<>%1', item."BLRCharges Status"::" ");
         if item.FindFirst() then
             saleline.Validate("No.", item."No.");
 
         saleline.Validate("Quantity (Base)", 1);
         saleline.Validate(Quantity, 1);
-        saleline.Validate("Unit Price", Abs(PaymentscheduleGridLine.Amount));
-        saleline."Contract ID" := PaymentscheduleGridLine."Contract ID";
-        saleline."FC ID" := salesheader1."FC ID";
+        saleline.Validate("Unit Price", Abs(PaymentscheduleGridLine."BLRAmount"));
+        saleline."BLRContract ID" := PaymentscheduleGridLine."BLRContract ID";
+        saleline."BLRFC ID" := salesheader1."BLRFC ID";
         saleline.Insert();
         Clear(saleline);
     end;
@@ -410,32 +410,32 @@ page 73209710 "Payment Schedule Card2"
 
     trigger OnAfterGetRecord()
     var
-        PaymentSchedule: Record "Payment Schedule";
-        workflowfrequency: Record "Workflow Frequency PR";
+        PaymentSchedule: Record "BLRPaymentSchedule";
+        workflowfrequency: Record "BLRWorkflowFrequencyPR";
         TempDueDate: Date;
     begin
         InvoicedField := NotAccessInvoicedFieldFinanceManager();
 
-        if PaymentSchedule.Get(Rec."Contract ID") then
-            Rec."Contract start date" := PaymentSchedule."Contract Start date";
+        if PaymentSchedule.Get(Rec."BLRContract ID") then
+            Rec."BLRContract start date" := PaymentSchedule."BLRContract Start date";
 
-        workflowfrequency.SetRange("Property ID", Rec."Property ID");
-        workflowfrequency.SetRange(Workflow, workflowfrequency.Workflow::Invoice);
+        workflowfrequency.SetRange("BLRProperty ID", Rec."BLRProperty ID");
+        workflowfrequency.SetRange(BLRWorkflow, workflowfrequency."BLRWorkflow"::Invoice);
         if workflowfrequency.FindFirst() then
-            Rec."No of Days" := workflowfrequency."No. of Days";
+            Rec."BLRNo of Days" := workflowfrequency."BLRNo. of Days";
 
-        TempDueDate := Rec."Due Date";
+        TempDueDate := Rec."BLRDue Date";
 
         if TempDueDate <> 0D then begin
-            if Rec."No of Days" = 0 then
-                Rec."Workflow frequency date" := TempDueDate
+            if Rec."BLRNo of Days" = 0 then
+                Rec."BLRWorkflow frequency date" := TempDueDate
             else
-                Rec."Workflow frequency date" := CalcDate('-' + Format(Rec."No of Days") + 'D', TempDueDate);
+                Rec."BLRWorkflow frequency date" := CalcDate('-' + Format(Rec."BLRNo of Days") + 'D', TempDueDate);
         end else
-            Rec."Workflow frequency date" := 0D;
+            Rec."BLRWorkflow frequency date" := 0D;
 
-        Rec."Final Rent Amount" := Rec."Amount" - Rec."Credit Note Amount";
-        Rec."Final RentAmountIncludingVAT" := Rec."Final Rent Amount" + (Rec."Final Rent Amount" * Rec."VAT%") / 100;
+        Rec."BLRFinal Rent Amount" := Rec."BLRAmount" - Rec."BLRCredit Note Amount";
+        Rec."BLRFinalRentAmtInclVAT" := Rec."BLRFinal Rent Amount" + (Rec."BLRFinal Rent Amount" * Rec."BLRVAT%") / 100;
         Rec.Modify();
     end;
 

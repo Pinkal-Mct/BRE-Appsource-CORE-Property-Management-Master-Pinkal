@@ -1,7 +1,7 @@
-page 73209804 "Revenue Recognition List"
+page 73209804 "BLRRevenue Recognition List"
 {
     PageType = List;
-    SourceTable = "Revenue Recognition";
+    SourceTable = "BLRRevenueRecognition";
     ApplicationArea = All;
     Caption = 'Revenue Recognition Rent List';
     UsageCategory = Lists;
@@ -15,38 +15,38 @@ page 73209804 "Revenue Recognition List"
             repeater(Group)
             {
 
-                field("RR Id"; Rec."RR Id")
+                field("RR Id"; Rec."BLRRR Id")
                 {
                     ApplicationArea = All;
                     Caption = 'RR Id';
                     ToolTip = 'Specifies the unique identifier for the revenue recognition entry.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract ID';
                     ToolTip = 'Specifies the unique identifier for the contract associated with the revenue recognition entry.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Tenant ID';
                     ToolTip = 'Specifies the unique identifier for the tenant associated with the revenue recognition entry.';
                 }
-                field("Start Date"; Rec."Start Date")
+                field("Start Date"; Rec."BLRStart Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Start Date';
                     ToolTip = 'Specifies the start date for the revenue recognition period.';
                 }
-                field("End Date"; Rec."End Date")
+                field("End Date"; Rec."BLREnd Date")
                 {
                     ApplicationArea = All;
                     Caption = 'End Date';
                     ToolTip = 'Specifies the end date for the revenue recognition period.';
                 }
-                field("Contract Amount"; Rec."Contract Amount")
+                field("Contract Amount"; Rec."BLRContract Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Amount';

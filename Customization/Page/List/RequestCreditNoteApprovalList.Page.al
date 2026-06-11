@@ -1,7 +1,7 @@
-page 73209799 "RequestCreditNoteApprovalList"
+page 73209799 "BLRReqCreditNoteApprovalList"
 {
     PageType = List;
-    SourceTable = RequestCreditNoteApprovalList;
+    SourceTable = BLRReqCreditNoteApprovalList;
     ApplicationArea = All;
     Caption = 'Request Credit Note Approval List';
     UsageCategory = Lists;
@@ -13,14 +13,14 @@ page 73209799 "RequestCreditNoteApprovalList"
         {
             repeater(Group)
             {
-                field(ID; Rec.ID)
+                field(ID; Rec.BLRID)
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the approval record.';
                 }
-                field("Request No."; Rec."Request No.")
+                field("Request No."; Rec."BLRRequest No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Request No.';
@@ -28,37 +28,37 @@ page 73209799 "RequestCreditNoteApprovalList"
                     ToolTip = 'Specifies the unique number of the credit note request.';
                     trigger OnDrillDown()
                     var
-                        RequestCreditNote: Record "Request Credit Note";
+                        RequestCreditNote: Record "BLRRequestCreditNote";
                     begin
-                        RequestCreditNote.SetRange("Request No.", Rec."Request No.");
+                        RequestCreditNote.SetRange("BLRRequest No.", Rec."BLRRequest No.");
                         if RequestCreditNote.FindSet() then
-                            PAGE.RunModal(PAGE::"Request Credit Note Card", RequestCreditNote)
+                            PAGE.RunModal(PAGE::"BLRRequest Credit Note Card", RequestCreditNote)
                         else
                             Message('No Request Credit Note found using FindFirst either.');
                     end;
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract ID';
                     Editable = false;
                     ToolTip = 'Specifies the contract associated with this credit note request.';
                 }
-                field("Tenant No."; Rec."Tenant No.")
+                field("Tenant No."; Rec."BLRTenant No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Tenant No.';
                     Editable = false;
                     ToolTip = 'Specifies the tenant related to this credit note request.';
                 }
-                field("Request Date"; Rec."Request Date")
+                field("Request Date"; Rec."BLRRequest Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Request Date';
                     Editable = false;
                     ToolTip = 'Specifies the date when the credit note was requested.';
                 }
-                field(Status; Rec.Status)
+                field(Status; Rec.BLRStatus)
                 {
                     ApplicationArea = All;
                     Caption = 'Status';
@@ -81,23 +81,23 @@ page 73209799 "RequestCreditNoteApprovalList"
                 Image = Approve;
                 trigger OnAction()
                 var
-                    SelectedRec: Record RequestCreditNoteApprovalList;
-                    RequestCreditNote: Record "Request Credit Note";
+                    SelectedRec: Record BLRReqCreditNoteApprovalList;
+                    RequestCreditNote: Record "BLRRequestCreditNote";
                 begin
-                    if Rec.Status = 'Pending' then begin
+                    if Rec.BLRStatus = 'Pending' then begin
                         SelectedRec := Rec;
-                        SelectedRec.Status := 'Approved';
+                        SelectedRec."BLRStatus" := 'Approved';
                         SelectedRec.Modify();
-                        RequestCreditNote.SetRange("Request No.", SelectedRec."Request No.");
-                        RequestCreditNote.SetRange("Contract ID", SelectedRec."Contract ID");
+                        RequestCreditNote.SetRange("BLRRequest No.", SelectedRec."BLRRequest No.");
+                        RequestCreditNote.SetRange("BLRContract ID", SelectedRec."BLRContract ID");
                         if RequestCreditNote.FindSet() then
                             repeat
-                                RequestCreditNote.Status := RequestCreditNote.Status::Approved;
+                                RequestCreditNote."BLRStatus" := RequestCreditNote."BLRStatus"::Approved;
                                 RequestCreditNote.Modify();
                             until RequestCreditNote.Next() = 0;
                         Commit();
                         CurrPage.Update();
-                        Message('Request Approved Successfully with Remarks for Contract ID: %1', SelectedRec."Contract ID");
+                        Message('Request Approved Successfully with Remarks for Contract ID: %1', SelectedRec."BLRContract ID");
                     end else
                         Message('Selected record is not in "Pending" status.');
                 end;
@@ -111,27 +111,27 @@ page 73209799 "RequestCreditNoteApprovalList"
                 ToolTip = 'Reject the selected credit note request and provide a remark.';
                 trigger OnAction()
                 var
-                    SelectedRec: Record "RequestCreditNoteApprovalList";
-                    RequestCreditNote1: Record "Request credit Note";
-                    RemarkDialog: Page "DialogBoxForInvoiceRejection";
+                    SelectedRec: Record "BLRReqCreditNoteApprovalList";
+                    RequestCreditNote1: Record "BLRRequestCreditNote";
+                    RemarkDialog: Page "BLRDialogBoxInvoiceRejection";
                     RemarkText: Text[250];
                     DialogResult: Action;
                 begin
-                    if Rec.Status = 'Pending' then begin
+                    if Rec.BLRStatus = 'Pending' then begin
                         DialogResult := RemarkDialog.RunModal();
                         if DialogResult = Action::OK then begin
                             RemarkText := Format(RemarkDialog.GetReason());
                             if RemarkText <> '' then begin
                                 SelectedRec := Rec;
-                                SelectedRec.Status := 'Rejected';
-                                SelectedRec.Remark := RemarkText;
+                                SelectedRec."BLRStatus" := 'Rejected';
+                                SelectedRec.BLRRemark := RemarkText;
                                 SelectedRec.Modify();
-                                RequestCreditNote1.SetRange("Request No.", SelectedRec."Request No.");
-                                RequestCreditNote1.SetRange("Contract ID", SelectedRec."Contract ID");
+                                RequestCreditNote1.SetRange("BLRRequest No.", SelectedRec."BLRRequest No.");
+                                RequestCreditNote1.SetRange("BLRContract ID", SelectedRec."BLRContract ID");
                                 if RequestCreditNote1.FindSet() then
                                     repeat
-                                        RequestCreditNote1."Reason for Rejection" := RemarkText;
-                                        RequestCreditNote1.Status := RequestCreditNote1.Status::Rejected;
+                                        RequestCreditNote1."BLRReason for Rejection" := RemarkText;
+                                        RequestCreditNote1.BLRStatus := RequestCreditNote1.BLRStatus::Rejected;
                                         RequestCreditNote1.Modify();
                                         RequestCreditNote1.Modify();
                                     until RequestCreditNote1.Next() = 0;

@@ -1,6 +1,6 @@
 namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
-report 73209585 "Other Payment Details"
+report 73209585 "BLROther Payment Details"
 {
     ApplicationArea = All;
     Caption = 'Other Payment Details';
@@ -8,42 +8,42 @@ report 73209585 "Other Payment Details"
     DefaultRenderingLayout = "OtherPayment.docx";
     dataset
     {
-        dataitem("Revenue Item Subpage"; "Revenue Item Subpage")
+        dataitem("BLRRevenueItemSubpage"; "BLRRevenueItemSubpage")
         {
-            column(ProposalID; ProposalID)
+            column(ProposalID; BLRProposalID)
             {
             }
-            column(Property_Name; "Property Name")
+            column(Property_Name; "BLRProperty Name")
             {
             }
-            column(Unit_Name; "Unit Name")
+            column(Unit_Name; "BLRUnit Name")
             {
             }
-            column(Unit_Size; "Unit Size")
+            column(Unit_Size; "BLRUnit Size")
             {
             }
-            column(Customer_Name; "Customer Name")
+            column(Customer_Name; "BLRCustomer Name")
             {
             }
             column(Entry_No_; AutoEntryNo)
             {
             }
-            column(Secondary_Item_Type; "Secondary Item Type")
+            column(Secondary_Item_Type; "BLRSecondary Item Type")
             {
             }
-            column(Amount; Amount)
+            column(Amount; BLRAmount)
             {
             }
-            column(VAT_Amount; "VAT Amount")
+            column(VAT_Amount; "BLRVAT Amount")
             {
             }
-            column(A_Including_VAT; "Amount Including VAT")
+            column(A_Including_VAT; "BLRAmount Including VAT")
             {
             }
-            column(Start_Date; "Start Date")
+            column(Start_Date; "BLRStart Date")
             {
             }
-            column(End_Date; "End Date")
+            column(End_Date; "BLREnd Date")
             {
             }
             column(CompanyPicture; CompanyInfo.Picture)
@@ -59,13 +59,13 @@ report 73209585 "Other Payment Details"
             begin
                 AutoEntryNo += 1;
 
-                PropertyNameStored := "Property Name";
-                UnitNameStored := "Unit Name";
-                CustomerNameStored := "Customer Name";
+                PropertyNameStored := "BLRProperty Name";
+                UnitNameStored := "BLRUnit Name";
+                CustomerNameStored := "BLRCustomer Name";
 
-                TotalAmount += Amount;
-                TotalVATAmount += "VAT Amount";
-                TotalAmountIncludingVAT += "Amount Including VAT";
+                TotalAmount += BLRAmount;
+                TotalVATAmount += "BLRVAT Amount";
+                TotalAmountIncludingVAT += "BLRAmount Including VAT";
             end;
         }
         dataitem(TotalSection; System.Utilities.Integer)
@@ -81,23 +81,23 @@ report 73209585 "Other Payment Details"
             {
             }
         }
-        dataitem("Lease Proposal Details"; "Lease Proposal Details")
+        dataitem("BLRLeaseProposalDetails"; "BLRLeaseProposalDetails")
         {
-            DataItemLink = "Proposal ID" = field(ProposalID);
-            DataItemLinkReference = "Revenue Item Subpage";
-            column(ID; "Proposal ID")
+            DataItemLink = "BLRProposal ID" = field(BLRProposalID);
+            DataItemLinkReference = "BLRRevenueItemSubpage";
+            column(ID; "BLRProposal ID")
             {
             }
-            column(Rent_Amount; "Rent Amount")
+            column(Rent_Amount; "BLRRent Amount")
             {
             }
-            column(Annual_R_A; "Annual Rent Amount")
+            column(Annual_R_A; "BLRAnnual Rent Amount")
             {
             }
-            column(Rent_VAT_A; "Rent VAT Amount")
+            column(Rent_VAT_A; "BLRRent VAT Amount")
             {
             }
-            column(RA_Incl_VAT; "Rent Amount Including VAT")
+            column(RA_Incl_VAT; "BLRRent Amount Including VAT")
             {
             }
         }

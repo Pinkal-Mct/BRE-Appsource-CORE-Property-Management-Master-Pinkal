@@ -1,9 +1,9 @@
-page 73209672 "Additional Charges Sub Card"
+page 73209672 "BLRAdditional Charges Sub Card"
 {
     PageType = ListPart;
     ApplicationArea = All;
     // UsageCategory = Administration;
-    SourceTable = "Additional Charges Sub";
+    SourceTable = "BLRAdditionalChargesSub";
     Caption = 'Termination Additional Charges';
 
     layout
@@ -13,7 +13,7 @@ page 73209672 "Additional Charges Sub Card"
             repeater(Group)
             {
 
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Secondary Item Type';
@@ -21,7 +21,7 @@ page 73209672 "Additional Charges Sub Card"
                     ShowMandatory = true;
                     NotBlank = true;
                 }
-                field("Amount"; Rec.Amount)
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
@@ -30,7 +30,7 @@ page 73209672 "Additional Charges Sub Card"
                     ToolTip = 'Enter the amount for the additional charge.';
                 }
 
-                field("VAT %"; Rec."VAT %")
+                field("VAT %"; Rec."BLRVAT %")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the VAT percentage for the additional charge.';
@@ -40,21 +40,21 @@ page 73209672 "Additional Charges Sub Card"
                     end;
                 }
 
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT Amount';
                     ToolTip = 'Enter the VAT amount for the additional charge.';
                 }
 
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount Including VAT';
                     ToolTip = 'Enter the total amount including VAT for the additional charge.';
                 }
 
-                field("Start Date"; Rec."Start Date")
+                field("Start Date"; Rec."BLRStart Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Start Date';
@@ -63,7 +63,7 @@ page 73209672 "Additional Charges Sub Card"
                     ToolTip = 'Enter the start date for the additional charge.';
                 }
 
-                field("End Date"; Rec."End Date")
+                field("End Date"; Rec."BLREnd Date")
                 {
                     ApplicationArea = All;
                     Caption = 'End Date';
@@ -72,7 +72,7 @@ page 73209672 "Additional Charges Sub Card"
                     ToolTip = 'Enter the end date for the additional charge.';
                 }
 
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Lookup = true;
@@ -81,7 +81,7 @@ page 73209672 "Additional Charges Sub Card"
                     Editable = false;
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Lookup = true;
@@ -90,13 +90,13 @@ page 73209672 "Additional Charges Sub Card"
                     Editable = false;
                 }
 
-                field("Invoiced ID"; Rec."Invoiced ID")
+                field("Invoiced ID"; Rec."BLRInvoiced ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The ID of the invoice to which this additional charge is linked.';
                     Editable = false;
                 }
-                field("Unit Type"; Rec."Unit Type")
+                field("Unit Type"; Rec."BLRUnit Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the Unit Type associated with the additional charge.';
@@ -107,13 +107,13 @@ page 73209672 "Additional Charges Sub Card"
 
             group(TotalAmount)
             {
-                field("Total Amount"; Rec."Total Amount")
+                field("Total Amount"; Rec."BLRTotal Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the total amount for the additional charge.';
                 }
-                field("Posted Invoice ID"; Rec."Posted Invoice ID")
+                field("Posted Invoice ID"; Rec."BLRPosted Invoice ID")
                 {
                     ApplicationArea = All;
                     DrillDown = true;
@@ -127,11 +127,11 @@ page 73209672 "Additional Charges Sub Card"
 
                         postedsalesinvoice: Record "Sales Invoice Header";
                     begin
-                        SalesHeader.SetRange("No.", Rec."Posted Invoice ID");
+                        SalesHeader.SetRange("No.", Rec."BLRPosted Invoice ID");
                         if SalesHeader.FindFirst() then
                             PAGE.Run(PAGE::"Sales Invoice", SalesHeader)
                         else begin
-                            postedsalesinvoice.SetRange("No.", Rec."Posted Invoice ID");
+                            postedsalesinvoice.SetRange("No.", Rec."BLRPosted Invoice ID");
                             if postedsalesinvoice.FindFirst() then
                                 PAGE.Run(PAGE::"Posted Sales Invoice", postedsalesinvoice);
 
@@ -139,7 +139,7 @@ page 73209672 "Additional Charges Sub Card"
                     end;
 
                 }
-                field("Invoice Document"; Rec."Invoice Document")
+                field("Invoice Document"; Rec."BLRInvoice Document")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -151,13 +151,13 @@ page 73209672 "Additional Charges Sub Card"
                     var
                         FileURL: Text;
                     begin
-                        FileURL := Rec."Invoice Document URL";
+                        FileURL := Rec."BLRInvoice Document URL";
                         if FileURL = '' then
                             Error('No document is available to view.');
                         OpenFileInBrowser(FileURL);
                     end;
                 }
-                field("Invoice Document URL"; Rec."Invoice Document URL")
+                field("Invoice Document URL"; Rec."BLRInvoice Document URL")
                 {
                     ApplicationArea = All;
                     Caption = 'Invoice Document URL';
@@ -204,12 +204,12 @@ page 73209672 "Additional Charges Sub Card"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."Contract ID" := ContractID;
-        Rec."Tenant ID" := tenantID;
+        Rec."BLRContract ID" := ContractID;
+        Rec."BLRTenant ID" := tenantID;
 
-        Rec."Start Date" := startDate;
-        Rec."End Date" := endDate;
-        Rec."Unit Type" := CopyStr(unittype, 1, StrLen(unittype));
+        Rec."BLRStart Date" := startDate;
+        Rec."BLREnd Date" := endDate;
+        Rec."BLRUnit Type" := CopyStr(unittype, 1, StrLen(unittype));
     end;
 
 

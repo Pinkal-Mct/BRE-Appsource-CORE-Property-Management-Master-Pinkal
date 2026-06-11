@@ -1,9 +1,9 @@
-page 73209747 "Tenant Document SubPage"
+page 73209747 "BLRTenant Document SubPage"
 {
     PageType = ListPart;
     ApplicationArea = All;
     UsageCategory = Administration;
-    SourceTable = "Tenant Document Details";
+    SourceTable = "BLRTenantDocumentDetails";
     Caption = 'Tenant Document SubPage';
 
     layout
@@ -12,17 +12,17 @@ page 73209747 "Tenant Document SubPage"
         {
             repeater(Group)
             {
-                field("Document Type"; Rec."Document Type")
+                field("Document Type"; Rec."BLRDocument Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Document Type';
                 }
-                field("Document Name"; Rec."Document Name")
+                field("Document Name"; Rec."BLRDocument Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Document Name';
                 }
-                field("Upload Document"; Rec."Upload Document")
+                field("Upload Document"; Rec."BLRUpload Document")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -30,7 +30,7 @@ page 73209747 "Tenant Document SubPage"
                     ToolTip = 'Click to upload a document related to the tenant.';
                     trigger OnDrillDown()
                     var
-                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                         fileName: Text;
                         uploadResult: Text;
                         folderName: Text;
@@ -38,15 +38,15 @@ page 73209747 "Tenant Document SubPage"
                         folderName := 'TenantDocuments';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Upload Document" := CopyStr(fileName, 1, StrLen(fileName));
-                            Rec."View Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                            Rec."BLRUpload Document" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."BLRView Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
                     end;
                 }
 
-                field("View & Download"; Rec."View & Download")
+                field("View & Download"; Rec."BLRView & Download")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -57,7 +57,7 @@ page 73209747 "Tenant Document SubPage"
                         FileURL: Text;
                     begin
                         // Get the URL of the uploaded document
-                        FileURL := Rec."View Document URL";
+                        FileURL := Rec."BLRView Document URL";
 
                         // Check if the file URL is not empty
                         if FileURL = '' then
@@ -69,7 +69,7 @@ page 73209747 "Tenant Document SubPage"
 
                 }
 
-                field("Tenant Screening"; Rec."Tenant Screening")
+                field("Tenant Screening"; Rec."BLRTenant Screening")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Tenant Screening';
@@ -96,7 +96,7 @@ page 73209747 "Tenant Document SubPage"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.No := TenantId;
+        Rec."BLRNo" := TenantId;
     end;
 
     var

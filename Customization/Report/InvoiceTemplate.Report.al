@@ -4,7 +4,7 @@ using Microsoft.Sales.Document;
 using System.Text;
 using Microsoft.Sales.History;
 using Microsoft.Bank.Check;
-report 73209583 InvoiceTemplate
+report 73209583 BLRInvoiceTemplate
 {
     ApplicationArea = All;
     Caption = 'InvoiceTemplate';
@@ -62,7 +62,7 @@ report 73209583 InvoiceTemplate
             column(VAT_Registration_No_; "VAT Registration No.")
             {
             }
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
             column(Document_Date; "Document Date")
@@ -83,25 +83,25 @@ report 73209583 InvoiceTemplate
             column(BankBranch; CompanyInfo."Bank Branch No.")
             {
             }
-            column(Customer_P_O; "Customer P.O")
+            column(Customer_P_O; "BLRCustomer P.O")
             {
             }
-            column(Customer_P_O_Date; "Customer P.O Date")
+            column(Customer_P_O_Date; "BLRCustomer P.O Date")
             {
             }
-            column(Contract_Period; "Contract Period")
+            column(Contract_Period; "BLRContract Period")
             {
             }
-            dataitem("Tenancy Contract"; "Tenancy Contract")
+            dataitem("BLRTenancyContract"; "BLRTenancyContract")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                column(Property_Name; "Property Name")
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                column(Property_Name; "BLRProperty Name")
                 {
                 }
-                column(Unit_Name; "Unit Name")
+                column(Unit_Name; "BLRUnit Name")
                 {
                 }
-                column(Contract_Tenor; "Contract Tenor")
+                column(Contract_Tenor; "BLRContract Tenor")
                 {
                 }
             }

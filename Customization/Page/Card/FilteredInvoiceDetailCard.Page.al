@@ -1,7 +1,7 @@
-page 73209690 "Filtered Invoice Detail Card"
+page 73209690 "BLRFilteredInvoiceDetailCard"
 {
     PageType = ListPart;
-    SourceTable = "Filtered Invoice Detail";
+    SourceTable = "BLRFilteredInvoiceDetail";
     ApplicationArea = All;
     Caption = 'Filtered Invoice Detail Card';
     layout
@@ -10,40 +10,40 @@ page 73209690 "Filtered Invoice Detail Card"
         {
             repeater("Contract Details")
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ToolTip = 'The unique identifier for the invoice detail.';
                     ApplicationArea = All;
                     Editable = false;
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ToolTip = 'The unique identifier for the contract associated with the invoice detail.';
                     ApplicationArea = All;
                     Editable = false;
                 }
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ToolTip = 'The unique identifier for the tenant associated with the invoice detail.';
                     ApplicationArea = All;
                     Caption = 'Tenant ID';
                     Editable = false;
                 }
-                field("Invoice ID"; Rec."Invoice ID")
+                field("Invoice ID"; Rec."BLRInvoice ID")
                 {
                     ToolTip = 'The unique identifier for the invoice associated with the detail.';
                     ApplicationArea = All;
                     Caption = 'Invoice ID';
                     Editable = false;
                 }
-                field("Item Name"; Rec."Item Name")
+                field("Item Name"; Rec."BLRItem Name")
                 {
                     ToolTip = 'The name of the item associated with the invoice detail.';
                     ApplicationArea = All;
                     Caption = 'Item Name';
                     Editable = false;
                 }
-                field("Item Amount"; Rec."Item Amount")
+                field("Item Amount"; Rec."BLRItem Amount")
                 {
                     ToolTip = 'The amount of the item associated with the invoice detail.';
                     ApplicationArea = All;

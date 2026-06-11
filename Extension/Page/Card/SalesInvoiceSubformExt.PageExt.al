@@ -1,15 +1,15 @@
-pageextension 73209588 SalesInvoiceSubformExt extends "Sales Invoice Subform"
+pageextension 73209588 BLRSalesInvoiceSubformExt extends "Sales Invoice Subform"
 {
     layout
     {
         addafter("Document No.")
         {
-            field("Contract ID"; Rec."Contract ID")
+            field("Contract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the contract associated with this sales invoice line.';
             }
-            field("FC ID"; Rec."FC ID")
+            field("FC ID"; Rec."BLRFC ID")
             {
                 ApplicationArea = All;
                 Editable = false;

@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 using Microsoft.Foundation.Company;
-report 73209579 "Contract Renewal"
+report 73209579 "BLRContractRenewal"
 {
     ApplicationArea = All;
     Caption = 'Contract Renewal';
@@ -8,42 +8,42 @@ report 73209579 "Contract Renewal"
     DefaultRenderingLayout = "ContractRenewalTemplate.docx";
     dataset
     {
-        dataitem(ContractRenewal; "Contract Renewal")
+        dataitem(ContractRenewal; "BLRContractRenewal")
         {
-            column(Contract_Date; "Contract Date")
+            column(Contract_Date; "BLRContract Date")
             {
             }
-            column(Property_Name; "Property Name")
+            column(Property_Name; "BLRProperty Name")
             {
             }
-            column(Unit_Number; "Unit Number")
+            column(Unit_Number; "BLRUnit Number")
             {
             }
-            column(Tenant_Full_Name; "Tenant Full Name")
+            column(Tenant_Full_Name; "BLRTenant Full Name")
             {
             }
-            column(Annual_Rent_Amount; "Annual Rent Amount")
+            column(Annual_Rent_Amount; "BLRAnnual Rent Amount")
             {
             }
-            column(Contract_Amount; "Contract Amount")
+            column(Contract_Amount; "BLRContract Amount")
             {
             }
-            column(Rera; Rera)
+            column(Rera; BLRRera)
             {
             }
-            column(Ejari_Processing_Charges; "Ejari Processing Charges")
+            column(Ejari_Processing_Charges; "BLREjari Processing Charges")
             {
             }
-            column(Renewal_Charges; "Renewal Charges")
+            column(Renewal_Charges; "BLRRenewal Charges")
             {
             }
             column(CompanyPicture; CompanyInfo.Picture)
             {
             }
-            column(Community; Community)
+            column(Community; BLRCommunity)
             {
             }
-            column(Contract_End_Date; Format("Contract End Date", 0, '<Day,2>/<Month,2>/<Year4>'))
+            column(Contract_End_Date; Format("BLRContract End Date", 0, '<Day,2>/<Month,2>/<Year4>'))
             {
             }
             column(CompanyName; CompanyInfo.Name)

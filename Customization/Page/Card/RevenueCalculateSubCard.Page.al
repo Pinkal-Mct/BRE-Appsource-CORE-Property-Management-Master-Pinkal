@@ -1,10 +1,10 @@
-page 73209724 "Revenue Calculate Sub Card"
+page 73209724 "BLRRevenue Calculate Sub Card"
 {
     PageType = ListPart;
     ApplicationArea = All;
     DeleteAllowed = true;
     // UsageCategory = Administration;
-    SourceTable = "Revenue Calculate Sub";
+    SourceTable = "BLRRevenueCalculateSub";
 
     layout
     {
@@ -12,7 +12,7 @@ page 73209724 "Revenue Calculate Sub Card"
         {
             repeater(Group)
             {
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -20,7 +20,7 @@ page 73209724 "Revenue Calculate Sub Card"
                     ToolTip = 'The Tenant ID is auto-generated and not editable.';
                 }
 
-                field("RS ID"; Rec."RS ID")
+                field("RS ID"; Rec."BLRRS ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -28,7 +28,7 @@ page 73209724 "Revenue Calculate Sub Card"
                     ToolTip = 'The RS ID is auto-generated and not editable.';
                 }
 
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -36,42 +36,42 @@ page 73209724 "Revenue Calculate Sub Card"
                     ToolTip = 'The Contract ID is auto-generated and not editable.';
                 }
 
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Secondary Item Type';
                     ToolTip = 'Enter the Secondary Item Type.';
                 }
 
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'Enter the Amount.';
                 }
 
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'Enter the VAT Amount.';
                 }
 
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'Enter the Amount Including VAT.';
                 }
 
-                field("Installment Start Date"; Rec."Installment Start Date")
+                field("Installment Start Date"; Rec."BLRInstallment Start Date")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'Enter the Installment Start Date.';
                 }
 
-                field("Installment End Date"; Rec."Installment End Date")
+                field("Installment End Date"; Rec."BLRInstallment End Date")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -81,19 +81,19 @@ page 73209724 "Revenue Calculate Sub Card"
 
             group(" ")
             {
-                field("Total Amount"; Rec."Total Amount")
+                field("Total Amount"; Rec."BLRTotal Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total Amount for the period.';
                 }
 
-                field("Total VAT Amount"; Rec."Total VAT Amount")
+                field("Total VAT Amount"; Rec."BLRTotal VAT Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total VAT Amount for the period.';
                 }
 
-                field("Total Amount Including VAT"; Rec."Total Amount Including VAT")
+                field("Total Amount Including VAT"; Rec."BLRTotal Amount Including VAT")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total Amount Including VAT for the period.';
@@ -119,8 +119,8 @@ page 73209724 "Revenue Calculate Sub Card"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."Contract ID" := ContractID;
-        Rec."Tenant ID" := tenantID;
+        Rec."BLRContract ID" := ContractID;
+        Rec."BLRTenant ID" := tenantID;
 
     end;
 

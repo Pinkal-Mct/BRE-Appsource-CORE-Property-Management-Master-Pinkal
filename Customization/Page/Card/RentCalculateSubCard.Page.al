@@ -1,10 +1,10 @@
-page 73209719 "Rent Calculate Sub Card"
+page 73209719 "BLRRent Calculate Sub Card"
 {
     PageType = ListPart;
     ApplicationArea = All;
     DeleteAllowed = true;
     // UsageCategory = Administration;
-    SourceTable = "Rent Calculate Sub";
+    SourceTable = "BLRRentCalculateSub";
 
     layout
     {
@@ -12,14 +12,14 @@ page 73209719 "Rent Calculate Sub Card"
         {
             repeater(Group)
             {
-                field("Year"; Rec."Year")
+                field("Year"; Rec."BLRYear")
                 {
                     ApplicationArea = All;
                     Caption = 'Year';
                     ToolTip = 'Enter the Year.';
                     Editable = false;
                 }
-                field("Period Start Date"; Rec."Period Start Date")
+                field("Period Start Date"; Rec."BLRPeriod Start Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Start Date';
@@ -27,7 +27,7 @@ page 73209719 "Rent Calculate Sub Card"
                     Editable = false;
                 }
 
-                field("Period End Date"; Rec."Period End Date")
+                field("Period End Date"; Rec."BLRPeriod End Date")
                 {
                     ApplicationArea = All;
                     Caption = 'End Date';
@@ -35,7 +35,7 @@ page 73209719 "Rent Calculate Sub Card"
                     Editable = false;
                 }
 
-                field("Number of Days"; Rec."Number of Days")
+                field("Number of Days"; Rec."BLRNumber of Days")
                 {
                     ApplicationArea = All;
                     Caption = 'Number of Days';
@@ -43,7 +43,7 @@ page 73209719 "Rent Calculate Sub Card"
                     Editable = false;
                 }
 
-                field("Final Annual Amount"; Rec."Final Annual Amount")
+                field("Final Annual Amount"; Rec."BLRFinal Annual Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'Final Annual Amount';
@@ -53,7 +53,7 @@ page 73209719 "Rent Calculate Sub Card"
                     ToolTip = 'Enter the Final Annual Amount.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -61,7 +61,7 @@ page 73209719 "Rent Calculate Sub Card"
                     ToolTip = 'The Tenant ID is auto-generated and not editable.';
                 }
 
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -69,7 +69,7 @@ page 73209719 "Rent Calculate Sub Card"
                     ToolTip = 'The Contract ID is auto-generated and not editable.';
                 }
 
-                field("Per Day Rent"; Rec."Per Day Rent")
+                field("Per Day Rent"; Rec."BLRPer Day Rent")
                 {
                     ApplicationArea = All;
                     Caption = 'Per Day Rent';
@@ -80,13 +80,13 @@ page 73209719 "Rent Calculate Sub Card"
             }
             group(" ")
             {
-                field("Total Number of Days"; Rec."Total Number of Days")
+                field("Total Number of Days"; Rec."BLRTotal Number of Days")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total Number of Days in the period.';
                 }
 
-                field("Total Final Annual Amount"; Rec."Total Final Annual Amount")
+                field("Total Final Annual Amount"; Rec."BLRTotal Final Annual Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total Final Annual Amount for the period.';
@@ -107,8 +107,8 @@ page 73209719 "Rent Calculate Sub Card"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."Contract ID" := ContractID;
-        Rec."Tenant ID" := tenantID;
+        Rec."BLRContract ID" := ContractID;
+        Rec."BLRTenant ID" := tenantID;
 
     end;
 

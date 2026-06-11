@@ -1,15 +1,15 @@
-codeunit 73209626 "Attach Invoice Report"
+codeunit 73209626 "BLRAttach Invoice Report"
 {
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterSalesInvHeaderInsert, '', false, false)]
     local procedure OnAfterSalesInvHeaderInsert(var SalesInvHeader: Record "Sales Invoice Header"; SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; WhseShip: Boolean; WhseReceive: Boolean; var TempWhseShptHeader: Record "Warehouse Shipment Header"; var TempWhseRcptHeader: Record "Warehouse Receipt Header"; PreviewMode: Boolean)
     var
         SalesHeader1: Record "Sales Header";
-        ConfigRecord: Record AzureConfiguration;
-        tenancyContract: Record "Tenancy Contract";
+        ConfigRecord: Record BLRAzureConfiguration;
+        tenancyContract: Record "BLRTenancyContract";
         customer: Record Customer;
-        azureBlobUploader: Codeunit "Azure AD Blob Storage";
-        emailrecord: Codeunit SendInvoiceToTenant;
+        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
+        emailrecord: Codeunit BLRSendInvoiceToTenant;
 
         TempBlob: Codeunit "Temp Blob";
         RecRef: RecordRef;
@@ -30,7 +30,7 @@ codeunit 73209626 "Attach Invoice Report"
         ValidFormats.Add('.jpg');
         ValidFormats.Add('.jpeg');
 
-        SASUrlBase := ConfigRecord."SAS URL";
+        SASUrlBase := ConfigRecord."BLRSAS URL";
         FileExtension := '.pdf';
         ReportID := 73209583;
         SalesHeader1.Reset();
@@ -47,16 +47,16 @@ codeunit 73209626 "Attach Invoice Report"
         FileName := 'Invoice_' + SalesInvHeader."No." + FileExtension;
         folderName := 'SalesInvoiceDocuments';
         UploadResult := azureBlobUploader.UploadDocumentToBlob(InStream, FileName, folderName);
-        SalesInvHeader."View Invoice" := CopyStr(FileName, 1, StrLen(FileName));
-        SalesInvHeader."View Document URL" := CopyStr(UploadResult, 1, StrLen(UploadResult));
+        SalesInvHeader."BLRView Invoice" := CopyStr(FileName, 1, StrLen(FileName));
+        SalesInvHeader."BLRView Document URL" := CopyStr(UploadResult, 1, StrLen(UploadResult));
         AddDocumentInBillingCalculations(SalesInvHeader);
         AddDocumentInAdditionalCharges(SalesInvHeader);
 
         emailrecord.SendInvoice(SalesInvHeader, FileName, InStream);
 
-        if tenancyContract.Get(SalesHeader."Contract ID") then begin
-            postingGroup := CopyStr(UpperCase(tenancyContract."Property Classification"), 1, 20);
-            if customer.Get(tenancyContract."Tenant ID") then begin
+        if tenancyContract.Get(SalesHeader."BLRContract ID") then begin
+            postingGroup := CopyStr(UpperCase(tenancyContract."BLRProperty Classification"), 1, 20);
+            if customer.Get(tenancyContract."BLRTenant ID") then begin
                 customer."Gen. Bus. Posting Group" := postingGroup;
                 customer."VAT Bus. Posting Group" := postingGroup;
                 customer."Customer Posting Group" := postingGroup;
@@ -73,12 +73,12 @@ codeunit 73209626 "Attach Invoice Report"
     local procedure OnBeforePostSalesDoc(var SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; PreviewMode: Boolean; var HideProgressWindow: Boolean; var IsHandled: Boolean; var CalledBy: Integer)
     var
         SalesLine: Record "Sales Line";
-        TenancyContract: Record "Tenancy Contract";
+        TenancyContract: Record "BLRTenancyContract";
     begin
         if PreviewMode then
             exit;
 
-        if not TenancyContract.Get(SalesHeader."Contract ID") then
+        if not TenancyContract.Get(SalesHeader."BLRContract ID") then
             exit;
 
         SalesLine.SetRange("Document Type", SalesHeader."Document Type");
@@ -88,11 +88,11 @@ codeunit 73209626 "Attach Invoice Report"
             repeat
                 SalesLine.Validate(
                     "Gen. Bus. Posting Group",
-                    CopyStr(UpperCase(TenancyContract."Property Classification"), 1, 20));
+                    CopyStr(UpperCase(TenancyContract."BLRProperty Classification"), 1, 20));
 
                 SalesLine.Validate(
                     "VAT Bus. Posting Group",
-                    CopyStr(UpperCase(TenancyContract."Property Classification"), 1, 20));
+                    CopyStr(UpperCase(TenancyContract."BLRProperty Classification"), 1, 20));
 
                 SalesLine.Validate("VAT Prod. Posting Group", SalesLine."VAT Prod. Posting Group");
 
@@ -103,15 +103,15 @@ codeunit 73209626 "Attach Invoice Report"
     procedure AddDocumentInAdditionalCharges(salesInvHeaderRec: Record "Sales Invoice Header")
 
     var
-        additionalcharges: Record "Additional Charges Sub";
+        additionalcharges: Record "BLRAdditionalChargesSub";
 
     begin
-        additionalcharges.SetRange("Contract ID", salesInvHeaderRec."Contract ID");
-        additionalcharges.SetRange("Invoiced ID", salesInvHeaderRec."No.");
+        additionalcharges.SetRange("BLRContract ID", salesInvHeaderRec."BLRContract ID");
+        additionalcharges.SetRange("BLRInvoiced ID", salesInvHeaderRec."No.");
         if additionalcharges.FindSet() then
             repeat
-                additionalcharges."Invoice Document" := salesInvHeaderRec."View Invoice";
-                additionalcharges."Invoice Document URL" := salesInvHeaderRec."View Document URL";
+                additionalcharges."BLRInvoice Document" := salesInvHeaderRec."BLRView Invoice";
+                additionalcharges."BLRInvoice Document URL" := salesInvHeaderRec."BLRView Document URL";
                 additionalcharges.Modify();
             until additionalcharges.Next() = 0;
 
@@ -119,14 +119,14 @@ codeunit 73209626 "Attach Invoice Report"
 
     procedure AddDocumentInBillingCalculations(salesInvHeaderRec: Record "Sales Invoice Header")
     var
-        billingcalculationgrid: Record "Final Billing Calculation Grid";
+        billingcalculationgrid: Record "BLRFinalBillingCalculationGrid";
     begin
-        billingcalculationgrid.SetRange("Contract ID", salesInvHeaderRec."Contract ID");
-        billingcalculationgrid.SetRange("Invoice ID", salesInvHeaderRec."No.");
+        billingcalculationgrid.SetRange("BLRContract ID", salesInvHeaderRec."BLRContract ID");
+        billingcalculationgrid.SetRange("BLRInvoice ID", salesInvHeaderRec."No.");
         if billingcalculationgrid.FindSet() then
             repeat
-                billingcalculationgrid."Invoice Document" := salesInvHeaderRec."View Invoice";
-                billingcalculationgrid."Invoice Document URL" := salesInvHeaderRec."View Document URL";
+                billingcalculationgrid."BLRInvoice Document" := salesInvHeaderRec."BLRView Invoice";
+                billingcalculationgrid."BLRInvoice Document URL" := salesInvHeaderRec."BLRView Document URL";
                 billingcalculationgrid.Modify();
             until billingcalculationgrid.Next() = 0;
     end;

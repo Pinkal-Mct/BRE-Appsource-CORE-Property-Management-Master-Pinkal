@@ -1,8 +1,8 @@
-page 73209722 "Rent Calculation SubCard2"
+page 73209722 "BLRRent Calculation SubCard2"
 {
     PageType = ListPart;
     ApplicationArea = All;
-    SourceTable = "Rent Calculation Subpage2";
+    SourceTable = "BLRRentCalculationSubpage2";
     Caption = 'Rent Calculation Card';
 
     layout
@@ -11,14 +11,14 @@ page 73209722 "Rent Calculation SubCard2"
         {
             repeater(Group)
             {
-                field("Year"; Rec."Year")
+                field("Year"; Rec."BLRYear")
                 {
                     ApplicationArea = All;
                     Caption = 'Year';
                     ToolTip = 'Enter the Year.';
                     Editable = false;
                 }
-                field("Installment No."; Rec."Installment No.")
+                field("Installment No."; Rec."BLRInstallment No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Instalment No.';
@@ -26,7 +26,7 @@ page 73209722 "Rent Calculation SubCard2"
                     ToolTip = 'Enter the Instalment No.';
                 }
 
-                field("Installment Start Date"; Rec."Installment Start Date")
+                field("Installment Start Date"; Rec."BLRInstallment Start Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Instalment Start Date';
@@ -34,7 +34,7 @@ page 73209722 "Rent Calculation SubCard2"
                     ToolTip = 'Enter the Instalment Start Date.';
                 }
 
-                field("Installment End Date"; Rec."Installment End Date")
+                field("Installment End Date"; Rec."BLRInstallment End Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Instalment End Date';
@@ -42,7 +42,7 @@ page 73209722 "Rent Calculation SubCard2"
                     ToolTip = 'Enter the Instalment End Date.';
                 }
 
-                field("Due Date"; Rec."Due Date")
+                field("Due Date"; Rec."BLRDue Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Due Date';
@@ -50,7 +50,7 @@ page 73209722 "Rent Calculation SubCard2"
                     ToolTip = 'Enter the Due Date.';
                 }
 
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
@@ -58,7 +58,7 @@ page 73209722 "Rent Calculation SubCard2"
                     ToolTip = 'Enter the Amount.';
                 }
 
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT Amount';
@@ -67,7 +67,7 @@ page 73209722 "Rent Calculation SubCard2"
                     ToolTip = 'Enter the VAT Amount.';
                 }
 
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount Including VAT';
@@ -76,7 +76,7 @@ page 73209722 "Rent Calculation SubCard2"
                     ToolTip = 'Enter the Amount Including VAT.';
                 }
 
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Secondary Item Type';
@@ -85,7 +85,7 @@ page 73209722 "Rent Calculation SubCard2"
                     ToolTip = 'Enter the Secondary Item Type.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -94,7 +94,7 @@ page 73209722 "Rent Calculation SubCard2"
                     ToolTip = 'The Tenant ID is auto-generated and not editable.';
                 }
 
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -104,7 +104,7 @@ page 73209722 "Rent Calculation SubCard2"
                 }
 
 
-                field("VAT %"; Rec."VAT %")
+                field("VAT %"; Rec."BLRVAT %")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT %';
@@ -112,7 +112,7 @@ page 73209722 "Rent Calculation SubCard2"
                     Editable = false;
                     Visible = false;
                 }
-                field("Primary Classification"; Rec."Primary Classification")
+                field("BLRPrimaryClassification"; Rec."BLRPrimary Classification")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Classification';
@@ -125,7 +125,7 @@ page 73209722 "Rent Calculation SubCard2"
             }
             group(TotalAmount)
             {
-                field("Total Amount"; Rec."Total Amount")
+                field("Total Amount"; Rec."BLRTotal Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -154,8 +154,8 @@ page 73209722 "Rent Calculation SubCard2"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."Contract ID" := ContractID;
-        Rec."Tenant ID" := tenantID;
+        Rec."BLRContract ID" := ContractID;
+        Rec."BLRTenant ID" := tenantID;
     end;
 
     var

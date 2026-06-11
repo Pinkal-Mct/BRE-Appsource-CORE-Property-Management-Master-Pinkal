@@ -1,8 +1,8 @@
-page 73209700 "Merged Units Card"
+page 73209700 "BLRMerged Units Card"
 {
     PageType = Card;
     ApplicationArea = All;
-    SourceTable = "Merged Units";
+    SourceTable = "BLRMergedUnits";
     Caption = 'Merged Unit Card';
 
     layout
@@ -13,7 +13,7 @@ page 73209700 "Merged Units Card"
             {
                 Caption = 'Merged Unit Information';
 
-                field(FixedNumber; Rec.FixedNumber)
+                field(FixedNumber; Rec."BLRFixedNumber")
                 {
                     ApplicationArea = All;
                     Caption = 'FixedNumber';
@@ -21,20 +21,20 @@ page 73209700 "Merged Units Card"
                     ToolTip = 'The Fixed Number is a unique identifier for the merged unit.';
                 }
 
-                field("Merged Unit ID"; Rec."Merged Unit ID")
+                field("Merged Unit ID"; Rec."BLRMerged Unit ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Merged Unit ID is a unique identifier for the merged unit.';
                 }
 
-                field("Property ID"; Rec."Property ID")
+                field("Property ID"; Rec."BLRProperty ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The Property ID is the identifier for the property associated with the merged unit.';
                 }
 
-                field("Property Name"; Rec."Property Name") // Custom Field
+                field("Property Name"; Rec."BLRProperty Name") // Custom Field
                 {
                     ApplicationArea = All;
                     Caption = 'Property Name';
@@ -42,7 +42,7 @@ page 73209700 "Merged Units Card"
                     ToolTip = 'The Property Name is the name of the property associated with the merged unit.';
                 }
 
-                field("Unit ID"; Rec."Unit ID")
+                field("Unit ID"; Rec."BLRUnit ID")
                 {
                     ApplicationArea = All;
                     Lookup = true;
@@ -56,18 +56,18 @@ page 73209700 "Merged Units Card"
                         UnitList: Page "Item List"; // Reference to the Unit List Page
 
                     begin
-                        if Rec."Property ID" = '' then begin
+                        if Rec."BLRProperty ID" = '' then begin
                             Message('Please select a Property ID first.');
                             exit(false);
                         end;
 
                         // Apply filters to show only units that are free and have the merging/splitting status as "Single"
                         UnitRec.Reset();
-                        UnitRec.SetRange("Property ID", Rec."Property ID");
-                        // UnitRec.SetRange("Unit Status", 'Free'); // Filter for free units
-                        UnitRec.SetRange("Unit Status", UnitRec."Unit Status"::Free);
+                        UnitRec.SetRange("BLRProperty ID", Rec."BLRProperty ID");
+                        // UnitRec.SetRange("BLRUnit Status", 'Free'); // Filter for free units
+                        UnitRec.SetRange("BLRUnit Status", UnitRec."BLRUnit Status"::Free);
 
-                        UnitRec.SetRange("MergeSplitOption", UnitRec."MergeSplitOption"::Single); // Filter for merging/splitting status
+                        UnitRec.SetRange("BLRMergeSplitOption", UnitRec."BLRMergeSplitOption"::Single); // Filter for merging/splitting status
 
                         if UnitRec.IsEmpty then begin
                             Message('No available units that are free and have "Single" option for the selected Property ID.');
@@ -78,7 +78,7 @@ page 73209700 "Merged Units Card"
 
                         if UnitList.LookupMode then
                             if UnitList.RunModal() = Action::LookupOk then begin
-                                Rec."Unit ID" := UnitRec."No."; // Set selected unit ID
+                                Rec."BLRUnit ID" := UnitRec."No."; // Set selected unit ID
                                 exit(true);
                             end;
                         exit(false);
@@ -87,7 +87,7 @@ page 73209700 "Merged Units Card"
                     trigger OnAssistEdit()
                     var
                         UnitRec: Record "Item"; // Reference to the Unit table
-                        SubMergedUnitRec: Record "Sub Merged Units"; // Reference to the Sub Merged Units table
+                        SubMergedUnitRec: Record "BLRSubMergedUnits"; // Reference to the Sub Merged Units table
                         UnitList: Page "Item List"; // Reference to the Unit List Page
                         SelectedUnits: Text; // To store selected Unit IDs
                         TotalUnitSize: Decimal;
@@ -100,16 +100,16 @@ page 73209700 "Merged Units Card"
                         MunicipalityNumber: Text[100]; // To store concatenated Municipality Numbers
                         DewaNumber: Text[100];
                     begin
-                        if Rec."Property ID" = '' then begin
+                        if Rec."BLRProperty ID" = '' then begin
                             Message('Please select a Property ID first.');
                             exit;
                         end;
 
                         // Apply filters to show only units that are free and have the merging/splitting status as "Single"
                         UnitRec.Reset();
-                        UnitRec.SetRange("Property ID", Rec."Property ID");
-                        UnitRec.SetRange("Unit Status", UnitRec."Unit Status"::Free);
-                        UnitRec.SetRange("MergeSplitOption", UnitRec."MergeSplitOption"::Single); // Filter for merging/splitting status
+                        UnitRec.SetRange("BLRProperty ID", Rec."BLRProperty ID");
+                        UnitRec.SetRange("BLRUnit Status", UnitRec."BLRUnit Status"::Free);
+                        UnitRec.SetRange("BLRMergeSplitOption", UnitRec."BLRMergeSplitOption"::Single); // Filter for merging/splitting status
 
                         if UnitRec.IsEmpty then begin
                             Message('No available units that are free and have "Single" option for the selected Property ID.');
@@ -131,7 +131,7 @@ page 73209700 "Merged Units Card"
                                 TotalAmount := 0;
 
                                 // Delete existing Sub Merged Units for the current Merged Unit
-                                SubMergedUnitRec.SetRange("Merged Unit ID", Rec."Merged Unit ID");
+                                SubMergedUnitRec.SetRange("BLRMerged Unit ID", Rec."BLRMerged Unit ID");
                                 if SubMergedUnitRec.FindSet() then
                                     repeat
                                         SubMergedUnitRec.Delete();
@@ -142,43 +142,43 @@ page 73209700 "Merged Units Card"
                                 UnitRec.SetFilter("No.", SelectedUnits); // Apply filter on selected Unit IDs
                                 if UnitRec.FindSet() then
                                     repeat
-                                        TotalUnitSize += UnitRec."Unit Size"; // Sum the unit sizes
-                                        TotalMarketRate += UnitRec."Market Rate per Sq. Ft."; // Sum the market rate per square values
-                                        TotalAmount += UnitRec."Unit Size" * UnitRec."Market Rate per Sq. Ft."; // Calculate total amount based on market rate per square
+                                        TotalUnitSize += UnitRec."BLRUnit Size"; // Sum the unit sizes
+                                        TotalMarketRate += UnitRec."BLRMarket Rate per Sq. Ft."; // Sum the market rate per square values
+                                        TotalAmount += UnitRec."BLRUnit Size" * UnitRec."BLRMarket Rate per Sq. Ft."; // Calculate total amount based on market rate per square
                                         if StrLen(UnitNames) > 0 then
                                             UnitNames += ', ';
-                                        UnitNames += UnitRec."Unit Name";
+                                        UnitNames += UnitRec."BLRUnit Name";
 
                                         if StrLen(UnitNumber) > 0 then
                                             UnitNumber += ', ';
-                                        UnitNumber += UnitRec."Unit Number";
+                                        UnitNumber += UnitRec."BLRUnit Number";
 
                                         if StrLen(MakaniNumber) > 0 then
                                             MakaniNumber += ', ';
-                                        MakaniNumber += UnitRec."Makani Number";
+                                        MakaniNumber += UnitRec."BLRMakani Number";
 
                                         if StrLen(MunicipalityNumber) > 0 then
                                             MunicipalityNumber += ', ';
-                                        MunicipalityNumber += UnitRec."Municipality Number";
+                                        MunicipalityNumber += UnitRec."BLRMunicipality Number";
 
                                         if StrLen(DewaNumber) > 0 then
                                             DewaNumber += ', ';
-                                        DewaNumber += UnitRec."DEWA Number";
+                                        DewaNumber += UnitRec."BLRDEWA Number";
                                         // Insert into Sub Merged Units table
                                         SubMergedUnitRec.Init();
-                                        SubMergedUnitRec."Merged Unit ID" := Rec."Merged Unit ID";
-                                        SubMergedUnitRec."Unit ID" := UnitRec."No.";
-                                        SubMergedUnitRec."Base Unit of Measure" := UnitRec."Base Unit of Measure";
-                                        SubMergedUnitRec."Unit Size" := UnitRec."Unit Size";
-                                        SubMergedUnitRec."Market Rate per Square" := UnitRec."Market Rate per Sq. Ft.";
-                                        SubMergedUnitRec."Amount" := UnitRec."Unit Size" * UnitRec."Market Rate per Sq. Ft.";
-                                        SubMergedUnitRec."Single Unit Name" := UnitRec."Unit Name";
+                                        SubMergedUnitRec."BLRMerged Unit ID" := Rec."BLRMerged Unit ID";
+                                        SubMergedUnitRec."BLRUnit ID" := UnitRec."No.";
+                                        SubMergedUnitRec."BLRBase Unit of Measure" := UnitRec."Base Unit of Measure";
+                                        SubMergedUnitRec."BLRUnit Size" := UnitRec."BLRUnit Size";
+                                        SubMergedUnitRec."BLRMarket Rate per Square" := UnitRec."BLRMarket Rate per Sq. Ft.";
+                                        SubMergedUnitRec."BLRAmount" := UnitRec."BLRUnit Size" * UnitRec."BLRMarket Rate per Sq. Ft.";
+                                        SubMergedUnitRec."BLRSingle Unit Name" := UnitRec."BLRUnit Name";
 
                                         SubMergedUnitRec.Insert();
 
                                         // Update unit's status
-                                        UnitRec."MergeSplitOption" := UnitRec."MergeSplitOption"::Merge; // Change the status to "Merge"
-                                        UnitRec."Merged Unit ID" := Rec."Merged Unit ID";
+                                        UnitRec."BLRMergeSplitOption" := UnitRec."BLRMergeSplitOption"::Merge; // Change the status to "Merge"
+                                        UnitRec."BLRMerged Unit ID" := Rec."BLRMerged Unit ID";
                                         UnitRec.Modify(); // Save the changes
                                     until UnitRec.Next() = 0;
 
@@ -188,31 +188,31 @@ page 73209700 "Merged Units Card"
                                     UnitNames := CopyStr(UnitNames, 1, StrLen(UnitNames) - 2);
 
                                 // Set the total unit size, total market rate, and total amount in the respective fields
-                                Rec."Unit Size" := TotalUnitSize;
-                                Rec."Market Rate per Square" := TotalMarketRate;
-                                Rec."Amount" := TotalAmount;
+                                Rec."BLRUnit Size" := TotalUnitSize;
+                                Rec."BLRMarket Rate per Square" := TotalMarketRate;
+                                Rec."BLRAmount" := TotalAmount;
 
                                 // Set the selected Unit IDs to the Unit ID field
-                                Rec."Unit ID" := CopyStr(SelectedUnits, 1, StrLen(SelectedUnits)); // Remove the last comma
-                                Rec."Single Unit Name" := CopyStr(UnitNames, 1, StrLen(UnitNames));
-                                Rec."Unit Number" := CopyStr(UnitNumber, 1, StrLen(UnitNumber));
-                                Rec."Makani Number" := MakaniNumber;
-                                Rec."Municipality Number" := MunicipalityNumber;
-                                Rec."DEWA Number" := DewaNumber;
-                                Rec."Spliting Status" := Rec."Spliting Status"::"Merge";
+                                Rec."BLRUnit ID" := CopyStr(SelectedUnits, 1, StrLen(SelectedUnits)); // Remove the last comma
+                                Rec."BLRSingle Unit Name" := CopyStr(UnitNames, 1, StrLen(UnitNames));
+                                Rec."BLRUnit Number" := CopyStr(UnitNumber, 1, StrLen(UnitNumber));
+                                Rec."BLRMakani Number" := MakaniNumber;
+                                Rec."BLRMunicipality Number" := MunicipalityNumber;
+                                Rec."BLRDEWA Number" := DewaNumber;
+                                Rec."BLRSpliting Status" := Rec."BLRSpliting Status"::"Merge";
                                 Rec.Modify(); // Explicitly save changes to the current record
                             end;
                         end;
                     end;
                 }
 
-                field("Merged Unit Name"; Rec."Merged Unit Name")
+                field("Merged Unit Name"; Rec."BLRMerged Unit Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the Merged Unit Name.';
                 }
 
-                field("Base Unit of Measure"; rec."Base Unit of Measure")
+                field("Base Unit of Measure"; rec."BLRBase Unit of Measure")
                 {
                     ApplicationArea = All;
                     Lookup = true;
@@ -220,32 +220,32 @@ page 73209700 "Merged Units Card"
                     ToolTip = 'The Base Unit of Measure is the unit of measure used for the merged unit.';
                 }
 
-                field("Unit Size"; Rec."Unit Size")
+                field("Unit Size"; Rec."BLRUnit Size")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the Unit Size.';
                 }
 
-                field("Market Rate per Square"; Rec."Market Rate per Square")
+                field("Market Rate per Square"; Rec."BLRMarket Rate per Square")
                 {
                     ApplicationArea = All;
                     Visible = false;
                     ToolTip = 'Enter the Market Rate per Square.';
                 }
 
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the Amount.';
                 }
 
-                field("Property Type"; Rec."Property Type")
+                field("BLRPropertyType"; Rec."BLRProperty Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The Property Type is the type of property associated with the merged unit.';
                 }
 
-                field("Single Unit Name"; Rec."Single Unit Name")
+                field("Single Unit Name"; Rec."BLRSingle Unit Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -253,32 +253,32 @@ page 73209700 "Merged Units Card"
                     ToolTip = 'The Single Unit Name is the name of the single unit associated with the merged unit.';
                 }
 
-                field("Unit Number"; Rec."Unit Number")
+                field("Unit Number"; Rec."BLRUnit Number")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Unit Number is the number of the unit associated with the merged unit.';
                 }
-                field("Makani Number"; Rec."Makani Number")
+                field("Makani Number"; Rec."BLRMakani Number")
                 {
                     ApplicationArea = All;
                     Editable = false;
 
                 }
-                field("Municipality Number"; Rec."Municipality Number")
+                field("Municipality Number"; Rec."BLRMunicipality Number")
                 {
                     ApplicationArea = All;
                     Editable = false;
 
                 }
-                field("DEWA Number"; Rec."DEWA Number")
+                field("DEWA Number"; Rec."BLRDEWA Number")
                 {
                     ApplicationArea = All;
                     Editable = false;
 
                 }
 
-                field("Status"; Rec."Status")
+                field("Status"; Rec."BLRStatus")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -286,7 +286,7 @@ page 73209700 "Merged Units Card"
                 }
 
 
-                field("Splitting Status"; Rec."Spliting Status")
+                field("Splitting Status"; Rec."BLRSpliting Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The Splitting Status indicates whether the merged unit is currently being merged or unmerged.';
@@ -296,22 +296,22 @@ page 73209700 "Merged Units Card"
                         ItemRec: Record Item;
                         SelectedUnits: Text[1024];
                     begin // Check if the Splitting Status is set to Unmerge
-                        if Rec."Spliting Status" = Rec."Spliting Status"::Unmerge then begin
+                        if Rec."BLRSpliting Status" = Rec."BLRSpliting Status"::Unmerge then begin
                             // Set Merge Unit Status to N/A
-                            Rec."Status" := Rec."Status"::"N/A";
+                            Rec."BLRStatus" := Rec."BLRStatus"::"N/A";
 
                             // Retrieve the list of units associated with this merged unit
-                            SelectedUnits := Rec."Unit ID"; // Contains the Unit IDs associated with the merged unit
+                            SelectedUnits := Rec."BLRUnit ID"; // Contains the Unit IDs associated with the merged unit
 
                             // Update each item in the Item table with the Unit IDs in SelectedUnits
                             ItemRec.SetFilter("No.", SelectedUnits); // Apply filter to the selected units
                             if ItemRec.FindSet() then
                                 repeat
                                     // ItemRec."Unit Status" := 'Free'; // Set Unit Status to Free
-                                    ItemRec."Unit Status" := ItemRec."Unit Status"::Free;
+                                    ItemRec."BLRUnit Status" := ItemRec."BLRUnit Status"::Free;
 
-                                    ItemRec."MergeSplitOption" := ItemRec."MergeSplitOption"::Single;
-                                    ItemRec."Merged Unit ID" := 0; // Set Merging/Splitting to Single
+                                    ItemRec."BLRMergeSplitOption" := ItemRec."BLRMergeSplitOption"::Single;
+                                    ItemRec."BLRMerged Unit ID" := 0; // Set Merging/Splitting to Single
                                     ItemRec.Modify(); // Save changes to the Item record
                                 until ItemRec.Next() = 0;
 
@@ -326,9 +326,9 @@ page 73209700 "Merged Units Card"
             {
                 Caption = 'Unit all Details';
 
-                part("Unit all Details"; "Sub Merged Units Card")
+                part("Unit all Details"; "BLRSub Merged Units Card")
                 {
-                    SubPageLink = "Merged Unit ID" = FIELD("Merged Unit ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRMerged Unit ID" = FIELD("BLRMerged Unit ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
                 }
             }

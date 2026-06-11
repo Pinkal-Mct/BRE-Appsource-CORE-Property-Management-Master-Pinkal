@@ -1,9 +1,9 @@
-page 73209698 "Management Fee Calc."
+page 73209698 "BLRManagement Fee Calc."
 {
     PageType = Card;
     ApplicationArea = All;
     UsageCategory = None;
-    SourceTable = "Management Fee Calc. Header";
+    SourceTable = "BLRManagementFeeCalcHeader";
     Caption = 'Management Fee Calculation';
 
     layout
@@ -12,7 +12,7 @@ page 73209698 "Management Fee Calc."
         {
             group(General)
             {
-                field("Entry No."; Rec."Entry No.")
+                field("Entry No."; Rec."BLREntry No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Entry No.';
@@ -20,31 +20,31 @@ page 73209698 "Management Fee Calc."
                     ToolTip = 'Specifies the unique entry number for the management fee calculation. This field is auto-generated and cannot be edited.';
                 }
 
-                field("Report Date"; Rec."Report Date")
+                field("Report Date"; Rec."BLRReport Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the date of the management fee report.';
                 }
-                field("Owner ID"; Rec."Owner ID")
+                field("Owner ID"; Rec."BLROwner ID")
                 {
                     ApplicationArea = All;
-                    Editable = not Rec."All Owners";
+                    Editable = not Rec."BLRAll Owners";
                     ToolTip = 'Specifies the unique identifier for the owner. If "All Owners" is selected, this field will be ignored.';
 
                     trigger OnValidate()
                     begin
-                        if Rec."Owner ID" <> 0 then
+                        if Rec."BLROwner ID" <> 0 then
                             ownereditable := false
                         else
                             ownereditable := true;
                     end;
                 }
-                field("Owner Name"; Rec."Owner Name")
+                field("Owner Name"; Rec."BLROwner Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the owner.';
                 }
-                field("All Owners"; Rec."All Owners")
+                field("All Owners"; Rec."BLRAll Owners")
                 {
                     ApplicationArea = All;
                     Editable = ownereditable;
@@ -52,46 +52,46 @@ page 73209698 "Management Fee Calc."
 
                     trigger OnValidate()
                     begin
-                        if Rec."All Owners" = true then
-                            Rec.Validate("All Properties", true)
+                        if Rec."BLRAll Owners" = true then
+                            Rec.Validate("BLRAll Properties", true)
 
                         else
-                            Rec.Validate("All Properties", false);
+                            Rec.Validate("BLRAll Properties", false);
 
                     end;
                 }
-                field("All Properties"; Rec."All Properties")
+                field("All Properties"; Rec."BLRAll Properties")
                 {
                     ApplicationArea = All;
                     Editable = propertyeditable;
                     ToolTip = 'Select this option to include all properties in the management fee calculation. If selected, the Property field will be ignored.';
                     // trigger OnValidate()
                     // begin
-                    //     if Rec."All Properties" = true then
+                    //     if Rec."BLRAll Properties" = true then
                     //         allpropertyeditable := false
                     //     else
                     //         allpropertyeditable := true;
                     // end;
                 }
-                field(Property; Rec.Property)
+                field(Property; Rec."BLRProperty")
                 {
                     ApplicationArea = All;
-                    Editable = not Rec."All Properties";
+                    Editable = not Rec."BLRAll Properties";
                     ToolTip = 'Specifies the properties to be included in the management fee calculation. If "All Properties" is selected, this field will be ignored.';
 
 
                     trigger OnLookup(var Text: Text): Boolean
                     var
-                        PropertyRegistrationRec: Record "Property Registration";
-                        PropertyRegistrationListPage: Page "Property Registration List";
+                        PropertyRegistrationRec: Record "BLRPropertyRegistration";
+                        PropertyRegistrationListPage: Page "BLRProperty Registration List";
                         SelectedPropertyNames: Text[250];
                     // PropertyName: Text[100];
                     begin
                         PropertyRegistrationRec.Reset();
-                        if Rec."Owner ID" = 0 then
+                        if Rec."BLROwner ID" = 0 then
                             PropertyRegistrationRec.FindSet()
                         else
-                            PropertyRegistrationRec.SetRange("Owner ID", Rec."Owner ID");
+                            PropertyRegistrationRec.SetRange("BLROwner ID", Rec."BLROwner ID");
 
                         PropertyRegistrationListPage.LookupMode(true);
                         PropertyRegistrationListPage.SetTableView(PropertyRegistrationRec);
@@ -106,10 +106,10 @@ page 73209698 "Management Fee Calc."
                                 repeat
                                     if SelectedPropertyNames <> '' then
                                         SelectedPropertyNames := SelectedPropertyNames + ', ';
-                                    SelectedPropertyNames := SelectedPropertyNames + PropertyRegistrationRec."Property Name";
+                                    SelectedPropertyNames := SelectedPropertyNames + PropertyRegistrationRec."BLRProperty Name";
                                 until PropertyRegistrationRec.Next() = 0;
-                                Rec.Property := SelectedPropertyNames;
-                                if Rec.Property <> ''
+                                Rec."BLRProperty" := SelectedPropertyNames;
+                                if Rec."BLRProperty" <> ''
                                 then
                                     propertyeditable := false
                                 else
@@ -120,31 +120,31 @@ page 73209698 "Management Fee Calc."
 
                     trigger OnValidate()
                     begin
-                        if Rec.Property <> '' then
+                        if Rec."BLRProperty" <> '' then
                             propertyeditable := false
                         else
                             propertyeditable := true;
                     end;
                 }
-                field("Financial Year"; Rec."Financial Year")
+                field("Financial Year"; Rec."BLRFinancial Year")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the financial year for which the management fee is being calculated.';
                 }
-                field("Period From"; Rec."Period From")
+                field("Period From"; Rec."BLRPeriod From")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the starting date of the period for which the management fee is being calculated.';
                 }
-                field("Period To"; Rec."Period To")
+                field("Period To"; Rec."BLRPeriod To")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the ending date of the period for which the management fee is being calculated.';
                 }
             }
-            part(ManagementFeeGrid; "Management Fee Calc Grid")
+            part(ManagementFeeGrid; "BLRManagement Fee Calc Grid")
             {
-                SubPageLink = "Header No." = field("Entry No.");
+                SubPageLink = "BLRHeader No." = field("BLREntry No.");
                 ApplicationArea = All;
                 Caption = 'Management Fee Details';
                 UpdatePropagation = Both;
@@ -162,7 +162,7 @@ page 73209698 "Management Fee Calc."
                 Image = CalculateVAT;
                 trigger OnAction()
                 var
-                    ManagementFeeCalcCodeunit: Codeunit "SetManagementFeeCalculation";
+                    ManagementFeeCalcCodeunit: Codeunit "BLRSetMgtFeeCalculation";
                 begin
                     ManagementFeeCalcCodeunit.PopulateManagementFeeLines(Rec);
                 end;
@@ -186,8 +186,8 @@ page 73209698 "Management Fee Calc."
 
     trigger OnAfterGetCurrRecord()
     begin
-        allownereditable := not Rec."All Owners";
-        allpropertyeditable := not Rec."All Properties";
+        allownereditable := not Rec."BLRAll Owners";
+        allpropertyeditable := not Rec."BLRAll Properties";
     end;
 
     var

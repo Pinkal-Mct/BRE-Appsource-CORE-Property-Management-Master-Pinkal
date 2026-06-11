@@ -1,7 +1,7 @@
-page 73209788 "OverduePaymentmodelist"
+page 73209788 "BLROverduePaymentmodelist"
 {
     PageType = List;
-    SourceTable = "OverDuePaymentmode";
+    SourceTable = "BLROverDuePaymentmode";
     ApplicationArea = All;
     Caption = 'Overdue Payment Approval List';
     UsageCategory = Lists;
@@ -16,51 +16,51 @@ page 73209788 "OverduePaymentmodelist"
             repeater(Group)
             {
 
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'ID';
                 }
-                field("Status"; Rec."Status")
+                field("Status"; Rec."BLRStatus")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Status';
                 }
-                field("Tenant Id"; Rec."Tenant Id")
+                field("Tenant Id"; Rec."BLRTenant Id")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Tenant Id';
                 }
 
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Contract ID';
                 }
-                field("Payment Series"; Rec."Payment Series")
+                field("Payment Series"; Rec."BLRPayment Series")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Payment Series';
                 }
 
-                field("Due Date"; Rec."Due Date")
+                field("Due Date"; Rec."BLRDue Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Due Date';
                 }
-                field("Payment Status"; Rec."Payment Status")
+                field("Payment Status"; Rec."BLRPayment Status")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Payment Status';
                 }
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -84,11 +84,11 @@ page 73209788 "OverduePaymentmodelist"
 
                 trigger OnAction()
                 var
-                    SelectedRecs: Record "OverDuePaymentmode";
-                    emailsrec: Codeunit "Send Email Paymentmode Overdue";
+                    SelectedRecs: Record "BLROverDuePaymentmode";
+                    emailsrec: Codeunit "BLRSendEmailPaymentmodeOverdue";
                     ApproveCount: Integer;
                     ErrorCount: Integer;
-                    approvalstatus: Enum "Approval Status Enum";
+                    approvalstatus: Enum "BLRApproval Status Enum";
                 begin
                     CurrPage.SetSelectionFilter(SelectedRecs);
 
@@ -102,8 +102,8 @@ page 73209788 "OverduePaymentmodelist"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs.Status = approvalstatus::Pending then begin
-                                SelectedRecs.Status := approvalstatus::Approved;
+                            if SelectedRecs."BLRStatus" = approvalstatus::Pending then begin
+                                SelectedRecs."BLRStatus" := approvalstatus::Approved;
                                 emailsrec.SendEmailOverdue(Rec);
                                 SelectedRecs.Modify();
                                 ApproveCount += 1;
@@ -126,10 +126,10 @@ page 73209788 "OverduePaymentmodelist"
 
                 trigger OnAction()
                 var
-                    SelectedRecs: Record "OverDuePaymentmode";
+                    SelectedRecs: Record "BLROverDuePaymentmode";
                     RejectCount: Integer;
                     ErrorCount: Integer;
-                    approvalstatus: Enum "Approval Status Enum";
+                    approvalstatus: Enum "BLRApproval Status Enum";
                 begin
                     CurrPage.SetSelectionFilter(SelectedRecs);
 
@@ -143,8 +143,8 @@ page 73209788 "OverduePaymentmodelist"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs.Status = approvalstatus::Pending then begin
-                                SelectedRecs.Status := approvalstatus::Rejected;
+                            if SelectedRecs."BLRStatus" = approvalstatus::Pending then begin
+                                SelectedRecs."BLRStatus" := approvalstatus::Rejected;
                                 SelectedRecs.Modify();
                                 RejectCount += 1;
                             end else

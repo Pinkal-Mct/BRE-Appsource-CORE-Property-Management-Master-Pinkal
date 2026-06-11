@@ -1,9 +1,9 @@
-codeunit 73209629 "SendListPendingCreditNoteInv"
+codeunit 73209629 "BLRSendPendingCreditNoteInv"
 {
     trigger OnRun()
     var
         UserPersonalizationRec: Record "User Personalization";
-        RequestCreditNoteGrid: Record "Request Credit Note Grid";
+        RequestCreditNoteGrid: Record "BLRRequestCreditNoteGrid";
         CompanyInfo: Record "Company Information";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
@@ -26,7 +26,7 @@ codeunit 73209629 "SendListPendingCreditNoteInv"
         if EmailAddress.Count() = 0 then
             Error('No users with the "Property Manager" profile have a valid email address.');
 
-        CreditNotelink := GETURL(ClientType::Current, COMPANYNAME, ObjectType::Page, PAGE::"Request Credit Note List");
+        CreditNotelink := GETURL(ClientType::Current, COMPANYNAME, ObjectType::Page, PAGE::"BLRRequest Credit Note List");
 
         EmailBody := SendListPendingAdjustCredtNoteList(InvoicesExist);
         if InvoicesExist then begin
@@ -49,26 +49,26 @@ codeunit 73209629 "SendListPendingCreditNoteInv"
 
     procedure SendListPendingAdjustCredtNoteList(var InvoicesExist: Boolean): Text
     var
-        RequestCreditNoteGridRec: Record "Request Credit Note Grid";
-        RequestCreditNoteRec: Record "Request Credit Note";
+        RequestCreditNoteGridRec: Record "BLRRequestCreditNoteGrid";
+        RequestCreditNoteRec: Record "BLRRequestCreditNote";
         UserRec: Record User;
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
         TempEmailBody: Text;
     begin
-        RequestCreditNoteGridRec.SetFilter("Invoiced", '=true');
-        RequestCreditNoteGridRec.SetFilter("Credit Memo Generated", '=false');
+        RequestCreditNoteGridRec.SetFilter("BLRInvoiced", '=true');
+        RequestCreditNoteGridRec.SetFilter("BLRCredit Memo Generated", '=false');
         if RequestCreditNoteGridRec.FindSet() then begin
             InvoicesExist := True;
             TempEmailBody := '<table border = "1" style="width:100%; text-align:center;"><tr><th>Request Credit Note No.</th><th>Contract ID</th><th>Tenant No.</th><th>Amount Including VAT</th><th>Total Reduction Amount</th></tr>';
             repeat
                 TempEmailBody += StrSubstNo(
       '<tr><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td>%5</td></tr>',
-      RequestCreditNoteGridRec."Request No.",
-      RequestCreditNoteGridRec."Contract ID",
-      RequestCreditNoteGridRec."Tenant No.",
-      RequestCreditNoteGridRec."Payment Series",
-      Format(RequestCreditNoteGridRec."Total Reduction"));
+      RequestCreditNoteGridRec."BLRRequest No.",
+      RequestCreditNoteGridRec."BLRContract ID",
+      RequestCreditNoteGridRec."BLRTenant No.",
+      RequestCreditNoteGridRec."BLRPayment Series",
+      Format(RequestCreditNoteGridRec."BLRTotal Reduction"));
             until RequestCreditNoteGridRec.Next() = 0;
             TempEmailBody += '</table>';
         end;

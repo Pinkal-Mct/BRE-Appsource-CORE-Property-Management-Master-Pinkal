@@ -1,10 +1,10 @@
-page 73209795 "Payment Transaction List"
+page 73209795 "BLRPayment Transaction List"
 {
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
     Caption = 'Payment Transaction List';
-    SourceTable = "Payment Transaction";
+    SourceTable = "BLRPaymentTransaction";
     CardPageId = 73209712;
 
     layout
@@ -13,11 +13,11 @@ page 73209795 "Payment Transaction List"
         {
             repeater(Group)
             {
-                field("PT Id"; Rec."PT Id") { ToolTip = 'Unique identifier for the payment transaction.'; }
-                field("Tenant Id"; Rec."Tenant Id") { ToolTip = 'Identifier for the tenant associated with the payment transaction.'; }
-                field("Tenant Name"; Rec."Tenant Name") { ToolTip = 'Name of the tenant associated with the payment transaction.'; }
-                field("Contract Id"; Rec."Contract Id") { ToolTip = 'Identifier for the contract associated with the payment transaction.'; }
-                field("Approval Status"; Rec."Approval Status") { ToolTip = 'Current approval status of the payment transaction.'; }
+                field("PT Id"; Rec."BLRPT Id") { ToolTip = 'Unique identifier for the payment transaction.'; }
+                field("Tenant Id"; Rec."BLRTenant Id") { ToolTip = 'Identifier for the tenant associated with the payment transaction.'; }
+                field("Tenant Name"; Rec."BLRTenant Name") { ToolTip = 'Name of the tenant associated with the payment transaction.'; }
+                field("Contract Id"; Rec."BLRContract Id") { ToolTip = 'Identifier for the contract associated with the payment transaction.'; }
+                field("Approval Status"; Rec."BLRApproval Status") { ToolTip = 'Current approval status of the payment transaction.'; }
             }
         }
     }

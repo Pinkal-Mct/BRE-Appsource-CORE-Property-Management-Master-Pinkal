@@ -1,10 +1,10 @@
-pageextension 73209583 "PostedSalesInvoiceLine" extends "Posted Sales Invoice Subform"
+pageextension 73209583 "BLRPostedSalesInvoiceLine" extends "Posted Sales Invoice Subform"
 {
     layout
     {
         addafter("Gen. Prod. Posting Group")
         {
-            field("Contract ID"; Rec."Contract ID")
+            field("Contract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
                 Caption = 'Contract ID';

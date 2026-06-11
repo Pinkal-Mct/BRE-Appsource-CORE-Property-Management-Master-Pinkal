@@ -1,7 +1,7 @@
-page 73209763 "Base Amount Unit Wise Grid"
+page 73209763 "BLRBase Amount Unit Wise Grid"
 {
     PageType = ListPart;
-    SourceTable = "Base Amount Data Unit Wise";
+    SourceTable = "BLRBaseAmountDataUnitWise";
     ApplicationArea = All;
     Caption = 'Base Amount Report';
 
@@ -11,108 +11,108 @@ page 73209763 "Base Amount Unit Wise Grid"
         {
             repeater(Group)
             {
-                field("Report Date"; Rec."Report Date")
+                field("Report Date"; Rec."BLRReport Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the date of the report.';
                 }
 
-                field("Financial Year"; Rec."Financial Year")
+                field("Financial Year"; Rec."BLRFinancial Year")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the financial year for the report.';
                 }
 
-                field("Period From"; Rec."Period From")
+                field("Period From"; Rec."BLRPeriod From")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the starting date of the period for the report.';
                 }
 
-                field("Period To"; Rec."Period To")
+                field("Period To"; Rec."BLRPeriod To")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the ending date of the period for the report.';
                 }
 
-                field("Property Management Company"; Rec."Property Management Company")
+                field("Property Management Company"; Rec."BLRProperty Management Company")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the property management company.';
                 }
 
-                field("Company Owner Name"; Rec."Company Owner Name")
+                field("Company Owner Name"; Rec."BLRCompany Owner Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the company owner.';
                 }
 
-                field("Property Name"; Rec."Property Name")
+                field("Property Name"; Rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the property.';
                 }
 
-                field("Property Type"; Rec."Property Type")
+                field("BLRPropertyType"; Rec."BLRProperty Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the type of the property (e.g., Residential, Commercial).';
                 }
 
-                field("Unit Number"; Rec."Unit Number")
+                field("Unit Number"; Rec."BLRUnit Number")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the unit number of the property.';
                 }
 
-                field("Unit Status"; Rec."Unit Status")
+                field("Unit Status"; Rec."BLRUnit Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the status of the unit (e.g., Occupied, Vacant).';
                 }
 
-                field("Contract Id"; Rec."Contract Id")
+                field("Contract Id"; Rec."BLRContract Id")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the unique identifier for the contract associated with the unit.';
                 }
-                field("Multi Year Start Date"; Rec."Multi Year Start Date")
+                field("Multi Year Start Date"; Rec."BLRMulti Year Start Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the starting date of the multi-year period for the report.';
                 }
 
-                field("Multi Year End Date"; Rec."Multi Year End Date")
+                field("Multi Year End Date"; Rec."BLRMulti Year End Date")
                 {
                     ApplicationArea = All;
-                        ToolTip = 'Specifies the ending date of the multi-year period for the report.';
+                    ToolTip = 'Specifies the ending date of the multi-year period for the report.';
                 }
 
-                field("Contract Status"; Rec."Contract Status")
+                field("Contract Status"; Rec."BLRContract Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the current status of the contract (e.g., Active, Inactive).';
                 }
 
-                field("Month"; Rec."Month")
+                field("Month"; Rec."BLRMonth")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the month for the report.';
                 }
 
-                field("Base Amount Source"; Rec."Base Amount Source")
+                field("Base Amount Source"; Rec."BLRBase Amount Source")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the source of the base amount, such as Rent, Service Charge, or Other.';
                 }
 
-                field("Quantity"; Rec."Quantity")
+                field("Quantity"; Rec."BLRQuantity")
                 {
                     ApplicationArea = All;
-                        ToolTip = 'Specifies the quantity used for calculating the base amount, such as the number of units or square footage.';
+                    ToolTip = 'Specifies the quantity used for calculating the base amount, such as the number of units or square footage.';
                 }
             }
-            field("Total Quantity"; Rec."Total Quantity")
+            field("Total Quantity"; Rec."BLRTotal Quantity")
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the total quantity for the report, calculated as the sum of the Quantity field for all lines.';

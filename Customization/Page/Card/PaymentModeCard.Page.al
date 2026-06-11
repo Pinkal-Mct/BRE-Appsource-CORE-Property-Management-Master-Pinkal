@@ -1,7 +1,7 @@
-page 73209705 "Payment Mode Card"
+page 73209705 "BLRPayment Mode Card"
 {
     PageType = Card;
-    SourceTable = "Payment Mode";
+    SourceTable = "BLRPaymentMode";
     ApplicationArea = All;
     Caption = 'Payment mode Details';
 
@@ -11,7 +11,7 @@ page 73209705 "Payment Mode Card"
         {
             group(Group)
             {
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
@@ -19,20 +19,20 @@ page 73209705 "Payment Mode Card"
                     Editable = IsFieldEditable;
                     ToolTip = 'Enter the Contract ID.';
                 }
-                field("Contract Start date"; Rec."Contract Start date")
+                field("Contract Start date"; Rec."BLRContract Start date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the Contract Start date.';
                 }
-                field("Contract End date"; Rec."Contract End date")
+                field("Contract End date"; Rec."BLRContract End date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the Contract End date.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -40,21 +40,21 @@ page 73209705 "Payment Mode Card"
                     ToolTip = 'Enter the Tenant ID.';
                 }
 
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the Tenant Name.';
                 }
 
-                field("Tenant Email"; Rec."Tenant Email")
+                field("Tenant Email"; Rec."BLRTenant Email")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the Tenant Email.';
                 }
 
-                field("Approval Status"; Rec."Approval Status")
+                field("Approval Status"; Rec."BLRApproval Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the Approval Status.';
@@ -62,74 +62,74 @@ page 73209705 "Payment Mode Card"
 
                     trigger OnValidate()
                     var
-                        PaymentModeRec: Record "Payment Mode2";
+                        PaymentModeRec: Record "BLRPaymentMode2";
                         MissingFields: Text;
                         AnyMissing: Boolean;
                         ChqNumLbl: Label 'Series %1: Cheque Number is missing', Comment = '%1 is the Payment Series';
                         DpstBnkLbl: Label 'Series %1: Deposit Bank is missing', Comment = '%1 is the Payment Series';
                         UpldChqLbl: Label 'Series %1: Upload Cheque is missing', Comment = '%1 is the Payment Series';
                     begin
-                        if Rec."Approval Status" <> Rec."Approval Status"::Approved then
+                        if Rec."BLRApproval Status" <> Rec."BLRApproval Status"::Approved then
                             exit;
 
                         PaymentModeRec.Reset();
-                        PaymentModeRec.SetRange("Contract ID", Rec."Contract ID");
+                        PaymentModeRec.SetRange("BLRContract ID", Rec."BLRContract ID");
 
                         if not PaymentModeRec.FindSet() then
-                            Error('Cannot change Approval Status to Approved. No payment mode details found for Contract %1.', Rec."Contract ID");
+                            Error('Cannot change Approval Status to Approved. No payment mode details found for Contract %1.', Rec."BLRContract ID");
 
                         AnyMissing := false;
                         MissingFields := '';
 
                         repeat
-                            if PaymentModeRec."Payment Mode" = 'Pending' then
-                                Error('Cannot change Approval Status to Approved. Payment Mode is still Pending for Series %1.', PaymentModeRec."Payment Series");
+                            if PaymentModeRec."BLRPayment Mode" = 'Pending' then
+                                Error('Cannot change Approval Status to Approved. Payment Mode is still Pending for Series %1.', PaymentModeRec."BLRPayment Series");
 
-                            case PaymentModeRec."Payment Mode" of
+                            case PaymentModeRec."BLRPayment Mode" of
                                 'Cheque':
                                     begin
-                                        if PaymentModeRec."Cheque Number" = '-' then begin
+                                        if PaymentModeRec."BLRCheque Number" = '-' then begin
                                             AnyMissing := true;
-                                            MissingFields += StrSubstNo(ChqNumLbl, PaymentModeRec."Payment Series");
+                                            MissingFields += StrSubstNo(ChqNumLbl, PaymentModeRec."BLRPayment Series");
                                         end;
-                                        if PaymentModeRec."Deposit Bank" = '' then begin
+                                        if PaymentModeRec."BLRDeposit Bank" = '' then begin
                                             AnyMissing := true;
-                                            MissingFields += StrSubstNo(DpstBnkLbl, PaymentModeRec."Payment Series");
+                                            MissingFields += StrSubstNo(DpstBnkLbl, PaymentModeRec."BLRPayment Series");
                                         end;
-                                        if PaymentModeRec."Upload Cheque" = 'Upload Cheque' then begin
+                                        if PaymentModeRec."BLRUpload Cheque" = 'Upload Cheque' then begin
                                             AnyMissing := true;
-                                            MissingFields += StrSubstNo(UpldChqLbl, PaymentModeRec."Payment Series");
+                                            MissingFields += StrSubstNo(UpldChqLbl, PaymentModeRec."BLRPayment Series");
                                         end;
                                     end;
 
                                 'Bank Transfer', 'Credit Card', 'Mobile Wallet':
-                                    if PaymentModeRec."Deposit Bank" = '' then begin
+                                    if PaymentModeRec."BLRDeposit Bank" = '' then begin
                                         AnyMissing := true;
-                                        MissingFields += StrSubstNo(DpstBnkLbl, PaymentModeRec."Payment Series");
+                                        MissingFields += StrSubstNo(DpstBnkLbl, PaymentModeRec."BLRPayment Series");
                                     end;
                             end;
                         until PaymentModeRec.Next() = 0;
 
                         if AnyMissing then
-                            Error('Cannot change Approval Status to Approved. The following required details are missing for Contract %1: %2', Rec."Contract ID", MissingFields);
+                            Error('Cannot change Approval Status to Approved. The following required details are missing for Contract %1: %2', Rec."BLRContract ID", MissingFields);
                     end;
                 }
 
-                field("Payment Reminder"; rec."Payment Reminder")
+                field("Payment Reminder"; rec."BLRPayment Reminder")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     Visible = false;
                     ToolTip = 'Enter the Payment Reminder.';
                 }
-                field("On-hold"; Rec."On-hold")
+                field("On-hold"; Rec."BLROn-hold")
                 {
                     ApplicationArea = All;
                     Editable = IsFieldEditable;
                     Visible = false;
                     ToolTip = 'Enter the On-hold status.';
                 }
-                field(Isupdated; Rec.Isupdated)
+                field(Isupdated; Rec."BLRIsupdated")
                 {
                     ApplicationArea = All;
                     Visible = false;
@@ -137,27 +137,27 @@ page 73209705 "Payment Mode Card"
                 }
             }
 
-            group("Payment Mode")
+            group("BLRPaymentMode")
             {
-                part("PaymentMode"; "Payment Mode Card2")
+                part("PaymentMode"; "BLRPayment Mode Card2")
                 {
-                    SubPageLink = "Contract ID" = FIELD("Contract ID"),
-                      "Tenant ID" = FIELD("Tenant ID"); // Link to filter attachments for this owner only
-                                                        // "Contract ID" = FIELD("Contract ID")
+                    SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"),
+                      "BLRTenant ID" = FIELD("BLRTenant ID"); // Link to filter attachments for this owner only
+                                                              // "Contract ID" = FIELD("BLRContract ID")
                     ApplicationArea = All;
                 }
             }
 
 
-            group("CombinePaymentLog")
+            group("BLRCombinePaymentLog")
             {
                 Visible = IsCombineVisible;
                 Caption = 'Combine Payment Log';
-                part("CombinePaymentsLog"; "CombinePaymentLogCard")
+                part("CombinePaymentsLog"; "BLRCombinePaymentLogCard")
                 {
-                    SubPageLink = "Contract ID" = FIELD("Contract ID"),
-                      "Tenant ID" = FIELD("Tenant ID"); // Link to filter attachments for this owner only
-                                                        // "Contract ID" = FIELD("Contract ID")
+                    SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"),
+                      "BLRTenant ID" = FIELD("BLRTenant ID"); // Link to filter attachments for this owner only
+                                                              // "Contract ID" = FIELD("BLRContract ID")
                     ApplicationArea = All;
                 }
             }
@@ -170,7 +170,7 @@ page 73209705 "Payment Mode Card"
                 {
                     ShowCaption = false;
 
-                    field("Combine Payment Series"; Rec."Combine Payment Series")
+                    field("Combine Payment Series"; Rec."BLRCombine Payment Series")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Enter the Payment Series for combining payments.';
@@ -178,21 +178,21 @@ page 73209705 "Payment Mode Card"
                         // Trasfer from Table Start
                         trigger OnLookup(var Text: Text): Boolean
                         var
-                            PaymentMode2Rec: Record "Payment Mode2";
-                            Selection: Page "Payment Mode2 List";
+                            PaymentMode2Rec: Record "BLRPaymentMode2";
+                            Selection: Page "BLRPayment Mode2 List";
                             SelectedPaymentSeries: Text;
                             TotalAmount: Decimal;
                             TotalVATAmount: Decimal;
                             TotalAmountInclVAT: Decimal;
                         begin
                             // First check if Contract ID is selected
-                            if Rec."Contract ID" = 0 then
+                            if Rec."BLRContract ID" = 0 then
                                 Error('Please select a Contract ID first');
 
                             // Filter Payment Mode2 records based on Contract ID
                             PaymentMode2Rec.Reset();
-                            PaymentMode2Rec.SetRange("Contract ID", Rec."Contract ID");
-                            PaymentMode2Rec.SetFilter("Payment Status", '<> %1 & <> %2', PaymentMode2Rec."Payment Status"::Cancelled, PaymentMode2Rec."Payment Status"::Received);
+                            PaymentMode2Rec.SetRange("BLRContract ID", Rec."BLRContract ID");
+                            PaymentMode2Rec.SetFilter("BLRPayment Status", '<> %1 & <> %2', PaymentMode2Rec."BLRPayment Status"::Cancelled, PaymentMode2Rec."BLRPayment Status"::Received);
 
                             Selection.LookupMode(true);
                             Selection.SetTableView(PaymentMode2Rec);
@@ -210,52 +210,52 @@ page 73209705 "Payment Mode Card"
                                         // Add to payment series string
                                         if SelectedPaymentSeries <> '' then
                                             SelectedPaymentSeries := SelectedPaymentSeries + ',';
-                                        SelectedPaymentSeries := SelectedPaymentSeries + PaymentMode2Rec."Payment Series";
+                                        SelectedPaymentSeries := SelectedPaymentSeries + PaymentMode2Rec."BLRPayment Series";
 
                                         // Sum up amounts
-                                        TotalAmount += PaymentMode2Rec.Amount;
-                                        TotalVATAmount += PaymentMode2Rec."VAT Amount";
-                                        TotalAmountInclVAT += PaymentMode2Rec."Amount Including VAT";
+                                        TotalAmount += PaymentMode2Rec."BLRAmount";
+                                        TotalVATAmount += PaymentMode2Rec."BLRVAT Amount";
+                                        TotalAmountInclVAT += PaymentMode2Rec."BLRAmount Including VAT";
                                     until PaymentMode2Rec.Next() = 0;
 
                                     // Set all values to the record
-                                    Rec."Combine Payment Series" := CopyStr(SelectedPaymentSeries, 1, StrLen(SelectedPaymentSeries));
-                                    Rec."Combine Amount" := TotalAmount;
-                                    Rec."Combine VAT Amount" := TotalVATAmount;
-                                    Rec."Combine Amount Including VAT" := TotalAmountInclVAT;
+                                    Rec."BLRCombine Payment Series" := CopyStr(SelectedPaymentSeries, 1, StrLen(SelectedPaymentSeries));
+                                    Rec."BLRCombine Amount" := TotalAmount;
+                                    Rec."BLRCombine VAT Amount" := TotalVATAmount;
+                                    Rec."BLRCombineAmtInclVAT" := TotalAmountInclVAT;
                                 end;
                             end;
                         end;
                         // Trasfer from Table End
                     }
 
-                    field("Combine Due Date"; Rec."Combine Due Date")
+                    field("Combine Due Date"; Rec."BLRCombine Due Date")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Enter the Due Date for combining payments.';
                     }
 
-                    field("Combine Payment Mode"; Rec."Combine Payment Mode")
+                    field("Combine Payment Mode"; Rec."BLRCombine Payment Mode")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Enter the Payment Mode for combining payments.';
                     }
 
-                    field("Combine Amount"; Rec."Combine Amount")
+                    field("Combine Amount"; Rec."BLRCombine Amount")
                     {
                         ApplicationArea = All;
                         ToolTip = 'The total amount for the combined payments.';
                         Editable = false;
                     }
 
-                    field("Combine VAT Amount"; Rec."Combine VAT Amount")
+                    field("Combine VAT Amount"; Rec."BLRCombine VAT Amount")
                     {
                         ApplicationArea = All;
                         ToolTip = 'The total VAT amount for the combined payments.';
                         Editable = false;
                     }
 
-                    field("Combine Amount Including VAT"; Rec."Combine Amount Including VAT")
+                    field("Combine Amount Including VAT"; Rec."BLRCombineAmtInclVAT")
                     {
                         ApplicationArea = All;
                         ToolTip = 'The total amount including VAT for the combined payments.';
@@ -271,7 +271,7 @@ page 73209705 "Payment Mode Card"
                         ApplicationArea = All;
                         Style = Strong;
                     }
-                    field("Deposit Bank"; Rec."C_Deposit_Bank")
+                    field("Deposit Bank"; Rec."BLRC_Deposit_Bank")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Enter the Deposit Bank if Payment Mode is Cheque, Bank Transfer, etc.';
@@ -284,22 +284,22 @@ page 73209705 "Payment Mode Card"
                         Style = Strong;
                     }
 
-                    field("cheque No"; Rec."C_Cheque_Number")
+                    field("cheque No"; Rec."BLRC_Cheque_Number")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Enter the Cheque Number if Payment Mode is Cheque.';
                     }
                 }
             }
-            group("SplitPaymentLog")
+            group("BLRSplitPaymentLog")
             {
                 Visible = IsSplitVisible;
                 Caption = 'Split Payment Log';
-                part("SplitPaymentsLog"; "SplitPaymentLogCard")
+                part("SplitPaymentsLog"; "BLRSplitPaymentLogCard")
                 {
-                    SubPageLink = "Contract ID" = FIELD("Contract ID"),
-                      "Tenant ID" = FIELD("Tenant ID"); // Link to filter attachments for this owner only
-                                                        // "Contract ID" = FIELD("Contract ID")
+                    SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"),
+                      "BLRTenant ID" = FIELD("BLRTenant ID"); // Link to filter attachments for this owner only
+                                                              // "Contract ID" = FIELD("BLRContract ID")
                     ApplicationArea = All;
                 }
             }
@@ -307,24 +307,24 @@ page 73209705 "Payment Mode Card"
             {
                 Visible = IsSplitVisible;
                 Caption = 'Split Payment';
-                part("SplitPayments"; "Split Payment Change Card")
+                part("SplitPayments"; "BLRSplit Payment Change Card")
                 {
-                    SubPageLink = "Contract ID" = FIELD("Contract ID"),
-                      "Tenant ID" = FIELD("Tenant ID"); // Link to filter attachments for this owner only
-                                                        // "Contract ID" = FIELD("Contract ID")
+                    SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"),
+                      "BLRTenant ID" = FIELD("BLRTenant ID"); // Link to filter attachments for this owner only
+                                                              // "Contract ID" = FIELD("BLRContract ID")
                     ApplicationArea = All;
                 }
             }
 
-            group("PaymentModeChangeLog")
+            group("BLRPaymentModeChangeLog")
             {
                 Visible = IsChangePaymodeVisible;
                 Caption = 'Change Payment Mode Log';
-                part("PaymentsModeChangeLog"; "PaymentModeChangeLogCard")
+                part("PaymentsModeChangeLog"; "BLRPaymentModeChangeLogCard")
                 {
-                    SubPageLink = "Contract ID" = FIELD("Contract ID"),
-                      "Tenant ID" = FIELD("Tenant ID"); // Link to filter attachments for this owner only
-                                                        // "Contract ID" = FIELD("Contract ID")
+                    SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"),
+                      "BLRTenant ID" = FIELD("BLRTenant ID"); // Link to filter attachments for this owner only
+                                                              // "Contract ID" = FIELD("BLRContract ID")
                     ApplicationArea = All;
                 }
             }
@@ -337,7 +337,7 @@ page 73209705 "Payment Mode Card"
                 group(ChangePaymentMode1)
                 {
                     ShowCaption = false;
-                    field("Change Payment Series"; Rec."Change Payment Series")
+                    field("Change Payment Series"; Rec."BLRChange Payment Series")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Enter the Payment Series for changing payment mode.';
@@ -345,17 +345,17 @@ page 73209705 "Payment Mode Card"
                         // Trasfer from Table Start
                         trigger OnLookup(var Text: Text): Boolean
                         var
-                            PaymentMode2Rec: Record "Payment Mode2";
-                            Selection: Page "Payment Mode2 List";
+                            PaymentMode2Rec: Record "BLRPaymentMode2";
+                            Selection: Page "BLRPayment Mode2 List";
                         begin
                             // Ensure Contract ID is selected first
-                            if Rec."Contract ID" = 0 then
+                            if Rec."BLRContract ID" = 0 then
                                 Error('Please select a Contract ID first');
 
                             // Filter Payment Mode2 records based on Contract ID
                             PaymentMode2Rec.Reset();
-                            PaymentMode2Rec.SetRange("Contract ID", Rec."Contract ID");
-                            PaymentMode2Rec.SetFilter("Payment Status", '<> %1 & <> %2', PaymentMode2Rec."Payment Status"::Cancelled, PaymentMode2Rec."Payment Status"::Received);
+                            PaymentMode2Rec.SetRange("BLRContract ID", Rec."BLRContract ID");
+                            PaymentMode2Rec.SetFilter("BLRPayment Status", '<> %1 & <> %2', PaymentMode2Rec."BLRPayment Status"::Cancelled, PaymentMode2Rec."BLRPayment Status"::Received);
 
                             Selection.LookupMode(true);
                             Selection.SetTableView(PaymentMode2Rec);
@@ -364,14 +364,14 @@ page 73209705 "Payment Mode Card"
                                 Selection.SetSelectionFilter(PaymentMode2Rec);
 
                                 if PaymentMode2Rec.FindFirst() then
-                                    Rec."Change Payment Series" := PaymentMode2Rec."Payment Series"; // Select only one value
+                                    Rec."BLRChange Payment Series" := PaymentMode2Rec."BLRPayment Series"; // Select only one value
 
                             end;
                         end;
                         // Trasfer from Table End
                     }
 
-                    field("Change Payment Mode"; Rec."Change Payment Mode")
+                    field("Change Payment Mode"; Rec."BLRChange Payment Mode")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Enter the Payment Mode for changing payment mode.';
@@ -386,7 +386,7 @@ page 73209705 "Payment Mode Card"
                         ApplicationArea = All;
                         Style = Strong;
                     }
-                    field(CP_Deposit_Bank; Rec.CP_Deposit_Bank)
+                    field(CP_Deposit_Bank; Rec."BLRCP_Deposit_Bank")
                     {
                         Caption = 'Deposit Bank Name';
                         ApplicationArea = All;
@@ -398,7 +398,7 @@ page 73209705 "Payment Mode Card"
                         ApplicationArea = All;
                         Style = Strong;
                     }
-                    field(CP_Cheque_Number; Rec.CP_Cheque_Number)
+                    field(CP_Cheque_Number; Rec."BLRCP_Cheque_Number")
                     {
                         Caption = 'Cheque No.';
                         ApplicationArea = All;
@@ -470,7 +470,7 @@ page 73209705 "Payment Mode Card"
                     IsCombineVisible := false;
                     IsSplitVisible := false;
                     IsChangePaymodeVisible := true;
-                    RequestType := RequestType::"Payment Mode";
+                    RequestType := RequestType::"BLRPaymentMode";
                     Status := Status::Manual;
                     Message('Paymode Payment section is open.');
                     PaymentModeLogStore();
@@ -487,51 +487,51 @@ page 73209705 "Payment Mode Card"
 
                 trigger OnAction()
                 var
-                    Paymentmode2: Record "Payment Mode2";
-                    Approvalpayment: Record "Approval Payment Request";
-                    SplitPayChange: Record "Split Payment Change";
+                    Paymentmode2: Record "BLRPaymentMode2";
+                    Approvalpayment: Record "BLRApprovalPaymentRequest";
+                    SplitPayChange: Record "BLRSplitPaymentChange";
                     MaxID: Integer;
 
                 begin
                     // Validate required fields
-                    if Rec."Contract ID" = 0 then
+                    if Rec."BLRContract ID" = 0 then
                         Error('Contract ID must be specified');
 
                     // Find the highest ID and increment it
                     if Approvalpayment.FindLast() then
-                        MaxID := Approvalpayment.ID + 1
+                        MaxID := Approvalpayment."BLRID" + 1
                     else
                         MaxID := 1; // If no records exist, start from 1
 
                     if IsCombineVisible then begin
-                        if (Rec."Combine Payment Series" <> '') and (Rec."Combine Due Date" <> 0D) and (Rec."Combine Payment Mode" <> '') then begin
-                            //(SplitPayChange."Payment Mode" <> '') and
+                        if (Rec."BLRCombine Payment Series" <> '') and (Rec."BLRCombine Due Date" <> 0D) and (Rec."BLRCombine Payment Mode" <> '') then begin
+                            //(SplitPayChange."BLRPaymentMode" <> '') and
                             Approvalpayment.Init();
-                            Approvalpayment.ID := MaxID; // Assign the new auto-incremented ID
-                            Approvalpayment."Contract ID" := Rec."Contract ID";
-                            Approvalpayment."Tenant ID" := Rec."Tenant ID";
-                            Approvalpayment."Status" := 'Pending';
-                            Approvalpayment."Request Type" := Format(RequestType);
-                            Approvalpayment."Manual/Auto Status" := Format(Status);
-                            Approvalpayment."Payment Series" := Rec."Combine Payment Series";
-                            Approvalpayment."Due Date" := Rec."Combine Due Date";
-                            Approvalpayment."Payment Mode" := Rec."Combine Payment Mode";
-                            Approvalpayment."Amount" := Rec."Combine Amount";
-                            Approvalpayment."VAT Amount" := Rec."Combine VAT Amount";
-                            Approvalpayment."Change Amount" := Rec."Combine Amount Including VAT";
-                            Approvalpayment."Payment mode ID" := Rec."Contract ID";
-                            Approvalpayment.C_Cheque_Number := Rec.C_Cheque_Number;
-                            Approvalpayment.C_Deposit_Bank := Rec.C_Deposit_Bank;
+                            Approvalpayment."BLRID" := MaxID; // Assign the new auto-incremented ID
+                            Approvalpayment."BLRContract ID" := Rec."BLRContract ID";
+                            Approvalpayment."BLRTenant ID" := Rec."BLRTenant ID";
+                            Approvalpayment."BLRStatus" := 'Pending';
+                            Approvalpayment."BLRRequest Type" := Format(RequestType);
+                            Approvalpayment."BLRManual/Auto Status" := Format(Status);
+                            Approvalpayment."BLRPayment Series" := Rec."BLRCombine Payment Series";
+                            Approvalpayment."BLRDue Date" := Rec."BLRCombine Due Date";
+                            Approvalpayment."BLRPayment Mode" := Rec."BLRCombine Payment Mode";
+                            Approvalpayment."BLRAmount" := Rec."BLRCombine Amount";
+                            Approvalpayment."BLRVAT Amount" := Rec."BLRCombine VAT Amount";
+                            Approvalpayment."BLRChange Amount" := Rec."BLRCombineAmtInclVAT";
+                            Approvalpayment."BLRPayment mode ID" := Rec."BLRContract ID";
+                            Approvalpayment."BLRC_Cheque_Number" := Rec."BLRC_Cheque_Number";
+                            Approvalpayment."BLRC_Deposit_Bank" := Rec."BLRC_Deposit_Bank";
                             Approvalpayment.Insert();
                             Message('Approval Request Sent successfully!');
-                            Clear(Rec."Combine Payment Series");
-                            Clear(Rec."Combine Due Date");
-                            Clear(Rec."Combine Payment Mode");
-                            Clear(Rec."Combine Amount");
-                            Clear(Rec."Combine VAT Amount");
-                            Clear(Rec."Combine Amount Including VAT");
-                            Clear(Rec.C_Cheque_Number);
-                            Clear(Rec.C_Deposit_Bank);
+                            Clear(Rec."BLRCombine Payment Series");
+                            Clear(Rec."BLRCombine Due Date");
+                            Clear(Rec."BLRCombine Payment Mode");
+                            Clear(Rec."BLRCombine Amount");
+                            Clear(Rec."BLRCombine VAT Amount");
+                            Clear(Rec."BLRCombineAmtInclVAT");
+                            Clear(Rec."BLRC_Cheque_Number");
+                            Clear(Rec."BLRC_Deposit_Bank");
                         end else
                             Message('Please ensure all required fields for Combine Payment are filled before sending the request.');
                     end
@@ -540,52 +540,52 @@ page 73209705 "Payment Mode Card"
                             if SplitPayChange.FindSet() then
                                 repeat
 
-                                    if (SplitPayChange."Split Payment Series" <> '') and
-                                    (SplitPayChange."Secondary Item Type" <> '') and
-                                    (SplitPayChange."Split Due Date" <> 0D) and
-                                    //(SplitPayChange."Payment Mode" <> '') and
-                                    (SplitPayChange."Split Amount" <> 0) then begin
+                                    if (SplitPayChange."BLRSplit Payment Series" <> '') and
+                                    (SplitPayChange."BLRSecondary Item Type" <> '') and
+                                    (SplitPayChange."BLRSplit Due Date" <> 0D) and
+                                    //(SplitPayChange."BLRPaymentMode" <> '') and
+                                    (SplitPayChange."BLRSplit Amount" <> 0) then begin
 
 
                                         Approvalpayment.Init(); // Initialize a new record
-                                        Approvalpayment.ID := MaxID; // Assign unique ID
+                                        Approvalpayment."BLRID" := MaxID; // Assign unique ID
                                         MaxID += 1; // Increment for the next record
 
-                                        Approvalpayment."Contract ID" := Rec."Contract ID";
-                                        Approvalpayment."Tenant ID" := Rec."Tenant ID";
-                                        Approvalpayment."Status" := 'Pending';
-                                        Approvalpayment."Request Type" := Format(RequestType);
-                                        Approvalpayment."Manual/Auto Status" := Format(Status);
-                                        Approvalpayment.Items := SplitPayChange."Secondary Item Type";
-                                        Approvalpayment."Payment Series" := SplitPayChange."Split Payment Series";
-                                        Approvalpayment."Due Date" := SplitPayChange."Split Due Date";
-                                        Approvalpayment."Payment Mode" := SplitPayChange."Split Payment Mode";
-                                        Approvalpayment.C_Cheque_Number := SplitPayChange."Cheque Number";
+                                        Approvalpayment."BLRContract ID" := Rec."BLRContract ID";
+                                        Approvalpayment."BLRTenant ID" := Rec."BLRTenant ID";
+                                        Approvalpayment."BLRStatus" := 'Pending';
+                                        Approvalpayment."BLRRequest Type" := Format(RequestType);
+                                        Approvalpayment."BLRManual/Auto Status" := Format(Status);
+                                        Approvalpayment."BLRItems" := SplitPayChange."BLRSecondary Item Type";
+                                        Approvalpayment."BLRPayment Series" := SplitPayChange."BLRSplit Payment Series";
+                                        Approvalpayment."BLRDue Date" := SplitPayChange."BLRSplit Due Date";
+                                        Approvalpayment."BLRPayment Mode" := SplitPayChange."BLRSplit Payment Mode";
+                                        Approvalpayment."BLRC_Cheque_Number" := SplitPayChange."BLRCheque Number";
 
-                                        Approvalpayment.C_Deposit_Bank := SplitPayChange."Deposit Bank Name";
+                                        Approvalpayment."BLRC_Deposit_Bank" := SplitPayChange."BLRDeposit Bank Name";
 
-                                        Approvalpayment."Amount" := SplitPayChange."Split Amount";
-                                        Approvalpayment."VAT Amount" := SplitPayChange."Split VAT Amount";
-                                        Approvalpayment."Change Amount" := SplitPayChange."Split Amount Including VAT";
-                                        Approvalpayment."Payment mode ID" := Rec."Contract ID";
-                                        Paymentmode2.SetRange("Contract ID", SplitPayChange."Contract ID");
-                                        Paymentmode2.SetRange("Payment Series", SplitPayChange."Split Payment Series");
+                                        Approvalpayment."BLRAmount" := SplitPayChange."BLRSplit Amount";
+                                        Approvalpayment."BLRVAT Amount" := SplitPayChange."BLRSplit VAT Amount";
+                                        Approvalpayment."BLRChange Amount" := SplitPayChange."BLRSplit Amount Including VAT";
+                                        Approvalpayment."BLRPayment mode ID" := Rec."BLRContract ID";
+                                        Paymentmode2.SetRange("BLRContract ID", SplitPayChange."BLRContract ID");
+                                        Paymentmode2.SetRange("BLRPayment Series", SplitPayChange."BLRSplit Payment Series");
                                         if Paymentmode2.FindFirst() then
-                                            Approvalpayment."Old Cheque" := Paymentmode2."Cheque Number";
+                                            Approvalpayment."BLROld Cheque" := Paymentmode2."BLRCheque Number";
                                         Approvalpayment.Insert(); // Insert inside the loop
                                         Message('Approval Request Sent successfully!');
-                                        Clear(SplitPayChange."Split Payment Series");
-                                        Clear(SplitPayChange."Split Due Date");
-                                        Clear(SplitPayChange."Split Payment Mode");
-                                        Clear(SplitPayChange."Split Amount");
-                                        Clear(SplitPayChange."Secondary Item Type");
-                                        Clear(SplitPayChange."Split VAT Amount");
-                                        Clear(SplitPayChange."Split Amount Including VAT");
-                                        Clear(SplitPayChange."Cheque Number");
-                                        Clear(SplitPayChange."Deposit Bank Name");
+                                        Clear(SplitPayChange."BLRSplit Payment Series");
+                                        Clear(SplitPayChange."BLRSplit Due Date");
+                                        Clear(SplitPayChange."BLRSplit Payment Mode");
+                                        Clear(SplitPayChange."BLRSplit Amount");
+                                        Clear(SplitPayChange."BLRSecondary Item Type");
+                                        Clear(SplitPayChange."BLRSplit VAT Amount");
+                                        Clear(SplitPayChange."BLRSplit Amount Including VAT");
+                                        Clear(SplitPayChange."BLRCheque Number");
+                                        Clear(SplitPayChange."BLRDeposit Bank Name");
                                     end else
                                         Message('Skipping incomplete split payment entry with Series %1. Please ensure all required fields are filled.',
-                                          SplitPayChange."Split Payment Series");
+                                          SplitPayChange."BLRSplit Payment Series");
 
                                 until SplitPayChange.Next() = 0;
                             SplitPayChange.Reset();
@@ -594,25 +594,25 @@ page 73209705 "Payment Mode Card"
                         end
                         else
                             if IsChangePaymodeVisible then
-                                if (Rec."Change Payment Series" <> '') and (Rec."Change Payment Mode" <> '') then begin
+                                if (Rec."BLRChange Payment Series" <> '') and (Rec."BLRChange Payment Mode" <> '') then begin
                                     Approvalpayment.Init();
-                                    Approvalpayment.ID := MaxID;
-                                    Approvalpayment."Contract ID" := Rec."Contract ID";
-                                    Approvalpayment."Tenant ID" := Rec."Tenant ID";
-                                    Approvalpayment."Status" := 'Pending';
-                                    Approvalpayment."Request Type" := Format(RequestType);
-                                    Approvalpayment."Manual/Auto Status" := Format(Status);
-                                    Approvalpayment."Payment Series" := Rec."Change Payment Series";
-                                    Approvalpayment."Payment Mode" := Rec."Change Payment Mode";
-                                    Approvalpayment.C_Cheque_Number := Rec.CP_Cheque_Number;
-                                    Approvalpayment.C_Deposit_Bank := Rec.CP_Deposit_Bank;
-                                    Approvalpayment."Payment mode ID" := Rec."Contract ID";
+                                    Approvalpayment."BLRID" := MaxID;
+                                    Approvalpayment."BLRContract ID" := Rec."BLRContract ID";
+                                    Approvalpayment."BLRTenant ID" := Rec."BLRTenant ID";
+                                    Approvalpayment."BLRStatus" := 'Pending';
+                                    Approvalpayment."BLRRequest Type" := Format(RequestType);
+                                    Approvalpayment."BLRManual/Auto Status" := Format(Status);
+                                    Approvalpayment."BLRPayment Series" := Rec."BLRChange Payment Series";
+                                    Approvalpayment."BLRPayment Mode" := Rec."BLRChange Payment Mode";
+                                    Approvalpayment."BLRC_Cheque_Number" := Rec."BLRCP_Cheque_Number";
+                                    Approvalpayment."BLRC_Deposit_Bank" := Rec."BLRCP_Deposit_Bank";
+                                    Approvalpayment."BLRPayment mode ID" := Rec."BLRContract ID";
                                     Approvalpayment.Insert();
                                     Message('Approval Request Sent successfully!');
-                                    Clear(Rec."Change Payment Series");
-                                    Clear(Rec."Change Payment Mode");
-                                    Clear(Rec.CP_Cheque_Number);
-                                    Clear(Rec.CP_Deposit_Bank);
+                                    Clear(Rec."BLRChange Payment Series");
+                                    Clear(Rec."BLRChange Payment Mode");
+                                    Clear(Rec."BLRCP_Cheque_Number");
+                                    Clear(Rec."BLRCP_Deposit_Bank");
                                 end else
                                     Message('Please ensure all required fields for Change Payment Mode are filled before sending the request.');
 
@@ -624,68 +624,68 @@ page 73209705 "Payment Mode Card"
     trigger OnAfterGetRecord()
     begin
         // Fields are editable only if Approval Status is not "Approved"
-        IsFieldEditable := (Rec."Approval Status" <> Rec."Approval Status"::Approved);
-        CurrPage."PaymentMode".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."PaymentMode".Page.SetContractID(Rec."Contract ID");
-        CurrPage.PaymentMode.Page.SetDetails(Rec."Tenant Name", Rec."Tenant Email");
-        CurrPage."SplitPayments".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."SplitPayments".Page.SetContractID(Rec."Contract ID");
+        IsFieldEditable := (Rec."BLRApproval Status" <> Rec."BLRApproval Status"::Approved);
+        CurrPage."PaymentMode".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."PaymentMode".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage.PaymentMode.Page.SetDetails(Rec."BLRTenant Name", Rec."BLRTenant Email");
+        CurrPage."SplitPayments".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."SplitPayments".Page.SetContractID(Rec."BLRContract ID");
     end;
 
 
     trigger OnModifyRecord(): Boolean
     begin
-        IsFieldEditable := (Rec."Approval Status" <> Rec."Approval Status"::Approved);
-        CurrPage."PaymentMode".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."PaymentMode".Page.SetContractID(Rec."Contract ID");
-        CurrPage.PaymentMode.Page.SetDetails(Rec."Tenant Name", Rec."Tenant Email");
-        CurrPage."SplitPayments".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."SplitPayments".Page.SetContractID(Rec."Contract ID");
+        IsFieldEditable := (Rec."BLRApproval Status" <> Rec."BLRApproval Status"::Approved);
+        CurrPage."PaymentMode".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."PaymentMode".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage.PaymentMode.Page.SetDetails(Rec."BLRTenant Name", Rec."BLRTenant Email");
+        CurrPage."SplitPayments".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."SplitPayments".Page.SetContractID(Rec."BLRContract ID");
     end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
 
-        CurrPage."PaymentMode".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."PaymentMode".Page.SetContractID(Rec."Contract ID");
-        CurrPage.PaymentMode.Page.SetDetails(Rec."Tenant Name", Rec."Tenant Email");
-        CurrPage."SplitPayments".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."SplitPayments".Page.SetContractID(Rec."Contract ID");
+        CurrPage."PaymentMode".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."PaymentMode".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage.PaymentMode.Page.SetDetails(Rec."BLRTenant Name", Rec."BLRTenant Email");
+        CurrPage."SplitPayments".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."SplitPayments".Page.SetContractID(Rec."BLRContract ID");
 
     end;
 
     procedure CombinePaymentLogStore()
     var
-        ApprovalPaymentRequest: Record "Approval Payment Request";
-        CombinePaymentLogsub: Record "CombinePaymentLog";
+        ApprovalPaymentRequest: Record "BLRApprovalPaymentRequest";
+        CombinePaymentLogsub: Record "BLRCombinePaymentLog";
     begin
 
-        CombinePaymentLogsub.SetRange("Contract ID", Rec."Contract ID");
+        CombinePaymentLogsub.SetRange("BLRContract ID", Rec."BLRContract ID");
         if CombinePaymentLogsub.FindSet() then
             CombinePaymentLogsub.DeleteAll();
 
 
         // TenancyContractLine.Reset();
-        ApprovalPaymentRequest.SetRange("Contract ID", Rec."Contract ID");
-        ApprovalPaymentRequest.SetRange("Tenant ID", Rec."Tenant ID");
-        ApprovalPaymentRequest.SetRange("Request Type", 'Combine');
+        ApprovalPaymentRequest.SetRange("BLRContract ID", Rec."BLRContract ID");
+        ApprovalPaymentRequest.SetRange("BLRTenant ID", Rec."BLRTenant ID");
+        ApprovalPaymentRequest.SetRange("BLRRequest Type", 'Combine');
         if ApprovalPaymentRequest.FindSet() then
             repeat
                 CombinePaymentLogsub.Init();
-                CombinePaymentLogsub."Contract ID" := Rec."Contract ID";
-                CombinePaymentLogsub."Tenant ID" := Rec."Tenant ID";
+                CombinePaymentLogsub."BLRContract ID" := Rec."BLRContract ID";
+                CombinePaymentLogsub."BLRTenant ID" := Rec."BLRTenant ID";
                 // Calculate VAT amount based on percentage
-                CombinePaymentLogsub."ID" := ApprovalPaymentRequest.ID;
-                CombinePaymentLogsub."Approval Status" := ApprovalPaymentRequest."Status";
-                CombinePaymentLogsub."Request Type" := ApprovalPaymentRequest."Request Type";
-                CombinePaymentLogsub."New Amount" := ApprovalPaymentRequest."Amount";
-                CombinePaymentLogsub."New VAT Amount" := ApprovalPaymentRequest."Vat Amount";
-                CombinePaymentLogsub."Change Amount Including VAT" := ApprovalPaymentRequest."Change Amount";
-                CombinePaymentLogsub."Payment mode" := ApprovalPaymentRequest."Payment mode";
-                CombinePaymentLogsub."Payment Series" := ApprovalPaymentRequest."Payment Series";
-                CombinePaymentLogsub."Due Date" := ApprovalPaymentRequest."Due Date";
-                CombinePaymentLogsub."C_Deposit_Bank" := ApprovalPaymentRequest."C_Deposit_Bank";
-                CombinePaymentLogsub."C_Cheque_Number" := ApprovalPaymentRequest."C_Cheque_Number";
+                CombinePaymentLogsub."BLRID" := ApprovalPaymentRequest."BLRID";
+                CombinePaymentLogsub."BLRApproval Status" := ApprovalPaymentRequest."BLRStatus";
+                CombinePaymentLogsub."BLRRequest Type" := ApprovalPaymentRequest."BLRRequest Type";
+                CombinePaymentLogsub."BLRNew Amount" := ApprovalPaymentRequest."BLRAmount";
+                CombinePaymentLogsub."BLRNew VAT Amount" := ApprovalPaymentRequest."BLRVat Amount";
+                CombinePaymentLogsub."BLRChange Amount Including VAT" := ApprovalPaymentRequest."BLRChange Amount";
+                CombinePaymentLogsub."BLRPayment mode" := ApprovalPaymentRequest."BLRPayment mode";
+                CombinePaymentLogsub."BLRPayment Series" := ApprovalPaymentRequest."BLRPayment Series";
+                CombinePaymentLogsub."BLRDue Date" := ApprovalPaymentRequest."BLRDue Date";
+                CombinePaymentLogsub."BLRC_Deposit_Bank" := ApprovalPaymentRequest."BLRC_Deposit_Bank";
+                CombinePaymentLogsub."BLRC_Cheque_Number" := ApprovalPaymentRequest."BLRC_Cheque_Number";
                 CombinePaymentLogsub.Insert();
                 Clear(CombinePaymentLogsub);
             until ApprovalPaymentRequest.Next() = 0;
@@ -694,39 +694,39 @@ page 73209705 "Payment Mode Card"
 
     procedure SplitPaymentLogStore()
     var
-        ApprovalPaymentRequest: Record "Approval Payment Request";
-        SplitPaymentLogsub: Record "SplitPaymentLog";
+        ApprovalPaymentRequest: Record "BLRApprovalPaymentRequest";
+        SplitPaymentLogsub: Record "BLRSplitPaymentLog";
     begin
 
-        SplitPaymentLogsub.SetRange("Contract ID", Rec."Contract ID");
+        SplitPaymentLogsub.SetRange("BLRContract ID", Rec."BLRContract ID");
         if SplitPaymentLogsub.FindSet() then
             SplitPaymentLogsub.DeleteAll();
 
 
         // TenancyContractLine.Reset();
-        ApprovalPaymentRequest.SetRange("Contract ID", Rec."Contract ID");
-        ApprovalPaymentRequest.SetRange("Tenant ID", Rec."Tenant ID");
+        ApprovalPaymentRequest.SetRange("BLRContract ID", Rec."BLRContract ID");
+        ApprovalPaymentRequest.SetRange("BLRTenant ID", Rec."BLRTenant ID");
 
-        ApprovalPaymentRequest.SetRange("Request Type", 'Split');
+        ApprovalPaymentRequest.SetRange("BLRRequest Type", 'Split');
         if ApprovalPaymentRequest.FindSet() then
             repeat
                 SplitPaymentLogsub.Init();
-                SplitPaymentLogsub."Contract ID" := Rec."Contract ID";
-                SplitPaymentLogsub."Tenant ID" := Rec."Tenant ID";
+                SplitPaymentLogsub."BLRContract ID" := Rec."BLRContract ID";
+                SplitPaymentLogsub."BLRTenant ID" := Rec."BLRTenant ID";
                 // Calculate VAT amount based on percentage
-                SplitPaymentLogsub."ID" := ApprovalPaymentRequest.ID;
-                SplitPaymentLogsub."Approval Status" := ApprovalPaymentRequest."Status";
-                SplitPaymentLogsub."Request Type" := ApprovalPaymentRequest."Request Type";
-                SplitPaymentLogsub."Payment Series" := ApprovalPaymentRequest."Payment Series";
-                SplitPaymentLogsub."New Amount" := ApprovalPaymentRequest."Amount";
-                SplitPaymentLogsub."New VAT Amount" := ApprovalPaymentRequest."Vat Amount";
-                SplitPaymentLogsub."Change Amount Including VAT" := ApprovalPaymentRequest."Change Amount";
-                SplitPaymentLogsub."Payment mode" := ApprovalPaymentRequest."Payment mode";
-                SplitPaymentLogsub."Cheque Number" := ApprovalPaymentRequest.C_Cheque_Number;
-                SplitPaymentLogsub."Deposit Bank Name" := ApprovalPaymentRequest.C_Deposit_Bank;
+                SplitPaymentLogsub."BLRID" := ApprovalPaymentRequest."BLRID";
+                SplitPaymentLogsub."BLRApproval Status" := ApprovalPaymentRequest."BLRStatus";
+                SplitPaymentLogsub."BLRRequest Type" := ApprovalPaymentRequest."BLRRequest Type";
+                SplitPaymentLogsub."BLRPayment Series" := ApprovalPaymentRequest."BLRPayment Series";
+                SplitPaymentLogsub."BLRNew Amount" := ApprovalPaymentRequest."BLRAmount";
+                SplitPaymentLogsub."BLRNew VAT Amount" := ApprovalPaymentRequest."BLRVat Amount";
+                SplitPaymentLogsub."BLRChange Amount Including VAT" := ApprovalPaymentRequest."BLRChange Amount";
+                SplitPaymentLogsub."BLRPayment mode" := ApprovalPaymentRequest."BLRPayment mode";
+                SplitPaymentLogsub."BLRCheque Number" := ApprovalPaymentRequest."BLRC_Cheque_Number";
+                SplitPaymentLogsub."BLRDeposit Bank Name" := ApprovalPaymentRequest."BLRC_Deposit_Bank";
 
-                SplitPaymentLogsub."Due Date" := ApprovalPaymentRequest."Due Date";
-                SplitPaymentLogsub.Items := ApprovalPaymentRequest.Items;
+                SplitPaymentLogsub."BLRDue Date" := ApprovalPaymentRequest."BLRDue Date";
+                SplitPaymentLogsub."BLRItems" := ApprovalPaymentRequest."BLRItems";
                 SplitPaymentLogsub.Insert();
                 Clear(SplitPaymentLogsub);
             until ApprovalPaymentRequest.Next() = 0;
@@ -735,32 +735,32 @@ page 73209705 "Payment Mode Card"
 
     procedure PaymentModeLogStore()
     var
-        ApprovalPaymentRequest: Record "Approval Payment Request";
-        PaymentModeLogSub: Record "PaymentModeChangeLog";
+        ApprovalPaymentRequest: Record "BLRApprovalPaymentRequest";
+        PaymentModeLogSub: Record "BLRPaymentModeChangeLog";
     begin
 
-        PaymentModeLogSub.SetRange("Contract ID", Rec."Contract ID");
+        PaymentModeLogSub.SetRange("BLRContract ID", Rec."BLRContract ID");
         if PaymentModeLogSub.FindSet() then
             PaymentModeLogSub.DeleteAll();
 
 
         // TenancyContractLine.Reset();
-        ApprovalPaymentRequest.SetRange("Contract ID", Rec."Contract ID");
-        ApprovalPaymentRequest.SetRange("Tenant ID", Rec."Tenant ID");
-        ApprovalPaymentRequest.SetRange("Request Type", 'Payment Mode');
+        ApprovalPaymentRequest.SetRange("BLRContract ID", Rec."BLRContract ID");
+        ApprovalPaymentRequest.SetRange("BLRTenant ID", Rec."BLRTenant ID");
+        ApprovalPaymentRequest.SetRange("BLRRequest Type", 'Payment Mode');
         if ApprovalPaymentRequest.FindSet() then
             repeat
                 PaymentModeLogSub.Init();
-                PaymentModeLogSub."Contract ID" := Rec."Contract ID";
-                PaymentModeLogSub."Tenant ID" := Rec."Tenant ID";
+                PaymentModeLogSub."BLRContract ID" := Rec."BLRContract ID";
+                PaymentModeLogSub."BLRTenant ID" := Rec."BLRTenant ID";
                 // Calculate VAT amount based on percentage
-                PaymentModeLogSub."ID" := ApprovalPaymentRequest.ID;
-                PaymentModeLogSub."Approval Status" := ApprovalPaymentRequest."Status";
-                PaymentModeLogSub."Request Type" := ApprovalPaymentRequest."Request Type";
-                PaymentModeLogSub."Payment Series" := ApprovalPaymentRequest."Payment Series";
-                PaymentModeLogSub."Payment mode" := ApprovalPaymentRequest."Payment mode";
-                PaymentModeLogSub."Cheque Number" := ApprovalPaymentRequest.C_Cheque_Number;
-                PaymentModeLogSub."Deposit Bank Name" := ApprovalPaymentRequest.C_Deposit_Bank;
+                PaymentModeLogSub."BLRID" := ApprovalPaymentRequest."BLRID";
+                PaymentModeLogSub."BLRApproval Status" := ApprovalPaymentRequest."BLRStatus";
+                PaymentModeLogSub."BLRRequest Type" := ApprovalPaymentRequest."BLRRequest Type";
+                PaymentModeLogSub."BLRPayment Series" := ApprovalPaymentRequest."BLRPayment Series";
+                PaymentModeLogSub."BLRPayment mode" := ApprovalPaymentRequest."BLRPayment mode";
+                PaymentModeLogSub."BLRCheque Number" := ApprovalPaymentRequest."BLRC_Cheque_Number";
+                PaymentModeLogSub."BLRDeposit Bank Name" := ApprovalPaymentRequest."BLRC_Deposit_Bank";
 
                 PaymentModeLogSub.Insert();
                 Clear(PaymentModeLogSub);
@@ -775,14 +775,14 @@ page 73209705 "Payment Mode Card"
         IsCombineVisible: Boolean;
         IsSplitVisible: Boolean;
         IsChangePaymodeVisible: Boolean;
-        RequestType: Option Combine,Split,"Payment Mode";
+        RequestType: Option Combine,Split,"BLRPaymentMode";
         Status: Option Manual,Frontend;
 
     trigger OnOpenPage()
     var
         PermissionSet: Record "User Personalization";
     begin
-        IsFieldEditable := (Rec."Approval Status" <> Rec."Approval Status"::Approved);
+        IsFieldEditable := (Rec."BLRApproval Status" <> Rec."BLRApproval Status"::Approved);
         // Check if the current user has the 'LEASE MANAGER' permission set
         IsFinanceManager := false;
         PermissionSet.SetRange("User ID", UserId());

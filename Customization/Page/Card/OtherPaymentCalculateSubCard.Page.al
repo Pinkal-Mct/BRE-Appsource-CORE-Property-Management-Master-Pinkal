@@ -1,10 +1,10 @@
-page 73209703 "OtherPayment Calculate SubCard"
+page 73209703 "BLROtherPaymentCalSubCard"
 {
     PageType = ListPart;
     ApplicationArea = All;
     DeleteAllowed = true;
     // UsageCategory = Administration;
-    SourceTable = "Other Payment Calculate Sub";
+    SourceTable = "BLROtherPaymentCalculateSub";
 
     layout
     {
@@ -12,7 +12,7 @@ page 73209703 "OtherPayment Calculate SubCard"
         {
             repeater(Group)
             {
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -20,7 +20,7 @@ page 73209703 "OtherPayment Calculate SubCard"
                     ToolTip = 'The Tenant ID is used to identify the tenant associated with this record.';
                 }
 
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -28,42 +28,42 @@ page 73209703 "OtherPayment Calculate SubCard"
                     ToolTip = 'The Contract ID is used to identify the contract associated with this record.';
                 }
 
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Secondary Item Type';
                     ToolTip = 'Enter the Secondary Item Type.';
                 }
 
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'The Amount is the monetary value associated with this record.';
                 }
 
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'The VAT Amount is the value-added tax applied to the amount.';
                 }
 
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'The Amount Including VAT is the total amount after adding VAT.';
                 }
 
-                field("Start Date"; Rec."Start Date")
+                field("Start Date"; Rec."BLRStart Date")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'The Start Date indicates when the payment period begins.';
                 }
 
-                field("End Date"; Rec."End Date")
+                field("End Date"; Rec."BLREnd Date")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -73,19 +73,19 @@ page 73209703 "OtherPayment Calculate SubCard"
 
             group(" ")
             {
-                field("Total Amount"; Rec."Total Amount")
+                field("Total Amount"; Rec."BLRTotal Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The Total Amount is the sum of all amounts in this record.';
                 }
 
-                field("Total VAT Amount"; Rec."Total VAT Amount")
+                field("Total VAT Amount"; Rec."BLRTotal VAT Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The Total VAT Amount is the sum of all VAT amounts in this record.';
                 }
 
-                field("Total Amount Including VAT"; Rec."Total Amount Including VAT")
+                field("Total Amount Including VAT"; Rec."BLRTotal Amount Including VAT")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The Total Amount Including VAT is the sum of all amounts including VAT in this record.';
@@ -111,8 +111,8 @@ page 73209703 "OtherPayment Calculate SubCard"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."Contract ID" := ContractID;
-        Rec."Tenant ID" := tenantID;
+        Rec."BLRContract ID" := ContractID;
+        Rec."BLRTenant ID" := tenantID;
     end;
 
     var

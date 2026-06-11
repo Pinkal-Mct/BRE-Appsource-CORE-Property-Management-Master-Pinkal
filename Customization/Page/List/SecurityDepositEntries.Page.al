@@ -1,9 +1,9 @@
-page 73209807 "Security Deposit Entries"
+page 73209807 "BLRSecurity Deposit Entries"
 {
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
-    SourceTable = "Security Deposit Entry";
+    SourceTable = "BLRSecurityDepositEntry";
     Caption = 'Security Deposit Entries';
 
     layout
@@ -12,56 +12,56 @@ page 73209807 "Security Deposit Entries"
         {
             repeater(GroupName)
             {
-                field("Entry No."; Rec."Entry No.")
+                field("Entry No."; Rec."BLREntry No.")
                 {
                     ApplicationArea = All;
                     Editable = IsFinanceManager;
                     ToolTip = 'The unique identifier for the security deposit entry.';
                 }
-                field("Security Deposit ID"; Rec."Security Deposit ID")
+                field("Security Deposit ID"; Rec."BLRSecurity Deposit ID")
                 {
                     ApplicationArea = All;
                     Editable = IsFinanceManager;
                     ToolTip = 'The unique identifier for the security deposit.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = IsFinanceManager;
                     ToolTip = 'The unique identifier for the contract associated with this security deposit.';
                 }
-                field("Main Security Deposit"; Rec."Main Security Deposit")
+                field("Main Security Deposit"; Rec."BLRMain Security Deposit")
                 {
                     ApplicationArea = All;
                     Visible = false;
                     Editable = IsFinanceManager;
                     ToolTip = 'The main security deposit amount for the contract.';
                 }
-                field("Security Deposit"; Rec."Security Deposit")
+                field("BLRSecurityDeposit"; Rec."BLRSecurity Deposit")
                 {
                     ApplicationArea = All;
                     Editable = IsFinanceManager;
                     ToolTip = 'The current security deposit amount for the contract.';
                 }
-                field("Start Date"; Rec."Start Date")
+                field("Start Date"; Rec."BLRStart Date")
                 {
                     ApplicationArea = All;
                     Editable = IsFinanceManager;
                     ToolTip = 'The start date of the security deposit entry.';
                 }
-                field("End Date"; Rec."End Date")
+                field("End Date"; Rec."BLREnd Date")
                 {
                     ApplicationArea = All;
                     Editable = IsFinanceManager;
                     ToolTip = 'The end date of the security deposit entry.';
                 }
-                field(Status; Rec.Status)
+                field(Status; Rec."BLRStatus")
                 {
                     ApplicationArea = All;
                     Editable = IsFinanceManager;
                     ToolTip = 'The current status of the security deposit entry.';
                 }
-                field("Total Amount"; Rec."Total Amount")
+                field("Total Amount"; Rec."BLRTotal Amount")
                 {
                     ApplicationArea = All;
                     Editable = IsFinanceManager;
@@ -84,14 +84,14 @@ page 73209807 "Security Deposit Entries"
 
                 trigger OnAction()
                 var
-                    AdjustSecurityDeposit: Record "Adjustment Security Deposit";
-                    FinaCalculation: Record "Final Calculation";
-                    CarryForwardGrid: Record "Carry Forward Grid";
-                    SecurityDeposit: Record "Security Deposit";
-                    TenancyContract: Record "Tenancy Contract";
-                    TenancyContractSubpage: Record "Tenancy Contract Subpage";
-                    TerminationAddCharges: Record "Additional Charges Sub";
-                    PendingReceivableGrid: Record "Pending Receviable Grid";
+                    AdjustSecurityDeposit: Record "BLRAdjustmentSecurityDeposit";
+                    FinaCalculation: Record "BLRFinalCalculation";
+                    CarryForwardGrid: Record "BLRCarryForwardGrid";
+                    SecurityDeposit: Record "BLRSecurityDeposit";
+                    TenancyContract: Record "BLRTenancyContract";
+                    TenancyContractSubpage: Record "BLRTenancyContractSubpage";
+                    TerminationAddCharges: Record "BLRAdditionalChargesSub";
+                    PendingReceivableGrid: Record "BLRPendingReceviableGrid";
                     ChillarDepositAmount: Decimal;
                     OtherDepositAmount: Decimal;
                     NetBalanceAmount: Decimal;
@@ -103,17 +103,17 @@ page 73209807 "Security Deposit Entries"
                     NetAmount: Decimal;
                     SummeryNetAmount: Decimal;
                 begin
-                    if Rec.Status = Rec.Status::Approved then
+                    if Rec."BLRStatus" = Rec."BLRStatus"::Approved then
                         Error('This entry is already approved');
 
                     if Confirm('Do you want to approve this entry?', true) then begin
 
                         // Update main record status
-                        if AdjustSecurityDeposit.Get(Rec."Security Deposit ID") then begin
-                            AdjustSecurityDeposit.Status := AdjustSecurityDeposit.Status::Approved;
+                        if AdjustSecurityDeposit.Get(Rec."BLRSecurity Deposit ID") then begin
+                            AdjustSecurityDeposit."BLRStatus" := AdjustSecurityDeposit."BLRStatus"::Approved;
 
                             // Get the Amount Including VAT from the Adjustment Security Deposit table
-                            AmountIncludingVAT := AdjustSecurityDeposit."Amount Including VAT";
+                            AmountIncludingVAT := AdjustSecurityDeposit."BLRAmount Including VAT";
 
                             AdjustSecurityDeposit.Modify();
 
@@ -121,25 +121,25 @@ page 73209807 "Security Deposit Entries"
                             ChillarDepositAmount := 0;
                             OtherDepositAmount := 0;
                             TenancyContract.Reset();
-                            TenancyContract.SetRange("Contract ID", Rec."Contract ID");
+                            TenancyContract.SetRange("BLRContract ID", Rec."BLRContract ID");
                             if TenancyContract.FindFirst() then begin
 
                                 TenancyContractSubpage.Reset();
-                                TenancyContractSubpage.SetRange(ContractID, TenancyContract."Contract ID");
-                                TenancyContractSubpage.SetRange("Secondary Item Type", 'Chiller Deposit Amount');
+                                TenancyContractSubpage.SetRange(BLRContractID, TenancyContract."BLRContract ID");
+                                TenancyContractSubpage.SetRange("BLRSecondary Item Type", 'Chiller Deposit Amount');
                                 if TenancyContractSubpage.FindFirst() then
-                                    ChillarDepositAmount := TenancyContractSubpage.Amount;
+                                    ChillarDepositAmount := TenancyContractSubpage."BLRAmount";
 
                                 // Get Other Deposit amount
                                 TenancyContractSubpage.Reset();
-                                TenancyContractSubpage.SetRange(ContractID, TenancyContract."Contract ID");
-                                TenancyContractSubpage.SetRange("Secondary Item Type", 'Other Deposit');
+                                TenancyContractSubpage.SetRange(BLRContractID, TenancyContract."BLRContract ID");
+                                TenancyContractSubpage.SetRange("BLRSecondary Item Type", 'Other Deposit');
                                 if TenancyContractSubpage.FindFirst() then
-                                    OtherDepositAmount := TenancyContractSubpage.Amount;
+                                    OtherDepositAmount := TenancyContractSubpage."BLRAmount";
                             end;
 
                             // Calculate Net Balance for Security Deposit
-                            NetBalanceAmount := Rec."Security Deposit";
+                            NetBalanceAmount := Rec."BLRSecurity Deposit";
 
                             TotalRefundableDeposit := NetBalanceAmount + ChillarDepositAmount + OtherDepositAmount;
 
@@ -147,164 +147,164 @@ page 73209807 "Security Deposit Entries"
                             TotalClaimAmount := 0;
 
                             TerminationAddCharges.Reset();
-                            TerminationAddCharges.SetRange("Contract ID", Rec."Contract ID");
+                            TerminationAddCharges.SetRange("BLRContract ID", Rec."BLRContract ID");
                             if TerminationAddCharges.FindSet() then
                                 repeat
-                                    TotalClaimAmount += TerminationAddCharges."Amount Including VAT";
+                                    TotalClaimAmount += TerminationAddCharges."BLRAmount Including VAT";
                                 until TerminationAddCharges.Next() = 0;
 
                             if TotalClaimAmount = 0 then begin
                                 TerminationAddCharges.Reset();
-                                TerminationAddCharges.SetRange("Contract ID", Rec."Contract ID");
-                                TerminationAddCharges.CalcSums(Amount);
-                                TotalClaimAmount := TerminationAddCharges.Amount;
+                                TerminationAddCharges.SetRange("BLRContract ID", Rec."BLRContract ID");
+                                TerminationAddCharges.CalcSums(BLRAmount);
+                                TotalClaimAmount := TerminationAddCharges."BLRAmount";
 
                                 if TotalClaimAmount = 0 then
-                                    TotalClaimAmount := GetTotalAmountFromTermination(Rec."Contract ID");
+                                    TotalClaimAmount := GetTotalAmountFromTermination(Rec."BLRContract ID");
                             end;
 
                             TotalRefundableAmount := 0;
                             TotalReceivableAmount := 0;
                             PendingReceivableGrid.Reset();
-                            PendingReceivableGrid.SetRange("Contract ID", Rec."Contract ID");
+                            PendingReceivableGrid.SetRange("BLRContract ID", Rec."BLRContract ID");
                             if PendingReceivableGrid.FindFirst() then begin
-                                TotalRefundableAmount := PendingReceivableGrid."Total Refundable";
-                                TotalReceivableAmount := PendingReceivableGrid."Total Receivable";
+                                TotalRefundableAmount := PendingReceivableGrid."BLRTotal Refundable";
+                                TotalReceivableAmount := PendingReceivableGrid."BLRTotal Receivable";
                             end;
 
                             Message('Total Claim Amount calculated: %1', TotalClaimAmount + TotalReceivableAmount);
                             Message('Amount Including VAT from Adjustment Security Deposit: %1', AmountIncludingVAT);
 
                             FinaCalculation.Reset();
-                            FinaCalculation.SetRange("Contract ID", Rec."Contract ID");
+                            FinaCalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
                             if FinaCalculation.FindFirst() then begin
-                                FinaCalculation."Security Deposit" := Rec."Main Security Deposit";
-                                FinaCalculation."Adjustment Security Deposit" := Rec."Main Security Deposit" - Rec."Security Deposit";
-                                FinaCalculation."Net Balance" := Rec."Security Deposit";
+                                FinaCalculation."BLRSecurity Deposit" := Rec."BLRMain Security Deposit";
+                                FinaCalculation."BLRAdjustment Security Deposit" := Rec."BLRMain Security Deposit" - Rec."BLRSecurity Deposit";
+                                FinaCalculation."BLRNet Balance" := Rec."BLRSecurity Deposit";
                                 // Update Chillar Deposit field
-                                FinaCalculation."Chiller Deposit" := ChillarDepositAmount;
-                                FinaCalculation."Other Deposit" := OtherDepositAmount;
+                                FinaCalculation."BLRChiller Deposit" := ChillarDepositAmount;
+                                FinaCalculation."BLROther Deposit" := OtherDepositAmount;
                                 // Update Total Refundable Deposit
-                                FinaCalculation."Total Refundable Deposit" := TotalRefundableDeposit;
+                                FinaCalculation."BLRTotal Refundable Deposit" := TotalRefundableDeposit;
                                 // Update Total Claim with the sum of Total Amount from Additional Charges Sub
-                                FinaCalculation."Total Claim" := TotalClaimAmount;
+                                FinaCalculation."BLRTotal Claim" := TotalClaimAmount;
 
-                                NetAmount := FinaCalculation."Total Claim" - FinaCalculation."Total Refundable Deposit";
+                                NetAmount := FinaCalculation."BLRTotal Claim" - FinaCalculation."BLRTotal Refundable Deposit";
                                 if NetAmount < 0 then begin
-                                    FinaCalculation."Total Refund" := ABS(NetAmount); // negative value
-                                    FinaCalculation."Total Receive" := 0;
+                                    FinaCalculation."BLRTotal Refund" := ABS(NetAmount); // negative value
+                                    FinaCalculation."BLRTotal Receive" := 0;
                                 end else begin
-                                    FinaCalculation."Total Receive" := ABS(NetAmount); // positive value
-                                    FinaCalculation."Total Refund" := 0;
+                                    FinaCalculation."BLRTotal Receive" := ABS(NetAmount); // positive value
+                                    FinaCalculation."BLRTotal Refund" := 0;
                                 end;
 
                                 // Initialize variables
                                 SummeryNetAmount := 0;
 
                                 // Scenario 1: Both are Receivable
-                                if ((FinaCalculation."Total Receive" <> 0) and (TotalReceivableAmount <> 0)) or
-                                   ((FinaCalculation."Total Receive" = 0) and (TotalReceivableAmount <> 0)) or
-                                   ((FinaCalculation."Total Receive" <> 0) and (TotalReceivableAmount = 0)) then begin
-                                    SummeryNetAmount := FinaCalculation."Total Receive" + ABS(TotalReceivableAmount);
-                                    FinaCalculation."Summery Net Balance" := SummeryNetAmount;
-                                    FinaCalculation."Net Receivable From The Tenant" := SummeryNetAmount;
-                                    FinaCalculation."Amount Refundable" := 0;
+                                if ((FinaCalculation."BLRTotal Receive" <> 0) and (TotalReceivableAmount <> 0)) or
+                                   ((FinaCalculation."BLRTotal Receive" = 0) and (TotalReceivableAmount <> 0)) or
+                                   ((FinaCalculation."BLRTotal Receive" <> 0) and (TotalReceivableAmount = 0)) then begin
+                                    SummeryNetAmount := FinaCalculation."BLRTotal Receive" + ABS(TotalReceivableAmount);
+                                    FinaCalculation."BLRSummery Net Balance" := SummeryNetAmount;
+                                    FinaCalculation."BLRNetRecvFromTheTenant" := SummeryNetAmount;
+                                    FinaCalculation."BLRAmount Refundable" := 0;
                                 end
                                 // Scenario 2: Both are Refund
                                 else
-                                    if ((FinaCalculation."Total Refund" <> 0) and (TotalRefundableAmount <> 0)) or
-                                   ((FinaCalculation."Total Refund" <> 0) and (TotalRefundableAmount = 0)) or
-                                   ((FinaCalculation."Total Refund" = 0) and (TotalRefundableAmount <> 0)) then begin
-                                        SummeryNetAmount := FinaCalculation."Total Refund" + ABS(TotalRefundableAmount);
-                                        FinaCalculation."Summery Net Balance" := SummeryNetAmount;
-                                        FinaCalculation."Amount Refundable" := FinaCalculation."Summery Net Balance";
-                                        FinaCalculation."Net Receivable From The Tenant" := 0;
+                                    if ((FinaCalculation."BLRTotal Refund" <> 0) and (TotalRefundableAmount <> 0)) or
+                                   ((FinaCalculation."BLRTotal Refund" <> 0) and (TotalRefundableAmount = 0)) or
+                                   ((FinaCalculation."BLRTotal Refund" = 0) and (TotalRefundableAmount <> 0)) then begin
+                                        SummeryNetAmount := FinaCalculation."BLRTotal Refund" + ABS(TotalRefundableAmount);
+                                        FinaCalculation."BLRSummery Net Balance" := SummeryNetAmount;
+                                        FinaCalculation."BLRAmount Refundable" := FinaCalculation."BLRSummery Net Balance";
+                                        FinaCalculation."BLRNetRecvFromTheTenant" := 0;
                                     end
 
                                     // Scenario 3: Refund (500) - Receivable (300) => 200 Amount Refundable
                                     else
-                                        if (FinaCalculation."Total Refund" <> 0) and (TotalReceivableAmount <> 0) then begin
-                                            SummeryNetAmount := FinaCalculation."Total Refund" - TotalReceivableAmount;
-                                            FinaCalculation."Summery Net Balance" := SummeryNetAmount;
+                                        if (FinaCalculation."BLRTotal Refund" <> 0) and (TotalReceivableAmount <> 0) then begin
+                                            SummeryNetAmount := FinaCalculation."BLRTotal Refund" - TotalReceivableAmount;
+                                            FinaCalculation."BLRSummery Net Balance" := SummeryNetAmount;
                                             if SummeryNetAmount > 0 then begin
-                                                FinaCalculation."Amount Refundable" := ABS(SummeryNetAmount);
-                                                FinaCalculation."Net Receivable From The Tenant" := 0;
+                                                FinaCalculation."BLRAmount Refundable" := ABS(SummeryNetAmount);
+                                                FinaCalculation."BLRNetRecvFromTheTenant" := 0;
                                             end else begin
-                                                FinaCalculation."Net Receivable From The Tenant" := ABS(SummeryNetAmount);
-                                                FinaCalculation."Amount Refundable" := 0;
+                                                FinaCalculation."BLRNetRecvFromTheTenant" := ABS(SummeryNetAmount);
+                                                FinaCalculation."BLRAmount Refundable" := 0;
                                             end;
                                         end
 
                                         // Scenario 4: Receive (500) - Refundable (300) => 200 Net Receivable
                                         else
-                                            if (FinaCalculation."Total Receive" <> 0) and (TotalRefundableAmount <> 0) then begin
-                                                SummeryNetAmount := FinaCalculation."Total Receive" - TotalRefundableAmount;
-                                                FinaCalculation."Summery Net Balance" := SummeryNetAmount;
+                                            if (FinaCalculation."BLRTotal Receive" <> 0) and (TotalRefundableAmount <> 0) then begin
+                                                SummeryNetAmount := FinaCalculation."BLRTotal Receive" - TotalRefundableAmount;
+                                                FinaCalculation."BLRSummery Net Balance" := SummeryNetAmount;
                                                 if SummeryNetAmount > 0 then begin
-                                                    FinaCalculation."Net Receivable From The Tenant" := ABS(SummeryNetAmount);
-                                                    FinaCalculation."Amount Refundable" := 0;
+                                                    FinaCalculation."BLRNetRecvFromTheTenant" := ABS(SummeryNetAmount);
+                                                    FinaCalculation."BLRAmount Refundable" := 0;
                                                 end else begin
-                                                    FinaCalculation."Amount Refundable" := ABS(SummeryNetAmount);
-                                                    FinaCalculation."Net Receivable From The Tenant" := 0;
+                                                    FinaCalculation."BLRAmount Refundable" := ABS(SummeryNetAmount);
+                                                    FinaCalculation."BLRNetRecvFromTheTenant" := 0;
                                                 end;
                                             end;
 
                                 FinaCalculation.Modify();
-                                Message('Final Calculation updated with Security Deposit: %1', Rec."Main Security Deposit");
+                                Message('Final Calculation updated with Security Deposit: %1', Rec."BLRMain Security Deposit");
                             end else
-                                Message('No Final Calculation record found for Contract ID: %1', Rec."Contract ID");
+                                Message('No Final Calculation record found for Contract ID: %1', Rec."BLRContract ID");
                         end else
                             Message('No Adjustment Security Deposit found');
 
                         // Handle carry forward grid for security deposits
                         SecurityDeposit.Reset();
-                        SecurityDeposit.SetRange("Contract ID", Rec."Contract ID");
+                        SecurityDeposit.SetRange("BLRContract ID", Rec."BLRContract ID");
 
                         if SecurityDeposit.FindSet() then
                             repeat
                                 // Check if a Carry Forward Grid record already exists
                                 CarryForwardGrid.Reset();
-                                CarryForwardGrid.SetRange("Contract ID", SecurityDeposit."Contract ID");
-                                CarryForwardGrid.SetRange("New Contract ID", SecurityDeposit."New_Contract ID");
-                                CarryForwardGrid.SetRange("Total Amount", SecurityDeposit."Carry Forward Amount"); // Additional Check
+                                CarryForwardGrid.SetRange("BLRContract ID", SecurityDeposit."BLRContract ID");
+                                CarryForwardGrid.SetRange("BLRNew Contract ID", SecurityDeposit."BLRNew_Contract ID");
+                                CarryForwardGrid.SetRange("BLRTotal Amount", SecurityDeposit."BLRCarry Forward Amount"); // Additional Check
 
                                 if not CarryForwardGrid.FindFirst() then begin
                                     // Create new record only if it doesn't exist
                                     CarryForwardGrid.Init();
                                     // Get the next available Entry No.
-                                    CarryForwardGrid."Entry No." := GetNextEntryNo();
-                                    CarryForwardGrid."Contract ID" := SecurityDeposit."Contract ID";
-                                    CarryForwardGrid."New Contract ID" := SecurityDeposit."New_Contract ID";
-                                    CarryForwardGrid."Total Amount" := SecurityDeposit."Carry Forward Amount";
-                                    CarryForwardGrid."Security Deposit" := 'Security Deposit';
+                                    CarryForwardGrid."BLREntry No." := GetNextEntryNo();
+                                    CarryForwardGrid."BLRContract ID" := SecurityDeposit."BLRContract ID";
+                                    CarryForwardGrid."BLRNew Contract ID" := SecurityDeposit."BLRNew_Contract ID";
+                                    CarryForwardGrid."BLRTotal Amount" := SecurityDeposit."BLRCarry Forward Amount";
+                                    CarryForwardGrid."BLRSecurity Deposit" := 'Security Deposit';
                                     CarryForwardGrid.Insert();
                                 end else begin
                                     // Update existing record
-                                    CarryForwardGrid."Total Amount" := SecurityDeposit."Carry Forward Amount";
-                                    CarryForwardGrid."Security Deposit" := 'Security Deposit';
+                                    CarryForwardGrid."BLRTotal Amount" := SecurityDeposit."BLRCarry Forward Amount";
+                                    CarryForwardGrid."BLRSecurity Deposit" := 'Security Deposit';
                                     CarryForwardGrid.Modify();
                                 end;
                             until SecurityDeposit.Next() = 0
                         else begin
                             // If no Security Deposit records exist, create a basic Carry Forward Grid record
                             CarryForwardGrid.Reset();
-                            CarryForwardGrid.SetRange("Contract ID", Rec."Contract ID");
+                            CarryForwardGrid.SetRange("BLRContract ID", Rec."BLRContract ID");
 
                             if not CarryForwardGrid.FindFirst() then begin
                                 CarryForwardGrid.Init();
                                 // Get the next available Entry No.
-                                CarryForwardGrid."Entry No." := GetNextEntryNo();
-                                CarryForwardGrid."Contract ID" := Rec."Contract ID";
+                                CarryForwardGrid."BLREntry No." := GetNextEntryNo();
+                                CarryForwardGrid."BLRContract ID" := Rec."BLRContract ID";
                                 // You'll need to determine the New Contract ID from elsewhere
-                                CarryForwardGrid."Total Amount" := Rec."Security Deposit";
-                                CarryForwardGrid."Security Deposit" := 'Security Deposit';
+                                CarryForwardGrid."BLRTotal Amount" := Rec."BLRSecurity Deposit";
+                                CarryForwardGrid."BLRSecurity Deposit" := 'Security Deposit';
                                 CarryForwardGrid.Insert();
                             end;
                         end;
                         AdditinalchargescashReceipt();
                         Message('Entry has been approved successfully!');
                         // Update entry status
-                        Rec.Status := Rec.Status::Approved;
+                        Rec."BLRStatus" := Rec."BLRStatus"::Approved;
                         Rec.Modify();
                     end else
                         exit;
@@ -325,11 +325,11 @@ page 73209807 "Security Deposit Entries"
 
     local procedure GetNextEntryNo(): Integer
     var
-        CarryForwardGrid: Record "Carry Forward Grid";
+        CarryForwardGrid: Record "BLRCarryForwardGrid";
     begin
         CarryForwardGrid.Reset();
         if CarryForwardGrid.FindLast() then
-            exit(CarryForwardGrid."Entry No." + 1)
+            exit(CarryForwardGrid."BLREntry No." + 1)
         else
             exit(1);
     end;
@@ -357,29 +357,29 @@ page 73209807 "Security Deposit Entries"
     // Helper function to get the total amount from a parent termination record if needed
     local procedure GetTotalAmountFromTermination(ContractID: Integer): Decimal
     var
-        TerminationHeader: Record "Additional Charges Sub"; // Use the actual table name
+        TerminationHeader: Record "BLRAdditionalChargesSub"; // Use the actual table name
         TotalAmount: Decimal;
     begin
         TotalAmount := 0;
         TerminationHeader.Reset();
-        TerminationHeader.SetRange("Contract ID", ContractID);
+        TerminationHeader.SetRange("BLRContract ID", ContractID);
         if TerminationHeader.FindFirst() then
             // Try to get TotalAmount field or equivalent
             if TerminationHeader.Get(ContractID) then
-                TotalAmount := TerminationHeader."Total Amount"; // Use the correct field name
+                TotalAmount := TerminationHeader."BLRTotal Amount"; // Use the correct field name
         exit(TotalAmount);
     end;
 
     procedure AdditinalchargescashReceipt()
     var
         GenJnlLine: Record "Gen. Journal Line";
-        finalcalculation: Record "Final Calculation";
-        TerminationCharges: Record "Termination Charges Sub";
-        PendingReceivableGrid: Record "Pending Receviable Grid";
+        finalcalculation: Record "BLRFinalCalculation";
+        TerminationCharges: Record "BLRTerminationChargesSub";
+        PendingReceivableGrid: Record "BLRPendingReceviableGrid";
         GenJnlTemplate: Record "Gen. Journal Template";
         GenJnlBatch: Record "Gen. Journal Batch";
-        BillingCalculation: Record "Final Billing Calculation Grid";
-        finalsettlmentRefund1: Record FinalSettlementRefund;
+        BillingCalculation: Record "BLRFinalBillingCalculationGrid";
+        finalsettlmentRefund1: Record BLRFinalSettlementRefund;
         PostingDate: Date;
         DocumentNo: Code[20];
         InvoiceNo: Code[20];
@@ -412,36 +412,36 @@ page 73209807 "Security Deposit Entries"
             Error('The Journal Batch %1 does not exist for template %2.', JournalBatchName, JournalTemplateName);
 
         PostingDate := Today();
-        DocumentNo := 'REFUND-' + Format(Rec."Contract ID");
-        RefundDocumentNo := 'REF-' + Format(Rec."Contract ID");
+        DocumentNo := 'REFUND-' + Format(Rec."BLRContract ID");
+        RefundDocumentNo := 'REF-' + Format(Rec."BLRContract ID");
 
         // *** FIXED: Properly retrieve Final Calculation record ***
         finalcalculation.Reset();
-        finalcalculation.SetRange("Contract ID", Rec."Contract ID");
+        finalcalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
         if not finalcalculation.FindFirst() then
-            Error('Final Calculation not found for Contract ID %1', Rec."Contract ID");
+            Error('Final Calculation not found for Contract ID %1', Rec."BLRContract ID");
 
         // Get values from Final Calculation
-        Tenantid := finalcalculation."Tenant ID";
-        Tenantname := finalcalculation."Tenant Name";
-        ContractID := finalcalculation."Contract ID";
-        securitydeposit := Round(finalcalculation."Net Balance");
-        chillerdeposit := Round(finalcalculation."Chiller Deposit");
-        otherdeposit := Round(finalcalculation."Other Deposit");
+        Tenantid := finalcalculation."BLRTenant ID";
+        Tenantname := finalcalculation."BLRTenant Name";
+        ContractID := finalcalculation."BLRContract ID";
+        securitydeposit := Round(finalcalculation."BLRNet Balance");
+        chillerdeposit := Round(finalcalculation."BLRChiller Deposit");
+        otherdeposit := Round(finalcalculation."BLROther Deposit");
 
         TerminationCharges.Reset();
-        TerminationCharges.SetRange("Contract ID", Rec."Contract ID");
+        TerminationCharges.SetRange("BLRContract ID", Rec."BLRContract ID");
         if TerminationCharges.FindFirst() then
-            AdditionalInvoiceNo := TerminationCharges."Posted Invoice ID"
+            AdditionalInvoiceNo := TerminationCharges."BLRPosted Invoice ID"
         else
             AdditionalInvoiceNo := '';
 
 
         // *** FIXED: Properly retrieve Billing Calculation ***
         BillingCalculation.Reset();
-        BillingCalculation.SetRange("Contract ID", Rec."Contract ID");
+        BillingCalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
         if BillingCalculation.FindFirst() then
-            InvoiceNo := BillingCalculation."Posted Invoice ID"
+            InvoiceNo := BillingCalculation."BLRPosted Invoice ID"
         else
             InvoiceNo := '';
 
@@ -449,22 +449,22 @@ page 73209807 "Security Deposit Entries"
         // Calculate total additional charges
         Totaladdtionalcharges := 0;
         TerminationCharges.Reset();
-        TerminationCharges.SetRange("Contract ID", Rec."Contract ID");
+        TerminationCharges.SetRange("BLRContract ID", Rec."BLRContract ID");
         if TerminationCharges.FindSet() then
             repeat
-                Totaladdtionalcharges += TerminationCharges."Amount Including VAT";
+                Totaladdtionalcharges += TerminationCharges."BLRAmount Including VAT";
             until TerminationCharges.Next() = 0;
 
         // Get total receivable from Pending Receivable Grid
         TotalReceivable := 0;
         PendingReceivableGrid.Reset();
-        PendingReceivableGrid.SetRange("Contract ID", Rec."Contract ID");
+        PendingReceivableGrid.SetRange("BLRContract ID", Rec."BLRContract ID");
         if PendingReceivableGrid.FindFirst() then
-            TotalReceivable := PendingReceivableGrid."Total Receivable";
+            TotalReceivable := PendingReceivableGrid."BLRTotal Receivable";
 
         // Debug message for amounts
         if (securitydeposit = 0) and (chillerdeposit = 0) and (otherdeposit = 0) then
-            Error('No deposit amounts found to process for Contract ID %1', Rec."Contract ID");
+            Error('No deposit amounts found to process for Contract ID %1', Rec."BLRContract ID");
 
         // Get last line number
         GenJnlLine.Reset();
@@ -481,7 +481,7 @@ page 73209807 "Security Deposit Entries"
                 AppliedAmount := Min(securitydeposit, Totaladdtionalcharges);
 
                 if Tenantid = '' then
-                    Error('Tenant ID is blank for Contract ID %1', Rec."Contract ID");
+                    Error('Tenant ID is blank for Contract ID %1', Rec."BLRContract ID");
 
                 // Create journal line for Additional Charges
                 Clear(GenJnlLine);
@@ -495,7 +495,7 @@ page 73209807 "Security Deposit Entries"
                 GenJnlLine.Description := Tenantname + ' - Security Deposit';
                 GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
                 GenJnlLine."Account No." := Tenantid;
-                GenJnlLine."Contract ID" := ContractID;
+                GenJnlLine."BLRContract ID" := ContractID;
                 GenJnlLine.Amount := Round(-AppliedAmount);
                 GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
                 GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
@@ -524,7 +524,7 @@ page 73209807 "Security Deposit Entries"
                     GenJnlLine.Description := Tenantname + ' - Security Deposit';
                     GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
                     GenJnlLine."Account No." := Tenantid;
-                    GenJnlLine."Contract ID" := ContractID;
+                    GenJnlLine."BLRContract ID" := ContractID;
                     GenJnlLine.Amount := Round(-AppliedAmount);
                     GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
                     GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
@@ -543,7 +543,7 @@ page 73209807 "Security Deposit Entries"
                 AppliedAmount := Min(chillerdeposit, Totaladdtionalcharges);
 
                 if Tenantid = '' then
-                    Error('Tenant ID is blank for Contract ID %1', Rec."Contract ID");
+                    Error('Tenant ID is blank for Contract ID %1', Rec."BLRContract ID");
 
                 Clear(GenJnlLine);
                 GenJnlLine.Init();
@@ -556,7 +556,7 @@ page 73209807 "Security Deposit Entries"
                 GenJnlLine.Description := Tenantname + ' - Chiller Deposit';
                 GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
                 GenJnlLine."Account No." := Tenantid;
-                GenJnlLine."Contract ID" := ContractID;
+                GenJnlLine."BLRContract ID" := ContractID;
                 GenJnlLine.Amount := Round(-AppliedAmount);
                 GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
                 GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
@@ -584,7 +584,7 @@ page 73209807 "Security Deposit Entries"
                     GenJnlLine.Description := Tenantname + ' - Chiller Deposit';
                     GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
                     GenJnlLine."Account No." := Tenantid;
-                    GenJnlLine."Contract ID" := ContractID;
+                    GenJnlLine."BLRContract ID" := ContractID;
                     GenJnlLine.Amount := Round(-AppliedAmount);
                     GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
                     GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
@@ -603,7 +603,7 @@ page 73209807 "Security Deposit Entries"
                 AppliedAmount := Min(otherdeposit, Totaladdtionalcharges);
 
                 if Tenantid = '' then
-                    Error('Tenant ID is blank for Contract ID %1', Rec."Contract ID");
+                    Error('Tenant ID is blank for Contract ID %1', Rec."BLRContract ID");
 
                 Clear(GenJnlLine);
                 GenJnlLine.Init();
@@ -616,7 +616,7 @@ page 73209807 "Security Deposit Entries"
                 GenJnlLine.Description := Tenantname + ' - Other Deposit';
                 GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
                 GenJnlLine."Account No." := Tenantid;
-                GenJnlLine."Contract ID" := ContractID;
+                GenJnlLine."BLRContract ID" := ContractID;
                 GenJnlLine.Amount := Round(-AppliedAmount);
                 GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
                 GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
@@ -644,7 +644,7 @@ page 73209807 "Security Deposit Entries"
                     GenJnlLine.Description := Tenantname + ' - Other Deposit';
                     GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
                     GenJnlLine."Account No." := Tenantid;
-                    GenJnlLine."Contract ID" := ContractID;
+                    GenJnlLine."BLRContract ID" := ContractID;
                     GenJnlLine.Amount := Round(-AppliedAmount);
                     GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
                     GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
@@ -661,11 +661,11 @@ page 73209807 "Security Deposit Entries"
         // *** NEW: REFUND REMAINING DEPOSITS ***
         // Update Final Settlement Refund with remaining amounts
         finalsettlmentRefund1.Reset();
-        finalsettlmentRefund1.SetRange("Contract ID", Rec."Contract ID");
+        finalsettlmentRefund1.SetRange("BLRContract ID", Rec."BLRContract ID");
         if finalsettlmentRefund1.FindFirst() then begin
-            finalsettlmentRefund1."Adjust Security Deposit" := securitydeposit;
-            finalsettlmentRefund1."Adjust Chiller Deposit" := chillerdeposit;
-            finalsettlmentRefund1."Adjust other deposit" := otherdeposit;
+            finalsettlmentRefund1."BLRAdjust Security Deposit" := securitydeposit;
+            finalsettlmentRefund1."BLRAdjust Chiller Deposit" := chillerdeposit;
+            finalsettlmentRefund1."BLRAdjust other deposit" := otherdeposit;
             finalsettlmentRefund1.Modify();
         end;
 
@@ -682,7 +682,7 @@ page 73209807 "Security Deposit Entries"
             GenJnlLine.Description := Tenantname + ' - Security Deposit Refund';
             GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
             GenJnlLine."Account No." := '4502';  // Security Deposit Account
-            GenJnlLine."Contract ID" := ContractID;
+            GenJnlLine."BLRContract ID" := ContractID;
             GenJnlLine.Amount := Round(-securitydeposit);  // Credit G/L (reduce liability)
             GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
             GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::Customer;
@@ -704,7 +704,7 @@ page 73209807 "Security Deposit Entries"
             GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
             GenJnlLine."Account No." := '4508';  // Chiller Deposit Account
             GenJnlLine.Amount := Round(-chillerdeposit);
-            GenJnlLine."Contract ID" := ContractID;
+            GenJnlLine."BLRContract ID" := ContractID;
             GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
             GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::Customer;
             GenJnlLine."Bal. Account No." := Tenantid;
@@ -725,7 +725,7 @@ page 73209807 "Security Deposit Entries"
             GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
             GenJnlLine."Account No." := '4508';  // Other Deposit Account
             GenJnlLine.Amount := Round(-otherdeposit);
-            GenJnlLine."Contract ID" := ContractID;
+            GenJnlLine."BLRContract ID" := ContractID;
             GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
             GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::Customer;
             GenJnlLine."Bal. Account No." := Tenantid;
@@ -742,7 +742,7 @@ page 73209807 "Security Deposit Entries"
                 Message('Journal entries have been created and posted successfully');
             end;
         end else
-            Message('No journal lines were created. Please check the data for Contract ID: %1', Rec."Contract ID");
+            Message('No journal lines were created. Please check the data for Contract ID: %1', Rec."BLRContract ID");
     end;
 
     procedure Min(a: Decimal; b: Decimal): Decimal

@@ -1,7 +1,7 @@
-page 73209798 "Rent Calculation List"
+page 73209798 "BLRRent Calculation List"
 {
     PageType = List;
-    SourceTable = "Rent Calculation";
+    SourceTable = "BLRRentCalculation";
     ApplicationArea = All;
     Caption = 'Rent Calculation List';
     UsageCategory = Lists;
@@ -14,45 +14,45 @@ page 73209798 "Rent Calculation List"
         {
             repeater(Group)
             {
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract ID';
                     ToolTip = 'Specifies the unique identifier for the contract associated with the rent calculation.';
                 }
-                field("RC_ID"; Rec."RC ID")
+                field("RC_ID"; Rec."BLRRC ID")
                 {
                     ApplicationArea = All;
                     Caption = 'RC_ID';
                     ToolTip = 'Specifies the unique identifier for the rent calculation.';
                 }
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Secondary Item Type';
                     ToolTip = 'Specifies the type of secondary item associated with the rent calculation, such as Maintenance or Utilities.';
                 }
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
                     ToolTip = 'Specifies the amount associated with the rent calculation, which can be a fixed amount or a percentage of the contract amount.';
                 }
 
-                field("Contract Start Date"; Rec."Contract Start Date")
+                field("Contract Start Date"; Rec."BLRContract Start Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Start Date';
                     ToolTip = 'Specifies the start date of the contract associated with the rent calculation.';
                 }
-                field("Contract End Date"; Rec."Contract End Date")
+                field("Contract End Date"; Rec."BLRContract End Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract End Date';
                     ToolTip = 'Specifies the end date of the contract associated with the rent calculation.';
                 }
 
-                field("Number of Installments"; Rec."Number of Installments")
+                field("Number of Installments"; Rec."BLRNumber of Installments")
                 {
                     ApplicationArea = All;
                     Caption = 'Number of Instalments';

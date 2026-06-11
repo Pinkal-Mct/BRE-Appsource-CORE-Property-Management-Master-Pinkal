@@ -1,7 +1,7 @@
-page 73209750 "Workflow Frequency PR Card"
+page 73209750 "BLRWorkflow Frequency PR Card"
 {
     PageType = ListPart;
-    SourceTable = "Workflow Frequency PR";
+    SourceTable = "BLRWorkflowFrequencyPR";
     ApplicationArea = All;
     Caption = 'Workflow Frequency PR Card';
 
@@ -11,7 +11,7 @@ page 73209750 "Workflow Frequency PR Card"
         {
             repeater(Group)
             {
-                field("Company ID"; Rec."Company ID")
+                field("Company ID"; Rec."BLRCompany ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -19,13 +19,13 @@ page 73209750 "Workflow Frequency PR Card"
                     ToolTip = 'Enter the Company ID.';
                 }
 
-                field("Workflow"; Rec."Workflow")
+                field("Workflow"; Rec."BLRWorkflow")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the Workflow.';
                 }
-                field("frequncy Status"; Rec."frequncy Status")
+                field("frequncy Status"; Rec."BLRfrequncy Status")
                 {
                     ApplicationArea = All;
                     Caption = 'frequncy Status';
@@ -35,21 +35,21 @@ page 73209750 "Workflow Frequency PR Card"
                     trigger OnValidate()
                     begin
                         // If "Property" is selected, allow editing "No of Days", otherwise disable it
-                        if Rec."frequncy Status" = Rec."frequncy Status"::Property then
+                        if Rec."BLRfrequncy Status" = Rec."BLRfrequncy Status"::Property then
                             IsApproved := true
                         else
                             IsApproved := false;
                     end;
                 }
 
-                field("No. of Days"; Rec."No. of Days")
+                field("No. of Days"; Rec."BLRNo. of Days")
                 {
                     ApplicationArea = All;
                     Editable = IsApproved;
                     ToolTip = 'Enter the Number of Days.';
                 }
 
-                field("Property ID"; Rec."Property ID")
+                field("Property ID"; Rec."BLRProperty ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
@@ -65,7 +65,7 @@ page 73209750 "Workflow Frequency PR Card"
 
     trigger OnAfterGetRecord()
     begin
-        if Rec."frequncy Status" = Rec."frequncy Status"::Property then
+        if Rec."BLRfrequncy Status" = Rec."BLRfrequncy Status"::Property then
             IsApproved := true
         else
             IsApproved := false;

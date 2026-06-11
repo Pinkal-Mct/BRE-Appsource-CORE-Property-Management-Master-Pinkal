@@ -1,7 +1,7 @@
-page 73209772 "Contract End Process Approval"
+page 73209772 "BLRContract EndProcessApproval"
 {
     PageType = List;
-    SourceTable = ContractEndProcessApproval;
+    SourceTable = BLRContractEndProcessApproval;
     ApplicationArea = All;
     Caption = 'Contract End Process Approval';
     UsageCategory = Lists;
@@ -15,21 +15,21 @@ page 73209772 "Contract End Process Approval"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the unique identifier for the contract end process approval record.';
                 }
 
-                field("Lease_M Status"; Rec."Lease_M Status")
+                field("Lease_M Status"; Rec."BLRLease_M Status")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the current status of the lease management process for this contract.';
                 }
 
-                field("Lease Manager Remark"; Rec."Lease Manager Remark")
+                field("Lease Manager Remark"; Rec."BLRLease Manager Remark")
                 {
                     ApplicationArea = All;
                     Editable = true;
@@ -37,58 +37,58 @@ page 73209772 "Contract End Process Approval"
                 }
 
 
-                field("Property_M Status"; Rec."Property_M Status")
+                field("Property_M Status"; Rec."BLRProperty_M Status")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the current status of the property management process for this contract.';
                 }
 
-                field("Property Manager Remark"; Rec."Property Manager Remark")
+                field("Property Manager Remark"; Rec."BLRProperty Manager Remark")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the remark provided by the property manager regarding this contract end process approval.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the unique identifier for the tenant associated with this contract end process approval.';
                 }
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the name of the tenant associated with this contract end process approval.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the unique identifier for the contract associated with this contract end process approval.';
                 }
-                field("Contract Start Date"; Rec."Start Date")
+                field("Contract Start Date"; Rec."BLRStart Date")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the start date of the contract associated with this contract end process approval.';
                 }
-                field("Contract End Date"; Rec."End Date")
+                field("Contract End Date"; Rec."BLREnd Date")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the end date of the contract associated with this contract end process approval.';
                 }
-                field("Tenant Email"; Rec."Tenant Email")
+                field("Tenant Email"; Rec."BLRTenant Email")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the email address of the tenant associated with this contract end process approval.';
                 }
 
-                field("Value"; Rec."Value")
+                field("Value"; Rec."BLRValue")
                 {
                     ApplicationArea = All;
                     Editable = true;
@@ -96,7 +96,7 @@ page 73209772 "Contract End Process Approval"
                     ToolTip = 'Specifies the value indicating whether the tenant has been notified about the contract end process.';
                 }
 
-                field("Renewal Notification to Tenant"; Rec."Renewal Notification to Tenant")
+                field("Renewal Notification to Tenant"; Rec."BLRRenewalNotiftoTenant")
                 {
                     ApplicationArea = All;
                     Editable = true;
@@ -124,8 +124,8 @@ page 73209772 "Contract End Process Approval"
 
                 trigger OnAction()
                 var
-                    SelectedRecs: Record "ContractEndProcessApproval";
-                    SendTenantMail: Codeunit "SendTenantMail";
+                    SelectedRecs: Record "BLRContractEndProcessApproval";
+                    SendTenantMail: Codeunit "BLRSendTenantMail";
                     ApproveCount: Integer;
                     ErrorCount: Integer;
                     LeaseNotApprovedCount: Integer;
@@ -146,19 +146,19 @@ page 73209772 "Contract End Process Approval"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs."Lease_M Status" = 'Approved' then begin
-                                if SelectedRecs."Property_M Status" = 'Pending' then begin
-                                    SelectedRecs."Property_M Status" := 'Approved';
+                            if SelectedRecs."BLRLease_M Status" = 'Approved' then begin
+                                if SelectedRecs."BLRProperty_M Status" = 'Pending' then begin
+                                    SelectedRecs."BLRProperty_M Status" := 'Approved';
 
                                     // Calculate remaining days until contract end date
-                                    DaysRemaining := SelectedRecs."End Date" - TodayDate;
+                                    DaysRemaining := SelectedRecs."BLREnd Date" - TodayDate;
 
-                                    if DaysRemaining <= SelectedRecs."Renewal Notification to Tenant" then begin
+                                    if DaysRemaining <= SelectedRecs."BLRRenewalNotiftoTenant" then begin
 
-                                        SelectedRecs."Value" := 'true'; // Set Value to text 'true'
+                                        SelectedRecs."BLRValue" := 'true'; // Set Value to text 'true'
                                         SendTenantMail.SendEmailToTenant(SelectedRecs); // Send email to tenant
                                     end else
-                                        SelectedRecs."Value" := 'False'; // Set Value to text 'false'
+                                        SelectedRecs."BLRValue" := 'False'; // Set Value to text 'false'
 
 
                                     SelectedRecs.Modify();
@@ -188,7 +188,7 @@ page 73209772 "Contract End Process Approval"
 
                 trigger OnAction()
                 var
-                    SelectedRecs: Record "ContractEndProcessApproval";
+                    SelectedRecs: Record "BLRContractEndProcessApproval";
                     EmailSender: Codeunit 73209610;
                     ApproveCount: Integer;
                     ErrorCount: Integer;
@@ -205,8 +205,8 @@ page 73209772 "Contract End Process Approval"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs."Lease_M Status" = 'Pending' then begin
-                                SelectedRecs."Lease_M Status" := 'Approved';
+                            if SelectedRecs."BLRLease_M Status" = 'Pending' then begin
+                                SelectedRecs."BLRLease_M Status" := 'Approved';
                                 SelectedRecs.Modify();
                                 ApproveCount += 1;
 
@@ -235,7 +235,7 @@ page 73209772 "Contract End Process Approval"
 
                 trigger OnAction()
                 var
-                    SelectedRecs: Record "ContractEndProcessApproval";
+                    SelectedRecs: Record "BLRContractEndProcessApproval";
                     DeclineCount: Integer;
                     ErrorCount: Integer;
                 begin
@@ -251,8 +251,8 @@ page 73209772 "Contract End Process Approval"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs."Property_M Status" = 'Pending' then begin
-                                SelectedRecs."Property_M Status" := 'Declined';
+                            if SelectedRecs."BLRProperty_M Status" = 'Pending' then begin
+                                SelectedRecs."BLRProperty_M Status" := 'Declined';
                                 SelectedRecs.Modify();
                                 DeclineCount += 1;
                             end else
@@ -277,7 +277,7 @@ page 73209772 "Contract End Process Approval"
 
                 trigger OnAction()
                 var
-                    SelectedRecs: Record "ContractEndProcessApproval";
+                    SelectedRecs: Record "BLRContractEndProcessApproval";
                     DeclineCount: Integer;
                     ErrorCount: Integer;
                 begin
@@ -293,8 +293,8 @@ page 73209772 "Contract End Process Approval"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs."Lease_M Status" = 'Pending' then begin
-                                SelectedRecs."Lease_M Status" := 'Declined';
+                            if SelectedRecs."BLRLease_M Status" = 'Pending' then begin
+                                SelectedRecs."BLRLease_M Status" := 'Declined';
                                 SelectedRecs.Modify();
                                 DeclineCount += 1;
                             end else

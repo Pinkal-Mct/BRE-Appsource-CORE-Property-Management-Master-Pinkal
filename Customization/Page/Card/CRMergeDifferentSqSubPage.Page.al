@@ -1,7 +1,7 @@
-page 73209682 "CR Merge DifferentSq SubPage"
+page 73209682 "BLRCRMergeDifferentSqSubPage"
 {
     PageType = ListPart;
-    SourceTable = "CR Merge DifferentSq SubPage";
+    SourceTable = "BLRCRMergeDifferentSqSubPage";
     ApplicationArea = All;
     Caption = 'Merge DifferentSqure SubPage';
 
@@ -11,48 +11,48 @@ page 73209682 "CR Merge DifferentSq SubPage"
         {
             repeater(Group)
             {
-                field("ID"; rec."ID")
+                field("ID"; rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the record.';
                 }
-                field("MD_Merged Unit ID"; rec."MD_Merged Unit ID")
+                field("MD_Merged Unit ID"; rec."BLRMD_Merged Unit ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Merged Unit ID';
                     Editable = false;
                     ToolTip = 'The ID of the merged unit associated with this record.';
                 }
-                field("MD_Unit ID"; rec."MD_Unit ID")
+                field("MD_Unit ID"; rec."BLRMD_Unit ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit ID';
                     Editable = false;
                     ToolTip = 'The ID of the unit associated with this record.';
                 }
-                field("MD_Year"; rec.MD_Year)
+                field("MD_Year"; rec."BLRMD_Year")
                 {
                     ApplicationArea = All;
                     Caption = 'Year';
                     Editable = false;
                     ToolTip = 'The year for which this record is applicable.';
                 }
-                field("MD_Start Date"; rec."MD_Start Date")
+                field("MD_Start Date"; rec."BLRMD_Start Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Start Date';
                     Editable = false;
                     ToolTip = 'The start date of the contract or lease for this record.';
                 }
-                field("MD_End Date"; rec."MD_End Date")
+                field("MD_End Date"; rec."BLRMD_End Date")
                 {
                     ApplicationArea = All;
                     Caption = 'End Date';
                     Editable = false;
                     ToolTip = 'The end date of the contract or lease for this record.';
                 }
-                field("MD_Number of Days"; rec."MD_Number of Days")
+                field("MD_Number of Days"; rec."BLRMD_Number of Days")
                 {
                     ApplicationArea = All;
                     Caption = 'Number of Days';
@@ -64,7 +64,7 @@ page 73209682 "CR Merge DifferentSq SubPage"
                         RecalculateNumberOfDays();
                     end;
                 }
-                field("MD_Unit Sq Ft"; rec."MD_Unit Sq Ft")
+                field("MD_Unit Sq Ft"; rec."BLRMD_Unit Sq Ft")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Sq Ft';
@@ -76,7 +76,7 @@ page 73209682 "CR Merge DifferentSq SubPage"
                         RecalculateAnnualAmount();
                     end;
                 }
-                field("MD_Rate per Sq.Ft"; rec."MD_Rate per Sq.Ft")
+                field("MD_Rate per Sq.Ft"; rec."BLRMD_Rate per Sq.Ft")
                 {
                     ApplicationArea = All;
                     Caption = 'Rate per Sq.Ft';
@@ -84,38 +84,38 @@ page 73209682 "CR Merge DifferentSq SubPage"
 
                     trigger OnValidate()
                     var
-                        PreviousYearRecord: Record "CR Merge DifferentSq SubPage";
+                        PreviousYearRecord: Record "BLRCRMergeDifferentSqSubPage";
                         PreviousRate: Decimal;
                     begin
                         // Ensure the value is not negative
-                        if Rec."MD_Rate per Sq.Ft" < 0 then
+                        if Rec."BLRMD_Rate per Sq.Ft" < 0 then
                             Error('Rate per Sq.Ft cannot be negative.');
 
                         // Fetch the previous year's record to calculate Rent Increase %
-                        PreviousYearRecord.SetRange("ID", Rec."ID");
-                        PreviousYearRecord.SetRange("MD_Year", Rec.MD_Year - 1);
-                        PreviousYearRecord.SetRange("MD_Unit ID", Rec."MD_Unit ID");
+                        PreviousYearRecord.SetRange("BLRID", Rec."BLRID");
+                        PreviousYearRecord.SetRange("BLRMD_Year", Rec."BLRMD_Year" - 1);
+                        PreviousYearRecord.SetRange("BLRMD_Unit ID", Rec."BLRMD_Unit ID");
 
                         if PreviousYearRecord.FindFirst() then begin
-                            PreviousRate := PreviousYearRecord."MD_Rate per Sq.Ft";
+                            PreviousRate := PreviousYearRecord."BLRMD_Rate per Sq.Ft";
 
                             // Ensure previous rate is greater than 0 to avoid division by zero
                             if PreviousRate > 0 then
-                                Rec."MD_Rent Increase %" :=
-                                    ((Rec."MD_Rate per Sq.Ft" - PreviousRate) / PreviousRate) * 100
+                                Rec."BLRMD_Rent Increase %" :=
+                                    ((Rec."BLRMD_Rate per Sq.Ft" - PreviousRate) / PreviousRate) * 100
                             else
-                                Rec."MD_Rent Increase %" := 0; // No increase if previous rate is 0
+                                Rec."BLRMD_Rent Increase %" := 0; // No increase if previous rate is 0
                         end else
-                            Rec."MD_Rent Increase %" := 0; // No increase for the first year or no previous record
+                            Rec."BLRMD_Rent Increase %" := 0; // No increase for the first year or no previous record
 
                         // Recalculate Annual Amount
-                        if (Rec."MD_Rate per Sq.Ft" > 0) and (Rec."MD_Unit Sq Ft" > 0) then
-                            Rec."MD_Annual Amount" := Rec."MD_Rate per Sq.Ft" * Rec."MD_Unit Sq Ft"
+                        if (Rec."BLRMD_Rate per Sq.Ft" > 0) and (Rec."BLRMD_Unit Sq Ft" > 0) then
+                            Rec."BLRMD_Annual Amount" := Rec."BLRMD_Rate per Sq.Ft" * Rec."BLRMD_Unit Sq Ft"
                         else
-                            Rec."MD_Annual Amount" := 0;
+                            Rec."BLRMD_Annual Amount" := 0;
 
                         // Set Final Annual Amount equal to Annual Amount
-                        Rec."MD_Final Annual Amount" := Rec."MD_Annual Amount";
+                        Rec."BLRMD_Final Annual Amount" := Rec."BLRMD_Annual Amount";
 
                         // Recalculate Per Day Rent
                         RecalculatePerDayRent();
@@ -129,7 +129,7 @@ page 73209682 "CR Merge DifferentSq SubPage"
                     end;
                 }
 
-                field("MD_Rent Increase %"; rec."MD_Rent Increase %")
+                field("MD_Rent Increase %"; rec."BLRMD_Rent Increase %")
                 {
                     ApplicationArea = All;
                     Caption = 'Rent Increase %';
@@ -137,32 +137,32 @@ page 73209682 "CR Merge DifferentSq SubPage"
 
                     trigger OnValidate()
                     var
-                        PreviousYearRecord: Record "CR Merge DifferentSq SubPage";
+                        PreviousYearRecord: Record "BLRCRMergeDifferentSqSubPage";
                         IncreaseFactor: Decimal;
                     begin
                         // Ensure that Rent Increase % is not negative
-                        if Rec."MD_Rent Increase %" < 0 then
+                        if Rec."BLRMD_Rent Increase %" < 0 then
                             Error('Rent Increase % cannot be negative.');
 
                         // Skip calculation for the first year
-                        if Rec.MD_Year = 1 then
+                        if Rec."BLRMD_Year" = 1 then
                             exit;
 
                         // Fetch the previous year's record
-                        PreviousYearRecord.SetRange("ID", Rec."ID");
-                        PreviousYearRecord.SetRange("MD_Year", Rec.MD_Year - 1);
-                        PreviousYearRecord.SetRange("MD_Unit ID", Rec."MD_Unit ID");
+                        PreviousYearRecord.SetRange("BLRID", Rec."BLRID");
+                        PreviousYearRecord.SetRange("BLRMD_Year", Rec."BLRMD_Year" - 1);
+                        PreviousYearRecord.SetRange("BLRMD_Unit ID", Rec."BLRMD_Unit ID");
 
                         if PreviousYearRecord.FindFirst() then begin
                             // Calculate the new rate for the current year
-                            IncreaseFactor := 1 + (Rec."MD_Rent Increase %" / 100);
-                            Rec."MD_Rate per Sq.Ft" := PreviousYearRecord."MD_Rate per Sq.Ft" * IncreaseFactor;
+                            IncreaseFactor := 1 + (Rec."BLRMD_Rent Increase %" / 100);
+                            Rec."BLRMD_Rate per Sq.Ft" := PreviousYearRecord."BLRMD_Rate per Sq.Ft" * IncreaseFactor;
 
                             // Recalculate Annual Amount
-                            Rec."MD_Annual Amount" := Rec."MD_Rate per Sq.Ft" * Rec."MD_Unit Sq Ft";
+                            Rec."BLRMD_Annual Amount" := Rec."BLRMD_Rate per Sq.Ft" * Rec."BLRMD_Unit Sq Ft";
 
                             // Update Final Annual Amount to match Annual Amount
-                            Rec."MD_Final Annual Amount" := Rec."MD_Annual Amount";
+                            Rec."BLRMD_Final Annual Amount" := Rec."BLRMD_Annual Amount";
 
                             // Recalculate Per Day Rent
                             RecalculatePerDayRent();
@@ -177,14 +177,14 @@ page 73209682 "CR Merge DifferentSq SubPage"
                         CurrPage.Update();
                     end;
                 }
-                field("MD_Annual Amount"; rec."MD_Annual Amount")
+                field("MD_Annual Amount"; rec."BLRMD_Annual Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'Annual Amount';
                     Editable = false;
                     ToolTip = 'The annual amount calculated based on the rate per square foot and unit size.';
                 }
-                field("MD_Round off"; rec."MD_Round off")
+                field("MD_Round off"; rec."BLRMD_Round off")
                 {
                     ApplicationArea = All;
                     Caption = 'Round off';
@@ -198,7 +198,7 @@ page 73209682 "CR Merge DifferentSq SubPage"
                         RecalculateTotals();     // Update totals dynamically
                     end;
                 }
-                field("MD_Final Annual Amount"; rec."MD_Final Annual Amount")
+                field("MD_Final Annual Amount"; rec."BLRMD_Final Annual Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'Final Annual Amount';
@@ -211,7 +211,7 @@ page 73209682 "CR Merge DifferentSq SubPage"
                         RecalculateTotals();     // Update totals dynamically
                     end;
                 }
-                field("MD_Per Day Rent"; rec."MD_Per Day Rent")
+                field("MD_Per Day Rent"; rec."BLRMD_Per Day Rent")
                 {
                     ApplicationArea = All;
                     Caption = 'Per Day Rent';
@@ -225,7 +225,7 @@ page 73209682 "CR Merge DifferentSq SubPage"
             group("Total Rent Caculation")
             {
 
-                field("TotalAnnualAmount"; rec.TotalAnnualAmount)
+                field("TotalAnnualAmount"; rec."BLRTotalAnnualAmount")
                 {
                     Caption = 'Total Contract Amount';
                     ApplicationArea = All;
@@ -233,7 +233,7 @@ page 73209682 "CR Merge DifferentSq SubPage"
                     ToolTip = 'Total Contract Amount for all years based on the calculated annual amounts.';
                 }
 
-                field("TotalRoundOff"; rec.TotalRoundOff)
+                field("TotalRoundOff"; rec."BLRTotalRoundOff")
                 {
                     Caption = 'Round Off';
                     ApplicationArea = All;
@@ -241,7 +241,7 @@ page 73209682 "CR Merge DifferentSq SubPage"
                     ToolTip = 'Total Round Off amount for all years based on the calculated round off values.';
                 }
 
-                field("TotalFinalAmount"; rec.TotalFinalAmount)
+                field("TotalFinalAmount"; rec."BLRTotalFinalAmount")
                 {
                     Caption = 'Total Final Contract Amount';
                     ApplicationArea = All;
@@ -249,7 +249,7 @@ page 73209682 "CR Merge DifferentSq SubPage"
                     ToolTip = 'Total Final Contract Amount for all years after applying round off.';
                 }
 
-                field("TotalFirstAnnualAmount"; rec.TotalFirstAnnualAmount)
+                field("TotalFirstAnnualAmount"; rec."BLRTotalFirstAnnualAmount")
                 {
                     Caption = 'Total Annual Amount';
                     ApplicationArea = All;
@@ -274,54 +274,54 @@ page 73209682 "CR Merge DifferentSq SubPage"
 
                 trigger OnAction()
                 var
-                    MergeDiffSquareRec: Record "CR Merge DifferentSq SubPage";
-                    MergeDiffSquareRecFromPerDayRevenue: Record "CR Merge DifferentSq SubPage";
-                    SubLeaseMergeRec: Record "CR Sub Lease Merged Units";
-                    PerDayRevnue: Record "CR Per Day Rent for Revenue";
+                    MergeDiffSquareRec: Record "BLRCRMergeDifferentSqSubPage";
+                    MergeDiffSquareRecFromPerDayRevenue: Record "BLRCRMergeDifferentSqSubPage";
+                    SubLeaseMergeRec: Record "BLRCRSubLeaseMergedUnits";
+                    PerDayRevnue: Record "BLRCRPerDayRentforRevenue";
                     YearList: List of [Integer];
                     YearItem: Integer;
                 begin
-                    if Rec."ID" = 0 then
+                    if Rec."BLRID" = 0 then
                         Error('Proposal ID is missing or not assigned.');
 
                     // Fetch distinct years from the Merge DifferentSqure SubPage table
-                    MergeDiffSquareRec.SetRange("ID", Rec."ID");
+                    MergeDiffSquareRec.SetRange("BLRID", Rec."BLRID");
                     if MergeDiffSquareRec.FindSet() then
                         repeat
-                            if not YearList.Contains(MergeDiffSquareRec."MD_Year") then
-                                YearList.Add(MergeDiffSquareRec."MD_Year");
+                            if not YearList.Contains(MergeDiffSquareRec."BLRMD_Year") then
+                                YearList.Add(MergeDiffSquareRec."BLRMD_Year");
                         until MergeDiffSquareRec.Next() = 0
                     else
                         Error('No matching records found in Merge DifferentSqure SubPage for the given Proposal ID.');
 
                     // Loop through each year and fetch corresponding data
                     foreach YearItem in YearList do begin
-                        MergeDiffSquareRec.SetRange("ID", Rec."ID");
-                        MergeDiffSquareRec.SetRange("MD_Year", YearItem);
+                        MergeDiffSquareRec.SetRange("BLRID", Rec."BLRID");
+                        MergeDiffSquareRec.SetRange("BLRMD_Year", YearItem);
 
                         if MergeDiffSquareRec.FindSet() then
                             repeat
                                 // Loop through Sub Lease Merged Units and fetch relevant data
-                                SubLeaseMergeRec.SetRange("ID", Rec."ID");
+                                SubLeaseMergeRec.SetRange("BLRID", Rec."BLRID");
                                 if SubLeaseMergeRec.FindSet() then
                                     repeat
                                         PerDayRevnue.Init();
 
                                         // Initialize the record in the current grid with data from both tables
-                                        PerDayRevnue."Contract Renewal Id" := MergeDiffSquareRec."ID";
-                                        PerDayRevnue."Year" := MergeDiffSquareRec."MD_Year"; // From Merge DifferentSquare SubPage
-                                        PerDayRevnue."Sq.Ft" := SubLeaseMergeRec."Unit Size"; // From Sub Lease Merged Units
-                                        PerDayRevnue."Unit ID" := CopyStr(SubLeaseMergeRec."Single Unit Name", 1, strlen(SubLeaseMergeRec."Single Unit Name")); // From Sub Lease Merged Units
+                                        PerDayRevnue."BLRContract Renewal Id" := MergeDiffSquareRec."BLRID";
+                                        PerDayRevnue."BLRYear" := MergeDiffSquareRec."BLRMD_Year"; // From Merge DifferentSquare SubPage
+                                        PerDayRevnue."BLRSq.Ft" := SubLeaseMergeRec."BLRUnit Size"; // From Sub Lease Merged Units
+                                        PerDayRevnue."BLRUnit ID" := CopyStr(SubLeaseMergeRec."BLRSingle Unit Name", 1, strlen(SubLeaseMergeRec."BLRSingle Unit Name")); // From Sub Lease Merged Units
 
-                                        MergeDiffSquareRecFromPerDayRevenue.SetRange("MD_Unit ID", PerDayRevnue."Unit ID");
+                                        MergeDiffSquareRecFromPerDayRevenue.SetRange("BLRMD_Unit ID", PerDayRevnue."BLRUnit ID");
                                         if MergeDiffSquareRecFromPerDayRevenue.FindFirst() then
                                             // Directly assign the Per Day Rent value from MergeDiffSquareRec table to PerDayRevnue
-                                            PerDayRevnue."Per Day Rent Per Unit" := MergeDiffSquareRecFromPerDayRevenue."MD_Per Day Rent";
+                                            PerDayRevnue."BLRPer Day Rent Per Unit" := MergeDiffSquareRecFromPerDayRevenue."BLRMD_Per Day Rent";
 
                                         // Check if the record already exists to prevent duplicates
-                                        PerDayRevnue.SetRange(Year, PerDayRevnue.Year);
-                                        PerDayRevnue.SetRange("ID", PerDayRevnue."ID");
-                                        PerDayRevnue.SetRange("Unit ID", PerDayRevnue."Unit ID");
+                                        PerDayRevnue.SetRange(BLRYear, PerDayRevnue."BLRYear");
+                                        PerDayRevnue.SetRange("BLRID", PerDayRevnue."BLRID");
+                                        PerDayRevnue.SetRange("BLRUnit ID", PerDayRevnue."BLRUnit ID");
                                         if not PerDayRevnue.FindFirst() then begin
                                             // Insert the new record only if it doesn't exist
                                             PerDayRevnue.Insert();
@@ -343,8 +343,8 @@ page 73209682 "CR Merge DifferentSq SubPage"
 
     local procedure RecalculateTotals()
     var
-        LeaseProposalRec: Record "Contract Renewal"; // Replace with your actual Lease Proposal table name
-        RecordTemp: Record "CR Merge DifferentSq SubPage";
+        LeaseProposalRec: Record "BLRContractRenewal"; // Replace with your actual Lease Proposal table name
+        RecordTemp: Record "BLRCRMergeDifferentSqSubPage";
         lTotalAnnualAmount: Decimal;
         lTotalRoundOff: Decimal;
         lTotalFinalAmount: Decimal;
@@ -357,32 +357,32 @@ page 73209682 "CR Merge DifferentSq SubPage"
         FirstYearAnnualAmount := 0; // Initialize to 0
 
         // Filter records by the current Proposal ID
-        RecordTemp.SetRange("ID", Rec."ID");
+        RecordTemp.SetRange("BLRID", Rec."BLRID");
 
         // Sum up the values for the filtered records
         if RecordTemp.FindSet() then
             repeat
-                lTotalAnnualAmount += RecordTemp."MD_Annual Amount";
-                lTotalRoundOff += RecordTemp."MD_Round off";
-                lTotalFinalAmount += RecordTemp."MD_Final Annual Amount";
+                lTotalAnnualAmount += RecordTemp."BLRMD_Annual Amount";
+                lTotalRoundOff += RecordTemp."BLRMD_Round off";
+                lTotalFinalAmount += RecordTemp."BLRMD_Final Annual Amount";
 
                 // Check for the first year and add its Final Annual Amount to FirstYearAnnualAmount
-                if RecordTemp.MD_Year = 1 then
-                    FirstYearAnnualAmount += RecordTemp."MD_Final Annual Amount"; // Sum all Final Annual Amounts for 1st Year
+                if RecordTemp."BLRMD_Year" = 1 then
+                    FirstYearAnnualAmount += RecordTemp."BLRMD_Final Annual Amount"; // Sum all Final Annual Amounts for 1st Year
             until RecordTemp.Next() = 0;
 
         // Assign the calculated totals to the respective fields
-        Rec.TotalAnnualAmount := lTotalAnnualAmount;
-        Rec.TotalRoundOff := lTotalRoundOff;
-        Rec.TotalFinalAmount := lTotalFinalAmount;
-        Rec.TotalFirstAnnualAmount := FirstYearAnnualAmount;
+        Rec."BLRTotalAnnualAmount" := lTotalAnnualAmount;
+        Rec."BLRTotalRoundOff" := lTotalRoundOff;
+        Rec."BLRTotalFinalAmount" := lTotalFinalAmount;
+        Rec."BLRTotalFirstAnnualAmount" := FirstYearAnnualAmount;
         rec.Modify();
 
         // Update Lease Proposal Details with calculated totals
-        LeaseProposalRec.SetRange("ID", Rec."ID");
+        LeaseProposalRec.SetRange("BLRID", Rec."BLRID");
         if LeaseProposalRec.FindSet() then begin
-            LeaseProposalRec."Rent Amount" := FirstYearAnnualAmount; // Update Rent Amount with the sum of first year's Final Annual Amount
-            LeaseProposalRec."Contract Amount" := lTotalFinalAmount; // Update Annual Rent Amount with the total of all years' Final Annual Amounts
+            LeaseProposalRec."BLRRent Amount" := FirstYearAnnualAmount; // Update Rent Amount with the sum of first year's Final Annual Amount
+            LeaseProposalRec."BLRContract Amount" := lTotalFinalAmount; // Update Annual Rent Amount with the total of all years' Final Annual Amounts
 
             LeaseProposalRec.Modify(); // Save the changes to the Lease Proposal record
         end;
@@ -398,19 +398,19 @@ page 73209682 "CR Merge DifferentSq SubPage"
         TotalDays: Integer;
     begin
         // Check if Start Date and End Date are valid
-        if Rec."MD_Start Date" = 0D then
+        if Rec."BLRMD_Start Date" = 0D then
             Error('Start Date is not valid.');
-        if Rec."MD_End Date" = 0D then
+        if Rec."BLRMD_End Date" = 0D then
             Error('End Date is not valid.');
-        if Rec."MD_End Date" < Rec."MD_Start Date" then
+        if Rec."BLRMD_End Date" < Rec."BLRMD_Start Date" then
             Error('End Date cannot be earlier than Start Date.');
 
         // Initialize TotalDays
         TotalDays := 0;
 
         // Loop through each day between Start Date and End Date
-        CurrentDate := Rec."MD_Start Date";
-        while CurrentDate <= Rec."MD_End Date" do begin
+        CurrentDate := Rec."BLRMD_Start Date";
+        while CurrentDate <= Rec."BLRMD_End Date" do begin
             // Check if the current date is in a leap year and is February 29
             if IsLeapYear(Date2DMY(CurrentDate, 3)) and (Date2DMY(CurrentDate, 2) = 2) and (Date2DMY(CurrentDate, 1) = 29) then
                 TotalDays += 1; // Add an extra day for February 29
@@ -419,10 +419,10 @@ page 73209682 "CR Merge DifferentSq SubPage"
         end;
 
         // Calculate total number of days
-        Rec."MD_Number of Days" := Rec."MD_End Date" - Rec."MD_Start Date" + 1;
+        Rec."BLRMD_Number of Days" := Rec."BLRMD_End Date" - Rec."BLRMD_Start Date" + 1;
 
         // Add extra day if leap year logic applies
-        Rec."MD_Number of Days" += TotalDays;
+        Rec."BLRMD_Number of Days" += TotalDays;
 
         Rec.Modify();
     end;
@@ -436,16 +436,16 @@ page 73209682 "CR Merge DifferentSq SubPage"
 
     local procedure RecalculateAnnualAmount()
     begin
-        if Rec.MD_Year = 1 then begin
-            if (Rec."MD_Rate per Sq.Ft" > 0) and (Rec."MD_Unit Sq Ft" > 0) then
-                Rec."MD_Annual Amount" := Rec."MD_Rate per Sq.Ft" * Rec."MD_Unit Sq Ft"
+        if Rec."BLRMD_Year" = 1 then begin
+            if (Rec."BLRMD_Rate per Sq.Ft" > 0) and (Rec."BLRMD_Unit Sq Ft" > 0) then
+                Rec."BLRMD_Annual Amount" := Rec."BLRMD_Rate per Sq.Ft" * Rec."BLRMD_Unit Sq Ft"
             else
-                Rec."MD_Annual Amount" := 0;
+                Rec."BLRMD_Annual Amount" := 0;
         end else
-            if (Rec."MD_Rate per Sq.Ft" > 0) and (Rec."MD_Unit Sq Ft" > 0) then
-                Rec."MD_Annual Amount" := Rec."MD_Rate per Sq.Ft" * Rec."MD_Unit Sq Ft"
+            if (Rec."BLRMD_Rate per Sq.Ft" > 0) and (Rec."BLRMD_Unit Sq Ft" > 0) then
+                Rec."BLRMD_Annual Amount" := Rec."BLRMD_Rate per Sq.Ft" * Rec."BLRMD_Unit Sq Ft"
             else
-                Rec."MD_Annual Amount" := 0;
+                Rec."BLRMD_Annual Amount" := 0;
 
         Rec.Modify();
         CurrPage.Update();
@@ -453,10 +453,10 @@ page 73209682 "CR Merge DifferentSq SubPage"
 
     local procedure RecalculateFinalAnnualAmount()
     begin
-        if Rec."MD_Round off" = 0 then
-            Rec."MD_Final Annual Amount" := Rec."MD_Annual Amount"
+        if Rec."BLRMD_Round off" = 0 then
+            Rec."BLRMD_Final Annual Amount" := Rec."BLRMD_Annual Amount"
         else
-            Rec."MD_Final Annual Amount" := Rec."MD_Annual Amount" + Rec."MD_Round off";
+            Rec."BLRMD_Final Annual Amount" := Rec."BLRMD_Annual Amount" + Rec."BLRMD_Round off";
 
         Rec.Modify();
         CurrPage.Update();
@@ -464,10 +464,10 @@ page 73209682 "CR Merge DifferentSq SubPage"
 
     local procedure RecalculatePerDayRent()
     begin
-        if Rec."MD_Number of Days" > 0 then
-            Rec."MD_Per Day Rent" := Rec."MD_Final Annual Amount" / Rec."MD_Number of Days"
+        if Rec."BLRMD_Number of Days" > 0 then
+            Rec."BLRMD_Per Day Rent" := Rec."BLRMD_Final Annual Amount" / Rec."BLRMD_Number of Days"
         else
-            Rec."MD_Per Day Rent" := 0;
+            Rec."BLRMD_Per Day Rent" := 0;
 
         Rec.Modify();
         CurrPage.Update();

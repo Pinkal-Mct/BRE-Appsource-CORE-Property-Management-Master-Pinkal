@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 using Microsoft.Foundation.Company;
-report 73209578 AbuDhabi_Contract
+report 73209578 BLRAbuDhabi_Contract
 {
     ApplicationArea = All;
     Caption = 'AbuDhabi_Contract';
@@ -8,36 +8,36 @@ report 73209578 AbuDhabi_Contract
     DefaultRenderingLayout = "AbuDhabiContract.docx";
     dataset
     {
-        dataitem(TenancyContract; "Tenancy Contract")
+        dataitem(TenancyContract; "BLRTenancyContract")
         {
-            column(Emirate; Emirate)
+            column(Emirate; BLREmirate)
             {
             }
-            column(Community; Community)
+            column(Community; BLRCommunity)
             {
             }
-            column(PropertyClassification; "Property Classification")
+            column(PropertyClassification; "BLRProperty Classification")
             {
             }
-            column(Unit_Number; "Unit Number")
+            column(Unit_Number; "BLRUnit Number")
             {
             }
-            column(Makani_Number; "Makani Number")
+            column(Makani_Number; "BLRMakani Number")
             {
             }
-            column(DEWA_Number; "DEWA Number")
+            column(DEWA_Number; "BLRDEWA Number")
             {
             }
-            column(PropertyName; "Property Name")
+            column(PropertyName; "BLRProperty Name")
             {
             }
-            column(PropertyType; "Property Type")
+            column(PropertyType; "BLRProperty Type")
             {
             }
-            column(Property_Size; "Property Size")
+            column(Property_Size; "BLRProperty Size")
             {
             }
-            column(Base_Unit_of_Measure; "Base Unit of Measure")
+            column(Base_Unit_of_Measure; "BLRBase Unit of Measure")
             {
             }
         }

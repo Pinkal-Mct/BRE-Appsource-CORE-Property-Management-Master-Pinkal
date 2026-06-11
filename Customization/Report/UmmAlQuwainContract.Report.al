@@ -2,7 +2,7 @@ namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
 using Microsoft.Inventory.Item;
 using Microsoft.Sales.Customer;
-report 73209594 UmmAlQuwainContract
+report 73209594 BLRUmmAlQuwainContract
 {
     ApplicationArea = All;
     Caption = 'Umm Al Quwain Contract';
@@ -10,108 +10,108 @@ report 73209594 UmmAlQuwainContract
     DefaultRenderingLayout = "UmmAlQuwainContract.docx";
     dataset
     {
-        dataitem(TenancyContract; "Tenancy Contract")
+        dataitem(TenancyContract; "BLRTenancyContract")
         {
-            column(Customer_Name; "Customer Name")
+            column(Customer_Name; "BLRCustomer Name")
             {
             }
-            column(Emirates_ID; "Emirates ID")
+            column(Emirates_ID; "BLREmirates ID")
             {
             }
-            column(Contact_Number; "Contact Number")
+            column(Contact_Number; "BLRContact Number")
             {
             }
-            column(Email_Address; "Email Address")
+            column(Email_Address; "BLREmail Address")
             {
             }
-            column(Owner_s_Name; "Owner's Name")
+            column(Owner_s_Name; "BLROwner's Name")
             {
             }
-            column(Lessor_s_Name; "Lessor's Name")
+            column(Lessor_s_Name; "BLRLessor's Name")
             {
             }
-            column(Lessor_s_Emirates_ID; "Lessor's Emirates ID")
+            column(Lessor_s_Emirates_ID; "BLRLessor's Emirates ID")
             {
             }
-            column(Lessor_s_Phone; "Lessor's Phone")
+            column(Lessor_s_Phone; "BLRLessor's Phone")
             {
             }
-            column(Lessor_s_Email; "Lessor's Email")
+            column(Lessor_s_Email; "BLRLessor's Email")
             {
             }
-            column(Contract_Start_Date; "Contract Start Date")
+            column(Contract_Start_Date; "BLRContract Start Date")
             {
             }
-            column(Contract_End_Date; "Contract End Date")
+            column(Contract_End_Date; "BLRContract End Date")
             {
             }
-            column(Property_Size; "Property Size")
+            column(Property_Size; "BLRProperty Size")
             {
             }
-            column(B_U_o_M; "Base Unit of Measure")
+            column(B_U_o_M; "BLRBase Unit of Measure")
             {
             }
-            column(Unit_Number; "Unit Number")
+            column(Unit_Number; "BLRUnit Number")
             {
             }
-            column(Property_Type; "Property Type")
+            column(Property_Type; "BLRProperty Type")
             {
             }
-            column(Unit_Name; "Unit Name")
+            column(Unit_Name; "BLRUnit Name")
             {
             }
-            column(Property_Name; "Property Name")
+            column(Property_Name; "BLRProperty Name")
             {
             }
-            column(Property_Classification; "Property Classification")
+            column(Property_Classification; "BLRProperty Classification")
             {
             }
-            column(Contract_Tenor; "Contract Tenor")
+            column(Contract_Tenor; "BLRContract Tenor")
             {
             }
-            column(Lessor_s_Nationality; "Lessor's Nationality")
+            column(Lessor_s_Nationality; "BLRLessor's Nationality")
             {
             }
-            column(Lessor_s_Address; "Lessor's Address")
+            column(Lessor_s_Address; "BLRLessor's Address")
             {
             }
-            column(Rent_Amount; "Rent Amount")
+            column(Rent_Amount; "BLRRent Amount")
             {
             }
-            column(Community; Community)
+            column(Community; "BLRCommunity")
             {
             }
-            column(DEWA_Number; "DEWA Number")
+            column(DEWA_Number; "BLRDEWA Number")
             {
             }
             dataitem(Customer; Customer)
             {
-                DataItemLink = "No." = field("Tenant ID");
-                column(Nationality; Nationality)
+                DataItemLink = "No." = field("BLRTenant ID");
+                column(Nationality; BLRNationality)
                 {
                 }
-                column(P_O_Box; "P.O.Box")
+                column(P_O_Box; "BLRP.O.Box")
                 {
                 }
             }
             dataitem(Item; Item)
             {
-                DataItemLink = "No." = field("Unit ID");
-                column(Floor_Number; "Floor Number")
+                DataItemLink = "No." = field("BLRUnit ID");
+                column(Floor_Number; "BLRFloor Number")
                 {
                 }
             }
-            dataitem("Property Registration"; "Property Registration")
+            dataitem("BLRPropertyRegistration"; "BLRPropertyRegistration")
             {
-                DataItemLink = "Property ID" = field("Property ID");
-                column(Address; Address)
+                DataItemLink = "BLRProperty ID" = field("BLRProperty ID");
+                column(Address; BLRAddress)
                 {
                 }
             }
-            dataitem("Owner Profile"; "Owner Profile")
+            dataitem("BLROwnerProfile"; "BLROwnerProfile")
             {
-                DataItemLink = "Owner ID" = field("Owner ID");
-                column(O_P_O_Box; "P.O.Box")
+                DataItemLink = "BLROwner ID" = field("BLROwner ID");
+                column(O_P_O_Box; "BLRP.O.Box")
                 {
                 }
             }

@@ -1,7 +1,7 @@
-page 73209733 "Single Unit Rent SubPage"
+page 73209733 "BLRSingleUnitRentSubPage"
 {
     PageType = ListPart;
-    SourceTable = "Single Unit Rent SubPage";
+    SourceTable = "BLRSingleUnitRentSubPage";
     ApplicationArea = All;
     Caption = 'Single Unit Rent SubPage';
 
@@ -11,44 +11,44 @@ page 73209733 "Single Unit Rent SubPage"
         {
             repeater(Group)
             {
-                field("Proposal ID"; rec."Proposal ID")
+                field("Proposal ID"; rec."BLRProposal ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Displays the ID of the lease proposal associated with the single unit rent subpage record.';
                 }
-                field("Merged Unit ID"; rec."Merged Unit ID")
+                field("Merged Unit ID"; rec."BLRMerged Unit ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     Visible = false;
                     ToolTip = 'Unique identifier for the merged unit associated with this single unit rent subpage record.';
                 }
-                field("Unit ID"; rec."Unit ID")
+                field("Unit ID"; rec."BLRUnit ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the unit associated with this single unit rent subpage record.';
                 }
-                field("Year"; rec.Year)
+                field("Year"; rec."BLRYear")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Year for which the rent is being calculated.';
                 }
-                field("Start Date"; rec."Start Date")
+                field("Start Date"; rec."BLRStart Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Start date of the rent period for this single unit rent subpage record.';
                 }
-                field("End Date"; rec."End Date")
+                field("End Date"; rec."BLREnd Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'End date of the rent period for this single unit rent subpage record.';
                 }
-                field("Number of Days"; Rec."Number of Days")
+                field("Number of Days"; Rec."BLRNumber of Days")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -60,7 +60,7 @@ page 73209733 "Single Unit Rent SubPage"
                         RecalculateNumberOfDays();
                     end;
                 }
-                field("Unit Sq Ft"; rec."Unit Sq Ft")
+                field("Unit Sq Ft"; rec."BLRUnit Sq Ft")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -72,7 +72,7 @@ page 73209733 "Single Unit Rent SubPage"
                     end;
                 }
 
-                field("Rate per Sq.Ft"; rec."Rate per Sq.Ft")
+                field("Rate per Sq.Ft"; rec."BLRRate per Sq.Ft")
                 {
                     ApplicationArea = All;
                     Editable = true;
@@ -80,37 +80,37 @@ page 73209733 "Single Unit Rent SubPage"
 
                     trigger OnValidate()
                     var
-                        PreviousYearRecord: Record "Single Unit Rent SubPage";
+                        PreviousYearRecord: Record "BLRSingleUnitRentSubPage";
                         PreviousRate: Decimal;
                     begin
                         // Ensure the value is not negative
-                        if Rec."Rate per Sq.Ft" < 0 then
+                        if Rec."BLRRate per Sq.Ft" < 0 then
                             Error('Rate per Sq.Ft cannot be negative.');
 
                         // Fetch the previous year's record to calculate Rent Increase %
-                        PreviousYearRecord.SetRange("Proposal ID", Rec."Proposal ID");
-                        PreviousYearRecord.SetRange("Year", Rec."Year" - 1);
+                        PreviousYearRecord.SetRange("BLRProposal ID", Rec."BLRProposal ID");
+                        PreviousYearRecord.SetRange("BLRYear", Rec."BLRYear" - 1);
 
                         if PreviousYearRecord.FindFirst() then begin
-                            PreviousRate := PreviousYearRecord."Rate per Sq.Ft";
+                            PreviousRate := PreviousYearRecord."BLRRate per Sq.Ft";
 
                             // Ensure previous rate is greater than 0 to avoid division by zero
                             if PreviousRate > 0 then
-                                Rec."Rent Increase %" :=
-                                    ((Rec."Rate per Sq.Ft" - PreviousRate) / PreviousRate) * 100
+                                Rec."BLRRent Increase %" :=
+                                    ((Rec."BLRRate per Sq.Ft" - PreviousRate) / PreviousRate) * 100
                             else
-                                Rec."Rent Increase %" := 0; // No increase if previous rate is 0
+                                Rec."BLRRent Increase %" := 0; // No increase if previous rate is 0
                         end else
-                            Rec."Rent Increase %" := 0; // No increase for the first year or no previous record
+                            Rec."BLRRent Increase %" := 0; // No increase for the first year or no previous record
 
                         // Recalculate Annual Amount
-                        if (Rec."Rate per Sq.Ft" > 0) and (Rec."Unit Sq Ft" > 0) then
-                            Rec."Annual Amount" := Rec."Rate per Sq.Ft" * Rec."Unit Sq Ft"
+                        if (Rec."BLRRate per Sq.Ft" > 0) and (Rec."BLRUnit Sq Ft" > 0) then
+                            Rec."BLRAnnual Amount" := Rec."BLRRate per Sq.Ft" * Rec."BLRUnit Sq Ft"
                         else
-                            Rec."Annual Amount" := 0;
+                            Rec."BLRAnnual Amount" := 0;
 
                         // Set Final Annual Amount equal to Annual Amount
-                        Rec."Final Annual Amount" := Rec."Annual Amount";
+                        Rec."BLRFinal Annual Amount" := Rec."BLRAnnual Amount";
                         RecalculateFinalAnnualAmount();
                         // Recalculate Per Day Rent
                         RecalculatePerDayRent();
@@ -124,7 +124,7 @@ page 73209733 "Single Unit Rent SubPage"
                     end;
                 }
 
-                field("Rent Increase %"; Rec."Rent Increase %")
+                field("Rent Increase %"; Rec."BLRRent Increase %")
                 {
                     ApplicationArea = All;
                     Caption = 'Rent Increase %';
@@ -132,31 +132,31 @@ page 73209733 "Single Unit Rent SubPage"
 
                     trigger OnValidate()
                     var
-                        PreviousYearRecord: Record "Single Unit Rent SubPage";
+                        PreviousYearRecord: Record "BLRSingleUnitRentSubPage";
                         IncreaseFactor: Decimal;
                     begin
                         // Ensure that Rent Increase % is not negative
-                        if Rec."Rent Increase %" < 0 then
+                        if Rec."BLRRent Increase %" < 0 then
                             Error('Rent Increase % cannot be negative.');
 
                         // Skip calculation for the first year
-                        if Rec."Year" = 1 then
+                        if Rec."BLRYear" = 1 then
                             exit;
 
                         // Fetch the previous year's record
-                        PreviousYearRecord.SetRange("Proposal ID", Rec."Proposal ID");
-                        PreviousYearRecord.SetRange("Year", Rec."Year" - 1);
+                        PreviousYearRecord.SetRange("BLRProposal ID", Rec."BLRProposal ID");
+                        PreviousYearRecord.SetRange("BLRYear", Rec."BLRYear" - 1);
 
                         if PreviousYearRecord.FindFirst() then begin
                             // Calculate the new rate for the current year
-                            IncreaseFactor := 1 + (Rec."Rent Increase %" / 100);
-                            Rec."Rate per Sq.Ft" := PreviousYearRecord."Rate per Sq.Ft" * IncreaseFactor;
+                            IncreaseFactor := 1 + (Rec."BLRRent Increase %" / 100);
+                            Rec."BLRRate per Sq.Ft" := PreviousYearRecord."BLRRate per Sq.Ft" * IncreaseFactor;
 
                             // Recalculate Annual Amount
-                            Rec."Annual Amount" := Rec."Rate per Sq.Ft" * Rec."Unit Sq Ft";
+                            Rec."BLRAnnual Amount" := Rec."BLRRate per Sq.Ft" * Rec."BLRUnit Sq Ft";
 
                             // Update Final Annual Amount to match Annual Amount
-                            Rec."Final Annual Amount" := Rec."Annual Amount";
+                            Rec."BLRFinal Annual Amount" := Rec."BLRAnnual Amount";
 
                             // Recalculate Per Day Rent
                             RecalculatePerDayRent();
@@ -173,7 +173,7 @@ page 73209733 "Single Unit Rent SubPage"
                 }
 
 
-                field("Annual Amount"; Rec."Annual Amount")
+                field("Annual Amount"; Rec."BLRAnnual Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -182,7 +182,7 @@ page 73209733 "Single Unit Rent SubPage"
                     DecimalPlaces = 2 : 2;
                 }
 
-                field("Round off"; rec."Round off")
+                field("Round off"; rec."BLRRound off")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the round off value. The Final Annual Amount will be recalculated automatically.';
@@ -195,7 +195,7 @@ page 73209733 "Single Unit Rent SubPage"
                     end;
                 }
 
-                field("Final Annual Amount"; Rec."Final Annual Amount")
+                field("Final Annual Amount"; Rec."BLRFinal Annual Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -209,7 +209,7 @@ page 73209733 "Single Unit Rent SubPage"
                         RecalculateTotals();     // Update totals dynamically
                     end;
                 }
-                field("Per Day Rent"; Rec."Per Day Rent")
+                field("Per Day Rent"; Rec."BLRPer Day Rent")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -222,7 +222,7 @@ page 73209733 "Single Unit Rent SubPage"
             group("Total Rent Caculation")
             {
 
-                field("TotalAnnualAmount"; rec.TotalAnnualAmount)
+                field("TotalAnnualAmount"; rec."BLRTotalAnnualAmount")
                 {
                     Caption = 'Total Contract Amount';
                     ApplicationArea = All;
@@ -230,7 +230,7 @@ page 73209733 "Single Unit Rent SubPage"
                     ToolTip = 'Total annual amount for the contract, calculated from all entries in the subpage.';
                 }
 
-                field("TotalRoundOff"; rec.TotalRoundOff)
+                field("TotalRoundOff"; rec."BLRTotalRoundOff")
                 {
                     Caption = 'Round Off';
                     ApplicationArea = All;
@@ -238,7 +238,7 @@ page 73209733 "Single Unit Rent SubPage"
                     ToolTip = 'Total round off amount for the contract, calculated from all entries in the subpage.';
                 }
 
-                field("TotalFinalAmount"; rec.TotalFinalAmount)
+                field("TotalFinalAmount"; rec."BLRTotalFinalAmount")
                 {
                     Caption = 'Total Final Contract Amount';
                     ApplicationArea = All;
@@ -247,7 +247,7 @@ page 73209733 "Single Unit Rent SubPage"
                 }
 
 
-                field("TotalFirstAnnualAmount"; rec.TotalFirstAnnualAmount)
+                field("TotalFirstAnnualAmount"; rec."BLRTotalFirstAnnualAmount")
                 {
                     Caption = 'Total Annual Amount';
                     ApplicationArea = All;
@@ -261,8 +261,8 @@ page 73209733 "Single Unit Rent SubPage"
     local procedure RecalculateTotals()
     var
 
-        LeaseProposalRec: Record "Lease Proposal Details";
-        RecordTemp: Record "Single Unit Rent SubPage";
+        LeaseProposalRec: Record "BLRLeaseProposalDetails";
+        RecordTemp: Record "BLRSingleUnitRentSubPage";
         lTotalAnnualAmount: Decimal;
         LTotalRoundOff: Decimal;
         LTotalFinalAmount: Decimal;
@@ -275,40 +275,40 @@ page 73209733 "Single Unit Rent SubPage"
         FirstYearAnnualAmount := 0; // Initialize to 0
 
         // Filter records based on the current Proposal ID
-        RecordTemp.SetRange("Proposal ID", Rec."Proposal ID");
+        RecordTemp.SetRange("BLRProposal ID", Rec."BLRProposal ID");
 
         // Iterate over the filtered records
         if RecordTemp.FindSet() then
             repeat
-                lTotalAnnualAmount += RecordTemp."Annual Amount";
-                LTotalRoundOff += RecordTemp."Round off";
-                LTotalFinalAmount += RecordTemp."Final Annual Amount";
+                lTotalAnnualAmount += RecordTemp."BLRAnnual Amount";
+                LTotalRoundOff += RecordTemp."BLRRound off";
+                LTotalFinalAmount += RecordTemp."BLRFinal Annual Amount";
 
                 // Check for the first year and assign its Annual Amount
-                if RecordTemp."Year" = 1 then
-                    FirstYearAnnualAmount := RecordTemp."Final Annual Amount";
+                if RecordTemp."BLRYear" = 1 then
+                    FirstYearAnnualAmount := RecordTemp."BLRFinal Annual Amount";
             until RecordTemp.Next() = 0;
 
         // Assign calculated totals to the fields
-        Rec.TotalAnnualAmount := lTotalAnnualAmount;
-        Rec.TotalRoundOff := LTotalRoundOff;
-        Rec.TotalFinalAmount := LTotalFinalAmount;
-        Rec.TotalFirstAnnualAmount := FirstYearAnnualAmount; // Assign the first year's annual amount
+        Rec."BLRTotalAnnualAmount" := lTotalAnnualAmount;
+        Rec."BLRTotalRoundOff" := LTotalRoundOff;
+        Rec."BLRTotalFinalAmount" := LTotalFinalAmount;
+        Rec."BLRTotalFirstAnnualAmount" := FirstYearAnnualAmount; // Assign the first year's annual amount
 
         // Update Lease Proposal Details with calculated totals
-        LeaseProposalRec.SetRange("Proposal ID", Rec."Proposal ID");
+        LeaseProposalRec.SetRange("BLRProposal ID", Rec."BLRProposal ID");
         if LeaseProposalRec.FindSet() then begin
-            LeaseProposalRec."Rent Amount" := FirstYearAnnualAmount; // Update Rent Amount with the first year's Final Annual Amount
-            LeaseProposalRec."Annual Rent Amount" := LTotalFinalAmount; // Update Annual Rent Amount with the Total Final Amount
+            LeaseProposalRec."BLRRent Amount" := FirstYearAnnualAmount; // Update Rent Amount with the first year's Final Annual Amount
+            LeaseProposalRec."BLRAnnual Rent Amount" := LTotalFinalAmount; // Update Annual Rent Amount with the Total Final Amount
 
 
-            if LeaseProposalRec."Rent Amount VAT %" = LeaseProposalRec."Rent Amount VAT %"::"5%" then
+            if LeaseProposalRec."BLRRent Amount VAT %" = LeaseProposalRec."BLRRent Amount VAT %"::"5%" then
                 vatPer := 5
             else
                 vatPer := 0;
 
-            LeaseProposalRec."Rent VAT Amount" := LeaseProposalRec."Annual Rent Amount" * (vatPer / 100);
-            LeaseProposalRec."Rent Amount Including VAT" := LeaseProposalRec."Annual Rent Amount" + LeaseProposalRec."Rent VAT Amount";
+            LeaseProposalRec."BLRRent VAT Amount" := LeaseProposalRec."BLRAnnual Rent Amount" * (vatPer / 100);
+            LeaseProposalRec."BLRRent Amount Including VAT" := LeaseProposalRec."BLRAnnual Rent Amount" + LeaseProposalRec."BLRRent VAT Amount";
             LeaseProposalRec.Modify(); // Save the changes to the Lease Proposal record
         end;
 
@@ -327,25 +327,25 @@ page 73209733 "Single Unit Rent SubPage"
         IsLeapYearInRange: Boolean;
     begin
         // Validate Start Date and End Date
-        if Rec."Start Date" = 0D then
+        if Rec."BLRStart Date" = 0D then
             Error('Start Date is not valid.');
-        if Rec."End Date" = 0D then
+        if Rec."BLREnd Date" = 0D then
             Error('End Date is not valid.');
-        if Rec."End Date" < Rec."Start Date" then
+        if Rec."BLREnd Date" < Rec."BLRStart Date" then
             Error('End Date cannot be earlier than Start Date.');
 
         // Initialize variables
-        StartYear := Date2DMY(Rec."Start Date", 3); // Extract year of Start Date
-        EndYear := Date2DMY(Rec."End Date", 3);    // Extract year of End Date
-        TotalDays := Rec."End Date" - Rec."Start Date" + 1;
+        StartYear := Date2DMY(Rec."BLRStart Date", 3); // Extract year of Start Date
+        EndYear := Date2DMY(Rec."BLREnd Date", 3);    // Extract year of End Date
+        TotalDays := Rec."BLREnd Date" - Rec."BLRStart Date" + 1;
         IsLeapYearInRange := false;
 
         // Check each year in the range for leap year
         for CurrentYear := StartYear to EndYear do
             if IsLeapYear(CurrentYear) then
                 // Ensure the leap day (Feb 29) falls within the Start and End Date
-                if (DMY2Date(29, 2, CurrentYear) >= Rec."Start Date") and
-                   (DMY2Date(29, 2, CurrentYear) <= Rec."End Date") then begin
+                if (DMY2Date(29, 2, CurrentYear) >= Rec."BLRStart Date") and
+                   (DMY2Date(29, 2, CurrentYear) <= Rec."BLREnd Date") then begin
                     IsLeapYearInRange := true;
                     break; // Stop checking further once a leap year is found
                 end;
@@ -355,7 +355,7 @@ page 73209733 "Single Unit Rent SubPage"
             TotalDays := TotalDays + 1;
 
         // Set the calculated number of days
-        Rec."Number of Days" := TotalDays;
+        Rec."BLRNumber of Days" := TotalDays;
 
         Rec.Modify();
     end;
@@ -369,16 +369,16 @@ page 73209733 "Single Unit Rent SubPage"
 
     local procedure RecalculateAnnualAmount()
     begin
-        if Rec."Year" = 1 then begin
-            if (Rec."Rate per Sq.Ft" > 0) and (Rec."Unit Sq Ft" > 0) then
-                Rec."Annual Amount" := Rec."Rate per Sq.Ft" * Rec."Unit Sq Ft"
+        if Rec."BLRYear" = 1 then begin
+            if (Rec."BLRRate per Sq.Ft" > 0) and (Rec."BLRUnit Sq Ft" > 0) then
+                Rec."BLRAnnual Amount" := Rec."BLRRate per Sq.Ft" * Rec."BLRUnit Sq Ft"
             else
-                Rec."Annual Amount" := 0;
+                Rec."BLRAnnual Amount" := 0;
         end else
-            if (Rec."Rate per Sq.Ft" > 0) and (Rec."Unit Sq Ft" > 0) then
-                Rec."Annual Amount" := Rec."Rate per Sq.Ft" * Rec."Unit Sq Ft"
+            if (Rec."BLRRate per Sq.Ft" > 0) and (Rec."BLRUnit Sq Ft" > 0) then
+                Rec."BLRAnnual Amount" := Rec."BLRRate per Sq.Ft" * Rec."BLRUnit Sq Ft"
             else
-                Rec."Annual Amount" := 0;
+                Rec."BLRAnnual Amount" := 0;
 
         Rec.Modify();
         CurrPage.Update();
@@ -394,31 +394,31 @@ page 73209733 "Single Unit Rent SubPage"
         ProratedAmount := 0;
 
         // If dates are not set, set Final Annual Amount to Annual Amount + Round off
-        if (Rec."Start Date" = 0D) or (Rec."End Date" = 0D) then begin
-            Rec."Final Annual Amount" := Rec."Annual Amount" + Rec."Round off";
+        if (Rec."BLRStart Date" = 0D) or (Rec."BLREnd Date" = 0D) then begin
+            Rec."BLRFinal Annual Amount" := Rec."BLRAnnual Amount" + Rec."BLRRound off";
             Rec.Modify();
             CurrPage.Update();
             exit;
         end;
 
-        if Rec."End Date" < Rec."Start Date" then
+        if Rec."BLREnd Date" < Rec."BLRStart Date" then
             Error('End Date cannot be earlier than Start Date.');
 
-        DaysInPeriod := Rec."End Date" - Rec."Start Date" + 1;
+        DaysInPeriod := Rec."BLREnd Date" - Rec."BLRStart Date" + 1;
 
         DaysInYear := 365;
 
-        if IsLeapYear(Date2DMY(Rec."Start Date", 3)) then begin
-            LeapDay := DMY2Date(29, 2, Date2DMY(Rec."Start Date", 3));
+        if IsLeapYear(Date2DMY(Rec."BLRStart Date", 3)) then begin
+            LeapDay := DMY2Date(29, 2, Date2DMY(Rec."BLRStart Date", 3));
 
-            if (LeapDay >= Rec."Start Date") and (LeapDay <= Rec."End Date") then
+            if (LeapDay >= Rec."BLRStart Date") and (LeapDay <= Rec."BLREnd Date") then
                 DaysInYear := 366;
         end;
 
-        ProratedAmount := (Rec."Annual Amount" * DaysInPeriod) / DaysInYear;
+        ProratedAmount := (Rec."BLRAnnual Amount" * DaysInPeriod) / DaysInYear;
 
         // Apply round off on top of the prorated sum
-        Rec."Final Annual Amount" := ProratedAmount + Rec."Round off";
+        Rec."BLRFinal Annual Amount" := ProratedAmount + Rec."BLRRound off";
 
         Rec.Modify();
         CurrPage.Update();
@@ -426,10 +426,10 @@ page 73209733 "Single Unit Rent SubPage"
 
     local procedure RecalculatePerDayRent()
     begin
-        if Rec."Number of Days" > 0 then
-            Rec."Per Day Rent" := Rec."Final Annual Amount" / Rec."Number of Days"
+        if Rec."BLRNumber of Days" > 0 then
+            Rec."BLRPer Day Rent" := Rec."BLRFinal Annual Amount" / Rec."BLRNumber of Days"
         else
-            Rec."Per Day Rent" := 0;
+            Rec."BLRPer Day Rent" := 0;
 
         Rec.Modify();
         CurrPage.Update();

@@ -1,8 +1,8 @@
-page 73209745 "Tenancy Contract Card"
+page 73209745 "BLRTenancy Contract Card"
 {
     PageType = Card;
     ApplicationArea = All;
-    SourceTable = "Tenancy Contract";
+    SourceTable = "BLRTenancyContract";
     Caption = 'Tenancy Contract';
 
     layout
@@ -14,14 +14,14 @@ page 73209745 "Tenancy Contract Card"
             {
                 Caption = 'General Information';
 
-                field("Contract ID"; rec."Contract ID")
+                field("Contract ID"; rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the tenancy contract.';
                 }
 
-                field("Contract Type"; rec."Contract Type")
+                field("Contract Type"; rec."BLRContract Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Select the type of tenancy contract.';
@@ -31,7 +31,7 @@ page 73209745 "Tenancy Contract Card"
                         UpdateFieldsEnable();
                     end;
                 }
-                field("Proposal ID"; Rec."Proposal ID")
+                field("Proposal ID"; Rec."BLRProposal ID")
                 {
                     ApplicationArea = All;
                     Enabled = ProposalIDEnabled;
@@ -43,13 +43,13 @@ page 73209745 "Tenancy Contract Card"
 
                 }
 
-                field("Renewal Proposal ID"; rec."Renewal Proposal ID")
+                field("Renewal Proposal ID"; rec."BLRRenewal Proposal ID")
                 {
                     ApplicationArea = All;
                     Enabled = RenewalProposalIDEnabled;
                     ToolTip = 'Specifies the unique identifier for the renewal proposal associated with this tenancy contract.';
                 }
-                field("Contract Date"; Rec."Contract Date")
+                field("Contract Date"; Rec."BLRContract Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the date when the tenancy contract was created.';
@@ -58,61 +58,61 @@ page 73209745 "Tenancy Contract Card"
 
             group("Owner / Lessor Information")
             {
-                field("Owner's Name"; rec."Owner's Name")
+                field("Owner's Name"; rec."BLROwner's Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the name of the owner or lessor associated with this tenancy contract.';
                     Editable = false;
 
                 }
-                field("Owner ID"; rec."Owner ID")
+                field("Owner ID"; rec."BLROwner ID")
                 {
                     ApplicationArea = All;
                     Visible = false;
                     ToolTip = 'Specifies the unique identifier for the owner associated with this tenancy contract.';
                 }
 
-                field("Lessor's Name"; rec."Lessor's Name")
+                field("Lessor's Name"; rec."BLRLessor's Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the name of the lessor associated with this tenancy contract.';
                 }
 
-                field("Lessor's Emirates ID"; rec."Lessor's Emirates ID")
+                field("Lessor's Emirates ID"; rec."BLRLessor's Emirates ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the Emirates ID of the lessor associated with this tenancy contract.';
                 }
 
-                field("License No."; rec."License No.")
+                field("License No."; rec."BLRLicense No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the license number of the owner or lessor associated with this tenancy contract.';
                 }
 
-                field("Licensing Authority"; rec."Licensing Authority")
+                field("Licensing Authority"; rec."BLRLicensing Authority")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Select the licensing authority for the owner or lessor associated with this tenancy contract.';
                 }
 
-                field("Lessor's Email"; rec."Lessor's Email")
+                field("Lessor's Email"; rec."BLRLessor's Email")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the email address of the lessor associated with this tenancy contract.';
                 }
 
-                field("Lessor's Phone"; rec."Lessor's Phone")
+                field("Lessor's Phone"; rec."BLRLessor's Phone")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the phone number of the lessor associated with this tenancy contract.';
                 }
-                field("Lessor's Address"; Rec."Lessor's Address")
+                field("Lessor's Address"; Rec."BLRLessor's Address")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the address of the lessor associated with this tenancy contract.';
                 }
-                field("Lessor's Nationality"; Rec."Lessor's Nationality")
+                field("Lessor's Nationality"; Rec."BLRLessor's Nationality")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the nationality of the lessor associated with this tenancy contract.';
@@ -123,49 +123,49 @@ page 73209745 "Tenancy Contract Card"
             group("Tenant & Customer Info")
             {
                 Caption = 'Tenant & Customer Information';
-                field("Tenant ID"; rec."Tenant ID")
+                field("Tenant ID"; rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Lookup = true;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the tenant associated with this tenancy contract.';
                 }
-                field("Customer Name"; Rec."Customer Name")
+                field("Customer Name"; Rec."BLRCustomer Name")
                 {
                     ApplicationArea = All;
                     Lookup = true;
                     Editable = false;
                     ToolTip = 'Enter the name of the tenant associated with this tenancy contract.';
                 }
-                field("Emirates ID"; rec."Emirates ID")
+                field("Emirates ID"; rec."BLREmirates ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the Emirates ID of the tenant associated with this tenancy contract.';
                 }
 
-                field("Contact Number"; rec."Contact Number")
+                field("Contact Number"; rec."BLRContact Number")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the contact number of the tenant associated with this tenancy contract.';
                 }
 
-                field("Email Address"; rec."Email Address")
+                field("Email Address"; rec."BLREmail Address")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the email address of the tenant associated with this tenancy contract.';
                 }
 
-                field("Tenant_License No."; Rec."Tenant_License No.")
+                field("Tenant_License No."; Rec."BLRTenant_License No.")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the license number of the tenant associated with this tenancy contract.';
                 }
 
-                field("Tenant_Licensing Authority"; Rec."Tenant_Licensing Authority")
+                field("Tenant_Licensing Authority"; Rec."BLRTenant_Licensing Authority")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -177,27 +177,27 @@ page 73209745 "Tenancy Contract Card"
             group("Property Info")
             {
                 Caption = 'Property Information';
-                field("Property ID"; rec."Property ID")
+                field("Property ID"; rec."BLRProperty ID")
                 {
                     ApplicationArea = All;
                     Lookup = true;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the property associated with this tenancy contract.';
                 }
-                field("Property Name"; Rec."Property Name")
+                field("Property Name"; Rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the name of the property associated with this tenancy contract.';
                 }
-                field("Property Classification"; rec."Property Classification")
+                field("Property Classification"; rec."BLRProperty Classification")
                 {
                     ApplicationArea = All;
                     Lookup = true;
                     Editable = false;
                     ToolTip = 'Select the classification of the property associated with this tenancy contract.';
                 }
-                field("Property Type"; rec."Property Type")
+                field("BLRPropertyType"; rec."BLRProperty Type")
                 {
                     ApplicationArea = All;
                     Lookup = true;
@@ -205,14 +205,14 @@ page 73209745 "Tenancy Contract Card"
                     ToolTip = 'Select the type of property associated with this tenancy contract.';
                 }
 
-                field("Praposal Type Selected"; rec."Praposal Type Selected")
+                field("Praposal Type Selected"; rec."BLRPraposal Type Selected")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Category';
                     Editable = false;
                     ToolTip = 'Select the type of proposal for the tenancy contract, either Single Unit or Merge Unit.';
                 }
-                field("Unit ID"; rec."Unit ID")
+                field("Unit ID"; rec."BLRUnit ID")
                 {
                     ApplicationArea = All;
                     Lookup = true;
@@ -220,48 +220,48 @@ page 73209745 "Tenancy Contract Card"
                     ToolTip = 'Specifies the unique identifier for the unit associated with this tenancy contract.';
                 }
 
-                field("Merge Unit ID"; Rec."Merge Unit ID")
+                field("Merge Unit ID"; Rec."BLRMerge Unit ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     Lookup = true; // Enable lookup for Unit ID
                     ToolTip = 'Specifies the unique identifier for the merge unit associated with this tenancy contract.';
                 }
-                field("Unit Name"; Rec."Unit Name")
+                field("Unit Name"; Rec."BLRUnit Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the name of the unit associated with this tenancy contract.';
                 }
 
-                field("Unit Number"; Rec."Unit Number")
+                field("Unit Number"; Rec."BLRUnit Number")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the unit number associated with this tenancy contract.';
                 }
 
-                field("Unit Address"; rec."Unit Address")
+                field("Unit Address"; rec."BLRUnit Address")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the address of the unit associated with this tenancy contract.';
 
                 }
-                field("Unit Classification"; rec."Usage Type")
+                field("Unit Classification"; rec."BLRUsage Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Select the classification of the unit associated with this tenancy contract.';
                     Editable = false;
                 }
-                field("Unit Type"; rec."Unit Type")
+                field("Unit Type"; rec."BLRUnit Type")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Select the type of unit associated with this tenancy contract.';
                 }
 
-                field("Uniq Unit ID"; Rec.UnitID) // Auto-generated Unit ID
+                field("Uniq Unit ID"; Rec."BLRUnitID") // Auto-generated Unit ID
                 {
                     ApplicationArea = All;
                     Caption = 'Uniq Unit ID';
@@ -269,7 +269,7 @@ page 73209745 "Tenancy Contract Card"
                     ToolTip = 'Specifies the unique identifier for the unit associated with this tenancy contract.';
                 }
 
-                field("Single Unit Name"; Rec."Single Unit Name")
+                field("Single Unit Name"; Rec."BLRSingle Unit Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -277,71 +277,71 @@ page 73209745 "Tenancy Contract Card"
                     ToolTip = 'Enter the name of the single unit associated with this tenancy contract.';
                 }
 
-                field("Market Rate per Sq. Ft."; rec."Market Rate per Sq. Ft.")
+                field("Market Rate per Sq. Ft."; rec."BLRMarket Rate per Sq. Ft.")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the market rate per square foot for the unit associated with this tenancy contract.';
                 }
 
-                field("Ejari Name"; Rec."Ejari Name")
+                field("Ejari Name"; Rec."BLREjari Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the Ejari name associated with this tenancy contract.';
                 }
-                field("Unit Sq. Feet"; Rec."Unit Sq. Feet")
+                field("Unit Sq. Feet"; Rec."BLRUnit Sq. Feet")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the square footage of the unit associated with this tenancy contract.';
                 }
-                field("Property Size"; Rec."Property Size")
+                field("Property Size"; Rec."BLRProperty Size")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the size of the property associated with this tenancy contract.';
                 }
 
-                field("Base Unit of Measure"; rec."Base Unit of Measure")
+                field("Base Unit of Measure"; rec."BLRBase Unit of Measure")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Select the base unit of measure for the property associated with this tenancy contract.';
                 }
 
-                field("Makani Number"; Rec."Makani Number")
+                field("Makani Number"; Rec."BLRMakani Number")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the Makani number associated with this tenancy contract.';
                 }
-                field("Municipality Number"; Rec."Municipality Number")
+                field("Municipality Number"; Rec."BLRMunicipality Number")
                 {
                     ApplicationArea = All;
                     Editable = false;
                 }
 
-                field(Emirate; Rec.Emirate)
+                field(Emirate; Rec."BLREmirate")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Select the emirate where the property is located.';
                 }
 
-                field(Community; Rec.Community)
+                field(Community; Rec."BLRCommunity")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Select the community where the property is located.';
                 }
-                field("DEWA Number"; Rec."DEWA Number")
+                field("DEWA Number"; Rec."BLRDEWA Number")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the DEWA number associated with this tenancy contract.';
                 }
 
-                field("Facilities/Amenities"; rec."Facilities/Amenities")
+                field("Facilities/Amenities"; rec."BLRFacilities/Amenities")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -353,98 +353,98 @@ page 73209745 "Tenancy Contract Card"
             group("Contract Details")
             {
                 Caption = 'Contract Details';
-                field("Contract Start Date"; Rec."Contract Start Date")
+                field("Contract Start Date"; Rec."BLRContract Start Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the start date of the tenancy contract.';
                 }
-                field("Contract End Date"; Rec."Contract End Date")
+                field("Contract End Date"; Rec."BLRContract End Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the end date of the tenancy contract.';
                 }
-                field("Contract Tenor"; Rec."Contract Tenor")
+                field("Contract Tenor"; Rec."BLRContract Tenor")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the tenor of the tenancy contract.';
                 }
 
-                field("Rent Amount"; Rec."Rent Amount")
+                field("Rent Amount"; Rec."BLRRent Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the rent amount for the tenancy contract.';
                 }
 
-                field("Contract VAT %"; Rec."Contract VAT %")
+                field("Contract VAT %"; Rec."BLRContract VAT %")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the VAT percentage applicable to the tenancy contract.';
                 }
 
-                field("Contract VAT Amount"; Rec."Contract VAT Amount")
+                field("Contract VAT Amount"; Rec."BLRContract VAT Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the VAT amount for the tenancy contract.';
                 }
 
-                field("Contract Amount Including VAT"; Rec."Contract Amount Including VAT")
+                field("Contract Amount Including VAT"; Rec."BLRContAmtInclVAT")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the contract amount including VAT for the tenancy contract.';
                 }
 
-                field("Annual Rent Amount"; Rec."Annual Rent Amount")
+                field("Annual Rent Amount"; Rec."BLRAnnual Rent Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the annual rent amount for the tenancy contract.';
                 }
 
-                field("Payment Frequency"; rec."Payment Frequency")
+                field("Payment Frequency"; rec."BLRPayment Frequency")
                 {
                     ApplicationArea = All;
                     Caption = 'Frequency of payment';
                     Editable = false;
                     ToolTip = 'Enter the payment frequency for the tenancy contract.';
                 }
-                field("Payment Method"; rec."Payment Method")
+                field("Payment Method"; rec."BLRPayment Method")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Mode';
                     Editable = false;
                     ToolTip = 'Enter the payment method for the tenancy contract.';
                 }
-                field("No of Installments"; rec."No of Installments")
+                field("No of Installments"; rec."BLRNo of Installments")
                 {
                     ApplicationArea = All;
                     Caption = 'No of Installments';
                     ToolTip = 'Enter the number of installments for the tenancy contract.';
                 }
             }
-            part("Additional Terms"; "TC Additional Terms Subpage")
+            part("Additional Terms"; "BLRTC Additional Terms Subpage")
             {
                 ApplicationArea = All;
-                SubPageLink = "Document No." = FIELD("Contract ID");
+                SubPageLink = "BLRDocument No." = FIELD("BLRContract ID");
                 Caption = 'Additional Terms';
 
             }
-            group("Security Deposit")
+            group("BLRSecurityDeposit")
             {
-                field("Security Deposit Amount"; Rec."Security Deposit Amount")
+                field("Security Deposit Amount"; Rec."BLRSecurity Deposit Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the security deposit amount for the tenancy contract.';
                 }
 
-                field("Security Deposit Amt. Received"; Rec."Security Deposit Amt. Received")
+                field("Security Deposit Amt. Received"; Rec."BLRSecDepAmtReceived")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -456,7 +456,7 @@ page 73209745 "Tenancy Contract Card"
                         UpdateSecurityAmountReceived();
                     end;
                 }
-                field("Security Amount Pending"; Rec."Security Amount Pending")
+                field("Security Amount Pending"; Rec."BLRSecurity Amount Pending")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -469,32 +469,32 @@ page 73209745 "Tenancy Contract Card"
                     end;
                 }
 
-                field("Security Balanced Amount"; Rec."Security Balanced Amount")
+                field("Security Balanced Amount"; Rec."BLRSecurity Balanced Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     Caption = 'Security Deposit Amount Balance';
                     ToolTip = 'Enter the balanced amount of the security deposit for the tenancy contract.';
                 }
-                field("Carry Forward In"; Rec."Carry Forward In")
+                field("Carry Forward In"; Rec."BLRCarry Forward In")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the amount carried forward from the previous tenancy contract.';
                 }
-                field("Carry Forward Out"; Rec."Carry Forward Out")
+                field("Carry Forward Out"; Rec."BLRCarry Forward Out")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the amount carried forward to the next tenancy contract.';
                 }
-                field(Adjustments; Rec.Adjustments)
+                field(Adjustments; Rec.BLRAdjustments)
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter any adjustments made to the security deposit for the tenancy contract.';
                 }
-                field(Refund; Rec.Refund)
+                field(Refund; Rec.BLRRefund)
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -507,46 +507,46 @@ page 73209745 "Tenancy Contract Card"
             {
                 Caption = 'Grace Period Information';
 
-                field("Grace Start Date"; Rec."Grace Start Date")
+                field("Grace Start Date"; Rec."BLRGrace Start Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the start date of the grace period for the tenancy contract.';
                 }
-                field("Grace End Date"; Rec."Grace End Date")
+                field("Grace End Date"; Rec."BLRGrace End Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the end date of the grace period for the tenancy contract.';
                 }
-                field("Grace Period"; Rec."Grace Period")
+                field("Grace Period"; Rec."BLRGrace Period")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Enter the duration of the grace period for the tenancy contract.';
                 }
 
-                field("Handover is Completed"; rec."Handover is Completed")
+                field("Handover is Completed"; rec."BLRHandover is Completed")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indicates whether the handover of the property has been completed.';
                 }
 
-                field("Handover of PDC"; rec."Handover of PDC")
+                field("Handover of PDC"; rec."BLRHandover of PDC")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indicates whether the post-dated cheques (PDC) have been handed over.';
                 }
-                field("Signed TC Document"; rec."Signed TC Document")
+                field("Signed TC Document"; rec."BLRSigned TC Document")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indicates whether the signed tenancy contract document has been uploaded.';
                 }
-                field("Handover Unit"; rec."Handover Unit")
+                field("Handover Unit"; rec."BLRHandover Unit")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indicates whether the unit has been handed over to the tenant.';
                 }
 
-                field("Single Rent Calculation"; Rec."Single Rent Calculation")
+                field("Single Rent Calculation"; Rec."BLRSingle Rent Calculation")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -557,7 +557,7 @@ page 73209745 "Tenancy Contract Card"
                     end;
                 }
 
-                field("Merge Rent Calculation"; Rec."Merge Rent Calculation")
+                field("Merge Rent Calculation"; Rec."BLRMerge Rent Calculation")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -569,7 +569,7 @@ page 73209745 "Tenancy Contract Card"
                 }
 
 
-                field("Upload Document"; Rec."Upload Document")
+                field("Upload Document"; Rec."BLRUpload Document")
                 {
                     ToolTip = 'Upload a document related to the tenancy contract.';
                     ApplicationArea = All;
@@ -577,7 +577,7 @@ page 73209745 "Tenancy Contract Card"
                     DrillDown = true;
                     trigger OnDrillDown()
                     var
-                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                         fileName: Text;
                         uploadResult: Text;
                         folderName: Text;
@@ -585,15 +585,15 @@ page 73209745 "Tenancy Contract Card"
                         folderName := 'TenancyContractDocuments';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Upload Document" := CopyStr(fileName, 1, StrLen(fileName));
-                            Rec."view Document" := copyStr(uploadResult, 1, StrLen(uploadResult));
+                            Rec."BLRUpload Document" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."BLRview Document" := copyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
                     end;
                 }
 
-                field("view Document"; Rec."view Document")
+                field("view Document"; Rec."BLRview Document")
                 {
                     ApplicationArea = All;
                     Editable = true;
@@ -605,7 +605,7 @@ page 73209745 "Tenancy Contract Card"
                         FileURL: Text;
                     begin
                         // Get the URL of the uploaded document
-                        FileURL := Rec."view Document";
+                        FileURL := Rec."BLRview Document";
 
                         // Check if the file URL is not empty
                         if FileURL = '' then
@@ -616,32 +616,32 @@ page 73209745 "Tenancy Contract Card"
                     end;
                 }
 
-                field("Renewal Contract Status"; rec."Renewal Contract Status")
+                field("Renewal Contract Status"; rec."BLRRenewal Contract Status")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Indicates the status of the renewal contract associated with this tenancy contract.';
                 }
 
-                field("Created By"; rec."Created By")
+                field("Created By"; rec."BLRCreated By")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the user who created this tenancy contract.';
                 }
 
-                field("Renewal Notification to Tenant"; rec."Renewal Notification to Tenant")
+                field("Renewal Notification to Tenant"; rec."BLRRenewalNotiftoTenant")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indicates whether a renewal notification has been sent to the tenant for this tenancy contract.';
                 }
 
-                field("Tenant Loyalty Check Reminder"; rec."Tenant Loyalty Check Reminder")
+                field("Tenant Loyalty Check Reminder"; rec."BLRTenantLoyaltyCheckReminder")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indicates whether a reminder for tenant loyalty check has been set for this tenancy contract.';
                 }
 
-                field("Payment Reminder"; rec."Payment Reminder")
+                field("Payment Reminder"; rec."BLRPayment Reminder")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indicates whether a payment reminder has been set for this tenancy contract.';
@@ -651,11 +651,11 @@ page 73209745 "Tenancy Contract Card"
             group("Lease Unit Details")
             {
                 Caption = 'Unit Details';
-                part("Unit all Details"; "Sub Lease Merged Units Card")
+                part("Unit all Details"; "BLRSub Lease Merged Units Card")
                 {
-                    SubPageLink = "Merge Unit ID" = FIELD("Merge Unit ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRMerge Unit ID" = FIELD("BLRMerge Unit ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
-                    Visible = Rec."Praposal Type Selected" = Rec."Praposal Type Selected"::"Merge Unit"; // Visible when "Praposal Type Selected" is "Merge Unit"
+                    Visible = Rec."BLRPraposal Type Selected" = Rec."BLRPraposal Type Selected"::"Merge Unit"; // Visible when "Praposal Type Selected" is "Merge Unit"
                 }
             }
 
@@ -664,18 +664,18 @@ page 73209745 "Tenancy Contract Card"
                 Caption = 'Single Unit with lumpsum square feet rate';
                 Visible = ShowLegalReasonFields3;
 
-                part("Single Unit lumpsum Rent (Renewal)"; "TC Single LumAnnualAmnt SP")
+                part("Single Unit lumpsum Rent (Renewal)"; "BLRTCSingleLumAnnualAmntSP")
                 {
-                    SubPageLink = "ID" = FIELD("Renewal Proposal ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRID" = FIELD("BLRRenewal Proposal ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" <> 0); // Show only if Renewal Proposal ID is set
+                    Visible = (Rec."BLRRenewal Proposal ID" <> 0); // Show only if Renewal Proposal ID is set
 
                 }
-                part("Single Unit lumpsum Rent (Proposal)"; "TC Single LumAnnualAmnt SP")
+                part("Single Unit lumpsum Rent (Proposal)"; "BLRTCSingleLumAnnualAmntSP")
                 {
-                    SubPageLink = "ID" = FIELD("Proposal ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRID" = FIELD("BLRProposal ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" = 0); // Show only if Renewal Proposal ID is empty
+                    Visible = (Rec."BLRRenewal Proposal ID" = 0); // Show only if Renewal Proposal ID is empty
 
                 }
             }
@@ -687,38 +687,38 @@ page 73209745 "Tenancy Contract Card"
                 Visible = ShowLegalReasonFields;
 
                 // Part for Renewal Proposal ID
-                part("Single Unit Rent (Renewal)"; "TC Single Unit Rent SubPage")
+                part("Single Unit Rent (Renewal)"; "BLRTCSingleUnitRentSubPage")
                 {
-                    SubPageLink = "ID" = FIELD("Renewal Proposal ID"); // Uses Renewal Proposal ID
+                    SubPageLink = "BLRID" = FIELD("BLRRenewal Proposal ID"); // Uses Renewal Proposal ID
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" <> 0); // Show only if Renewal Proposal ID is set
+                    Visible = (Rec."BLRRenewal Proposal ID" <> 0); // Show only if Renewal Proposal ID is set
                 }
 
                 // Part for Proposal ID (Fallback)
-                part("Single Unit Rent (Proposal)"; "TC Single Unit Rent SubPage")
+                part("Single Unit Rent (Proposal)"; "BLRTCSingleUnitRentSubPage")
                 {
-                    SubPageLink = "ID" = FIELD("Proposal ID"); // Uses Proposal ID if Renewal is empty
+                    SubPageLink = "BLRID" = FIELD("BLRProposal ID"); // Uses Proposal ID if Renewal is empty
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" = 0); // Show only if Renewal Proposal ID is empty
+                    Visible = (Rec."BLRRenewal Proposal ID" = 0); // Show only if Renewal Proposal ID is empty
                 }
             }
             group("Merged Unit with same square feet")
             {
                 Caption = 'Merged Unit With Same Square Feet';
                 Visible = ShowBusinessReasonFields;
-                part("Merge SameSqure Rent (Renewal)"; "TC Merge SameSqure SubPage")
+                part("Merge SameSqure Rent (Renewal)"; "BLRTCMergeSameSqureSubPage")
                 {
-                    SubPageLink = "ID" = FIELD("Renewal Proposal ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRID" = FIELD("BLRRenewal Proposal ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" <> 0); // Show only if Renewal Proposal ID is set
+                    Visible = (Rec."BLRRenewal Proposal ID" <> 0); // Show only if Renewal Proposal ID is set
 
                 }
 
-                part("Merge SameSqure Rent (Proposal)"; "TC Merge SameSqure SubPage")
+                part("Merge SameSqure Rent (Proposal)"; "BLRTCMergeSameSqureSubPage")
                 {
-                    SubPageLink = "ID" = FIELD("Proposal ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRID" = FIELD("BLRProposal ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" = 0); // Show only if Renewal Proposal ID is empty
+                    Visible = (Rec."BLRRenewal Proposal ID" = 0); // Show only if Renewal Proposal ID is empty
 
                 }
             }
@@ -726,37 +726,37 @@ page 73209745 "Tenancy Contract Card"
             {
                 Caption = 'Merged Unit With Differential Square Feet Rate';
                 Visible = ShowLegalReasonFields1;
-                part("Merge DifferentSqure Rent (Renewal)"; "TC Merge DifferentSq SubPage")
+                part("Merge DifferentSqure Rent (Renewal)"; "BLRTCMergeDifferentSqSubPage")
                 {
-                    SubPageLink = "ID" = FIELD("Renewal Proposal ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRID" = FIELD("BLRRenewal Proposal ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" <> 0);
+                    Visible = (Rec."BLRRenewal Proposal ID" <> 0);
 
                 }
 
-                part("Merge DifferentSqure Rent (Proposal)"; "TC Merge DifferentSq SubPage")
+                part("Merge DifferentSqure Rent (Proposal)"; "BLRTCMergeDifferentSqSubPage")
                 {
-                    SubPageLink = "ID" = FIELD("Proposal ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRID" = FIELD("BLRProposal ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" = 0);
+                    Visible = (Rec."BLRRenewal Proposal ID" = 0);
                 }
             }
             group("Merged Unit with lumpsum annual amount")
             {
                 Caption = 'Merged Unit With Lumpsum Annual Amount';
                 Visible = ShowBusinessReasonFields2;
-                part("Merge Lum_AnnualAmount Rent (Renewal)"; "TC Merge Lum_AnnualAmount SP")
+                part("Merge Lum_AnnualAmount Rent (Renewal)"; "BLRTC MergeLum_AnnualAmountSP")
                 {
-                    SubPageLink = "ID" = FIELD("Renewal Proposal ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRID" = FIELD("BLRRenewal Proposal ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" <> 0);
+                    Visible = (Rec."BLRRenewal Proposal ID" <> 0);
                 }
 
-                part("Merge Lum_AnnualAmount Rent (Proposal)"; "TC Merge Lum_AnnualAmount SP")
+                part("Merge Lum_AnnualAmount Rent (Proposal)"; "BLRTC MergeLum_AnnualAmountSP")
                 {
-                    SubPageLink = "ID" = FIELD("Proposal ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRID" = FIELD("BLRProposal ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" = 0);
+                    Visible = (Rec."BLRRenewal Proposal ID" = 0);
                 }
             }
 
@@ -765,26 +765,26 @@ page 73209745 "Tenancy Contract Card"
                 Caption = 'Per Day Rent for Revenue Allocation';
 
                 //  Show for Renewal Proposal if "Praposal Type Selected" = "Merge Unit"
-                part("Per Day Rent (Renewal)"; "TC PerDayRent for Revenue Card")
+                part("Per Day Rent (Renewal)"; "BLRTC PerDayRentforRevenueCard")
                 {
-                    SubPageLink = "Contract Renewal Id" = FIELD("Renewal Proposal ID"); // Link to Renewal Proposal ID
+                    SubPageLink = "BLRContract Renewal ID" = FIELD("BLRRenewal Proposal ID"); // Link to Renewal Proposal ID
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" <> 0) and
-                  (Rec."Praposal Type Selected" = Rec."Praposal Type Selected"::"Merge Unit");
+                    Visible = (Rec."BLRRenewal Proposal ID" <> 0) and
+                  (Rec."BLRPraposal Type Selected" = Rec."BLRPraposal Type Selected"::"Merge Unit");
                 }
 
                 //  Show for Normal Proposal if "Praposal Type Selected" = "Merge Unit"
-                part("Per Day Rent (Proposal)"; "TC PerDayRent for Revenue Card")
+                part("Per Day Rent (Proposal)"; "BLRTC PerDayRentforRevenueCard")
                 {
-                    SubPageLink = "Proposal Id" = FIELD("Proposal ID"); // Link to Proposal ID
+                    SubPageLink = "BLRProposal ID" = FIELD("BLRProposal ID"); // Link to Proposal ID
                     ApplicationArea = All;
-                    Visible = (Rec."Renewal Proposal ID" = 0) and
-                  (Rec."Praposal Type Selected" = Rec."Praposal Type Selected"::"Merge Unit");
+                    Visible = (Rec."BLRRenewal Proposal ID" = 0) and
+                  (Rec."BLRPraposal Type Selected" = Rec."BLRPraposal Type Selected"::"Merge Unit");
                 }
             }
-            group("Rent Calculation")
+            group("BLRRentCalculation")
             {
-                field("Update Data"; Rec."Update Data")
+                field("Update Data"; Rec."BLRUpdate Data")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -793,15 +793,15 @@ page 73209745 "Tenancy Contract Card"
 
                     trigger OnDrillDown()
                     var
-                        RentRecord: Record "Rent Calculation";
-                        Tenancycontract: Record "Tenancy Contract";
-                        SU_samesquare: Record "TC Single Unit Rent SubPage";
-                        SU_lumpsum: Record "TC Single LumAnnualAmnt SP";
-                        MU_samesquare: Record "TC Merge SameSqure SubPage";
-                        MU_differentsquare: Record "TC Merge DifferentSq SubPage";
-                        MU_lumpsum: Record "TC Merge LumAnnualAmount SP";
-                        RentSubpage: Record "Rent Calculation Subpage";
-                        fetchMonth: Codeunit "Fetch Month";
+                        RentRecord: Record "BLRRentCalculation";
+                        Tenancycontract: Record "BLRTenancyContract";
+                        SU_samesquare: Record "BLRTCSingleUnitRentSubPage";
+                        SU_lumpsum: Record "BLRTCSingleLumAnnualAmntSP";
+                        MU_samesquare: Record "BLRTCMergeSameSqureSubPage";
+                        MU_differentsquare: Record "BLRTCMergeDifferentSqSubPage";
+                        MU_lumpsum: Record "BLRTCMergeLumAnnualAmountSP";
+                        RentSubpage: Record "BLRRentCalculationSubpage";
+                        fetchMonth: Codeunit "BLRFetch Month";
                         yearlyInstallment: Integer;
                         Lastyear: Integer;
                         RentRecordid: Integer;
@@ -809,141 +809,141 @@ page 73209745 "Tenancy Contract Card"
                         CommaPos: Integer;
                     begin
                         // Find the Tenancy Contract record
-                        Tenancycontract.SetRange("Contract ID", Rec."Contract ID");
-                        Tenancycontract.SetRange("Tenant ID", Rec."Tenant ID");
+                        Tenancycontract.SetRange("BLRContract ID", Rec."BLRContract ID");
+                        Tenancycontract.SetRange("BLRTenant ID", Rec."BLRTenant ID");
                         if Tenancycontract.FindFirst() then begin
                             // Set fields for RentCalculation record
-                            RentRecord."Contract ID" := Tenancycontract."Contract ID";
-                            RentRecord."Property Classification" := Tenancycontract."Property Classification";
-                            RentRecord."Contract Start Date" := Tenancycontract."Contract Start Date";
-                            RentRecord."Contract End Date" := Tenancycontract."Contract End Date";
-                            RentRecord."Amount" := Round(Tenancycontract."Annual Rent Amount");
-                            RentRecord."Tenant ID" := Tenancycontract."Tenant ID";
-                            RentRecord."Secondary Item Type" := 'Rent';
-                            RentRecord."VAT Amount" := Round(Tenancycontract."Contract VAT Amount");
-                            RentRecord."Amount Including VAT" := Round(Tenancycontract."Contract Amount Including VAT");
-                            RentRecord."Number of Installments" := Tenancycontract."No of Installments";
-                            RentRecord."VAT %" := Tenancycontract."Contract VAT %";
+                            RentRecord."BLRContract ID" := Tenancycontract."BLRContract ID";
+                            RentRecord."BLRProperty Classification" := Tenancycontract."BLRProperty Classification";
+                            RentRecord."BLRContract Start Date" := Tenancycontract."BLRContract Start Date";
+                            RentRecord."BLRContract End Date" := Tenancycontract."BLRContract End Date";
+                            RentRecord."BLRAmount" := Round(Tenancycontract."BLRAnnual Rent Amount");
+                            RentRecord."BLRTenant ID" := Tenancycontract."BLRTenant ID";
+                            RentRecord."BLRSecondary Item Type" := 'Rent';
+                            RentRecord."BLRVAT Amount" := Round(Tenancycontract."BLRContract VAT Amount");
+                            RentRecord."BLRAmount Including VAT" := Round(Tenancycontract."BLRContAmtInclVAT");
+                            RentRecord."BLRNumber of Installments" := Tenancycontract."BLRNo of Installments";
+                            RentRecord."BLRVAT %" := Tenancycontract."BLRContract VAT %";
 
                             // Check if Rent Calculation exists, then modify or insert
-                            RentRecord.SetRange("Contract ID", Rec."Contract ID"); // Ensure you're looking for the correct Contract ID
+                            RentRecord.SetRange("BLRContract ID", Rec."BLRContract ID"); // Ensure you're looking for the correct Contract ID
 
                             if RentRecord.FindFirst() then begin
-                                RentRecord."Contract ID" := Tenancycontract."Contract ID";
-                                RentRecord."Property Classification" := Tenancycontract."Property Classification";
-                                RentRecord."Contract Start Date" := Tenancycontract."Contract Start Date";
-                                RentRecord."Contract End Date" := Tenancycontract."Contract End Date";
-                                RentRecord."Amount" := Round(Tenancycontract."Annual Rent Amount");
-                                RentRecord."Tenant ID" := Tenancycontract."Tenant ID";
-                                RentRecord."Secondary Item Type" := 'Rent';
-                                RentRecord."VAT Amount" := Round(Tenancycontract."Contract VAT Amount");
-                                RentRecord."Amount Including VAT" := Round(Tenancycontract."Contract Amount Including VAT");
-                                RentRecord."Number of Installments" := Tenancycontract."No of Installments";
-                                RentRecord."VAT %" := Tenancycontract."Contract VAT %";
+                                RentRecord."BLRContract ID" := Tenancycontract."BLRContract ID";
+                                RentRecord."BLRProperty Classification" := Tenancycontract."BLRProperty Classification";
+                                RentRecord."BLRContract Start Date" := Tenancycontract."BLRContract Start Date";
+                                RentRecord."BLRContract End Date" := Tenancycontract."BLRContract End Date";
+                                RentRecord."BLRAmount" := Round(Tenancycontract."BLRAnnual Rent Amount");
+                                RentRecord."BLRTenant ID" := Tenancycontract."BLRTenant ID";
+                                RentRecord."BLRSecondary Item Type" := 'Rent';
+                                RentRecord."BLRVAT Amount" := Round(Tenancycontract."BLRContract VAT Amount");
+                                RentRecord."BLRAmount Including VAT" := Round(Tenancycontract."BLRContAmtInclVAT");
+                                RentRecord."BLRNumber of Installments" := Tenancycontract."BLRNo of Installments";
+                                RentRecord."BLRVAT %" := Tenancycontract."BLRContract VAT %";
                                 RentRecord.Modify();
                                 Message('Record Modified Successfully');
                                 exit;
                             end else begin
                                 // If Rent Calculation doesn't exist, insert a new one
                                 RentRecord.Init();
-                                RentRecord."Contract ID" := Tenancycontract."Contract ID";
-                                RentRecord."Property Classification" := Tenancycontract."Property Classification";
-                                RentRecord."Contract Start Date" := Tenancycontract."Contract Start Date";
-                                RentRecord."Contract End Date" := Tenancycontract."Contract End Date";
-                                RentRecord."Amount" := Round(Tenancycontract."Annual Rent Amount");
-                                RentRecord."Tenant ID" := Tenancycontract."Tenant ID";
-                                RentRecord."Secondary Item Type" := 'Rent';
-                                RentRecord."VAT Amount" := Round(Tenancycontract."Contract VAT Amount");
-                                RentRecord."Amount Including VAT" := Round(Tenancycontract."Contract Amount Including VAT");
-                                RentRecord."Number of Installments" := Tenancycontract."No of Installments";
-                                RentRecord."VAT %" := Tenancycontract."Contract VAT %";
+                                RentRecord."BLRContract ID" := Tenancycontract."BLRContract ID";
+                                RentRecord."BLRProperty Classification" := Tenancycontract."BLRProperty Classification";
+                                RentRecord."BLRContract Start Date" := Tenancycontract."BLRContract Start Date";
+                                RentRecord."BLRContract End Date" := Tenancycontract."BLRContract End Date";
+                                RentRecord."BLRAmount" := Round(Tenancycontract."BLRAnnual Rent Amount");
+                                RentRecord."BLRTenant ID" := Tenancycontract."BLRTenant ID";
+                                RentRecord."BLRSecondary Item Type" := 'Rent';
+                                RentRecord."BLRVAT Amount" := Round(Tenancycontract."BLRContract VAT Amount");
+                                RentRecord."BLRAmount Including VAT" := Round(Tenancycontract."BLRContAmtInclVAT");
+                                RentRecord."BLRNumber of Installments" := Tenancycontract."BLRNo of Installments";
+                                RentRecord."BLRVAT %" := Tenancycontract."BLRContract VAT %";
 
                                 // Handle Rent Calculation Type assignment
-                                if Tenancycontract."Single Rent Calculation" = Tenancycontract."Single Rent Calculation"::"Single Unit with lumpsum square feet rate" then
-                                    RentRecord."Rent Calculation Type" := Format(Tenancycontract."Single Rent Calculation")
+                                if Tenancycontract."BLRSingle Rent Calculation" = Tenancycontract."BLRSingle Rent Calculation"::"Single Unit with lumpsum square feet rate" then
+                                    RentRecord."BLRRent Calculation Type" := Format(Tenancycontract."BLRSingle Rent Calculation")
                                 else
-                                    if Tenancycontract."Single Rent Calculation" = Tenancycontract."Single Rent Calculation"::"Single Unit with square feet rate" then
-                                        RentRecord."Rent Calculation Type" := Format(Tenancycontract."Single Rent Calculation")
+                                    if Tenancycontract."BLRSingle Rent Calculation" = Tenancycontract."BLRSingle Rent Calculation"::"Single Unit with square feet rate" then
+                                        RentRecord."BLRRent Calculation Type" := Format(Tenancycontract."BLRSingle Rent Calculation")
                                     else
-                                        if Tenancycontract."Merge Rent Calculation" = Tenancycontract."Merge Rent Calculation"::"Merged Unit with differential square feet rate" then
-                                            RentRecord."Rent Calculation Type" := Format(Tenancycontract."Merge Rent Calculation")
+                                        if Tenancycontract."BLRMerge Rent Calculation" = Tenancycontract."BLRMerge Rent Calculation"::"Merged Unit with differential square feet rate" then
+                                            RentRecord."BLRRent Calculation Type" := Format(Tenancycontract."BLRMerge Rent Calculation")
                                         else
-                                            if Tenancycontract."Merge Rent Calculation" = Tenancycontract."Merge Rent Calculation"::"Merged Unit with lumpsum annual amount" then
-                                                RentRecord."Rent Calculation Type" := Format(Tenancycontract."Merge Rent Calculation")
+                                            if Tenancycontract."BLRMerge Rent Calculation" = Tenancycontract."BLRMerge Rent Calculation"::"Merged Unit with lumpsum annual amount" then
+                                                RentRecord."BLRRent Calculation Type" := Format(Tenancycontract."BLRMerge Rent Calculation")
                                             else
-                                                if Tenancycontract."Merge Rent Calculation" = Tenancycontract."Merge Rent Calculation"::"Merged Unit with same square feet" then
-                                                    RentRecord."Rent Calculation Type" := Format(Tenancycontract."Merge Rent Calculation")
+                                                if Tenancycontract."BLRMerge Rent Calculation" = Tenancycontract."BLRMerge Rent Calculation"::"Merged Unit with same square feet" then
+                                                    RentRecord."BLRRent Calculation Type" := Format(Tenancycontract."BLRMerge Rent Calculation")
                                                 else
                                                     Error('No valid Rent Calculation Type found in Tenancy Contract.');
                                 // Insert the new Rent Calculation record
                                 RentRecord.Insert();
                             end;
                             // Update data in Revenue Structure Subpage for Single Rent Calculation
-                            if Tenancycontract."Single Rent Calculation" = Tenancycontract."Single Rent Calculation"::"Single Unit with lumpsum square feet rate" then begin
-                                SU_lumpsum.SetRange("Contract Id", Tenancycontract."Contract Id");
+                            if Tenancycontract."BLRSingle Rent Calculation" = Tenancycontract."BLRSingle Rent Calculation"::"Single Unit with lumpsum square feet rate" then begin
+                                SU_lumpsum.SetRange("BLRContract Id", Tenancycontract."BLRContract Id");
                                 if SU_lumpsum.FindSet() then
                                     repeat
-                                        if not RentSubpage.Get(RentRecord."RC ID", SU_lumpsum.SL_Year) then begin
+                                        if not RentSubpage.Get(RentRecord."BLRRC ID", SU_lumpsum."BLRSL_Year") then begin
                                             RentSubpage.Init();
-                                            RentSubpage."RC ID" := RentRecord."RC ID";
-                                            RentSubpage."Contract ID" := RentRecord."Contract ID";
-                                            RentSubpage."Tenant Id" := RentRecord."Tenant ID";
-                                            RentSubpage."Secondary Item Type" := RentRecord."Secondary Item Type";
-                                            RentSubpage."VAT %" := RentRecord."VAT %";
-                                            RentSubpage."Propety Classification" := RentRecord."Property Classification";
-                                            RentSubpage."VAT Amount" := RentRecord."VAT Amount";
-                                            RentSubpage."Amount Including VAT" := RentRecord."Amount Including VAT";
-                                            RentSubpage.Year := SU_lumpsum.SL_Year;
-                                            RentSubpage."Period Start Date" := SU_lumpsum."SL_Start Date";
-                                            RentSubpage."Period End Date" := SU_lumpsum."SL_End Date";
-                                            RentSubpage."Number of Days" := SU_lumpsum."SL_Number of Days";
-                                            RentSubpage."Per Day Rent" := SU_lumpsum."SL_Per Day Rent";
-                                            RentSubpage."Final Annual Amount" := SU_lumpsum."SL_Final Annual Amount";
-                                            RentSubpage."Unit ID" := SU_lumpsum."SL_Unit ID";
+                                            RentSubpage."BLRRC ID" := RentRecord."BLRRC ID";
+                                            RentSubpage."BLRContract ID" := RentRecord."BLRContract ID";
+                                            RentSubpage."BLRTenant Id" := RentRecord."BLRTenant ID";
+                                            RentSubpage."BLRSecondary Item Type" := RentRecord."BLRSecondary Item Type";
+                                            RentSubpage."BLRVAT %" := RentRecord."BLRVAT %";
+                                            RentSubpage."BLRPropety Classification" := RentRecord."BLRProperty Classification";
+                                            RentSubpage."BLRVAT Amount" := RentRecord."BLRVAT Amount";
+                                            RentSubpage."BLRAmount Including VAT" := RentRecord."BLRAmount Including VAT";
+                                            RentSubpage."BLRYear" := SU_lumpsum."BLRSL_Year";
+                                            RentSubpage."BLRPeriod Start Date" := SU_lumpsum."BLRSL_Start Date";
+                                            RentSubpage."BLRPeriod End Date" := SU_lumpsum."BLRSL_End Date";
+                                            RentSubpage."BLRNumber of Days" := SU_lumpsum."BLRSL_Number of Days";
+                                            RentSubpage."BLRPer Day Rent" := SU_lumpsum."BLRSL_Per Day Rent";
+                                            RentSubpage."BLRFinal Annual Amount" := SU_lumpsum."BLRSL_Final Annual Amount";
+                                            RentSubpage."BLRUnit ID" := SU_lumpsum."BLRSL_Unit ID";
                                             RentSubpage.Insert();
                                             Clear(RentSubpage);
                                         end
                                     until SU_lumpsum.Next() = 0
                                 else
-                                    Error('No data found in Single Unit with lumpsum square feet rate subpage for Contract ID %1.', Tenancycontract."Contract ID");
+                                    Error('No data found in Single Unit with lumpsum square feet rate subpage for Contract ID %1.', Tenancycontract."BLRContract ID");
                             end
                             else
-                                if Tenancycontract."Single Rent Calculation" = Tenancycontract."Single Rent Calculation"::"Single Unit with square feet rate" then begin
-                                    SU_samesquare.SetRange("Contract Id", Tenancycontract."Contract ID");
+                                if Tenancycontract."BLRSingle Rent Calculation" = Tenancycontract."BLRSingle Rent Calculation"::"Single Unit with square feet rate" then begin
+                                    SU_samesquare.SetRange("BLRContract Id", Tenancycontract."BLRContract ID");
                                     if SU_samesquare.FindSet() then
                                         repeat
-                                            if not RentSubpage.Get(RentRecord."RC ID", SU_samesquare.Year) then begin
+                                            if not RentSubpage.Get(RentRecord."BLRRC ID", SU_samesquare."BLRYear") then begin
                                                 RentSubpage.Init();
-                                                RentSubpage."RC ID" := RentRecord."RC ID";
-                                                RentSubpage."Contract ID" := RentRecord."Contract ID";
-                                                RentSubpage."Tenant Id" := RentRecord."Tenant ID";
-                                                RentSubpage."Secondary Item Type" := RentRecord."Secondary Item Type";
-                                                RentSubpage."VAT %" := RentRecord."VAT %";
-                                                RentSubpage."VAT Amount" := RentRecord."VAT Amount";
-                                                RentSubpage."Propety Classification" := RentRecord."Property Classification";
-                                                RentSubpage."Amount Including VAT" := RentRecord."Amount Including VAT";
-                                                RentSubpage.Year := SU_samesquare.Year;
-                                                RentSubpage."Period Start Date" := SU_samesquare."Start Date";
-                                                RentSubpage."Period End Date" := SU_samesquare."End Date";
-                                                RentSubpage."Number of Days" := SU_samesquare."Number of Days";
-                                                RentSubpage."Per Day Rent" := SU_samesquare."Per Day Rent";
-                                                RentSubpage."Final Annual Amount" := SU_samesquare."Final Annual Amount";
-                                                RentSubpage."Unit ID" := SU_samesquare."Unit ID";
+                                                RentSubpage."BLRRC ID" := RentRecord."BLRRC ID";
+                                                RentSubpage."BLRContract ID" := RentRecord."BLRContract ID";
+                                                RentSubpage."BLRTenant Id" := RentRecord."BLRTenant ID";
+                                                RentSubpage."BLRSecondary Item Type" := RentRecord."BLRSecondary Item Type";
+                                                RentSubpage."BLRVAT %" := RentRecord."BLRVAT %";
+                                                RentSubpage."BLRVAT Amount" := RentRecord."BLRVAT Amount";
+                                                RentSubpage."BLRPropety Classification" := RentRecord."BLRProperty Classification";
+                                                RentSubpage."BLRAmount Including VAT" := RentRecord."BLRAmount Including VAT";
+                                                RentSubpage."BLRYear" := SU_samesquare."BLRYear";
+                                                RentSubpage."BLRPeriod Start Date" := SU_samesquare."BLRStart Date";
+                                                RentSubpage."BLRPeriod End Date" := SU_samesquare."BLREnd Date";
+                                                RentSubpage."BLRNumber of Days" := SU_samesquare."BLRNumber of Days";
+                                                RentSubpage."BLRPer Day Rent" := SU_samesquare."BLRPer Day Rent";
+                                                RentSubpage."BLRFinal Annual Amount" := SU_samesquare."BLRFinal Annual Amount";
+                                                RentSubpage."BLRUnit ID" := SU_samesquare."BLRUnit ID";
 
                                                 RentSubpage.Insert();
                                                 Clear(RentSubpage);
                                             end
                                         until SU_samesquare.Next() = 0
                                     else
-                                        Error('No data found in Single Unit with square feet rate subpage for Contract ID %1.', Tenancycontract."Contract ID");
+                                        Error('No data found in Single Unit with square feet rate subpage for Contract ID %1.', Tenancycontract."BLRContract ID");
                                 end
 
                                 else
-                                    if Tenancycontract."Merge Rent Calculation" = Tenancycontract."Merge Rent Calculation"::"Merged Unit with differential square feet rate" then begin
+                                    if Tenancycontract."BLRMerge Rent Calculation" = Tenancycontract."BLRMerge Rent Calculation"::"Merged Unit with differential square feet rate" then begin
                                         // Find the Tenancy Contract record
-                                        Tenancycontract.SetRange("Contract Id", Rec."Contract Id");
+                                        Tenancycontract.SetRange("BLRContract Id", Rec."BLRContract Id");
                                         if Tenancycontract.FindFirst() then begin
-                                            SingleUnitName := Tenancycontract."Single Unit Name";
+                                            SingleUnitName := Tenancycontract."BLRSingle Unit Name";
                                             CommaPos := StrPos(SingleUnitName, ','); // Find the position of the first comma
                                             if CommaPos > 0 then
                                                 SingleUnitName := CopyStr(SingleUnitName, 1, CommaPos - 1) // Trim to the first name
@@ -951,122 +951,122 @@ page 73209745 "Tenancy Contract Card"
                                                 SingleUnitName := SingleUnitName; // No comma, use the whole name
 
                                             // Find the first unit's details in Merge DifferentSquare table
-                                            MU_differentsquare.SetRange("Contract ID", Tenancycontract."Contract ID");
+                                            MU_differentsquare.SetRange("BLRContract ID", Tenancycontract."BLRContract ID");
                                             if MU_differentsquare.FindSet() then
                                                 repeat
                                                     // Update Revenue Structure Subpage
-                                                    if not RentSubpage.Get(RentRecord."RC ID", MU_differentsquare.MD_Year) then begin
+                                                    if not RentSubpage.Get(RentRecord."BLRRC ID", MU_differentsquare."BLRMD_Year") then begin
                                                         RentSubpage.Init();
-                                                        RentSubpage."RC ID" := RentRecord."RC ID";
-                                                        RentSubpage."Contract ID" := RentRecord."Contract ID";
-                                                        RentSubpage."Tenant Id" := RentRecord."Tenant ID";
-                                                        RentSubpage."Secondary Item Type" := RentRecord."Secondary Item Type";
-                                                        RentSubpage."VAT %" := RentRecord."VAT %";
-                                                        RentSubpage."Propety Classification" := RentRecord."Property Classification";
-                                                        RentSubpage."VAT Amount" := RentRecord."VAT Amount";
-                                                        RentSubpage."Amount Including VAT" := RentRecord."Amount Including VAT";
-                                                        RentSubpage.Year := MU_differentsquare.MD_Year;
-                                                        RentSubpage."Period Start Date" := MU_differentsquare."MD_Start Date";
-                                                        RentSubpage."Period End Date" := MU_differentsquare."MD_End Date";
-                                                        RentSubpage."Number of Days" := MU_differentsquare."MD_Number of Days";
-                                                        RentSubpage."Per Day Rent" := MU_differentsquare."MD_Per Day Rent";
-                                                        RentSubpage."Final Annual Amount" := MU_differentsquare."MD_Final Annual Amount";
-                                                        RentSubpage."Unit ID" := MU_differentsquare."MD_Unit ID";
+                                                        RentSubpage."BLRRC ID" := RentRecord."BLRRC ID";
+                                                        RentSubpage."BLRContract ID" := RentRecord."BLRContract ID";
+                                                        RentSubpage."BLRTenant Id" := RentRecord."BLRTenant ID";
+                                                        RentSubpage."BLRSecondary Item Type" := RentRecord."BLRSecondary Item Type";
+                                                        RentSubpage."BLRVAT %" := RentRecord."BLRVAT %";
+                                                        RentSubpage."BLRPropety Classification" := RentRecord."BLRProperty Classification";
+                                                        RentSubpage."BLRVAT Amount" := RentRecord."BLRVAT Amount";
+                                                        RentSubpage."BLRAmount Including VAT" := RentRecord."BLRAmount Including VAT";
+                                                        RentSubpage."BLRYear" := MU_differentsquare."BLRMD_Year";
+                                                        RentSubpage."BLRPeriod Start Date" := MU_differentsquare."BLRMD_Start Date";
+                                                        RentSubpage."BLRPeriod End Date" := MU_differentsquare."BLRMD_End Date";
+                                                        RentSubpage."BLRNumber of Days" := MU_differentsquare."BLRMD_Number of Days";
+                                                        RentSubpage."BLRPer Day Rent" := MU_differentsquare."BLRMD_Per Day Rent";
+                                                        RentSubpage."BLRFinal Annual Amount" := MU_differentsquare."BLRMD_Final Annual Amount";
+                                                        RentSubpage."BLRUnit ID" := MU_differentsquare."BLRMD_Unit ID";
 
                                                         RentSubpage.Insert();
                                                         Clear(RentSubpage);
                                                     end
                                                 until MU_differentsquare.Next() = 0
                                             else
-                                                Error('No data found for Unit Name: %1 in Contract ID: %2.', SingleUnitName, Tenancycontract."Contract ID");
+                                                Error('No data found for Unit Name: %1 in Contract ID: %2.', SingleUnitName, Tenancycontract."BLRContract ID");
                                         end
                                         else
-                                            Error('Tenancy Contract not found for Contract ID: %1.', Rec."Contract ID");
+                                            Error('Tenancy Contract not found for Contract ID: %1.', Rec."BLRContract ID");
                                     end
                                     else
-                                        if Tenancycontract."Merge Rent Calculation" = Tenancycontract."Merge Rent Calculation"::"Merged Unit with lumpsum annual amount" then begin
-                                            MU_lumpsum.SetRange("Contract ID", Tenancycontract."Contract ID");
+                                        if Tenancycontract."BLRMerge Rent Calculation" = Tenancycontract."BLRMerge Rent Calculation"::"Merged Unit with lumpsum annual amount" then begin
+                                            MU_lumpsum.SetRange("BLRContract ID", Tenancycontract."BLRContract ID");
                                             if MU_lumpsum.FindSet() then
                                                 repeat
-                                                    if not RentSubpage.Get(RentRecord."RC ID", MU_lumpsum.ML_Year) then begin
+                                                    if not RentSubpage.Get(RentRecord."BLRRC ID", MU_lumpsum."BLRML_Year") then begin
                                                         RentSubpage.Init();
-                                                        RentSubpage."RC ID" := RentRecord."RC ID";
-                                                        RentSubpage."Contract ID" := RentRecord."Contract ID";
-                                                        RentSubpage."Tenant Id" := RentRecord."Tenant ID";
-                                                        RentSubpage."Secondary Item Type" := RentRecord."Secondary Item Type";
-                                                        RentSubpage."VAT %" := RentRecord."VAT %";
-                                                        RentSubpage."Propety Classification" := RentRecord."Property Classification";
-                                                        RentSubpage."VAT Amount" := RentRecord."VAT Amount";
-                                                        RentSubpage."Amount Including VAT" := RentRecord."Amount Including VAT";
-                                                        RentSubpage.Year := MU_lumpsum.ML_Year;
-                                                        RentSubpage."Period Start Date" := MU_lumpsum."ML_Start Date";
-                                                        RentSubpage."Period End Date" := MU_lumpsum."ML_End Date";
-                                                        RentSubpage."Number of Days" := MU_lumpsum."ML_Number of Days";
-                                                        RentSubpage."Per Day Rent" := MU_lumpsum."ML_Per Day Rent";
-                                                        RentSubpage."Final Annual Amount" := MU_lumpsum."ML_Final Annual Amount";
-                                                        RentSubpage."Unit ID" := MU_lumpsum."ML_Unit ID";
+                                                        RentSubpage."BLRRC ID" := RentRecord."BLRRC ID";
+                                                        RentSubpage."BLRContract ID" := RentRecord."BLRContract ID";
+                                                        RentSubpage."BLRTenant Id" := RentRecord."BLRTenant ID";
+                                                        RentSubpage."BLRSecondary Item Type" := RentRecord."BLRSecondary Item Type";
+                                                        RentSubpage."BLRVAT %" := RentRecord."BLRVAT %";
+                                                        RentSubpage."BLRPropety Classification" := RentRecord."BLRProperty Classification";
+                                                        RentSubpage."BLRVAT Amount" := RentRecord."BLRVAT Amount";
+                                                        RentSubpage."BLRAmount Including VAT" := RentRecord."BLRAmount Including VAT";
+                                                        RentSubpage."BLRYear" := MU_lumpsum."BLRML_Year";
+                                                        RentSubpage."BLRPeriod Start Date" := MU_lumpsum."BLRML_Start Date";
+                                                        RentSubpage."BLRPeriod End Date" := MU_lumpsum."BLRML_End Date";
+                                                        RentSubpage."BLRNumber of Days" := MU_lumpsum."BLRML_Number of Days";
+                                                        RentSubpage."BLRPer Day Rent" := MU_lumpsum."BLRML_Per Day Rent";
+                                                        RentSubpage."BLRFinal Annual Amount" := MU_lumpsum."BLRML_Final Annual Amount";
+                                                        RentSubpage."BLRUnit ID" := MU_lumpsum."BLRML_Unit ID";
 
                                                         RentSubpage.Insert();
                                                         Clear(RentSubpage);
                                                     end
                                                 until MU_lumpsum.Next() = 0
                                             else
-                                                Error('No data found in Merged Unit with lumpsum annual amount subpage for Contract ID %1.', Tenancycontract."Contract ID");
+                                                Error('No data found in Merged Unit with lumpsum annual amount subpage for Contract ID %1.', Tenancycontract."BLRContract ID");
                                         end
                                         else
-                                            if Tenancycontract."Merge Rent Calculation" = Tenancycontract."Merge Rent Calculation"::"Merged Unit with same square feet" then begin
-                                                MU_samesquare.SetRange("Contract ID", Tenancycontract."Contract ID");
+                                            if Tenancycontract."BLRMerge Rent Calculation" = Tenancycontract."BLRMerge Rent Calculation"::"Merged Unit with same square feet" then begin
+                                                MU_samesquare.SetRange("BLRContract ID", Tenancycontract."BLRContract ID");
                                                 if MU_samesquare.FindSet() then
                                                     repeat
-                                                        if not RentSubpage.Get(RentRecord."RC ID", MU_samesquare.MS_Year) then begin
+                                                        if not RentSubpage.Get(RentRecord."BLRRC ID", MU_samesquare."BLRMS_Year") then begin
                                                             RentSubpage.Init();
-                                                            RentSubpage."RC ID" := RentRecord."RC ID";
-                                                            RentSubpage."Contract ID" := RentRecord."Contract ID";
-                                                            RentSubpage."Tenant Id" := RentRecord."Tenant ID";
-                                                            RentSubpage."Secondary Item Type" := RentRecord."Secondary Item Type";
-                                                            RentSubpage."VAT %" := RentRecord."VAT %";
-                                                            RentSubpage."VAT Amount" := RentRecord."VAT Amount";
-                                                            RentSubpage."Propety Classification" := RentRecord."Property Classification";
-                                                            RentSubpage."Amount Including VAT" := RentRecord."Amount Including VAT";
-                                                            RentSubpage.Year := MU_samesquare.MS_Year;
-                                                            RentSubpage."Period Start Date" := MU_samesquare."MS_Start Date";
-                                                            RentSubpage."Period End Date" := MU_samesquare."MS_End Date";
-                                                            RentSubpage."Number of Days" := MU_samesquare."MS_Number of Days";
-                                                            RentSubpage."Per Day Rent" := MU_samesquare."MS_Per Day Rent";
-                                                            RentSubpage."Unit ID" := MU_samesquare."MS_Unit ID";
+                                                            RentSubpage."BLRRC ID" := RentRecord."BLRRC ID";
+                                                            RentSubpage."BLRContract ID" := RentRecord."BLRContract ID";
+                                                            RentSubpage."BLRTenant Id" := RentRecord."BLRTenant ID";
+                                                            RentSubpage."BLRSecondary Item Type" := RentRecord."BLRSecondary Item Type";
+                                                            RentSubpage."BLRVAT %" := RentRecord."BLRVAT %";
+                                                            RentSubpage."BLRVAT Amount" := RentRecord."BLRVAT Amount";
+                                                            RentSubpage."BLRPropety Classification" := RentRecord."BLRProperty Classification";
+                                                            RentSubpage."BLRAmount Including VAT" := RentRecord."BLRAmount Including VAT";
+                                                            RentSubpage."BLRYear" := MU_samesquare."BLRMS_Year";
+                                                            RentSubpage."BLRPeriod Start Date" := MU_samesquare."BLRMS_Start Date";
+                                                            RentSubpage."BLRPeriod End Date" := MU_samesquare."BLRMS_End Date";
+                                                            RentSubpage."BLRNumber of Days" := MU_samesquare."BLRMS_Number of Days";
+                                                            RentSubpage."BLRPer Day Rent" := MU_samesquare."BLRMS_Per Day Rent";
+                                                            RentSubpage."BLRUnit ID" := MU_samesquare."BLRMS_Unit ID";
 
-                                                            RentSubpage."Final Annual Amount" := MU_samesquare."MS_Final Annual Amount";
+                                                            RentSubpage."BLRFinal Annual Amount" := MU_samesquare."BLRMS_Final Annual Amount";
                                                             RentSubpage.Insert();
                                                             Clear(RentSubpage);
                                                         end
                                                     until MU_samesquare.Next() = 0
                                                 else
-                                                    Error('No data found in Merged Unit with same square feet subpage for Contract ID %1.', Tenancycontract."Contract ID");
+                                                    Error('No data found in Merged Unit with same square feet subpage for Contract ID %1.', Tenancycontract."BLRContract ID");
                                             end;
 
-                            RentSubpage.SetRange("RC ID", RentRecord."RC ID");
-                            RentSubpage.SetRange("Contract ID", RentRecord."Contract ID");
-                            RentSubpage.SetCurrentKey(Year);
+                            RentSubpage.SetRange("BLRRC ID", RentRecord."BLRRC ID");
+                            RentSubpage.SetRange("BLRContract ID", RentRecord."BLRContract ID");
+                            RentSubpage.SetCurrentKey(BLRYear);
                             if RentSubpage.FindLast() then begin
-                                Lastyear := RentSubpage.Year;
+                                Lastyear := RentSubpage."BLRYear";
                                 Clear(RentSubpage);
-                                RentSubpage.SetRange("RC ID", RentRecord."RC ID");
-                                RentSubpage.SetRange("Contract ID", RentRecord."Contract ID");
+                                RentSubpage.SetRange("BLRRC ID", RentRecord."BLRRC ID");
+                                RentSubpage.SetRange("BLRContract ID", RentRecord."BLRContract ID");
                                 if RentSubpage.FindSet() then
                                     repeat
-                                        yearlyInstallment := 12 / fetchMonth.GetNoofMonthsFromFrequency(Format(Rec."Payment Frequency"));
+                                        yearlyInstallment := 12 / fetchMonth.GetNoofMonthsFromFrequency(Format(Rec."BLRPayment Frequency"));
 
-                                        if Rec."No of Installments" > yearlyInstallment then begin
-                                            if RentSubpage.Year = Lastyear then
-                                                RentSubpage."Yearly No. of Installment" := Rec."No of Installments" - (yearlyInstallment * (Lastyear - 1))
+                                        if Rec."BLRNo of Installments" > yearlyInstallment then begin
+                                            if RentSubpage."BLRYear" = Lastyear then
+                                                RentSubpage."BLRYearly No. of Installment" := Rec."BLRNo of Installments" - (yearlyInstallment * (Lastyear - 1))
                                             else
-                                                RentSubpage."Yearly No. of Installment" := yearlyInstallment;
+                                                RentSubpage."BLRYearly No. of Installment" := yearlyInstallment;
                                         end
                                         else
-                                            if Rec."No of Installments" < yearlyInstallment then
-                                                RentSubpage."Yearly No. of Installment" := Rec."No of Installments"
+                                            if Rec."BLRNo of Installments" < yearlyInstallment then
+                                                RentSubpage."BLRYearly No. of Installment" := Rec."BLRNo of Installments"
                                             else
-                                                RentSubpage."Yearly No. of Installment" := yearlyInstallment;
+                                                RentSubpage."BLRYearly No. of Installment" := yearlyInstallment;
 
                                         RentSubpage.Modify(true);
                                     until RentSubpage.Next() = 0;
@@ -1074,11 +1074,11 @@ page 73209745 "Tenancy Contract Card"
                             Message('New record has been created in Rent Calculation and subpage updated successfully.');
                         end;
 
-                        RentRecord.SetRange("Contract ID", Rec."Contract ID");
-                        RentRecord.SetRange("Tenant ID", Rec."Tenant ID");
+                        RentRecord.SetRange("BLRContract ID", Rec."BLRContract ID");
+                        RentRecord.SetRange("BLRTenant ID", Rec."BLRTenant ID");
 
                         if RentRecord.FindSet() then
-                            RentRecordid := RentRecord."RC ID"
+                            RentRecordid := RentRecord."BLRRC ID"
                         else begin
                             // If no record is found, create a new Revenue Structure record
                             RentRecord.Init();
@@ -1086,14 +1086,14 @@ page 73209745 "Tenancy Contract Card"
                             RentRecord.Modify(true);  // Insert the new record and generate the RS ID
 
                             // Get the newly created RS ID
-                            RentRecordid := RentRecord."RC ID";
+                            RentRecordid := RentRecord."BLRRC ID";
                         end;
-                        Rec."Rent Calculation Link" := RentRecordid;
+                        Rec."BLRRent Calculation Link" := RentRecordid;
                     end;
 
                 }
 
-                field("Rent Calculation Link"; Rec."Rent Calculation Link")
+                field("Rent Calculation Link"; Rec."BLRRent Calculation Link")
                 {
                     ApplicationArea = All;
                     DrillDown = true;
@@ -1101,12 +1101,12 @@ page 73209745 "Tenancy Contract Card"
 
                     trigger OnDrillDown()
                     var
-                        RentCalculation: Record "Rent Calculation";
+                        RentCalculation: Record "BLRRentCalculation";
 
                     begin
                         // Navigate to the Revenue Structure Card page
-                        if RentCalculation.Get(Rec."Rent Calculation Link") then
-                            PAGE.RUN(PAGE::"Rent Calculation Card", RentCalculation)
+                        if RentCalculation.Get(Rec."BLRRent Calculation Link") then
+                            PAGE.RUN(PAGE::"BLRRent Calculation Card", RentCalculation)
                         else
                             Message('The related Revenue Structure does not exist.')
                     end;
@@ -1116,30 +1116,30 @@ page 73209745 "Tenancy Contract Card"
             }
             group("Other Payments")
             {
-                part("Revenues"; "Tenancy Contract SubPage Card")
+                part("Revenues"; "BLRTenancy ContractSubPageCard")
                 {
-                    SubPageLink = ContractID = FIELD("Contract ID"); // Link to filter attachments for this owner only
+                    SubPageLink = BLRContractID = FIELD("BLRContract ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
                 }
             }
 
             group("Contract Status")  // Add a separate group for clarity
             {
-                field("Update Contract Status"; Rec."Update Contract Status")
+                field("Update Contract Status"; Rec."BLRUpdate Contract Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Select the status to update the contract.';
                     trigger OnValidate()
                     begin
                         // Check if "Update Contract Status" has a value other than its default (e.g., <Blank>)
-                        if Rec."Update Contract Status" <> Rec."Update Contract Status"::" " then
-                            Rec."Yes/No" := true
+                        if Rec."BLRUpdate Contract Status" <> Rec."BLRUpdate Contract Status"::" " then
+                            Rec."BLRYes/No" := true
                         else
-                            Rec."Yes/No" := false;
+                            Rec."BLRYes/No" := false;
                     end;
                 }
 
-                field("Tenant Contract Status"; rec."Tenant Contract Status")
+                field("Tenant Contract Status"; rec."BLRTenant Contract Status")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -1150,8 +1150,8 @@ page 73209745 "Tenancy Contract Card"
 
                     begin
                         // Check if the contract status is either "Terminated" or "Renewed"
-                        if (Rec."Tenant Contract Status" = Rec."Tenant Contract Status"::"Terminated") or
-                           (Rec."Tenant Contract Status" = Rec."Tenant Contract Status"::"Contract Renewed") then
+                        if (Rec."BLRTenant Contract Status" = Rec."BLRTenant Contract Status"::"Terminated") or
+                           (Rec."BLRTenant Contract Status" = Rec."BLRTenant Contract Status"::"Contract Renewed") then
                             IsVisible := true  // Link should be visible
                         else
                             IsVisible := false; // Link should be hidden
@@ -1159,7 +1159,7 @@ page 73209745 "Tenancy Contract Card"
                     end;
                 }
 
-                field("Previous Status"; Rec."Previous Status")
+                field("Previous Status"; Rec."BLRPrevious Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The previous status of the tenancy contract.';
@@ -1169,7 +1169,7 @@ page 73209745 "Tenancy Contract Card"
                 {
                     Visible = IsVisible;
                     ShowCaption = false;
-                    field("Final Calculation"; rec."Final Calculation")
+                    field("BLRFinalCalculation"; rec."BLRFinal Calculation")
                     {
                         ToolTip = 'Drill down to the Final Calculation record for this tenancy contract.';
                         ApplicationArea = All;
@@ -1179,18 +1179,18 @@ page 73209745 "Tenancy Contract Card"
                         trigger OnDrillDown()
                         var
 
-                            FinalCalculation: Record "Final Calculation";
-                            TenancyContractSubpage: Record "Tenancy Contract SubPage";
-                            FinalSettlementRefund: Record FinalSettlementRefund;
-                            FinalSettlement: Record FinalSettlement;
+                            FinalCalculation: Record "BLRFinalCalculation";
+                            TenancyContractSubpage: Record "BLRTenancyContractSubpage";
+                            FinalSettlementRefund: Record BLRFinalSettlementRefund;
+                            FinalSettlement: Record BLRFinalSettlement;
                             StartDate: Date;
                             EndDate: Date;
                             DaysDiff: Integer;
 
                             FinalCalculationid: Integer;
                         begin
-                            FinalCalculation.SetRange("Contract ID", Rec."Contract ID");
-                            FinalCalculation.SetRange("Tenant ID", Rec."Tenant ID");
+                            FinalCalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
+                            FinalCalculation.SetRange("BLRTenant ID", Rec."BLRTenant ID");
 
                             if FinalCalculation.FindSet() then begin
                                 PopulateFinalCalculationFromTenancyContract(FinalCalculation);
@@ -1204,17 +1204,17 @@ page 73209745 "Tenancy Contract Card"
                                 FinalCalculation.Insert();
                                 Message('Record Created Successfully');
                             end;
-                            StartDate := Rec."Contract Start Date";
-                            EndDate := Rec."Contract End Date";
+                            StartDate := Rec."BLRContract Start Date";
+                            EndDate := Rec."BLRContract End Date";
                             DaysDiff := EndDate - StartDate + 1;
-                            FinalCalculation."Original Contract Tenure" := DaysDiff;
+                            FinalCalculation."BLROriginal Contract Tenure" := DaysDiff;
                             FinalCalculation.Modify(true);
 
-                            FinalCalculation.SetRange("Contract ID", Rec."Contract ID");
-                            FinalCalculation.SetRange("Tenant ID", Rec."Tenant ID");
+                            FinalCalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
+                            FinalCalculation.SetRange("BLRTenant ID", Rec."BLRTenant ID");
 
                             if FinalCalculation.FindSet() then
-                                FinalCalculationid := FinalCalculation."FC ID"
+                                FinalCalculationid := FinalCalculation."BLRFC ID"
                             else begin
                                 // If no record is found, create a new Revenue Structure record
                                 FinalCalculation.Init();
@@ -1222,42 +1222,42 @@ page 73209745 "Tenancy Contract Card"
                                 FinalCalculation.Modify(true);  // Insert the new record and generate the RS ID
 
                                 // Get the newly created RS ID
-                                FinalCalculationid := FinalCalculation."FC ID";
+                                FinalCalculationid := FinalCalculation."BLRFC ID";
                             end;
-                            Rec."Link" := FinalCalculationid;
+                            Rec."BLRLink" := FinalCalculationid;
 
                             // Add this new section to populate the Final Settlement Refund grid
-                            FinalSettlementRefund.SetRange("FC ID", FinalCalculationid);
+                            FinalSettlementRefund.SetRange("BLRFC ID", FinalCalculationid);
                             if FinalSettlementRefund.FindSet() then
                                 repeat
-                                    FinalSettlementRefund."Contract ID" := Rec."Contract ID";
+                                    FinalSettlementRefund."BLRContract ID" := Rec."BLRContract ID";
                                     FinalSettlementRefund.Modify(true);
                                 until FinalSettlementRefund.Next() = 0
                             else begin
                                 // If you want to create a new record when none exists
                                 FinalSettlementRefund.Init();
-                                FinalSettlementRefund."FC ID" := FinalCalculationid;
-                                FinalSettlementRefund."Contract ID" := Rec."Contract ID";
+                                FinalSettlementRefund."BLRFC ID" := FinalCalculationid;
+                                FinalSettlementRefund."BLRContract ID" := Rec."BLRContract ID";
                                 FinalSettlementRefund.Insert(true);
                                 Clear(FinalSettlementRefund);
                             end;
 
                             // Add this new section to populate the Final Settlement Refund grid
-                            FinalSettlement.SetRange("FC ID", FinalCalculationid);
+                            FinalSettlement.SetRange("BLRFC ID", FinalCalculationid);
                             if FinalSettlement.FindSet() then
                                 repeat
-                                    FinalSettlement."Contract ID" := Rec."Contract ID";
-                                    FinalSettlement."Tenant Email" := CopyStr(Rec."Email Address", 1, strlen(Rec."Email Address"));
-                                    FinalSettlement."Tenant Name" := Rec."Customer Name";
+                                    FinalSettlement."BLRContract ID" := Rec."BLRContract ID";
+                                    FinalSettlement."BLRTenant Email" := CopyStr(Rec."BLREmail Address", 1, strlen(Rec."BLREmail Address"));
+                                    FinalSettlement."BLRTenant Name" := Rec."BLRCustomer Name";
                                     FinalSettlement.Modify(true);
                                 until FinalSettlement.Next() = 0
                             else begin
                                 // If you want to create a new record when none exists
                                 FinalSettlement.Init();
-                                FinalSettlement."FC ID" := FinalCalculationid;
-                                FinalSettlement."Contract ID" := Rec."Contract ID";
-                                FinalSettlement."Tenant Email" := CopyStr(Rec."Email Address", 1, strlen(Rec."Email Address"));
-                                FinalSettlement."Tenant Name" := Rec."Customer Name";
+                                FinalSettlement."BLRFC ID" := FinalCalculationid;
+                                FinalSettlement."BLRContract ID" := Rec."BLRContract ID";
+                                FinalSettlement."BLRTenant Email" := CopyStr(Rec."BLREmail Address", 1, strlen(Rec."BLREmail Address"));
+                                FinalSettlement."BLRTenant Name" := Rec."BLRCustomer Name";
                                 FinalSettlement.Insert(true);
                                 Clear(FinalSettlement);
                             end;
@@ -1266,7 +1266,7 @@ page 73209745 "Tenancy Contract Card"
 
 
 
-                    field("Link"; Rec."Link")
+                    field("Link"; Rec."BLRLink")
                     {
                         ApplicationArea = All;
                         DrillDown = true;
@@ -1274,18 +1274,18 @@ page 73209745 "Tenancy Contract Card"
 
                         trigger OnDrillDown()
                         var
-                            FinalCalculation: Record "Final Calculation";
+                            FinalCalculation: Record "BLRFinalCalculation";
 
                         begin
                             // Navigate to the Revenue Structure Card page
-                            if FinalCalculation.Get(Rec."Link") then
-                                PAGE.RUN(PAGE::"Final Calculation Card", FinalCalculation)
+                            if FinalCalculation.Get(Rec."BLRLink") then
+                                PAGE.RUN(PAGE::"BLRFinalCalculationCard", FinalCalculation)
                             else
                                 Message('The related Revenue Structure does not exist.')
                         end;
                     }
                 }
-                field("Suspended Reason list"; Rec."Suspended Reason list")
+                field("Suspended Reason list"; Rec."BLRSuspended Reason list")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Click to open the Suspended Reason List.';
@@ -1294,11 +1294,11 @@ page 73209745 "Tenancy Contract Card"
 
                     trigger OnAssistEdit()
                     var
-                        SuspendedReasonRec: Record "SuspendReasonTable";
+                        SuspendedReasonRec: Record "BLRSuspendReasonTable";
                     begin
                         // Filter the Suspended Reason List page by the current Contract ID
-                        SuspendedReasonRec.SetRange("Contract ID", Rec."Contract ID");
-                        Page.Run(Page::"SuspendReasonList", SuspendedReasonRec);
+                        SuspendedReasonRec.SetRange("BLRContract ID", Rec."BLRContract ID");
+                        Page.Run(Page::"BLRSuspendReasonList", SuspendedReasonRec);
                     end;
                 }
 
@@ -1307,92 +1307,92 @@ page 73209745 "Tenancy Contract Card"
             group("WorkflowFrequencys")
             {
                 Visible = false;
-                part("Workflow Frequency"; "Workflow Frequency PR Card")
+                part("BLRWorkflowFrequency"; "BLRWorkflow Frequency PR Card")
                 {
-                    SubPageLink = "Property ID" = FIELD("Property ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRProperty ID" = FIELD("BLRProperty ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
                 }
             }
 
             group("Brokers and Commission Agent Details")
             {
-                field("Vendor ID"; Rec."Vendor ID")
+                field("Vendor ID"; Rec."BLRVendor ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Click to open the Vendor Card';
                 }
 
-                field("Vendor Name"; Rec."Vendor Name")
+                field("Vendor Name"; Rec."BLRVendor Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Click to open the Vendor Card';
                 }
 
-                field("Start Date"; Rec."Start Date")
+                field("Start Date"; Rec."BLRStart Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The start date of the tenancy contract.';
                 }
 
-                field("End Date"; Rec."End Date")
+                field("End Date"; Rec."BLREnd Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The end date of the tenancy contract.';
                 }
 
-                field("Calculation Method"; Rec."Calculation Method")
+                field("Calculation Method"; Rec."BLRCalculation Method")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The calculation method of the tenancy contract.';
                 }
 
-                field("Percentage Type"; Rec."Percentage Type")
+                field("Percentage Type"; Rec."BLRPercentage Type")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The percentage type of the tenancy contract.';
                 }
 
-                field("Percentage"; Rec."Percentage")
+                field("Percentage"; Rec."BLRPercentage")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The percentage of the tenancy contract.';
                 }
 
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The amount of the tenancy contract.';
                 }
 
-                field("Base Amount Type"; Rec."Base Amount Type")
+                field("Base Amount Type"; Rec."BLRBase Amount Type")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The base amount type of the tenancy contract.';
                 }
-                field("Frequency Of Payment"; Rec."Frequency Of Payment")
+                field("Frequency Of Payment"; Rec."BLRFrequency Of Payment")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The frequency of payment of the tenancy contract.';
                 }
 
-                field("ContractStatus"; Rec."Contract Status")
+                field("ContractStatus"; Rec."BLRContract Status")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The status of the tenancy contract.';
                 }
             }
-            field(IsCarryForwarded; Rec.IsCarryForwarded)
+            field(IsCarryForwarded; Rec.BLRIsCarryForwarded)
             {
                 ApplicationArea = All;
                 ToolTip = 'Carry Forward';
@@ -1410,15 +1410,15 @@ page 73209745 "Tenancy Contract Card"
                 ApplicationArea = All;
                 trigger OnAction()
                 var
-                    TenancyContract: Record "Tenancy Contract";
-                    ReportDubai: Report "Tenancy Contract";
-                    ReportAbuDhabi: Report UmmAlQuwainContract;
-                    Emirate: Enum Emirates;
-                    CurrentEmirateValue: Enum Emirates;
+                    TenancyContract: Record "BLRTenancyContract";
+                    ReportDubai: Report "BLRTenancyContract";
+                    ReportAbuDhabi: Report BLRUmmAlQuwainContract;
+                    Emirate: Enum BLREmirates;
+                    CurrentEmirateValue: Enum BLREmirates;
                 begin
-                    TenancyContract.SetRange("Contract ID", Rec."Contract ID");
+                    TenancyContract.SetRange("BLRContract ID", Rec."BLRContract ID");
 
-                    if Evaluate(CurrentEmirateValue, Rec.Emirate) then
+                    if Evaluate(CurrentEmirateValue, Rec."BLREmirate") then
                         case CurrentEmirateValue of
                             Emirate::"Umm Al Quwain":
                                 begin
@@ -1457,58 +1457,58 @@ page 73209745 "Tenancy Contract Card"
     trigger OnAfterGetRecord()
 
     var
-        workflowfrequency: Record "Workflow Frequency PR";
+        workflowfrequency: Record "BLRWorkflowFrequencyPR";
 
     begin
 
-        CurrPage."Revenues".Page.SetContractID(Rec."Contract ID");
+        CurrPage."Revenues".Page.SetContractID(Rec."BLRContract ID");
 
-        CurrPage."Revenues".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."Revenues".Page.SetProposalId(Rec."Proposal ID");
-        CurrPage."Single Unit Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Single Unit lumpsum Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Single Unit Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Single Unit lumpsum Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge SameSqure Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge SameSqure Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge DifferentSqure Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge DifferentSqure Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge Lum_AnnualAmount Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge Lum_AnnualAmount Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
+        CurrPage."Revenues".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."Revenues".Page.SetProposalId(Rec."BLRProposal ID");
+        CurrPage."Single Unit Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Single Unit lumpsum Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Single Unit Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Single Unit lumpsum Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge SameSqure Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge SameSqure Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge DifferentSqure Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge DifferentSqure Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge Lum_AnnualAmount Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge Lum_AnnualAmount Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
         UpdateFieldsEnable();
         UpdateVisibility();
         UpdateSecurityAmountReceived();
 
-        if Rec."Termination Of Contract" = Rec."Termination Of Contract"::" " then
+        if Rec."BLRTermination Of Contract" = Rec."BLRTermination Of Contract"::" " then
             IsVisible := false  // Link should be visible
         else
             IsVisible := true; // Link should be hidde
 
 
         // Check if the contract status is either "Terminated" or "Renewed"
-        if (Rec."Tenant Contract Status" = Rec."Tenant Contract Status"::"Terminated") or
-           (Rec."Tenant Contract Status" = Rec."Tenant Contract Status"::"Contract Renewed") then
+        if (Rec."BLRTenant Contract Status" = Rec."BLRTenant Contract Status"::"Terminated") or
+           (Rec."BLRTenant Contract Status" = Rec."BLRTenant Contract Status"::"Contract Renewed") then
             IsVisible := true  // Link should be visible
         else
             IsVisible := false; // Link should be hidden        
 
-        workflowfrequency.SetRange("Property ID", Rec."Property ID");
-        workflowfrequency.SetFilter(Workflow, '%1|%2|%3',
-            workflowfrequency.Workflow::"Payment Reminder",
-            workflowfrequency.Workflow::"Renewal Notification to Tenant",
-            workflowfrequency.Workflow::"Tenant Loyalty Check Reminder");
+        workflowfrequency.SetRange("BLRProperty ID", Rec."BLRProperty ID");
+        workflowfrequency.SetFilter(BLRWorkflow, '%1|%2|%3',
+            workflowfrequency."BLRWorkflow"::"Payment Reminder",
+            workflowfrequency."BLRWorkflow"::"Renewal Notification to Tenant",
+            workflowfrequency."BLRWorkflow"::"Tenant Loyalty Check Reminder");
 
         if workflowfrequency.FindSet() then begin
             repeat
-                case workflowfrequency.Workflow of
-                    workflowfrequency.Workflow::"Payment Reminder":
-                        Rec."Payment Reminder" := workflowfrequency."No. of Days";
+                case workflowfrequency."BLRWorkflow" of
+                    workflowfrequency."BLRWorkflow"::"Payment Reminder":
+                        Rec."BLRPayment Reminder" := workflowfrequency."BLRNo. of Days";
 
-                    workflowfrequency.Workflow::"Renewal Notification to Tenant":
-                        Rec."Renewal Notification to Tenant" := workflowfrequency."No. of Days";
+                    workflowfrequency."BLRWorkflow"::"Renewal Notification to Tenant":
+                        Rec."BLRRenewalNotiftoTenant" := workflowfrequency."BLRNo. of Days";
 
-                    workflowfrequency.Workflow::"Tenant Loyalty Check Reminder":
-                        Rec."Tenant Loyalty Check Reminder" := workflowfrequency."No. of Days";
+                    workflowfrequency."BLRWorkflow"::"Tenant Loyalty Check Reminder":
+                        Rec."BLRTenantLoyaltyCheckReminder" := workflowfrequency."BLRNo. of Days";
                 end;
             until workflowfrequency.Next() = 0;
 
@@ -1518,40 +1518,40 @@ page 73209745 "Tenancy Contract Card"
 
     trigger OnModifyRecord(): Boolean
     begin
-        CurrPage."Revenues".Page.SetContractID(Rec."Contract ID");
+        CurrPage."Revenues".Page.SetContractID(Rec."BLRContract ID");
 
-        CurrPage."Revenues".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."Revenues".Page.SetProposalId(Rec."Proposal ID");
-        CurrPage."Single Unit Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Single Unit lumpsum Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Single Unit Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Single Unit lumpsum Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge SameSqure Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge SameSqure Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge DifferentSqure Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge DifferentSqure Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge Lum_AnnualAmount Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge Lum_AnnualAmount Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
+        CurrPage."Revenues".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."Revenues".Page.SetProposalId(Rec."BLRProposal ID");
+        CurrPage."Single Unit Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Single Unit lumpsum Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Single Unit Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Single Unit lumpsum Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge SameSqure Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge SameSqure Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge DifferentSqure Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge DifferentSqure Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge Lum_AnnualAmount Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge Lum_AnnualAmount Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
         UpdateVisibility();
         UpdateSecurityAmountReceived();
     end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        CurrPage."Revenues".Page.SetContractID(Rec."Contract ID");
+        CurrPage."Revenues".Page.SetContractID(Rec."BLRContract ID");
 
-        CurrPage."Revenues".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."Revenues".Page.SetProposalId(Rec."Proposal ID");
-        CurrPage."Single Unit Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Single Unit lumpsum Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Single Unit Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Single Unit lumpsum Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge SameSqure Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge SameSqure Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge DifferentSqure Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge DifferentSqure Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge Lum_AnnualAmount Rent (Proposal)".Page.SetContractIDs(Rec."Contract ID");
-        CurrPage."Merge Lum_AnnualAmount Rent (Renewal)".Page.SetContractIDs(Rec."Contract ID");
+        CurrPage."Revenues".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."Revenues".Page.SetProposalId(Rec."BLRProposal ID");
+        CurrPage."Single Unit Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Single Unit lumpsum Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Single Unit Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Single Unit lumpsum Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge SameSqure Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge SameSqure Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge DifferentSqure Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge DifferentSqure Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge Lum_AnnualAmount Rent (Proposal)".Page.SetContractIDs(Rec."BLRContract ID");
+        CurrPage."Merge Lum_AnnualAmount Rent (Renewal)".Page.SetContractIDs(Rec."BLRContract ID");
         UpdateVisibility();
 
     end;
@@ -1559,8 +1559,8 @@ page 73209745 "Tenancy Contract Card"
 
     local procedure UpdateFieldsEnable()
     begin
-        ProposalIDEnabled := Rec."Contract Type" = Rec."Contract Type"::"New Contract";
-        RenewalProposalIDEnabled := Rec."Contract Type" = Rec."Contract Type"::"Renewal Contract";
+        ProposalIDEnabled := Rec."BLRContract Type" = Rec."BLRContract Type"::"New Contract";
+        RenewalProposalIDEnabled := Rec."BLRContract Type" = Rec."BLRContract Type"::"Renewal Contract";
 
         CurrPage.Update(false);
     end;
@@ -1578,21 +1578,21 @@ page 73209745 "Tenancy Contract Card"
     // Procedure to update visibility dynamically
     procedure UpdateVisibility()
     begin
-        ShowLegalReasonFields := (Rec."Single Rent Calculation" = Rec."Single Rent Calculation"::"Single Unit with square feet rate");
-        ShowBusinessReasonFields := (Rec."Merge Rent Calculation" = Rec."Merge Rent Calculation"::"Merged Unit with same square feet");
-        ShowLegalReasonFields1 := (Rec."Merge Rent Calculation" = Rec."Merge Rent Calculation"::"Merged Unit with differential square feet rate");
-        ShowBusinessReasonFields2 := (Rec."Merge Rent Calculation" = Rec."Merge Rent Calculation"::"Merged Unit with lumpsum annual amount");
-        ShowLegalReasonFields3 := (Rec."Single Rent Calculation" = Rec."Single Rent Calculation"::"Single Unit with lumpsum square feet rate");
-        ShowLegalReasonFields4 := (Rec."Praposal Type Selected" = Rec."Praposal Type Selected"::"Merge Unit");
+        ShowLegalReasonFields := (Rec."BLRSingle Rent Calculation" = Rec."BLRSingle Rent Calculation"::"Single Unit with square feet rate");
+        ShowBusinessReasonFields := (Rec."BLRMerge Rent Calculation" = Rec."BLRMerge Rent Calculation"::"Merged Unit with same square feet");
+        ShowLegalReasonFields1 := (Rec."BLRMerge Rent Calculation" = Rec."BLRMerge Rent Calculation"::"Merged Unit with differential square feet rate");
+        ShowBusinessReasonFields2 := (Rec."BLRMerge Rent Calculation" = Rec."BLRMerge Rent Calculation"::"Merged Unit with lumpsum annual amount");
+        ShowLegalReasonFields3 := (Rec."BLRSingle Rent Calculation" = Rec."BLRSingle Rent Calculation"::"Single Unit with lumpsum square feet rate");
+        ShowLegalReasonFields4 := (Rec."BLRPraposal Type Selected" = Rec."BLRPraposal Type Selected"::"Merge Unit");
     end;
 
     local procedure UpdateSecurityAmountReceived()
     begin
         // Update Security Amount Received
-        if Rec."Security Deposit Amount" = Rec."Security Deposit Amt. Received" then
-            Rec."Security Amount Pending" := 0
+        if Rec."BLRSecurity Deposit Amount" = Rec."BLRSecDepAmtReceived" then
+            Rec."BLRSecurity Amount Pending" := 0
         else
-            Rec."Security Amount Pending" := Rec."Security Deposit Amount" - Rec."Security Deposit Amt. Received";
+            Rec."BLRSecurity Amount Pending" := Rec."BLRSecurity Deposit Amount" - Rec."BLRSecDepAmtReceived";
 
     end;
 
@@ -1600,50 +1600,50 @@ page 73209745 "Tenancy Contract Card"
 
     trigger OnOpenPage()
     var
-        TenancyContractSubpage: Record "Tenancy Contract Subpage";
+        TenancyContractSubpage: Record "BLRTenancyContractSubpage";
     begin
-        TenancyContractSubpage.SetRange(ContractID, 0);
+        TenancyContractSubpage.SetRange(BLRContractID, 0);
         if TenancyContractSubpage.FindSet() then
             TenancyContractSubpage.DeleteAll();
     end;
 
-    procedure PopulateFinalCalculationFromTenancyContract(var aFinalCalculation: Record "Final Calculation")
+    procedure PopulateFinalCalculationFromTenancyContract(var aFinalCalculation: Record "BLRFinalCalculation")
     var
-        TenancyContractSubpage: Record "Tenancy Contract SubPage";
+        TenancyContractSubpage: Record "BLRTenancyContractSubpage";
     begin
-        aFinalCalculation."Contract ID" := Rec."Contract ID";
-        aFinalCalculation."Tenant ID" := Rec."Tenant ID";
-        aFinalCalculation."Contract Start Date" := Rec."Contract Start Date";
-        aFinalCalculation."Contract End Date" := Rec."Contract End Date";
-        aFinalCalculation."Unit Type" := Rec."Usage Type";
-        aFinalCalculation."Contract Amount" := Rec."Annual Rent Amount";
-        aFinalCalculation."Tenant Email" := Rec."Email Address";
-        aFinalCalculation."Tenant Name" := Rec."Customer Name";
-        aFinalCalculation."Security Deposit" := Rec."Security Balanced Amount";
-        aFinalCalculation."Remaining Security Deposit" := Rec."Security Balanced Amount";
+        aFinalCalculation."BLRContract ID" := Rec."BLRContract ID";
+        aFinalCalculation."BLRTenant ID" := Rec."BLRTenant ID";
+        aFinalCalculation."BLRContract Start Date" := Rec."BLRContract Start Date";
+        aFinalCalculation."BLRContract End Date" := Rec."BLRContract End Date";
+        aFinalCalculation."BLRUnit Type" := Rec."BLRUsage Type";
+        aFinalCalculation."BLRContract Amount" := Rec."BLRAnnual Rent Amount";
+        aFinalCalculation."BLRTenant Email" := Rec."BLREmail Address";
+        aFinalCalculation."BLRTenant Name" := Rec."BLRCustomer Name";
+        aFinalCalculation."BLRSecurity Deposit" := Rec."BLRSecurity Balanced Amount";
+        aFinalCalculation."BLRRemaining Security Deposit" := Rec."BLRSecurity Balanced Amount";
 
 
         // Add Chiller Deposit
         TenancyContractSubpage.Reset();
-        TenancyContractSubpage.SetRange(ContractID, Rec."Contract ID");
-        TenancyContractSubpage.SetRange("Secondary Item Type", 'Chiller Deposit');
+        TenancyContractSubpage.SetRange(BLRContractID, Rec."BLRContract ID");
+        TenancyContractSubpage.SetRange("BLRSecondary Item Type", 'Chiller Deposit');
         if TenancyContractSubpage.FindFirst() then begin
 
-            aFinalCalculation."Chiller Deposit" := TenancyContractSubpage."Invoiced and Paid";
-            aFinalCalculation."Remaining Chiller Deposit" := TenancyContractSubpage."Invoiced and Paid";
+            aFinalCalculation."BLRChiller Deposit" := TenancyContractSubpage."BLRInvoiced and Paid";
+            aFinalCalculation."BLRRemaining Chiller Deposit" := TenancyContractSubpage."BLRInvoiced and Paid";
         end;
 
 
         // Add Other Deposit
         TenancyContractSubpage.Reset();
-        TenancyContractSubpage.SetRange(ContractID, Rec."Contract ID");
-        TenancyContractSubpage.SetRange("Secondary Item Type", 'Other Deposit');
+        TenancyContractSubpage.SetRange(BLRContractID, Rec."BLRContract ID");
+        TenancyContractSubpage.SetRange("BLRSecondary Item Type", 'Other Deposit');
         if TenancyContractSubpage.FindFirst() then begin
-            aFinalCalculation."Other Deposit" := TenancyContractSubpage."Invoiced and Paid";
-            aFinalCalculation."Remaining Other Deposit" := TenancyContractSubpage."Invoiced and Paid";
+            aFinalCalculation."BLROther Deposit" := TenancyContractSubpage."BLRInvoiced and Paid";
+            aFinalCalculation."BLRRemaining Other Deposit" := TenancyContractSubpage."BLRInvoiced and Paid";
         end;
 
 
-        aFinalCalculation."Total Refundable Deposit" := aFinalCalculation."Security Deposit" + aFinalCalculation."Chiller Deposit" + aFinalCalculation."Other Deposit";
+        aFinalCalculation."BLRTotal Refundable Deposit" := aFinalCalculation."BLRSecurity Deposit" + aFinalCalculation."BLRChiller Deposit" + aFinalCalculation."BLROther Deposit";
     end;
 }

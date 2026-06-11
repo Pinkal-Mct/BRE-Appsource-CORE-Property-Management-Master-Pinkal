@@ -1,7 +1,7 @@
-page 50994 "TC Additional Terms Subpage"
+page 73209817 "BLRTC Additional Terms Subpage"
 {
     PageType = ListPart;
-    SourceTable = "TC Additional Terms";
+    SourceTable = "BLRTCAdditionalTerms";
     ApplicationArea = All;
 
     layout
@@ -11,7 +11,7 @@ page 50994 "TC Additional Terms Subpage"
             repeater(Group)
             {
 
-                field(Description; Rec.Description)
+                field(Description; Rec.BLRDescription)
                 {
                     ApplicationArea = All;
                 }

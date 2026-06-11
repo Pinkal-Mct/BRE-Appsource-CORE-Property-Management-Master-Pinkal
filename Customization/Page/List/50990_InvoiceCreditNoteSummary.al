@@ -1,7 +1,7 @@
-page 73209755 "InvoiceCreditNoteSummary"
+page 73209755 "BLRInvoiceCreditNoteSummary"
 {
     PageType = ListPart;
-    SourceTable = InvoiceCreditNoteSummary;
+    SourceTable = BLRInvoiceCreditNoteSummary;
     ApplicationArea = All;
     Caption = 'Invoice / Credit Note Summary';
     UsageCategory = None;
@@ -15,28 +15,28 @@ page 73209755 "InvoiceCreditNoteSummary"
         {
             repeater(General)
             {
-                field(Description; Rec.Description)
+                field(Description; Rec.BLRDescription)
                 {
                     ApplicationArea = All;
                     Caption = 'Revenue Description';
                     ToolTip = 'Specifies the description';
                     Editable = false;
                 }
-                field("Revenue Description"; Rec."Revenue Description")
+                field("Revenue Description"; Rec."BLRRevenue Description")
                 {
                     ApplicationArea = All;
                     Caption = 'Detailed Revenue Description';
                     ToolTip = 'Specifies the detailed revenue description';
                     Editable = false;
                 }
-                field(Invoice; Rec.Invoice)
+                field(Invoice; Rec.BLRInvoice)
                 {
                     ApplicationArea = All;
                     Caption = 'Invoice (Amount incl. VAT)';
                     ToolTip = 'Specifies the invoice amount.';
                     Editable = false;
                 }
-                field(CreditNote; Rec."Credit Note")
+                field(CreditNote; Rec."BLRCredit Note")
                 {
                     ApplicationArea = All;
                     Caption = 'Credit Note (Amount incl. VAT)';
@@ -45,7 +45,7 @@ page 73209755 "InvoiceCreditNoteSummary"
                 }
 
             }
-            field(Invoiced; Rec.Invoiced)
+            field(Invoiced; Rec.BLRInvoiced)
             {
                 ApplicationArea = All;
                 Caption = 'Invoiced';
@@ -54,7 +54,7 @@ page 73209755 "InvoiceCreditNoteSummary"
                 Visible = false;
             }
 
-            field("Credit Noted"; Rec."Credit Noted")
+            field("Credit Noted"; Rec."BLRCredit Noted")
             {
                 ApplicationArea = All;
                 Caption = 'Credit Noted';
@@ -62,7 +62,7 @@ page 73209755 "InvoiceCreditNoteSummary"
                 Editable = false;
                 Visible = false;
             }
-            field("Invoice ID"; Rec."Invoice ID")
+            field("Invoice ID"; Rec."BLRInvoice ID")
             {
                 ApplicationArea = All;
                 Caption = 'Invoice ID';
@@ -72,22 +72,20 @@ page 73209755 "InvoiceCreditNoteSummary"
                 trigger OnDrillDown()
                 var
                     SalesHeader: Record "Sales Header";
-                    SalesLine: Record "Sales Line";
-                    SalesLine2: Record "Sales Line";
                     postedsalesinvoice: Record "Sales Invoice Header";
                 begin
-                    SalesHeader.SetRange("No.", Rec."Invoice ID");
-                    if SalesHeader.FindFirst() then begin
-                        PAGE.Run(PAGE::"Sales Invoice", SalesHeader);
-                    end else begin
-                        postedsalesinvoice.SetRange("No.", Rec."Invoice ID");
-                        if postedsalesinvoice.FindFirst() then begin
+                    SalesHeader.SetRange("No.", Rec."BLRInvoice ID");
+                    if SalesHeader.FindFirst() then
+                        PAGE.Run(PAGE::"Sales Invoice", SalesHeader)
+                    else begin
+                        postedsalesinvoice.SetRange("No.", Rec."BLRInvoice ID");
+                        if postedsalesinvoice.FindFirst() then
                             PAGE.Run(PAGE::"Posted Sales Invoice", postedsalesinvoice);
-                        end;
+
                     end;
                 end;
             }
-            field("Credit Note ID"; Rec."Credit Note ID")
+            field("Credit Note ID"; Rec."BLRCredit Note ID")
             {
                 ApplicationArea = All;
                 Caption = 'Credit Note ID';
@@ -97,29 +95,28 @@ page 73209755 "InvoiceCreditNoteSummary"
                 trigger OnDrillDown()
                 var
                     SalesHeader: Record "Sales Header";
-                    SalesLine: Record "Sales Line";
-                    SalesLine2: Record "Sales Line";
+
                     PostedSalesCreditMemo: Record "Sales Cr.Memo Header";
                 begin
-                    SalesHeader.SetRange("No.", Rec."Credit Note ID");
-                    if SalesHeader.FindFirst() then begin
-                        PAGE.Run(PAGE::"Sales Credit Memo", SalesHeader);
-                    end else begin
-                        PostedSalesCreditMemo.SetRange("No.", Rec."Credit Note ID");
-                        if PostedSalesCreditMemo.FindFirst() then begin
+                    SalesHeader.SetRange("No.", Rec."BLRCredit Note ID");
+                    if SalesHeader.FindFirst() then
+                        PAGE.Run(PAGE::"Sales Credit Memo", SalesHeader)
+                    else begin
+                        PostedSalesCreditMemo.SetRange("No.", Rec."BLRCredit Note ID");
+                        if PostedSalesCreditMemo.FindFirst() then
                             PAGE.Run(PAGE::"Posted Sales Credit Memo", PostedSalesCreditMemo);
-                        end;
+
                     end;
                 end;
             }
-            field(TotalInvoice; Rec."Total Invoice")
+            field(TotalInvoice; Rec."BLRTotal Invoice")
             {
                 ApplicationArea = All;
                 Caption = 'Total Invoice';
                 ToolTip = 'Specifies the total invoice amount.';
                 Editable = false;
             }
-            field(TotalCreditNote; Rec."Total Credit Note")
+            field(TotalCreditNote; Rec."BLRTotal Credit Note")
             {
                 ApplicationArea = All;
                 Caption = 'Total Credit Note';
@@ -141,7 +138,7 @@ page 73209755 "InvoiceCreditNoteSummary"
                 Image = Invoice;
                 trigger OnAction()
                 var
-                    GenerateInvoicesCreditNotesFinalCalculation: Codeunit "GenerateInvoiceCreditNoteFC";
+                    GenerateInvoicesCreditNotesFinalCalculation: Codeunit "BLRGenerateInvoiceCreditNoteFC";
                 begin
                     GenerateInvoicesCreditNotesFinalCalculation.GenerateBillingInvoice(Rec);
                     // GenerateInvoicesCreditNotesFinalCalculation.GenerateAdditionalChargesInvoice(Rec);
@@ -155,7 +152,7 @@ page 73209755 "InvoiceCreditNoteSummary"
                 Image = CreditMemo;
                 trigger OnAction()
                 var
-                    GenerateInvoicesCreditNotesFinalCalculation: Codeunit "GenerateInvoiceCreditNoteFC";
+                    GenerateInvoicesCreditNotesFinalCalculation: Codeunit "BLRGenerateInvoiceCreditNoteFC";
                     CustLedgerEntry: Record "Cust. Ledger Entry";
                 begin
                     // GenerateInvoicesCreditNotesFinalCalculation.GenerateBillingCreditNote(Rec);
@@ -173,7 +170,7 @@ page 73209755 "InvoiceCreditNoteSummary"
                 var
                     CustLedgerEntry: Record "Cust. Ledger Entry";
                 begin
-                    CustLedgerEntry.SetRange("Contract ID", Rec."Contract No.");
+                    CustLedgerEntry.SetRange("BLRContract ID", Rec."BLRContract No.");
                     PAGE.RUN(PAGE::"Customer Ledger Entries", CustLedgerEntry);
                 end;
             }
@@ -188,7 +185,7 @@ page 73209755 "InvoiceCreditNoteSummary"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."Contract No." := ContractNo;
+        Rec."BLRContract No." := ContractNo;
     end;
 
     var

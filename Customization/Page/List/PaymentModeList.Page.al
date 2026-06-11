@@ -1,7 +1,7 @@
-page 73209791 "Payment Mode List"
+page 73209791 "BLRPayment Mode List"
 {
     PageType = List;
-    SourceTable = "Payment Mode";
+    SourceTable = "BLRPaymentMode";
     ApplicationArea = All;
     Caption = 'Payment Mode List';
     UsageCategory = Lists;
@@ -15,30 +15,30 @@ page 73209791 "Payment Mode List"
             repeater(Group)
             {
 
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract_ID';
                     ToolTip = 'The ID of the contract associated with the payment mode.';
                 }
-                field("Contract Start date"; Rec."Contract Start date")
+                field("Contract Start date"; Rec."BLRContract Start date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The start date of the contract associated with the payment mode.';
                 }
-                field("Contract End date"; Rec."Contract End date")
+                field("Contract End date"; Rec."BLRContract End date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The end date of the contract associated with the payment mode.';
                 }
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Tenant ID';
                     ToolTip = 'The ID of the tenant associated with the payment mode.';
                 }
 
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Tenant Name';

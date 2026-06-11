@@ -1,7 +1,7 @@
-page 73209754 "FinalAdjuContractReduction"
+page 73209754 "BLRFinalAdjuContractReduction"
 {
     PageType = ListPart;
-    SourceTable = FinancialAdjContractReduction;
+    SourceTable = BLRFinAdjContractReduction;
     ApplicationArea = All;
     Caption = 'Final Adjustment / Contract Reductions';
     InsertAllowed = true;
@@ -12,39 +12,39 @@ page 73209754 "FinalAdjuContractReduction"
         {
             repeater(General)
             {
-                field("Revenue Description"; Rec."Revenue Description")
+                field("Revenue Description"; Rec."BLRRevenue Description")
                 {
                     ApplicationArea = All;
                     Caption = 'Revenue Description';
                     ToolTip = 'Specifies the description of the revenue item.';
 
                 }
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
                     ToolTip = 'Specifies the amount for the final adjustment or contract reduction.';
                 }
-                field(VAT; Rec."VAT %")
+                field(VAT; Rec."BLRVAT %")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT %';
                     ToolTip = 'Specifies the VAT percentage applicable to the final adjustment or contract reduction.';
                 }
-                field("Amount Incl. VAT"; Rec."Amount Incl. VAT")
+                field("Amount Incl. VAT"; Rec."BLRAmount Incl. VAT")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount Incl. VAT';
                     ToolTip = 'Specifies the total amount including VAT for the final adjustment or contract reduction.';
                     Editable = false;
                 }
-                field(Description; Rec.Description)
+                field(Description; Rec."BLRDescription")
                 {
                     ApplicationArea = All;
                     Caption = 'Description';
                     ToolTip = 'Specifies additional details or notes regarding the final adjustment or contract reduction.';
                 }
-                field("Credit Note ID"; Rec."Credit Note ID")
+                field("Credit Note ID"; Rec."BLRCredit Note ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Credit Note ID';
@@ -56,11 +56,11 @@ page 73209754 "FinalAdjuContractReduction"
                         SalesHeader: Record "Sales Header";
                         postedsalesinvoice: Record "Sales Cr.Memo Header";
                     begin
-                        SalesHeader.SetRange("No.", Rec."Credit Note ID");
+                        SalesHeader.SetRange("No.", Rec."BLRCredit Note ID");
                         if SalesHeader.FindFirst() then
                             PAGE.Run(PAGE::"Sales Credit Memo", SalesHeader)
                         else begin
-                            postedsalesinvoice.SetRange("No.", Rec."Credit Note ID");
+                            postedsalesinvoice.SetRange("No.", Rec."BLRCredit Note ID");
                             if postedsalesinvoice.FindFirst() then
                                 PAGE.Run(PAGE::"Posted Sales Credit Memo", postedsalesinvoice);
 
@@ -69,21 +69,21 @@ page 73209754 "FinalAdjuContractReduction"
                 }
 
             }
-            field("Total Amount"; Rec.Total)
+            field("Total Amount"; Rec.BLRTotal)
             {
                 ApplicationArea = All;
                 Caption = 'Total Amount';
                 ToolTip = 'Specifies the total amount of all final adjustments and contract reductions.';
                 Editable = false;
             }
-            field("Total VAT"; Rec."Total VAT")
+            field("Total VAT"; Rec."BLRTotal VAT")
             {
                 ApplicationArea = All;
                 Caption = 'Total VAT';
                 ToolTip = 'Specifies the total VAT amount of all final adjustments and contract reductions.';
                 Editable = false;
             }
-            field("Total Amount Incl. VAT"; Rec."Total Amount Incl.VAT")
+            field("Total Amount Incl. VAT"; Rec."BLRTotal Amount Incl.VAT")
             {
                 ApplicationArea = All;
                 Caption = 'Total Amount Incl. VAT';
@@ -102,7 +102,7 @@ page 73209754 "FinalAdjuContractReduction"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."Contract No." := ContractNo;
+        Rec."BLRContract No." := ContractNo;
     end;
 
     var

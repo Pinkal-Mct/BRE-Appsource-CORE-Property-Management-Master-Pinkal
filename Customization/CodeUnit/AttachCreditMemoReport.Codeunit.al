@@ -1,16 +1,16 @@
-codeunit 73209625 "Attach Credit Memo Report"
+codeunit 73209625 "BLRAttach Credit Memo Report"
 {
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterSalesCrMemoHeaderInsert, '', false, false)]
     local procedure OnAfterSalesCrMemoHeaderInsert(var SalesCrMemoHeader: Record "Sales Cr.Memo Header"; SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; WhseShip: Boolean; WhseReceive: Boolean; var TempWhseShptHeader: Record "Warehouse Shipment Header"; var TempWhseRcptHeader: Record "Warehouse Receipt Header")
     var
         SalesHeader1: Record "Sales Header";
-        ConfigRecord: Record AzureConfiguration;
-        tenancyContract: Record "Tenancy Contract";
+        ConfigRecord: Record BLRAzureConfiguration;
+        tenancyContract: Record "BLRTenancyContract";
         customer: Record Customer;
-        emailcreditmemo: Codeunit "Send Credit Memo to Tenant";
+        emailcreditmemo: Codeunit "BLRSend Credit Memo to Tenant";
 
-        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
         TempBlob: Codeunit "Temp Blob";
         RecRef: RecordRef;
         InStream: InStream;
@@ -30,7 +30,7 @@ codeunit 73209625 "Attach Credit Memo Report"
         ValidFormats.Add('.jpg');
         ValidFormats.Add('.jpeg');
 
-        SASUrlBase := ConfigRecord."SAS URL";
+        SASUrlBase := ConfigRecord."BLRSAS URL";
         FileExtension := '.pdf';
         ReportID := 73209580;
         SalesHeader1.Reset();
@@ -47,13 +47,13 @@ codeunit 73209625 "Attach Credit Memo Report"
         FileName := 'CreditMemo_' + SalesCrMemoHeader."No." + FileExtension;
         folderName := 'SalesCreditMemoDocuments';
         UploadResult := azureBlobUploader.UploadDocumentToBlob(InStream, FileName, folderName);
-        SalesCrMemoHeader."Credit Memo Document" := CopyStr(FileName, 1, StrLen(FileName));
-        SalesCrMemoHeader."Credit Memo URL" := CopyStr(UploadResult, 1, StrLen(UploadResult));
+        SalesCrMemoHeader."BLRCredit Memo Document" := CopyStr(FileName, 1, StrLen(FileName));
+        SalesCrMemoHeader."BLRCredit Memo URL" := CopyStr(UploadResult, 1, StrLen(UploadResult));
         emailcreditmemo.SendMailToTenantForCreditMemo(SalesCrMemoHeader, FileName, InStream);
 
-        if tenancyContract.Get(SalesHeader."Contract ID") then begin
-            postingGroup := CopyStr(UpperCase(tenancyContract."Property Classification"), 1, 20);
-            if customer.Get(tenancyContract."Tenant ID") then begin
+        if tenancyContract.Get(SalesHeader."BLRContract ID") then begin
+            postingGroup := CopyStr(UpperCase(tenancyContract."BLRProperty Classification"), 1, 20);
+            if customer.Get(tenancyContract."BLRTenant ID") then begin
                 customer."Gen. Bus. Posting Group" := postingGroup;
                 customer."VAT Bus. Posting Group" := postingGroup;
                 customer."Customer Posting Group" := postingGroup;

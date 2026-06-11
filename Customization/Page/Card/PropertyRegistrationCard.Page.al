@@ -1,7 +1,7 @@
-page 73209717 "Property Registration Card"
+page 73209717 "BLRProperty Registration Card"
 {
     PageType = Card;
-    SourceTable = "Property Registration";
+    SourceTable = "BLRPropertyRegistration";
     ApplicationArea = All;
     Caption = 'Property Registration';
     // UsageCategory = Administration;
@@ -15,13 +15,13 @@ page 73209717 "Property Registration Card"
                 Caption = 'Property Details';
 
 
-                field("Property ID"; rec."Property ID")
+                field("Property ID"; rec."BLRProperty ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the property.';
                 }
-                field("Property Name"; rec."Property Name")
+                field("Property Name"; rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the property.';
@@ -31,7 +31,7 @@ page 73209717 "Property Registration Card"
                         InsertWorkflowFrquencyData();
                     end;
                 }
-                field("Company ID"; rec."Company ID")
+                field("Company ID"; rec."BLRCompany ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the company associated with the property.';
@@ -44,7 +44,7 @@ page 73209717 "Property Registration Card"
 
 
 
-                field("Base Unit of Measure"; rec."Base Unit of Measure")
+                field("Base Unit of Measure"; rec."BLRBase Unit of Measure")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the base unit of measure for the property.';
@@ -54,7 +54,7 @@ page 73209717 "Property Registration Card"
                         InsertWorkflowFrquencyData();
                     end;
                 }
-                field("Property Size"; rec."Property Size")
+                field("Property Size"; rec."BLRProperty Size")
                 {
                     ApplicationArea = All;
                     Caption = 'Property Size';
@@ -62,43 +62,43 @@ page 73209717 "Property Registration Card"
                     ToolTip = 'Specifies the size of the property in square feet or square meters.';
                 }
 
-                field("Market Rate per Sq. Ft."; rec."Market Rate per Sq. Ft.")
+                field("Market Rate per Sq. Ft."; rec."BLRMarket Rate per Sq. Ft.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the market rate per square foot for the property.';
                 }
 
-                field("Address"; Rec."Address")
+                field("Address"; Rec."BLRAddress")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the address of the property.';
                 }
-                field("Built-up Area"; Rec."Built-up Area")
+                field("Built-up Area"; Rec."BLRBuilt-up Area")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the built-up area of the property in square feet or square meters.';
                 }
-                field("Makani Number"; Rec."Makani Number")
+                field("Makani Number"; Rec."BLRMakani Number")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the Makani number for the property, which is a unique identifier for properties in Dubai.';
                 }
-                field("Municipality Number"; Rec."Municipality Number")
+                field("Municipality Number"; Rec."BLRMunicipality Number")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the municipality number for the property, which is used for official identification.';
                 }
-                field("DEWA Number"; Rec."DEWA Number")
+                field("DEWA Number"; Rec."BLRDEWA Number")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the DEWA number for the property, which is a unique identifier for properties in Dubai.';
                 }
-                field("Number of Floors"; Rec."Number of Floors")
+                field("Number of Floors"; Rec."BLRNumber of Floors")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the total number of floors in the property.';
                 }
-                field("Number of Lifts"; Rec."Number of Lifts")
+                field("Number of Lifts"; Rec."BLRNumber of Lifts")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the total number of lifts in the property.';
@@ -111,21 +111,21 @@ page 73209717 "Property Registration Card"
             {
                 Caption = 'Additional Information';
 
-                field("Country"; rec."Country")
+                field("BLRCountry"; rec."BLRCountry")
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
                     ToolTip = 'Specifies the country where the property is located.';
                     // Lookup = true;
                 }
-                field("Emirate"; rec."Emirate Name")
+                field("BLREmirate"; rec."BLREmirate Name")
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
                     ToolTip = 'Specifies the emirate where the property is located.';
                     // Lookup = true;
                 }
-                field("Community"; rec."Community")
+                field("BLRCommunity"; rec."BLRCommunity")
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
@@ -133,13 +133,13 @@ page 73209717 "Property Registration Card"
                     ToolTip = 'Specifies the community where the property is located.';
                 }
 
-                field("Number of Units"; rec."Number of Units")
+                field("Number of Units"; rec."BLRNumber of Units")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the total number of units in the property.';
                 }
 
-                field("Property Classification"; rec."Property Classification")
+                field("Property Classification"; rec."BLRProperty Classification")
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
@@ -147,7 +147,7 @@ page 73209717 "Property Registration Card"
                     Lookup = true;
                 }
 
-                field("Property Type"; rec."Property Type")
+                field("BLRPropertyType"; rec."BLRProperty Type")
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
@@ -156,18 +156,18 @@ page 73209717 "Property Registration Card"
                 }
 
 
-                field("Registration Date"; rec."Registration Date")
+                field("Registration Date"; rec."BLRRegistration Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the date when the property was registered.';
                 }
 
-                field("GTIN"; rec."GTIN")
+                field("GTIN"; rec."BLRGTIN")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the Global Trade Item Number (GTIN) for the property, which is a unique identifier used in international trade.';
                 }
-                field("Owner ID"; rec."Owner ID")
+                field("Owner ID"; rec."BLROwner ID")
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
@@ -179,9 +179,9 @@ page 73209717 "Property Registration Card"
             {
 
                 // Add the Document Attachment Subpage here
-                part("Document Attachments"; "Property Registration SubPage")
+                part("Document Attachments"; "BLRPropertyRegistrationSubPage")
                 {
-                    SubPageLink = PropertyID = FIELD("Property ID"); // Link to filter attachments for this owner only
+                    SubPageLink = BLRPropertyID = FIELD("BLRProperty ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
                     Visible = isVisible;
                 }
@@ -190,10 +190,10 @@ page 73209717 "Property Registration Card"
             group("WorkflowFrequencys")
             {
                 Caption = 'List of Workflow Frequency';
-                part("Workflow Frequency"; "Workflow Frequency PR Card")
+                part("BLRWorkflowFrequency"; "BLRWorkflow Frequency PR Card")
                 {
-                    SubPageLink = "Company ID" = FIELD("Company ID"),
-                    "Property ID" = FIELD("Property ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRCompany ID" = FIELD("BLRCompany ID"),
+                    "BLRProperty ID" = FIELD("BLRProperty ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
 
                 }
@@ -209,20 +209,20 @@ page 73209717 "Property Registration Card"
 
     trigger OnModifyRecord(): Boolean
     begin
-        CurrPage."Document Attachments".Page.SetPropertyId(Rec."Property ID");
+        CurrPage."Document Attachments".Page.SetPropertyId(Rec."BLRProperty ID");
     end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        CurrPage."Document Attachments".Page.SetPropertyId(Rec."Property ID");
+        CurrPage."Document Attachments".Page.SetPropertyId(Rec."BLRProperty ID");
         isVisible := true;
     end;
 
     trigger OnAfterGetRecord()
     begin
-        CurrPage."Document Attachments".Page.SetPropertyId(Rec."Property ID");
+        CurrPage."Document Attachments".Page.SetPropertyId(Rec."BLRProperty ID");
 
-        if Rec."Property ID" <> '' then
+        if Rec."BLRProperty ID" <> '' then
             isVisible := true
         else
             isVisible := false;
@@ -230,11 +230,11 @@ page 73209717 "Property Registration Card"
 
     procedure InsertWorkflowFrquencyData()
     var
-        workflowfrequency: Record "Workflow Frequency";
-        workflowfrequencyPR: Record "Workflow Frequency PR";
+        workflowfrequency: Record "BLRWorkflowFrequency";
+        workflowfrequencyPR: Record "BLRWorkflowFrequencyPR";
     begin
-        workflowfrequencyPR.SetRange("Property ID", Rec."Property ID");
-        workflowfrequencyPR.SetRange("Company ID", Rec."Company ID");
+        workflowfrequencyPR.SetRange("BLRProperty ID", Rec."BLRProperty ID");
+        workflowfrequencyPR.SetRange("BLRCompany ID", Rec."BLRCompany ID");
 
         if workflowfrequencyPR.FindSet() then
             workflowfrequencyPR.DeleteAll();
@@ -244,11 +244,11 @@ page 73209717 "Property Registration Card"
             repeat
                 workflowfrequencyPR.Init();
 
-                workflowfrequencyPR."Property ID" := Rec."Property ID";
-                workflowfrequencyPR."Company ID" := workflowfrequency."Company ID";
-                workflowfrequencyPR.Workflow := workflowfrequency.Workflow;
-                workflowfrequencyPR."frequncy Status" := workflowfrequency."frequncy Status";
-                workflowfrequencyPR."No. of Days" := workflowfrequency."No. of Days";
+                workflowfrequencyPR."BLRProperty ID" := Rec."BLRProperty ID";
+                workflowfrequencyPR."BLRCompany ID" := workflowfrequency."BLRCompany ID";
+                workflowfrequencyPR."BLRWorkflow" := workflowfrequency."BLRWorkflow";
+                workflowfrequencyPR."BLRfrequncy Status" := workflowfrequency."BLRfrequncy Status";
+                workflowfrequencyPR."BLRNo. of Days" := workflowfrequency."BLRNo. of Days";
                 workflowfrequencyPR.Insert();
                 Clear(workflowfrequencyPR);
             until workflowfrequency.Next() = 0;

@@ -4,7 +4,7 @@ using Microsoft.Sales.History;
 using Microsoft.Sales.Document;
 using Microsoft.Sales.Customer;
 using System.Text;
-report 73209580 "Credit Note"
+report 73209580 "BLRCreditNote"
 {
     ApplicationArea = All;
     Caption = 'Credit Note';
@@ -59,7 +59,7 @@ report 73209580 "Credit Note"
             column(BankBranch; CompanyInfo."Bank Branch No.")
             {
             }
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
             column(Applies_to_Doc__No_; "Applies-to Doc. No.")
@@ -115,22 +115,22 @@ report 73209580 "Credit Note"
                     AmountToWords(TotalAmountInclVAT);
                 end;
             }
-            dataitem("Tenancy Contract"; "Tenancy Contract")
+            dataitem("BLRTenancyContract"; "BLRTenancyContract")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                column(Property_Name; "Property Name")
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                column(Property_Name; "BLRProperty Name")
                 {
                 }
-                column(unit_Name; "Unit Name")
+                column(unit_Name; "BLRUnit Name")
                 {
                 }
-                column(Contract_Start_Date; "Contract Start Date")
+                column(Contract_Start_Date; "BLRContract Start Date")
                 {
                 }
-                column(Contract_End_Date; "Contract End Date")
+                column(Contract_End_Date; "BLRContract End Date")
                 {
                 }
-                column(Contract_Tenor; "Contract Tenor")
+                column(Contract_Tenor; "BLRContract Tenor")
                 {
                 }
             }

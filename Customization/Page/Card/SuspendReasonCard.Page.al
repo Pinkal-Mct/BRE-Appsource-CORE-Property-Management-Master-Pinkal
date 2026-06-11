@@ -1,7 +1,7 @@
-page 73209738 "Suspend Reason Card"
+page 73209738 "BLRSuspend Reason Card"
 {
     PageType = Card;
-    SourceTable = SuspendReasonTable;
+    SourceTable = BLRSuspendReasonTable;
     ApplicationArea = All;
     Caption = 'Suspend Reason Card';
     UsageCategory = Administration;
@@ -16,7 +16,7 @@ page 73209738 "Suspend Reason Card"
             {
                 Caption = 'Tenancy Details';
 
-                field("Contract Type"; rec."Contract Type")
+                field("Contract Type"; rec."BLRContract Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Type of contract for the tenancy.';
@@ -26,7 +26,7 @@ page 73209738 "Suspend Reason Card"
                     end;
                 }
 
-                field("Proposal ID"; Rec."Proposal ID")
+                field("Proposal ID"; Rec."BLRProposal ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Proposal ID';
@@ -34,7 +34,7 @@ page 73209738 "Suspend Reason Card"
                     ToolTip = 'Identifier for the proposal associated with this tenancy.';
                 }
 
-                field("Renewal Proposal ID"; Rec."Renewal Proposal ID")
+                field("Renewal Proposal ID"; Rec."BLRRenewal Proposal ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Renewal Proposal ID';
@@ -42,7 +42,7 @@ page 73209738 "Suspend Reason Card"
                     ToolTip = 'Identifier for the renewal proposal associated with this tenancy.';
                 }
 
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Lookup = true;
@@ -50,49 +50,49 @@ page 73209738 "Suspend Reason Card"
                     ToolTip = 'Identifier for the contract associated with this tenancy.';
                 }
 
-                field(TenantID; Rec.TenantID)
+                field(TenantID; Rec.BLRTenantID)
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the tenant associated with this tenancy.';
                 }
 
-                field(TenantName; Rec.TenantName)
+                field(TenantName; Rec.BLRTenantName)
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Name of the tenant associated with this tenancy.';
                 }
 
-                field(EmiratesID; Rec.EmiratesID)
+                field(EmiratesID; Rec.BLREmiratesID)
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Emirates ID of the tenant associated with this tenancy.';
                 }
 
-                field(ContactNumber; Rec.ContactNumber)
+                field(ContactNumber; Rec.BLRContactNumber)
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Contact number of the tenant associated with this tenancy.';
                 }
 
-                field(EmailAddress; Rec.EmailAddress)
+                field(EmailAddress; Rec.BLREmailAddress)
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Email address of the tenant associated with this tenancy.';
                 }
 
-                field(TenantTradeLicenseNo; Rec.TradeLicenseNo)
+                field(TenantTradeLicenseNo; Rec.BLRTradeLicenseNo)
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Trade license number of the tenant associated with this tenancy.';
                 }
 
-                field(TenantLicensingAuthority; Rec.LicensingAuthority)
+                field(TenantLicensingAuthority; Rec.BLRLicensingAuthority)
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -103,25 +103,25 @@ page 73209738 "Suspend Reason Card"
             {
                 Caption = 'General Details';
 
-                field(ID; Rec.ID)
+                field(ID; Rec.BLRID)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Unique identifier for the suspend reason.';
                 }
 
-                field(DateEffective; Rec.DateEffective)
+                field(DateEffective; Rec.BLRDateEffective)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Effective date of the suspension reason.';
                 }
 
-                field(SuspensionEndDate; Rec.SuspensionEndDate)
+                field(SuspensionEndDate; Rec.BLRSuspensionEndDate)
                 {
                     ApplicationArea = All;
                     ToolTip = 'End date of the suspension reason.';
                 }
 
-                field(Reason; Rec.Reason)
+                field(Reason; Rec.BLRReason)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Reason for the suspension.';
@@ -132,19 +132,19 @@ page 73209738 "Suspend Reason Card"
                     end;
                 }
 
-                field(Description; Rec.Description)
+                field(Description; Rec.BLRDescription)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Description of the suspension reason.';
                 }
 
-                field("Tenant Contract Status"; Rec."Tenant Contract Status")
+                field("Tenant Contract Status"; Rec."BLRTenant Contract Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Status of the tenant contract associated with this suspension reason.';
                 }
 
-                field("ReleaseUnits"; Rec."ReleaseUnits")
+                field("ReleaseUnits"; Rec."BLRReleaseUnits")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Units to be released as part of the suspension reason.';
@@ -158,14 +158,14 @@ page 73209738 "Suspend Reason Card"
                 Caption = 'Legal Reason Details';
                 Visible = ShowLegalReasonFields;
 
-                field(ReleaseUnit; Rec.ReleaseUnit)
+                field(ReleaseUnit; Rec.BLRReleaseUnit)
                 {
                     ApplicationArea = All;
                     Caption = 'Release Unit';
                     ToolTip = 'Unit to be released as part of the legal suspension reason.';
                 }
 
-                field(ReleaseDate; Rec.ReleaseDate)
+                field(ReleaseDate; Rec.BLRReleaseDate)
                 {
                     ApplicationArea = All;
                     Caption = 'Release Date';
@@ -178,14 +178,14 @@ page 73209738 "Suspend Reason Card"
                 Caption = 'Business Reason Details';
                 Visible = ShowBusinessReasonFields;
 
-                field(SuspensionEffectiveDate; Rec.SuspensionEffectiveDate)
+                field(SuspensionEffectiveDate; Rec.BLRSuspensionEffectiveDate)
                 {
                     ApplicationArea = All;
                     Caption = 'Effective Date of Suspension to Active';
                     ToolTip = 'Date when the suspension becomes effective for business reasons.';
                 }
 
-                field(IssueResolutionDescription; Rec.IssueResolutionDescription)
+                field(IssueResolutionDescription; Rec.BLRIssueResolutionDescription)
                 {
                     ApplicationArea = All;
                     Caption = 'Issue Resolution Description';
@@ -221,8 +221,8 @@ page 73209738 "Suspend Reason Card"
     // Procedure to update visibility dynamically
     procedure UpdateVisibility()
     begin
-        ShowLegalReasonFields := (Rec.Reason = Rec.Reason::"Legal Reason");
-        ShowBusinessReasonFields := (Rec.Reason = Rec.Reason::"Business Reason");
+        ShowLegalReasonFields := (Rec.BLRReason = Rec.BLRReason::"Legal Reason");
+        ShowBusinessReasonFields := (Rec.BLRReason = Rec.BLRReason::"Business Reason");
     end;
 
     trigger OnAfterGetRecord()
@@ -237,8 +237,8 @@ page 73209738 "Suspend Reason Card"
 
     local procedure UpdateFieldsEnable()
     begin
-        ProposalIDEnabled := Rec."Contract Type" = Rec."Contract Type"::"New Contract";
-        RenewalProposalIDEnabled := Rec."Contract Type" = Rec."Contract Type"::"Renewal Contract";
+        ProposalIDEnabled := Rec."BLRContract Type" = Rec."BLRContract Type"::"New Contract";
+        RenewalProposalIDEnabled := Rec."BLRContract Type" = Rec."BLRContract Type"::"Renewal Contract";
 
         CurrPage.Update(false);
     end;

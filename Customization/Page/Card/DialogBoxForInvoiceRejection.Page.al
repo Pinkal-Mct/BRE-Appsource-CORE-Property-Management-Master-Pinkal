@@ -1,4 +1,4 @@
-page 73209689 DialogBoxForInvoiceRejection
+page 73209689 BLRDialogBoxInvoiceRejection
 {
     PageType = StandardDialog;
     Caption = 'Enter Reason Rejection';

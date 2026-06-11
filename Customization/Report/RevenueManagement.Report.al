@@ -1,5 +1,5 @@
 namespace PropertyManagement.PropertyManagement;
-report 73209590 RevenueManagement
+report 73209590 BLRRevenueManagement
 {
     ApplicationArea = All;
     Caption = 'RevenueManagement';
@@ -7,9 +7,9 @@ report 73209590 RevenueManagement
     DefaultRenderingLayout = "RevenueManagement.docx";
     dataset
     {
-        dataitem(TenancyContract; "Tenancy Contract")
+        dataitem(TenancyContract; "BLRTenancyContract")
         {
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
         }

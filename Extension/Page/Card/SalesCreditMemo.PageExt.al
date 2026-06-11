@@ -1,4 +1,4 @@
-pageextension 73209585 SalesCreditMemo extends "Sales Credit Memo"
+pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
 {
     layout
     {
@@ -6,33 +6,33 @@ pageextension 73209585 SalesCreditMemo extends "Sales Credit Memo"
         {
             group("Contract Information")
             {
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'ID of the contract related to this credit memo.';
-                    TableRelation = "Tenancy Contract"."Contract ID";
+                    TableRelation = "BLRTenancyContract"."BLRContract ID";
 
                     trigger OnValidate()
                     var
-                        tenancyContract: Record "Tenancy Contract";
+                        tenancyContract: Record "BLRTenancyContract";
 
                     begin
-                        tenancyContract.SetRange("Contract ID", Rec."Contract ID");
+                        tenancyContract.SetRange("BLRContract ID", Rec."BLRContract ID");
                         if tenancyContract.FindFirst() then begin
-                            Rec."Tenant Name" := tenancyContract."Customer Name";
-                            Rec."Property Name" := tenancyContract."Property Name";
-                            Rec."Unit Name" := tenancyContract."Unit Name";
-                            Rec."Contract Tenure" := tenancyContract."Contract Tenor";
-                            Rec."Contract Period" := Format(tenancyContract."Contract Start Date", 0, '<Day,2>/<Month,2>/<Year4>') + ' To ' + Format(tenancyContract."Contract End Date", 0, '<Day,2>/<Month,2>/<Year4>');
-                            Rec."Property Classification" := tenancyContract."Property Classification";
-                            Rec."Contract Amount" := Round(tenancyContract."Annual Rent Amount");
+                            Rec."BLRTenant Name" := tenancyContract."BLRCustomer Name";
+                            Rec."BLRProperty Name" := tenancyContract."BLRProperty Name";
+                            Rec."BLRUnit Name" := tenancyContract."BLRUnit Name";
+                            Rec."BLRContract Tenure" := tenancyContract."BLRContract Tenor";
+                            Rec."BLRContract Period" := Format(tenancyContract."BLRContract Start Date", 0, '<Day,2>/<Month,2>/<Year4>') + ' To ' + Format(tenancyContract."BLRContract End Date", 0, '<Day,2>/<Month,2>/<Year4>');
+                            Rec."BLRProperty Classification" := tenancyContract."BLRProperty Classification";
+                            Rec."BLRContract Amount" := Round(tenancyContract."BLRAnnual Rent Amount");
                         end else begin
-                            Rec."Tenant Name" := '';
-                            rec."Property Name" := '';
-                            Rec."Unit Name" := '';
-                            Rec."Contract Tenure" := '';
-                            Rec."Contract Period" := '';
-                            Rec."Property Classification" := '';
+                            Rec."BLRTenant Name" := '';
+                            rec."BLRProperty Name" := '';
+                            Rec."BLRUnit Name" := '';
+                            Rec."BLRContract Tenure" := '';
+                            Rec."BLRContract Period" := '';
+                            Rec."BLRProperty Classification" := '';
 
                             // Rec."Tenant Name" := '';
 
@@ -40,44 +40,44 @@ pageextension 73209585 SalesCreditMemo extends "Sales Credit Memo"
                     end;
 
                 }
-                field("Contract Amount"; Rec."Contract Amount")
+                field("Contract Amount"; Rec."BLRContract Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Amount of the contract related to this credit memo.';
                     Editable = false;
                 }
-                field("Property Name"; Rec."Property Name")
+                field("Property Name"; Rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Name of the property related to this credit memo.';
                     Editable = false;
                 }
-                field("Unit Name"; Rec."Unit Name")
+                field("Unit Name"; Rec."BLRUnit Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Name of the unit related to this credit memo.';
                     Editable = false;
                 }
-                field("Contract Tenure"; Rec."Contract Tenure")
+                field("Contract Tenure"; Rec."BLRContract Tenure")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Tenure of the contract related to this credit memo.';
                     Editable = false;
 
                 }
-                field("Contract Period"; Rec."Contract Period")
+                field("Contract Period"; Rec."BLRContract Period")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Period of the contract related to this credit memo.';
                     Editable = false;
                 }
-                field("Property Classification"; Rec."Property Classification")
+                field("Property Classification"; Rec."BLRProperty Classification")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Classification of the property related to this credit memo.';
                     Editable = false;
                 }
-                field("Approval Status for CreditNote"; Rec."Approval Status for CreditNote")
+                field("Approval Status for CreditNote"; Rec."BLRApproval Status for CreditNote")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Approval status of the credit note.';
@@ -89,24 +89,24 @@ pageextension 73209585 SalesCreditMemo extends "Sales Credit Memo"
                     trigger OnValidate()
                     var
                         SalesCreditNotePost: Codeunit "Sales-Post";
-                        ShowDialogBox: Codeunit DialogboxRejectionCreditMemo;
+                        ShowDialogBox: Codeunit BLRDialogboxRejecCreditMemo;
                     begin
 
-                        if Rec."Approval Status for CreditNote" = Rec."Approval Status for CreditNote"::Approved then
+                        if Rec."BLRApproval Status for CreditNote" = Rec."BLRApproval Status for CreditNote"::Approved then
                             SalesCreditNotePost.Run(Rec)
                         else
-                            if Rec."Approval Status for CreditNote" = Rec."Approval Status for CreditNote"::Rejected then
+                            if Rec."BLRApproval Status for CreditNote" = Rec."BLRApproval Status for CreditNote"::Rejected then
                                 ShowDialogBox.Dialogboxcreditmemo(Rec);
 
                     end;
                 }
-                field("Rejection Reason CreditNote"; Rec."Rejection Reason CreditNote")
+                field("Rejection Reason CreditNote"; Rec."BLRRejection Reason CreditNote")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Reason for rejection of the credit note.';
                     Editable = false;
                 }
-                field("Terminated Credit Note"; Rec."Terminated Credit Note")
+                field("Terminated Credit Note"; Rec."BLRTerminated Credit Note")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indicates if the credit note is terminated.';
@@ -119,13 +119,13 @@ pageextension 73209585 SalesCreditMemo extends "Sales Credit Memo"
         }
         addlast(General)
         {
-            field("Credit Memo URL"; Rec."Credit Memo URL")
+            field("Credit Memo URL"; Rec."BLRCredit Memo URL")
             {
                 ApplicationArea = All;
                 Caption = 'Credit Memo Document URL';
                 ToolTip = 'URL of the credit memo document stored in Azure Blob Storage.';
             }
-            field("Credit Memo Document"; Rec."Credit Memo Document")
+            field("Credit Memo Document"; Rec."BLRCredit Memo Document")
             {
                 ApplicationArea = All;
                 Caption = 'View Invoice';
@@ -137,7 +137,7 @@ pageextension 73209585 SalesCreditMemo extends "Sales Credit Memo"
                     FileURL: Text;
                 begin
 
-                    FileURL := Rec."Credit Memo URL";
+                    FileURL := Rec."BLRCredit Memo URL";
 
                     if FileURL = '' then
                         Error('No document is available to view.');
@@ -159,7 +159,7 @@ pageextension 73209585 SalesCreditMemo extends "Sales Credit Memo"
                 ToolTip = 'Send the credit memo for approval to the finance manager.';
                 trigger OnAction()
                 var
-                    sendMailToFMCreditNote: Codeunit "Send Mail to FM Credit Note";
+                    sendMailToFMCreditNote: Codeunit "BLRSend Mail to FM Credit Note";
                 begin
                     sendMailToFMCreditNote.SendMailToFM(Rec);
                 end;
@@ -169,7 +169,7 @@ pageextension 73209585 SalesCreditMemo extends "Sales Credit Memo"
         {
             trigger OnBeforeAction()
             begin
-                if Rec."Approval Status for CreditNote" <> Rec."Approval Status for CreditNote"::Approved then
+                if Rec."BLRApproval Status for CreditNote" <> Rec."BLRApproval Status for CreditNote"::Approved then
                     Error('The Sales Credit Memo cannot be posted because the approval status is not "Approved".');
             end;
         }
@@ -178,23 +178,23 @@ pageextension 73209585 SalesCreditMemo extends "Sales Credit Memo"
 
     trigger OnAfterGetRecord()
     var
-        tenancyContract: Record "Tenancy Contract";
+        tenancyContract: Record "BLRTenancyContract";
     begin
         approvaleditable := GetUserEditableStatus();
-        tenancyContract.SetRange("Contract ID", Rec."Contract ID");
+        tenancyContract.SetRange("BLRContract ID", Rec."BLRContract ID");
         if tenancyContract.FindFirst() then begin
 
-            Rec."Property Name" := tenancyContract."Property Name";
-            Rec."Unit Name" := tenancyContract."Unit Name";
-            Rec."Contract Tenure" := tenancyContract."Contract Tenor";
-            Rec."Tenant Name" := tenancyContract."Customer Name";
-            Rec."Contract Period" := Format(tenancyContract."Contract Start Date", 0, '<Day,2>/<Month,2>/<Year4>') + '  To  ' + Format(tenancyContract."Contract End Date", 0, '<Day,2>/<Month,2>/<Year4>');
-            Rec."Contract Amount" := tenancyContract."Annual Rent Amount";
+            Rec."BLRProperty Name" := tenancyContract."BLRProperty Name";
+            Rec."BLRUnit Name" := tenancyContract."BLRUnit Name";
+            Rec."BLRContract Tenure" := tenancyContract."BLRContract Tenor";
+            Rec."BLRTenant Name" := tenancyContract."BLRCustomer Name";
+            Rec."BLRContract Period" := Format(tenancyContract."BLRContract Start Date", 0, '<Day,2>/<Month,2>/<Year4>') + '  To  ' + Format(tenancyContract."BLRContract End Date", 0, '<Day,2>/<Month,2>/<Year4>');
+            Rec."BLRContract Amount" := tenancyContract."BLRAnnual Rent Amount";
         end else begin
-            rec."Property Name" := '';
-            Rec."Unit Name" := '';
-            Rec."Contract Tenure" := '';
-            Rec."Contract Period" := '';
+            rec."BLRProperty Name" := '';
+            Rec."BLRUnit Name" := '';
+            Rec."BLRContract Tenure" := '';
+            Rec."BLRContract Period" := '';
         end;
     end;
 

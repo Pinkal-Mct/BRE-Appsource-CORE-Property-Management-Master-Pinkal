@@ -1,4 +1,4 @@
-report 73209584 "Management Fee Calculation"
+report 73209584 "BLRManagement Fee Calculation"
 {
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
@@ -6,72 +6,72 @@ report 73209584 "Management Fee Calculation"
 
     dataset
     {
-        dataitem("Management Fee Calc. Header"; "Management Fee Calc. Header")
+        dataitem("BLRManagementFeeCalcHeader"; "BLRManagementFeeCalcHeader")
         {
-            column(Report_Date; "Report Date")
+            column(Report_Date; "BLRReport Date")
             { }
             column(Owner_Name; OwnerName)
             { }
             column(Property; PropertyName)
             { }
-            column(Financial_Year; "Financial Year")
+            column(Financial_Year; "BLRFinancial Year")
             { }
-            column(Period_From; "Period From")
+            column(Period_From; "BLRPeriod From")
             { }
-            column(Period_To; "Period To")
+            column(Period_To; "BLRPeriod To")
             { }
             column(Total_Management_Fee; TotalMgtFee)
             { }
 
-            dataitem("Management Fee Calc. Line"; "Management Fee Calc. Line")
+            dataitem("BLRManagementFeeCalcLine"; "BLRManagementFeeCalcLine")
             {
-                DataItemLink = "Header No." = field("Entry No.");
+                DataItemLink = "BLRHeader No." = field("BLREntry No.");
 
-                column(Property_Management_Company; "Property Management Company")
+                column(Property_Management_Company; "BLRProperty Management Company")
                 { }
-                column(Company_Owner_Name; "Company/Owner Name")
+                column(Company_Owner_Name; "BLRCompany/Owner Name")
                 { }
-                column(Property_Name; "Property Name")
+                column(Property_Name; "BLRProperty Name")
                 { }
-                column(Property_Type; "Property Type")
+                column(Property_Type; "BLRProperty Type")
                 { }
-                column(Calculation_Method; "Calculation Method")
+                column(Calculation_Method; "BLRCalculation Method")
                 { }
-                column(Calculation_Sub_Type; "Calculation Sub-Type")
+                column(Calculation_Sub_Type; "BLRCalculation Sub-Type")
                 { }
-                column(Percentage_Type; "Percentage Type")
+                column(Percentage_Type; "BLRPercentage Type")
                 { }
-                column(Percentage; Percentage)
+                column(Percentage; "BLRPercentage")
                 { }
-                column(Amount; Amount)
+                column(Amount; "BLRAmount")
                 { }
-                column(Base_Amount_Source; "Base Amount Source")
+                column(Base_Amount_Source; "BLRBase Amount Source")
                 { }
-                column(Base_Amount; "Base Amount")
+                column(Base_Amount; "BLRBase Amount")
                 { }
-                column(Management_Fee; "Management Fee")
+                column(Management_Fee; "BLRManagement Fee")
                 { }
-                column(Validity_Period; "Validity Period")
+                column(Validity_Period; "BLRValidity Period")
                 { }
-                column(Contract_Status; "Contract Status")
+                column(Contract_Status; "BLRContract Status")
                 { }
 
-                column(Total_Mgt__Fee; "Total Mgt. Fee")
+                column(Total_Mgt__Fee; "BLRTotal Mgt. Fee")
                 { }
             }
 
             trigger OnAfterGetRecord()
             begin
-                CalcFields("Owner Name");
-                if "All Owners" then
+                CalcFields("BLROwner Name");
+                if "BLRAll Owners" then
                     OwnerName := 'All'
                 else
-                    OwnerName := "Owner Name";
+                    OwnerName := "BLROwner Name";
 
-                if "All Properties" then
+                if "BLRAll Properties" then
                     PropertyName := 'All'
                 else
-                    PropertyName := Property;
+                    PropertyName := BLRProperty;
             end;
         }
 

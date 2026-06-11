@@ -3,7 +3,7 @@ using Microsoft.Foundation.Company;
 using Microsoft.Sales.Document;
 using Microsoft.Sales.Customer;
 using System.Text;
-report 73209592 "Terminated Credit Note"
+report 73209592 "BLRTerminated Credit Note"
 {
     ApplicationArea = All;
     Caption = 'Terminated Credit Note';
@@ -11,7 +11,7 @@ report 73209592 "Terminated Credit Note"
     DefaultRenderingLayout = "TerminatedCreditNote.docx";
     dataset
     {
-        dataitem(CreditNote; "Credit Note")
+        dataitem(CreditNote; "BLRCreditNote")
         {
             column(CurrentDate; Format(CurrentDateTime, 0, '<Day,2>/<Month,2>/<Year4>'))
             {
@@ -58,43 +58,43 @@ report 73209592 "Terminated Credit Note"
             column(BankBranch; CompanyInfo."Bank Branch No.")
             {
             }
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
-            column(Contract_Start_Date; "Contract Start Date")
+            column(Contract_Start_Date; "BLRContract Start Date")
             {
             }
-            column(Contract_End_Date; "Contract End Date")
+            column(Contract_End_Date; "BLRContract End Date")
             {
             }
-            column(Credit_Note_No_; "Credit Note No.")
+            column(Credit_Note_No_; "BLRCredit Note No.")
             {
             }
-            dataitem("Billing Calculation CN"; "Billing Calculation CN")
+            dataitem("BLRBillingCalculationCN"; "BLRBillingCalculationCN")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
                 column(Serial_No; SerialNo)
                 {
                 }
-                column(Item; Item)
+                column(Item; BLRItem)
                 {
                 }
-                column(Amount; Amount)
+                column(Amount; BLRAmount)
                 {
                 }
-                column(VAT_Amount; "VAT Amount")
+                column(VAT_Amount; "BLRVAT Amount")
                 {
                 }
-                column(AInVAT; "Amount Including VAT")
+                column(AInVAT; "BLRAmount Including VAT")
                 {
                 }
-                column(VAT__; "VAT %")
+                column(VAT__; "BLRVAT %")
                 {
                 }
                 trigger OnAfterGetRecord()
                 begin
                     SerialNo := SerialNo + 1;
-                    TotalAmountInclVAT += "Amount Including VAT";
+                    TotalAmountInclVAT += "BLRAmount Including VAT";
                 end;
 
                 trigger OnPreDataItem()
@@ -105,7 +105,7 @@ report 73209592 "Terminated Credit Note"
             dataitem(Totals; System.Utilities.Integer)
             {
                 DataItemTableView = sorting(Number) where(Number = const(1));
-                column(TAInclVAT; Format(TotalAmountInclVAT, 0, AutoFormat.ResolveAutoFormat("Auto Format"::AmountFormat, "Billing Calculation CN".SystemId)))
+                column(TAInclVAT; Format(TotalAmountInclVAT, 0, AutoFormat.ResolveAutoFormat("Auto Format"::AmountFormat, "BLRBillingCalculationCN".SystemId)))
                 { }
                 column(AmountInWords; AmountInWordsText)
                 {
@@ -115,22 +115,22 @@ report 73209592 "Terminated Credit Note"
                     AmountToWords(TotalAmountInclVAT);
                 end;
             }
-            dataitem("Tenancy Contract"; "Tenancy Contract")
+            dataitem("BLRTenancyContract"; "BLRTenancyContract")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                column(Property_Name; "Property Name")
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                column(Property_Name; "BLRProperty Name")
                 {
                 }
-                column(unit_Name; "Unit Name")
+                column(unit_Name; "BLRUnit Name")
                 {
                 }
-                column(Contract_Tenor; "Contract Tenor")
+                column(Contract_Tenor; "BLRContract Tenor")
                 {
                 }
             }
             dataitem(Customer; Customer)
             {
-                DataItemLink = "No." = field("Tenant ID");
+                DataItemLink = "No." = field("BLRTenant ID");
                 column(Name; Name)
                 {
                 }

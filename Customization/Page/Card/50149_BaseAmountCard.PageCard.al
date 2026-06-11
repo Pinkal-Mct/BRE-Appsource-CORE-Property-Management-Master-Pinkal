@@ -1,9 +1,9 @@
-page 73209670 "Base Amount Card"
+page 73209670 "BLRBase Amount Card"
 {
     PageType = Card;
     ApplicationArea = All;
     UsageCategory = Administration;
-    SourceTable = "Base Amount Data Header";
+    SourceTable = "BLRBaseAmountDataHeader";
     Caption = 'Base Amount Report';
     Editable = false;
     layout
@@ -11,21 +11,21 @@ page 73209670 "Base Amount Card"
 
         area(Content)
         {
-            field("Base Amount Type"; Rec."Base Amount Type")
+            field("Base Amount Type"; Rec."BLRBase Amount Type")
             {
                 ApplicationArea = All;
                 Caption = 'Base Amount Type';
                 ToolTip = 'Specifies the type of base amount, such as Revenue, Collections, Annual Rent, Per Unit Fee, or Hybrid.';
             }
-            part(BaseAmountGrid; "Base Amount Report Grid")
+            part(BaseAmountGrid; "BLRBase Amount Report Grid")
             {
-                SubPageLink = "Header No." = FIELD("Header No."), "Line No." = FIELD("Line No."); // Link to filter attachments for this owner only
+                SubPageLink = "BLRHeader No." = FIELD("BLRHeader No."), "BLRLine No." = FIELD("BLRLine No."); // Link to filter attachments for this owner only
                 ApplicationArea = All;
                 Visible = isBaseAmountVisible;
             }
-            part(BaseAmountUnitGrid; "Base Amount Unit Wise Grid")
+            part(BaseAmountUnitGrid; "BLRBase Amount Unit Wise Grid")
             {
-                SubPageLink = "Header No." = FIELD("Header No."), "Line No." = FIELD("Line No."); // Link to filter attachments for this owner only
+                SubPageLink = "BLRHeader No." = FIELD("BLRHeader No."), "BLRLine No." = FIELD("BLRLine No."); // Link to filter attachments for this owner only
                 ApplicationArea = All;
                 Visible = idUnitListVisible;
             }
@@ -35,7 +35,7 @@ page 73209670 "Base Amount Card"
     trigger OnAfterGetCurrRecord()
     begin
         case
-            Rec."Base Amount Type" of
+            Rec."BLRBase Amount Type" of
             'Revenue', 'Collections', 'Annual Rent':
                 begin
                     isBaseAmountVisible := true;

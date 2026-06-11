@@ -1,8 +1,8 @@
-page 73209785 "Module Setup List"
+page 73209785 "BLRModule Setup List"
 {
     PageType = List;
     ApplicationArea = All;
-    SourceTable = "Module Setup";
+    SourceTable = "BLRModuleSetup";
     Caption = 'Module Setup List';
 
     UsageCategory = Lists;
@@ -18,13 +18,13 @@ page 73209785 "Module Setup List"
 
 
 
-                field("Extension Name"; Rec."Extension Name")
+                field("Extension Name"; Rec."BLRExtension Name")
                 {
                     Caption = 'Module Name';
                     ApplicationArea = All;
                     ToolTip = 'Name of the module or extension.';
                 }
-                field("Is Active"; Rec."Is Active")
+                field("Is Active"; Rec."BLRIs Active")
                 {
                     Caption = 'Is Active';
                     ApplicationArea = All;
@@ -40,12 +40,12 @@ page 73209785 "Module Setup List"
 
     trigger OnOpenPage()
     var
-        ModuleSetupRec: Record "Module Setup";
+        ModuleSetupRec: Record "BLRModuleSetup";
     begin
         // Check if the record exists using the primary key
         if not ModuleSetupRec.Get('SETUP') then begin
             ModuleSetupRec.Init();
-            ModuleSetupRec."Module Name" := 'SETUP'; // Assign the primary key
+            ModuleSetupRec."BLRModule Name" := 'SETUP'; // Assign the primary key
             ModuleSetupRec.Insert();
         end;
     end;

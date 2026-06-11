@@ -1,9 +1,9 @@
-page 73209712 "Payment Transaction Card"
+page 73209712 "BLRPayment Transaction Card"
 {
     PageType = Card;
     ApplicationArea = All;
     UsageCategory = Administration;
-    SourceTable = "Payment Transaction";
+    SourceTable = "BLRPaymentTransaction";
 
     layout
     {
@@ -11,7 +11,7 @@ page 73209712 "Payment Transaction Card"
         {
             group(GroupName)
             {
-                field("PT Id"; Rec."PT Id")
+                field("PT Id"; Rec."BLRPT Id")
                 {
                     ApplicationArea = all;
                     Editable = false;
@@ -23,22 +23,22 @@ page 73209712 "Payment Transaction Card"
                     Visible = false;
                     ToolTip = 'Specifies the system identifier for the payment transaction.';
                 }
-                field("Tenant Id"; Rec."Tenant Id")
+                field("Tenant Id"; Rec."BLRTenant Id")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the unique identifier for the tenant associated with this payment transaction.';
                 }
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the tenant associated with this payment transaction.';
                 }
-                field("Contract Id"; Rec."Contract Id")
+                field("Contract Id"; Rec."BLRContract Id")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the unique identifier for the contract associated with this payment transaction.';
                 }
-                field("Approval Status"; Rec."Approval Status")
+                field("Approval Status"; Rec."BLRApproval Status")
                 {
                     ApplicationArea = All;
                     Editable = IsFinanceManager;
@@ -47,10 +47,10 @@ page 73209712 "Payment Transaction Card"
             }
             group("Payment Series Grid")
             {
-                part("Payment series"; "Payment Series Grid")
+                part("Payment series"; "BLRPayment Series Grid")
                 {
-                    SubPageLink = "Contract Id" = FIELD("Contract Id"),
-                    "Payment Transaction Id" = FIELD("PT Id");
+                    SubPageLink = "BLRContract ID" = FIELD("BLRContract Id"),
+                    "BLRPayment Transaction Id" = FIELD("BLRPT Id");
                     ApplicationArea = All;
                 }
             }

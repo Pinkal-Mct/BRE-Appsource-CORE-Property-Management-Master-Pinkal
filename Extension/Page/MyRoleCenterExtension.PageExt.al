@@ -1,4 +1,4 @@
-pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Center"
+pageextension 73209604 "BLRMyRoleCenterExtension" extends "Business Manager Role Center"
 {
     actions
     {
@@ -12,21 +12,21 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Countries';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Country List";
+                    RunObject = Page "BLRCountry List";
                     ToolTip = 'View list of countries.';
                 }
                 action(EmirateList)
                 {
                     Caption = 'Emirates';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Emirate List";
+                    RunObject = Page "BLREmirate List";
                     ToolTip = 'View list of emirates.';
                 }
                 action(CommunityList)
                 {
                     Caption = 'Communities';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Community List";
+                    RunObject = Page "BLRCommunity List";
                     ToolTip = 'View list of communities.';
                 }
 
@@ -34,21 +34,21 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Property Classifications';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Primary Classification List";
+                    RunObject = Page "BLRPrimary Classification List";
                     ToolTip = 'View list of property classifications.';
                 }
                 action(PropertyType)
                 {
                     Caption = 'Property Types';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Property Type List";
+                    RunObject = Page "BLRProperty Type List";
                     ToolTip = 'View list of property types.';
                 }
                 action(UnitType)
                 {
                     Caption = 'Unit Types';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Secondary Classification List";
+                    RunObject = Page "BLRSecondaryClassificationList";
                     ToolTip = 'View list of unit types.';
                 }
 
@@ -56,7 +56,7 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Owner Profiles';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Owner Profile List";
+                    RunObject = Page "BLROwner Profile List";
                     ToolTip = 'View list of owner profiles.';
                 }
                 action(TenantProfile)
@@ -77,14 +77,14 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Primary Items';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Primary Item List";
+                    RunObject = Page "BLRPrimary Item List";
                     ToolTip = 'View list of primary items.';
                 }
                 action(SecondaryItemList)
                 {
                     Caption = 'Secondary Items';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Secondary Items";
+                    RunObject = Page "BLRSecondary Items";
                     ToolTip = 'View list of secondary items.';
 
                 }
@@ -92,7 +92,7 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Categories';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Category List";
+                    RunObject = Page "BLRCategory List";
                     ToolTip = 'View list of categories.';
                 }
                 action(BankAccountList)
@@ -106,21 +106,21 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Payment Types';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Payment Type List";
+                    RunObject = Page "BLRPayment Type List";
                     ToolTip = 'View list of payment types.';
                 }
                 action(VendorCategoryList)
                 {
                     Caption = 'Vendor Categories';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Vendor Category List";
+                    RunObject = Page "BLRVendor Category List";
                     ToolTip = 'View list of vendor categories.';
                 }
                 action(CalculationTypeList)
                 {
                     Caption = 'Calculation Types';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Calculation Type List";
+                    RunObject = Page "BLRCalculation Type List";
                     ToolTip = 'View list of calculation types.';
                 }
 
@@ -128,7 +128,7 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = ' Property Registrations';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Property Registration List";
+                    RunObject = Page "BLRProperty Registration List";
                     ToolTip = 'View list of property registrations.';
                 }
 
@@ -137,14 +137,14 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                     Caption = 'Unit Registrations';
                     ApplicationArea = Basic, Suite;
                     RunObject = Page "Item List";
-                    RunPageView = where("Item type template" = const("Unit Service"));
+                    RunPageView = where("BLRItem type template" = const("Unit Service"));
                     ToolTip = 'View list of unit registrations.';
                 }
                 action(LeaseProposal)
                 {
                     Caption = 'Lease Proposals';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Lease Proposal List";
+                    RunObject = Page "BLRLease Proposal List";
                     ToolTip = 'View list of lease proposals.';
                 }
 
@@ -152,7 +152,7 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Tenancy Contracts';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Tenancy Contract List";
+                    RunObject = Page "BLRTenancy Contract List";
                     ToolTip = 'View list of tenancy contracts.';
                 }
 
@@ -160,14 +160,14 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Merge Units';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Merged Units List";
+                    RunObject = Page "BLRMerged Units List";
                     ToolTip = 'View list of merged units.';
                 }
                 action(RentCalculation)
                 {
                     Caption = 'Rent Calculation';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Rent Calculation List";
+                    RunObject = Page "BLRRent Calculation List";
 
                     ToolTip = 'View list of rent calculations.';
                 }
@@ -176,14 +176,14 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Payment Schedule';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Payment Schedule List";
+                    RunObject = Page "BLRPayment Schedule List";
                     ToolTip = 'View list of payment schedules.';
                 }
                 action(PaymentMode)
                 {
                     Caption = 'Payment Mode';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Payment Mode List";
+                    RunObject = Page "BLRPayment Mode List";
                     ToolTip = 'View list of payment modes.';
                 }
 
@@ -191,7 +191,7 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'PDC Transactions';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "PDC Transactions";
+                    RunObject = Page "BLRPDC Transactions";
                     ToolTip = 'View list of PDC transactions.';
                 }
 
@@ -199,14 +199,14 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Approval Contract Status';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Approval Contract Status List";
+                    RunObject = Page "BLRApproval ContractStatusList";
                     ToolTip = 'View list of approval contract statuses.';
                 }
                 action(ConytractRenewal)
                 {
                     Caption = 'Contract Renewal';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Contract Renewal List";
+                    RunObject = Page "BLRContract Renewal List";
                     ToolTip = 'View list of contract renewals.';
                 }
 
@@ -214,7 +214,7 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Security Deposit';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Security Deposit List";
+                    RunObject = Page "BLRSecurity Deposit List";
                     ToolTip = 'View list of security deposits.';
                 }
 
@@ -222,7 +222,7 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Final Calculation';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Final Calculation List";
+                    RunObject = Page "BLRFinal Calculation List";
                     ToolTip = 'View list of final calculations.';
                 }
 
@@ -230,7 +230,7 @@ pageextension 73209604 "MyRoleCenterExtension" extends "Business Manager Role Ce
                 {
                     Caption = 'Contract End Process Approval';
                     ApplicationArea = Basic, Suite;
-                    RunObject = Page "Contract End Process Approval";
+                    RunObject = Page "BLRContract EndProcessApproval";
                     ToolTip = 'View list of contract end process approvals.';
                 }
 

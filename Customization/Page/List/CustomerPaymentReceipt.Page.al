@@ -1,9 +1,9 @@
-page 73209774 "Customer Payment Receipt"
+page 73209774 "BLRCustomerPaymentReceipt"
 {
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
-    SourceTable = "Customer Payment Receipt";
+    SourceTable = "BLRCustomerPaymentReceipt";
     Caption = 'Customer Payment Receipt';
 
     layout
@@ -12,43 +12,43 @@ page 73209774 "Customer Payment Receipt"
         {
             repeater(GroupName)
             {
-                field("Entry No."; Rec."Entry No.")
+                field("Entry No."; Rec."BLREntry No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Entry No.';
                     ToolTip = 'The unique identifier for the customer payment receipt entry.';
                 }
-                field("Posing Date"; Rec."Posing Date")
+                field("Posing Date"; Rec."BLRPosing Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Posing Date';
                     ToolTip = 'The date when the customer payment receipt was posted.';
                 }
-                field("Document No."; Rec."Document No.")
+                field("Document No."; Rec."BLRDocument No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Document No.';
                     ToolTip = 'The document number associated with the customer payment receipt.';
                 }
-                field("Account Type"; Rec."Account Type")
+                field("Account Type"; Rec."BLRAccount Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Account Type';
                     ToolTip = 'The type of account associated with the customer payment receipt.';
                 }
-                field("Account No."; Rec."Account No.")
+                field("Account No."; Rec."BLRAccount No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Account No.';
                     ToolTip = 'The account number associated with the customer payment receipt.';
                 }
-                field(Description; Rec.Description)
+                field(Description; Rec."BLRDescription")
                 {
                     ApplicationArea = All;
                     Caption = 'Description';
                     ToolTip = 'A description of the customer payment receipt.';
                 }
-                field(Amount; Rec.Amount)
+                field(Amount; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';

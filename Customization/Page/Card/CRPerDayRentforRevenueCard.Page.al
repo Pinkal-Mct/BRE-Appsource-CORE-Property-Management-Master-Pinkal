@@ -1,8 +1,8 @@
-page 73209685 "CR PerDayRent for Revenue Card"
+page 73209685 "BLRCR PerDayRentforRevenueCard"
 {
     PageType = ListPart;
     ApplicationArea = All;
-    SourceTable = "CR Per Day Rent for Revenue";
+    SourceTable = "BLRCRPerDayRentforRevenue";
     Caption = 'Per Day Rent for Revenue Allocation';
 
     layout
@@ -11,49 +11,49 @@ page 73209685 "CR PerDayRent for Revenue Card"
         {
             repeater(Group)
             {
-                field("Id"; rec."Id")
+                field("Id"; rec."BLRId")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the Per Day Rent record.';
                 }
 
-                field("Contract Renewal Id"; rec."Contract Renewal Id")
+                field("Contract Renewal Id"; rec."BLRContract Renewal Id")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Identifier for the associated contract renewal.';
                 }
 
-                field("Proposal Id"; rec."Proposal Id")
+                field("Proposal Id"; rec."BLRProposal Id")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Identifier for the associated proposal.';
                 }
 
-                field("Year"; rec."Year")
+                field("Year"; rec."BLRYear")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The year for which the per day rent is applicable.';
                 }
 
-                field("Unit ID"; rec."Unit ID")
+                field("Unit ID"; rec."BLRUnit ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Identifier for the unit associated with the per day rent.';
                 }
 
-                field("Sq.Ft"; rec."Sq.Ft")
+                field("Sq.Ft"; rec."BLRSq.Ft")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The square footage of the unit for which the per day rent is calculated.';
                 }
 
-                field("Per Day Rent Per Unit"; rec."Per Day Rent Per Unit")
+                field("Per Day Rent Per Unit"; rec."BLRPer Day Rent Per Unit")
                 {
                     ApplicationArea = All;
                     Editable = false;

@@ -1,7 +1,7 @@
-page 73209809 "Security Deposit List"
+page 73209809 "BLRSecurity Deposit List"
 {
     PageType = List;
-    SourceTable = "Security Deposit";
+    SourceTable = "BLRSecurityDeposit";
     ApplicationArea = All;
     Caption = 'Security Deposits';
     CardPageId = 73209731;
@@ -13,79 +13,79 @@ page 73209809 "Security Deposit List"
         {
             repeater(Group)
             {
-                field("Security Deposit ID"; Rec."Security Deposit ID")
+                field("Security Deposit ID"; Rec."BLRSecurity Deposit ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Unique identifier for the security deposit.';
                 }
 
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Identifier for the contract associated with the security deposit.';
                 }
 
-                field("Tenant Full Name"; Rec."Tenant Full Name")
+                field("Tenant Full Name"; Rec."BLRTenant Full Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Full name of the tenant associated with the security deposit.';
                 }
 
-                field("Contract Start Date"; Rec."Contract Start Date")
+                field("Contract Start Date"; Rec."BLRContract Start Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Start date of the contract associated with the security deposit.';
                 }
 
-                field("Contract End Date"; Rec."Contract End Date")
+                field("Contract End Date"; Rec."BLRContract End Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'End date of the contract associated with the security deposit.';
                 }
 
-                field("Security Deposit Amount"; Rec."Security Deposit Amount")
+                field("Security Deposit Amount"; Rec."BLRSecurity Deposit Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Amount of the security deposit.';
                 }
-                field(Status; Rec.Status)
+                field(Status; Rec.BLRStatus)
                 {
                     ApplicationArea = All;
                     StyleExpr = styleExpr;
                     ToolTip = 'Status of the security deposit transfer. Open indicates that the transfer is in progress, while Posted indicates that the transfer has been completed.';
                 }
 
-                field("New_Contract ID"; Rec."New_Contract ID")
+                field("New_Contract ID"; Rec."BLRNew_Contract ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Identifier for the new contract associated with the security deposit.';
                 }
 
-                field("New_Tenant Full Name"; Rec."New_Tenant Full Name")
+                field("New_Tenant Full Name"; Rec."BLRNew_Tenant Full Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Full name of the tenant associated with the new contract.';
                 }
 
-                field("New_Contract Start Date"; Rec."New_Contract Start Date")
+                field("New_Contract Start Date"; Rec."BLRNew_Contract Start Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Start date of the new contract associated with the security deposit.';
                 }
 
-                field("New_Contract End Date"; Rec."New_Contract End Date")
+                field("New_Contract End Date"; Rec."BLRNew_Contract End Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'End date of the new contract associated with the security deposit.';
                 }
 
-                field("New_Security Deposit Amount"; Rec."Carry Forward Amount")
+                field("New_Security Deposit Amount"; Rec."BLRCarry Forward Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Amount of the new security deposit.';
                 }
 
-                field("Adjusted amount"; Rec."Security Deposit Amt. Pending")
+                field("Adjusted amount"; Rec."BLRSecDepAmtPending")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Amount adjusted for the security deposit.';
@@ -103,9 +103,9 @@ page 73209809 "Security Deposit List"
 
     procedure GetStatusStyle(): Text
     begin
-        if Rec.Status = Rec.Status::Open then
+        if Rec.BLRStatus = Rec.BLRStatus::Open then
             exit('Strong');
-        if Rec.Status = Rec.Status::Posted then
+        if Rec.BLRStatus = Rec.BLRStatus::Posted then
             exit('Favorable');
     end;
 

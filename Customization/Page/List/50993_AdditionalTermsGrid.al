@@ -1,7 +1,7 @@
-page 50993 "Additional Terms Subpage"
+page 73209816 "BLRAdditional Terms Subpage"
 {
     PageType = ListPart;
-    SourceTable = "Additional Terms";
+    SourceTable = "BLRAdditionalTerms";
     ApplicationArea = All;
 
     layout
@@ -11,7 +11,7 @@ page 50993 "Additional Terms Subpage"
             repeater(Group)
             {
 
-                field(Description; Rec.Description)
+                field(Description; Rec.BLRDescription)
                 {
                     ApplicationArea = All;
                 }

@@ -1,9 +1,9 @@
-page 73209725 "Revenue Item SubPage Card"
+page 73209725 "BLRRevenue Item SubPage Card"
 {
     PageType = ListPart;
     ApplicationArea = All;
     // UsageCategory = Administration;
-    SourceTable = "Revenue Item Subpage";
+    SourceTable = "BLRRevenueItemSubpage";
     Caption = 'Other Payments';
 
     layout
@@ -13,7 +13,7 @@ page 73209725 "Revenue Item SubPage Card"
             repeater(Group)
             {
 
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Secondary Item Type';
@@ -21,7 +21,7 @@ page 73209725 "Revenue Item SubPage Card"
                     ShowMandatory = true;
                     NotBlank = true;
                 }
-                field("Amount"; Rec.Amount)
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
@@ -30,14 +30,14 @@ page 73209725 "Revenue Item SubPage Card"
                     ToolTip = 'Enter the Amount.';
                     trigger OnValidate()
                     begin
-                        if Rec."Secondary Item Type" = '' then
+                        if Rec."BLRSecondary Item Type" = '' then
                             Error('Please select the Secondary Item Type before entering an Amount.');
 
                         UpdateLeaseProposalAmount();
                     end;
                 }
 
-                field("VAT %"; Rec."VAT %")
+                field("VAT %"; Rec."BLRVAT %")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the VAT percentage.';
@@ -47,14 +47,14 @@ page 73209725 "Revenue Item SubPage Card"
                     end;
                 }
 
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT Amount';
                     ToolTip = 'Enter the VAT Amount.';
                 }
 
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount Including VAT';
@@ -66,7 +66,7 @@ page 73209725 "Revenue Item SubPage Card"
                     end;
                 }
 
-                field("Start Date"; Rec."Start Date")
+                field("Start Date"; Rec."BLRStart Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Start Date';
@@ -74,7 +74,7 @@ page 73209725 "Revenue Item SubPage Card"
                     ToolTip = 'Enter the Start Date.';
                 }
 
-                field("End Date"; Rec."End Date")
+                field("End Date"; Rec."BLREnd Date")
                 {
                     ApplicationArea = All;
                     Caption = 'End Date';
@@ -82,7 +82,7 @@ page 73209725 "Revenue Item SubPage Card"
                     ToolTip = 'Enter the End Date.';
                 }
 
-                field("Payment Type"; Rec."Payment Type")
+                field("BLRPaymentType"; Rec."BLRPayment Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Type';
@@ -90,35 +90,35 @@ page 73209725 "Revenue Item SubPage Card"
                     Visible = false;
                 }
 
-                field(ProposalID; Rec.ProposalID)
+                field(ProposalID; Rec."BLRProposalID")
                 {
                     ApplicationArea = All;
                     Lookup = true;
                     Visible = false;
                     ToolTip = 'Enter the Proposal ID.';
                 }
-                field("Property Name"; Rec."Property Name")
+                field("Property Name"; Rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     Lookup = true;
                     Visible = false;
                     ToolTip = 'Enter the Property Name.';
                 }
-                field("Unit Name"; Rec."Unit Name")
+                field("Unit Name"; Rec."BLRUnit Name")
                 {
                     ApplicationArea = All;
                     Lookup = true;
                     Visible = false;
                     ToolTip = 'Enter the Unit Name.';
                 }
-                field("Unit Size"; Rec."Unit Size")
+                field("Unit Size"; Rec."BLRUnit Size")
                 {
                     ApplicationArea = All;
                     Lookup = true;
                     Visible = false;
                     ToolTip = 'Enter the Unit Size.';
                 }
-                field(Customer_Name; Rec."Customer Name")
+                field(Customer_Name; Rec."BLRCustomer Name")
                 {
                     ApplicationArea = All;
                     Lookup = true;
@@ -126,7 +126,7 @@ page 73209725 "Revenue Item SubPage Card"
                     ToolTip = 'Enter the Customer Name.';
                 }
 
-                field("Generate Payment Schedule"; Rec."Generate Payment Schedule")
+                field("Generate Payment Schedule"; Rec."BLRGenerate Payment Schedule")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -136,9 +136,9 @@ page 73209725 "Revenue Item SubPage Card"
 
                     trigger OnDrillDown()
                     var
-                        RevenueStructure: Record "Revenue Structure Subpage";
+                        RevenueStructure: Record "BLRRevenueStructureSubpage";
 
-                        TargetRecord: Record "Revenue Structure"; // Replace with the actual table name
+                        TargetRecord: Record "BLRRevenueStructure"; // Replace with the actual table name
                         StartDate: Date;
                         EndDate: Date;
                         AnnualAmount: Decimal;
@@ -156,34 +156,34 @@ page 73209725 "Revenue Item SubPage Card"
 
                     begin
 
-                        if Rec."Payment Type" = Rec."Payment Type"::Installment then begin
+                        if Rec."BLRPayment Type" = Rec."BLRPayment Type"::Installment then begin
 
-                            TargetRecord.SetRange("Secondary Item Type", Rec."Secondary Item Type");
-                            TargetRecord.SetRange("Tenant ID", Rec."TenantID");
+                            TargetRecord.SetRange("BLRSecondary Item Type", Rec."BLRSecondary Item Type");
+                            TargetRecord.SetRange("BLRTenant ID", Rec."BLRTenantID");
 
                             if TargetRecord.FindSet() then begin
-                                TargetRecord."Contract Start Date" := Rec."Start Date";
-                                TargetRecord."Contract End Date" := Rec."End Date";
-                                TargetRecord."Amount" := Rec."Amount";
-                                TargetRecord."VAT Amount" := Rec."VAT Amount";
-                                TargetRecord."Amount Including VAT" := Rec."Amount Including VAT";
-                                TargetRecord."VAT %" := Rec."VAT %";
+                                TargetRecord."BLRContract Start Date" := Rec."BLRStart Date";
+                                TargetRecord."BLRContract End Date" := Rec."BLREnd Date";
+                                TargetRecord."BLRAmount" := Rec."BLRAmount";
+                                TargetRecord."BLRVAT Amount" := Rec."BLRVAT Amount";
+                                TargetRecord."BLRAmount Including VAT" := Rec."BLRAmount Including VAT";
+                                TargetRecord."BLRVAT %" := Rec."BLRVAT %";
                                 TargetRecord.Modify();
                             end else begin
                                 TargetRecord.Init();
-                                TargetRecord."Tenant ID" := Rec."TenantID";
-                                TargetRecord."Secondary Item Type" := Rec."Secondary Item Type";
-                                TargetRecord."Contract Start Date" := Rec."Start Date";
-                                TargetRecord."Contract End Date" := Rec."End Date";
-                                TargetRecord."Amount" := Rec."Amount";
-                                TargetRecord."VAT Amount" := Rec."VAT Amount";
-                                TargetRecord."Amount Including VAT" := Rec."Amount Including VAT";
-                                TargetRecord."VAT %" := Rec."VAT %";
+                                TargetRecord."BLRTenant ID" := Rec."BLRTenantID";
+                                TargetRecord."BLRSecondary Item Type" := Rec."BLRSecondary Item Type";
+                                TargetRecord."BLRContract Start Date" := Rec."BLRStart Date";
+                                TargetRecord."BLRContract End Date" := Rec."BLREnd Date";
+                                TargetRecord."BLRAmount" := Rec."BLRAmount";
+                                TargetRecord."BLRVAT Amount" := Rec."BLRVAT Amount";
+                                TargetRecord."BLRAmount Including VAT" := Rec."BLRAmount Including VAT";
+                                TargetRecord."BLRVAT %" := Rec."BLRVAT %";
                                 TargetRecord.Insert();
 
-                                StartDate := TargetRecord."Contract Start Date";
-                                EndDate := TargetRecord."Contract End Date";
-                                AnnualAmount := TargetRecord."Amount";
+                                StartDate := TargetRecord."BLRContract Start Date";
+                                EndDate := TargetRecord."BLRContract End Date";
+                                AnnualAmount := TargetRecord."BLRAmount";
 
                                 if (StartDate = 0D) or (EndDate = 0D) or (AnnualAmount = 0) then
                                     Error('Start Date, End Date, and Amount must be populated.');
@@ -193,21 +193,21 @@ page 73209725 "Revenue Item SubPage Card"
 
                                 while PeriodStartDate <= EndDate do begin
                                     RevenueStructure.Init();
-                                    RevenueStructure."RS ID" := TargetRecord."RS ID";
-                                    RevenueStructure."Tenant Id" := TargetRecord."Tenant ID";
-                                    RevenueStructure."Year" := YearCounter;
-                                    RevenueStructure."Period Start Date" := PeriodStartDate;
-                                    RevenueStructure."VAT Amount" := TargetRecord."VAT Amount";
-                                    RevenueStructure."Amount Including VAT" := TargetRecord."Amount Including VAT";
-                                    RevenueStructure."Secondary Item Type" := TargetRecord."Secondary Item Type";
-                                    RevenueStructure."VAT %" := TargetRecord."VAT %";
+                                    RevenueStructure."BLRRS ID" := TargetRecord."BLRRS ID";
+                                    RevenueStructure."BLRTenant Id" := TargetRecord."BLRTenant ID";
+                                    RevenueStructure."BLRYear" := YearCounter;
+                                    RevenueStructure."BLRPeriod Start Date" := PeriodStartDate;
+                                    RevenueStructure."BLRVAT Amount" := TargetRecord."BLRVAT Amount";
+                                    RevenueStructure."BLRAmount Including VAT" := TargetRecord."BLRAmount Including VAT";
+                                    RevenueStructure."BLRSecondary Item Type" := TargetRecord."BLRSecondary Item Type";
+                                    RevenueStructure."BLRVAT %" := TargetRecord."BLRVAT %";
 
                                     if PeriodStartDate + 365 > EndDate then
                                         PeriodEndDate := EndDate
                                     else
                                         PeriodEndDate := PeriodStartDate + 365 - 1;
 
-                                    RevenueStructure."Period End Date" := PeriodEndDate;
+                                    RevenueStructure."BLRPeriod End Date" := PeriodEndDate;
 
                                     NumDays := PeriodEndDate - PeriodStartDate + 1;
 
@@ -230,7 +230,7 @@ page 73209725 "Revenue Item SubPage Card"
                                     if IsLeapYearInRange then
                                         NumDays := NumDays + 1;
 
-                                    RevenueStructure."Number of Days" := NumDays;
+                                    RevenueStructure."BLRNumber of Days" := NumDays;
 
                                     RevenueStructure.Insert();
                                     RevenueStructure.Modify();
@@ -240,7 +240,7 @@ page 73209725 "Revenue Item SubPage Card"
                                     YearCounter += 1;
 
                                     if TargetRecord.FindLast() then
-                                        Revenuestructureid := TargetRecord."RS ID"
+                                        Revenuestructureid := TargetRecord."BLRRS ID"
                                     else begin
                                         // If no record is found, create a new Revenue Structure record
                                         TargetRecord.Init();
@@ -248,10 +248,10 @@ page 73209725 "Revenue Item SubPage Card"
                                         TargetRecord.Modify(true);  // Insert the new record and generate the RS ID
 
                                         // Get the newly created RS ID
-                                        Revenuestructureid := TargetRecord."RS ID";
+                                        Revenuestructureid := TargetRecord."BLRRS ID";
                                     end;
 
-                                    Rec."Link" := Revenuestructureid;
+                                    Rec."BLRLink" := Revenuestructureid;
 
                                 end;
 
@@ -266,7 +266,7 @@ page 73209725 "Revenue Item SubPage Card"
                     end;
                 }
 
-                field("Link"; Rec."Link")
+                field("Link"; Rec."BLRLink")
                 {
                     ApplicationArea = All;
                     Caption = 'Link';
@@ -276,12 +276,12 @@ page 73209725 "Revenue Item SubPage Card"
 
                     trigger OnDrillDown()
                     var
-                        RevenueStructureRec: Record "Revenue Structure";
+                        RevenueStructureRec: Record "BLRRevenueStructure";
                     begin
-                        if Rec."Payment Type" = Rec."Payment Type"::Installment then begin
+                        if Rec."BLRPayment Type" = Rec."BLRPayment Type"::Installment then begin
                             // Navigate to the Revenue Structure Card page
-                            if RevenueStructureRec.Get(Rec."Link") then
-                                PAGE.RUN(PAGE::"Revenue Structure Card", RevenueStructureRec)
+                            if RevenueStructureRec.Get(Rec."BLRLink") then
+                                PAGE.RUN(PAGE::"BLRRevenue Structure Card", RevenueStructureRec)
                             else
                                 Message('The related Revenue Structure does not exist.');
                         end
@@ -324,22 +324,22 @@ page 73209725 "Revenue Item SubPage Card"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.ProposalID := proposalID;
-        Rec.TenantID := tenantID;
-        Rec."Start Date" := startDate;
-        Rec."End Date" := endDate;
-        Rec."Unit Name" := unitname;
-        Rec."Property Name" := propertyname;
-        Rec."Unit Size" := unitsize;
-        Rec."Customer Name" := customerName;
+        Rec."BLRProposalID" := proposalID;
+        Rec."BLRTenantID" := tenantID;
+        Rec."BLRStart Date" := startDate;
+        Rec."BLREnd Date" := endDate;
+        Rec."BLRUnit Name" := unitname;
+        Rec."BLRProperty Name" := propertyname;
+        Rec."BLRUnit Size" := unitsize;
+        Rec."BLRCustomer Name" := customerName;
     end;
 
     trigger OnAfterGetRecord()
     begin
-        Rec."Unit Name" := unitname;
-        Rec."Property Name" := propertyname;
-        Rec."Unit Size" := unitsize;
-        Rec."Customer Name" := customerName;
+        Rec."BLRUnit Name" := unitname;
+        Rec."BLRProperty Name" := propertyname;
+        Rec."BLRUnit Size" := unitsize;
+        Rec."BLRCustomer Name" := customerName;
     end;
 
     var
@@ -354,17 +354,17 @@ page 73209725 "Revenue Item SubPage Card"
 
     procedure UpdateLeaseProposalAmount()
     var
-        LeaseProposal: Record "Lease Proposal Details";
+        LeaseProposal: Record "BLRLeaseProposalDetails";
     // Replace with your actual Lease Proposal table name
     begin
         // Apply a filter on the ProposalID to find matching Lease Proposal records
-        if rec."Secondary Item Type" = 'Security Deposit' then begin
+        if rec."BLRSecondary Item Type" = 'Security Deposit' then begin
 
-            LeaseProposal.SetRange("Proposal ID", Rec.ProposalID); // Adjust the field names to your table schema
+            LeaseProposal.SetRange("BLRProposal ID", Rec."BLRProposalID"); // Adjust the field names to your table schema
 
             if LeaseProposal.FindSet() then begin
                 // Loop through all matching records if there are multiple
-                LeaseProposal."Security Deposit Amount" := Rec.Amount;
+                LeaseProposal."BLRSecurity Deposit Amount" := Rec."BLRAmount";
                 LeaseProposal.Modify(); // Save the changes
             end;
         end;

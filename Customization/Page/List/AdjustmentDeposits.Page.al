@@ -1,9 +1,9 @@
-page 73209759 "Adjustment Deposits"
+page 73209759 "BLRAdjustmentDeposits"
 {
     PageType = ListPart;
     ApplicationArea = All;
     UsageCategory = None;
-    SourceTable = "Adjustment Deposits";
+    SourceTable = "BLRAdjustmentDeposits";
 
     layout
     {
@@ -11,19 +11,19 @@ page 73209759 "Adjustment Deposits"
         {
             repeater(Group)
             {
-                field("Entry No."; Rec."Entry No.")
+                field("Entry No."; Rec."BLREntry No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
                     ToolTip = 'Unique identifier for each adjustment or refund entry.';
                 }
-                field("Contract Id"; Rec."Contract Id")
+                field("Contract Id"; Rec."BLRContract Id")
                 {
                     ApplicationArea = All;
                     Visible = false;
                     ToolTip = 'Specifies the contract associated with the adjustment or refund.';
                 }
-                field("Item Description"; Rec."Item Description")
+                field("Item Description"; Rec."BLRItem Description")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the type of deposit being adjusted or refunded.';
@@ -33,7 +33,7 @@ page 73209759 "Adjustment Deposits"
                         ClearNarration();
                     end;
                 }
-                field("Transaction Type"; Rec."Transaction Type")
+                field("Transaction Type"; Rec."BLRTransaction Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies whether the deposit is to be refunded or adjusted.';
@@ -47,7 +47,7 @@ page 73209759 "Adjustment Deposits"
 
                     end;
                 }
-                field(Amount; Rec.Amount)
+                field(Amount; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the amount to be refunded or adjusted.';
@@ -58,13 +58,17 @@ page 73209759 "Adjustment Deposits"
                     end;
 
                 }
-                field(Narration; Rec.Narration)
+                field("Posting Date"; Rec."BLRPosting Date")
+                {
+                    ApplicationArea = All;
+                }
+                field(Narration; Rec."BLRNarration")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Shows narration based on the transaction type selected.';
                 }
-                field(Adjusted; Rec.Adjusted)
+                field(Adjusted; Rec."BLRAdjusted")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indicates whether this record has been processed for refund or adjustment. Once marked as adjusted, the record cannot be edited.';
@@ -84,7 +88,7 @@ page 73209759 "Adjustment Deposits"
                 ToolTip = 'Preview the refund journal lines before posting.';
                 trigger OnAction()
                 var
-                    adjustmentDepositsRec: Record "Adjustment Deposits";
+                    adjustmentDepositsRec: Record "BLRAdjustmentDeposits";
                     GenJournalLineRec: Record "Gen. Journal Line";
                     Previewed: Boolean;
                 begin
@@ -93,13 +97,17 @@ page 73209759 "Adjustment Deposits"
                     if GenJournalLineRec.FindSet() then
                         GenJournalLineRec.DeleteAll();
 
-                    adjustmentDepositsRec.SetRange("Contract ID", Rec."Contract ID");
-                    adjustmentDepositsRec.SetRange("Transaction Type", Rec."Transaction Type"::Refund);
-                    adjustmentDepositsRec.SetRange(Adjusted, false);
+                    adjustmentDepositsRec.SetRange("BLRContract ID", Rec."BLRContract ID");
+                    adjustmentDepositsRec.SetRange("BLRTransaction Type", Rec."BLRTransaction Type"::Refund);
+                    adjustmentDepositsRec.SetRange(BLRAdjusted, false);
                     if adjustmentDepositsRec.FindSet() then
                         repeat
-                            Previewed := true;
-                            RefundDepositAmount(adjustmentDepositsRec, Previewed);
+                            if adjustmentDepositsRec."BLRPosting Date" <> 0D then begin
+                                Previewed := true;
+                                RefundDepositAmount(adjustmentDepositsRec, Previewed);
+                            end
+                            else
+                                Error('Please enter a valid posting date before previewing the refund.');
                         until adjustmentDepositsRec.Next() = 0
                     else
                         Error('No refund entries found to post for this contract or all entries have already been refunded.');
@@ -113,9 +121,9 @@ page 73209759 "Adjustment Deposits"
                 ToolTip = 'Previews the refund journal entry before posting.';
                 trigger OnAction()
                 var
-                    adjustmentDepositsRec: Record "Adjustment Deposits";
+                    adjustmentDepositsRec: Record "BLRAdjustmentDeposits";
                     GenJournalLineRec: Record "Gen. Journal Line";
-                    TenancyContractRec: Record "Tenancy Contract";
+                    TenancyContractRec: Record "BLRTenancyContract";
                     GenJnlPost: Codeunit "Gen. Jnl.-Post";
                     Previewed: Boolean;
                 begin
@@ -125,18 +133,24 @@ page 73209759 "Adjustment Deposits"
                     if GenJournalLineRec.FindSet() then
                         GenJournalLineRec.DeleteAll();
 
-                    adjustmentDepositsRec.SetRange("Contract ID", Rec."Contract ID");
-                    adjustmentDepositsRec.SetRange("Transaction Type", Rec."Transaction Type"::Refund);
-                    adjustmentDepositsRec.SetRange(Adjusted, false);
+                    adjustmentDepositsRec.SetRange("BLRContract ID", Rec."BLRContract ID");
+                    adjustmentDepositsRec.SetRange("BLRTransaction Type", Rec."BLRTransaction Type"::Refund);
+                    adjustmentDepositsRec.SetRange(BLRAdjusted, false);
                     if adjustmentDepositsRec.FindSet() then
                         repeat
-                            Previewed := false;
-                            RefundDepositAmount(adjustmentDepositsRec, Previewed);
-                            if adjustmentDepositsRec."Item Description" = adjustmentDepositsRec."Item Description"::"Security Deposit" then begin
-                                TenancyContractRec.SetRange("Contract ID", adjustmentDepositsRec."Contract ID");
-                                if TenancyContractRec.FindFirst() then begin
-                                    TenancyContractRec.Validate(Refund, TenancyContractRec.Refund + adjustmentDepositsRec.Amount);
-                                    TenancyContractRec.Modify();
+                            if adjustmentDepositsRec."BLRPosting Date" <> 0D then begin
+
+                                Previewed := false;
+                                RefundDepositAmount(adjustmentDepositsRec, Previewed);
+                                if adjustmentDepositsRec."BLRItem Description" = adjustmentDepositsRec."BLRItem Description"::"Security Deposit" then begin
+                                    TenancyContractRec.SetRange("BLRContract ID", adjustmentDepositsRec."BLRContract ID");
+                                    if TenancyContractRec.FindFirst() then begin
+                                        TenancyContractRec.Validate(BLRRefund, TenancyContractRec.BLRRefund + adjustmentDepositsRec."BLRAmount");
+                                        TenancyContractRec.Modify();
+                                    end
+                                    else
+                                        Error('Please enter a valid posting date before posting the refund.');
+
                                 end;
                             end;
                         until adjustmentDepositsRec.Next() = 0
@@ -154,7 +168,7 @@ page 73209759 "Adjustment Deposits"
 
                 trigger OnAction()
                 var
-                    adjustmentDepositsRec: Record "Adjustment Deposits";
+                    adjustmentDepositsRec: Record "BLRAdjustmentDeposits";
                     GenJnlLine: Record "Gen. Journal Line";
                 begin
                     GenJnlLine.Reset();
@@ -163,12 +177,15 @@ page 73209759 "Adjustment Deposits"
                     if GenJnlLine.FindSet() then
                         GenJnlLine.DeleteAll();
 
-                    adjustmentDepositsRec.SetRange("Contract ID", Rec."Contract ID");
-                    adjustmentDepositsRec.SetRange("Transaction Type", Rec."Transaction Type"::Adjustment);
-                    adjustmentDepositsRec.SetRange(Adjusted, false);
+                    adjustmentDepositsRec.SetRange("BLRContract ID", Rec."BLRContract ID");
+                    adjustmentDepositsRec.SetRange("BLRTransaction Type", Rec."BLRTransaction Type"::Adjustment);
+                    adjustmentDepositsRec.SetRange(BLRAdjusted, false);
                     if adjustmentDepositsRec.FindSet() then begin
                         repeat
-                            AdditinalchargescashReceipt(adjustmentDepositsRec);
+                            if adjustmentDepositsRec."BLRPosting Date" <> 0D then
+                                AdditinalchargescashReceipt(adjustmentDepositsRec)
+                            else
+                                Error('Please enter a valid posting date before posting the adjustment.');
                         until adjustmentDepositsRec.Next() = 0;
                         Commit();
                         PAGE.Run(PAGE::"Cash Receipt Journal");
@@ -190,70 +207,70 @@ page 73209759 "Adjustment Deposits"
 
     procedure UpdateNarration()
     begin
-        case Rec."Transaction Type" of
-            Rec."Transaction Type"::Refund:
-                Rec.Narration := StrSubstNo(refundNarrationLbl, Rec."Item Description", Rec."Contract Id");
-            Rec."Transaction Type"::Adjustment:
-                Rec.Narration := StrSubstNo(adjustnarrationLbl, Rec."Item Description", Rec."Contract Id");
-            Rec."Transaction Type"::" ":
-                Rec.Narration := '';
+        case Rec."BLRTransaction Type" of
+            Rec."BLRTransaction Type"::Refund:
+                Rec."BLRNarration" := StrSubstNo(refundNarrationLbl, Rec."BLRItem Description", Rec."BLRContract Id");
+            Rec."BLRTransaction Type"::Adjustment:
+                Rec."BLRNarration" := StrSubstNo(adjustnarrationLbl, Rec."BLRItem Description", Rec."BLRContract Id");
+            Rec."BLRTransaction Type"::" ":
+                Rec."BLRNarration" := '';
         end;
     end;
 
     procedure ClearNarration()
     begin
-        Rec.Narration := '';
+        Rec."BLRNarration" := '';
     end;
 
     procedure ValidateAmount()
     var
-        finalCalculationRec: Record "Final Calculation";
+        finalCalculationRec: Record "BLRFinalCalculation";
     begin
-        finalCalculationRec.SetRange("Contract ID", Rec."Contract Id");
+        finalCalculationRec.SetRange("BLRContract ID", Rec."BLRContract Id");
         if finalCalculationRec.FindFirst() then
-            if Rec."Transaction Type" = Rec."Transaction Type"::Refund then
-                case Rec."Item Description" of
-                    Rec."Item Description"::"Security Deposit":
-                        if Rec.Amount > finalCalculationRec."Remaining Security Deposit" then
+            if Rec."BLRTransaction Type" = Rec."BLRTransaction Type"::Refund then
+                case Rec."BLRItem Description" of
+                    Rec."BLRItem Description"::"Security Deposit":
+                        if Rec."BLRAmount" > finalCalculationRec."BLRRemaining Security Deposit" then
                             Error(errorSDamountLbl);
-                    Rec."Item Description"::"Chiller Deposit":
-                        if Rec.Amount > finalCalculationRec."Remaining Chiller Deposit" then
+                    Rec."BLRItem Description"::"Chiller Deposit":
+                        if Rec."BLRAmount" > finalCalculationRec."BLRRemaining Chiller Deposit" then
                             Error(errorChilleramountLbl);
-                    Rec."Item Description"::"Other Deposit":
-                        if Rec.Amount > finalCalculationRec."Remaining Other Deposit" then
+                    Rec."BLRItem Description"::"Other Deposit":
+                        if Rec."BLRAmount" > finalCalculationRec."BLRRemaining Other Deposit" then
                             Error(errorOtheramountLbl);
                 end
             else
-                case Rec."Item Description" of
-                    Rec."Item Description"::"Security Deposit":
-                        if Rec.Amount > finalCalculationRec."Remaining Security Deposit" then
+                case Rec."BLRItem Description" of
+                    Rec."BLRItem Description"::"Security Deposit":
+                        if Rec."BLRAmount" > finalCalculationRec."BLRRemaining Security Deposit" then
                             Error(errorSDamountLbl);
-                    Rec."Item Description"::"Chiller Deposit":
-                        if Rec.Amount > finalCalculationRec."Remaining Chiller Deposit" then
+                    Rec."BLRItem Description"::"Chiller Deposit":
+                        if Rec."BLRAmount" > finalCalculationRec."BLRRemaining Chiller Deposit" then
                             Error(errorChilleramountLbl);
-                    Rec."Item Description"::"Other Deposit":
-                        if Rec.Amount > finalCalculationRec."Remaining Other Deposit" then
+                    Rec."BLRItem Description"::"Other Deposit":
+                        if Rec."BLRAmount" > finalCalculationRec."BLRRemaining Other Deposit" then
                             Error(errorOtheramountLbl);
                 end
     end;
 
     procedure ClearAllFields()
     begin
-        Rec."Transaction Type" := Rec."Transaction Type"::" ";
-        Rec.Amount := 0;
+        Rec."BLRTransaction Type" := Rec."BLRTransaction Type"::" ";
+        Rec."BLRAmount" := 0;
     end;
 
-    procedure AdditinalchargescashReceipt(adjustmentDepositsRec: Record "Adjustment Deposits")
+    procedure AdditinalchargescashReceipt(adjustmentDepositsRec: Record "BLRAdjustmentDeposits")
     var
         GenJnlLine: Record "Gen. Journal Line";
-        finalcalculation: Record "Final Calculation";
+        finalcalculation: Record "BLRFinalCalculation";
 
         GenJnlTemplate: Record "Gen. Journal Template";
         GenJnlBatch: Record "Gen. Journal Batch";
 
         CustomerCard: Record Customer;
 
-        COASetupLine: Record "COA Setup Line";
+        COASetupLine: Record "BLRCOASetupLine";
 
         PostingDate: Date;
         DocumentNo: Code[20];
@@ -283,32 +300,32 @@ page 73209759 "Adjustment Deposits"
         if GenJnlBatch.IsEmpty() then
             Error('The Journal Batch %1 does not exist for template %2.', JournalBatchName, JournalTemplateName);
 
-        PostingDate := Today();
+
 
         // Only process Adjustment transaction types in this procedure
-        if ((adjustmentDepositsRec."Transaction Type" = adjustmentDepositsRec."Transaction Type"::Adjustment) AND (adjustmentDepositsRec.Amount = 0)) or (adjustmentDepositsRec."Transaction Type" = adjustmentDepositsRec."Transaction Type"::Refund) then
+        if ((adjustmentDepositsRec."BLRTransaction Type" = adjustmentDepositsRec."BLRTransaction Type"::Adjustment) AND (adjustmentDepositsRec."BLRAmount" = 0)) or (adjustmentDepositsRec."BLRTransaction Type" = adjustmentDepositsRec."BLRTransaction Type"::Refund) then
             exit;
 
         // Use a clear document number for adjustment postings
-        DocumentNo := 'ADJUSTMENT-' + Format(adjustmentDepositsRec."Contract ID");
+        DocumentNo := 'ADJUSTMENT-' + Format(adjustmentDepositsRec."BLRContract ID");
 
         // Retrieve Final Calculation record
         finalcalculation.Reset();
-        finalcalculation.SetRange("Contract ID", adjustmentDepositsRec."Contract ID");
+        finalcalculation.SetRange("BLRContract ID", adjustmentDepositsRec."BLRContract ID");
         if not finalcalculation.FindFirst() then
-            Error('Final Calculation not found for Contract ID %1', adjustmentDepositsRec."Contract ID");
+            Error('Final Calculation not found for Contract ID %1', adjustmentDepositsRec."BLRContract ID");
 
         // Get values from Final Calculation
-        Tenantid := finalcalculation."Tenant ID";
-        Tenantname := finalcalculation."Tenant Name";
-        ContractID := finalcalculation."Contract ID";
+        Tenantid := finalcalculation."BLRTenant ID";
+        Tenantname := finalcalculation."BLRTenant Name";
+        ContractID := finalcalculation."BLRContract ID";
 
 
 
 
         // Retrieve Termination Charges (additional charges) and calculate totals
 
-        AppliedAmount := adjustmentDepositsRec.Amount;
+        AppliedAmount := adjustmentDepositsRec."BLRAmount";
 
         // Create General Journal Line
         GenJnlLine.Reset();
@@ -319,36 +336,36 @@ page 73209759 "Adjustment Deposits"
         else
             LastLineNo := 10000;
 
-        // case adjustmentDepositsRec."Item Description" of
-        //     adjustmentDepositsRec."Item Description"::"Security Deposit":
+        // case adjustmentDepositsRec."BLRItem Description" of
+        //     adjustmentDepositsRec."BLRItem Description"::"BLRSecurityDeposit":
         //         BalanceAccountNo := '4502';
-        //     adjustmentDepositsRec."Item Description"::"Chiller Deposit",
-        //     adjustmentDepositsRec."Item Description"::"Other Deposit":
+        //     adjustmentDepositsRec."BLRItem Description"::"Chiller Deposit",
+        //     adjustmentDepositsRec."BLRItem Description"::"Other Deposit":
         //         BalanceAccountNo := '4508';
         // end;
 
-        COASetupLine.SetRange("Secondary Item", Format(adjustmentDepositsRec."Item Description"));
+        COASetupLine.SetRange("BLRSecondary Item", Format(adjustmentDepositsRec."BLRItem Description"));
         if COASetupLine.FindFirst() then begin
-            if (COASetupLine.Residential = '') and (COASetupLine.Commercial = '') then
-                Error('COA Setup doest not exist or no G/L account has been selected for %1', adjustmentDepositsRec."Item Description")
+            if (COASetupLine.BLRResidential = '') and (COASetupLine.BLRCommercial = '') then
+                Error('COA Setup doest not exist or no G/L account has been selected for %1', adjustmentDepositsRec."BLRItem Description")
             else
-                if COASetupLine.Residential <> '' then
-                    BalanceAccountNo := COASetupLine.Residential
+                if COASetupLine.BLRResidential <> '' then
+                    BalanceAccountNo := COASetupLine.BLRResidential
                 else
-                    BalanceAccountNo := COASetupLine.Commercial;
+                    BalanceAccountNo := COASetupLine.BLRCommercial;
 
 
         end
         else
-            Error('COA Setup doest not exist or no G/L account has been selected for %1', adjustmentDepositsRec."Item Description");
+            Error('COA Setup doest not exist or no G/L account has been selected for %1', adjustmentDepositsRec."BLRItem Description");
 
 
-        if finalcalculation."Unit Type" <> '' then begin
+        if finalcalculation."BLRUnit Type" <> '' then begin
             CustomerCard.Reset();
-            CustomerCard.SetRange("No.", finalcalculation."Tenant ID");
+            CustomerCard.SetRange("No.", finalcalculation."BLRTenant ID");
             if CustomerCard.FindFirst() then begin
-                CustomerCard.Validate("Gen. Bus. Posting Group", finalcalculation."Unit Type");
-                CustomerCard.Validate("Customer Posting Group", finalcalculation."Unit Type");
+                CustomerCard.Validate("Gen. Bus. Posting Group", finalcalculation."BLRUnit Type");
+                CustomerCard.Validate("Customer Posting Group", finalcalculation."BLRUnit Type");
                 CustomerCard.Modify();
             end;
         end;
@@ -363,17 +380,17 @@ page 73209759 "Adjustment Deposits"
         GenJnlLine."Journal Template Name" := JournalTemplateName;
         GenJnlLine."Journal Batch Name" := JournalBatchName;
         GenJnlLine."Line No." := LastLineNo;
-        GenJnlLine."Posting Date" := PostingDate;
+        GenJnlLine."Posting Date" := adjustmentDepositsRec."BLRPosting Date";
         GenJnlLine."Document Type" := GenJnlLine."Document Type"::Payment;
         GenJnlLine."Document No." := DocumentNo;
-        GenJnlLine.Description := adjustmentDepositsRec.Narration;
+        GenJnlLine.Description := adjustmentDepositsRec."BLRNarration";
         GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
         GenJnlLine."Account No." := Tenantid;
-        GenJnlLine."Contract ID" := ContractID;
+        GenJnlLine."BLRContract ID" := ContractID;
         GenJnlLine.Amount := Round(-AppliedAmount);
         GenJnlLine."Amount (LCY)" := GenJnlLine.Amount;
-        GenJnlLine."Item Description" := adjustmentDepositsRec."Item Description";
-        GenJnlLine."Transaction Type" := adjustmentDepositsRec."Transaction Type";
+        GenJnlLine."BLRItem Description" := adjustmentDepositsRec."BLRItem Description";
+        GenJnlLine."BLRTransaction Type" := adjustmentDepositsRec."BLRTransaction Type";
         GenJnlLine."Bal. Account Type" := GenJnlLine."Bal. Account Type"::"G/L Account";
         GenJnlLine."Bal. Account No." := BalanceAccountNo;
         // Do not set Applies-to fields since we don't need Posted Invoice IDs for adjustments
@@ -381,17 +398,17 @@ page 73209759 "Adjustment Deposits"
         LastLineNo += 10000;
     end;
 
-    procedure RefundDepositAmount(adjustmentDepositsRec: Record "Adjustment Deposits"; Previewed: Boolean)
+    procedure RefundDepositAmount(adjustmentDepositsRec: Record "BLRAdjustmentDeposits"; Previewed: Boolean)
     var
         GenJnlLine: Record "Gen. Journal Line";
-        finalcalculation: Record "Final Calculation";
+        finalcalculation: Record "BLRFinalCalculation";
 
         GenJnlTemplate: Record "Gen. Journal Template";
         GenJnlBatch: Record "Gen. Journal Batch";
 
         CustomerCard: Record Customer;
 
-        COASetupLine: Record "COA Setup Line";
+        COASetupLine: Record "BLRCOASetupLine";
         GenJnlPost: Codeunit "Gen. Jnl.-Post";
 
         PostingDate: Date;
@@ -422,32 +439,32 @@ page 73209759 "Adjustment Deposits"
         if GenJnlBatch.IsEmpty() then
             Error('The Journal Batch %1 does not exist for template %2.', JournalBatchName, JournalTemplateName);
 
-        PostingDate := Today();
+
 
         // Only process Adjustment transaction types in this procedure
-        if ((adjustmentDepositsRec."Transaction Type" = adjustmentDepositsRec."Transaction Type"::Refund) AND (adjustmentDepositsRec.Amount = 0)) or (adjustmentDepositsRec."Transaction Type" = adjustmentDepositsRec."Transaction Type"::Adjustment) then
+        if ((adjustmentDepositsRec."BLRTransaction Type" = adjustmentDepositsRec."BLRTransaction Type"::Refund) AND (adjustmentDepositsRec."BLRAmount" = 0)) or (adjustmentDepositsRec."BLRTransaction Type" = adjustmentDepositsRec."BLRTransaction Type"::Adjustment) then
             exit;
 
         // Use a clear document number for adjustment postings
-        DocumentNo := 'ADJUSTMENT-' + Format(adjustmentDepositsRec."Contract ID");
+        DocumentNo := 'ADJUSTMENT-' + Format(adjustmentDepositsRec."BLRContract ID");
 
         // Retrieve Final Calculation record
         finalcalculation.Reset();
-        finalcalculation.SetRange("Contract ID", adjustmentDepositsRec."Contract ID");
+        finalcalculation.SetRange("BLRContract ID", adjustmentDepositsRec."BLRContract ID");
         if not finalcalculation.FindFirst() then
-            Error('Final Calculation not found for Contract ID %1', adjustmentDepositsRec."Contract ID");
+            Error('Final Calculation not found for Contract ID %1', adjustmentDepositsRec."BLRContract ID");
 
         // Get values from Final Calculation
-        Tenantid := finalcalculation."Tenant ID";
-        Tenantname := finalcalculation."Tenant Name";
-        ContractID := finalcalculation."Contract ID";
+        Tenantid := finalcalculation."BLRTenant ID";
+        Tenantname := finalcalculation."BLRTenant Name";
+        ContractID := finalcalculation."BLRContract ID";
 
 
 
 
         // Retrieve Termination Charges (additional charges) and calculate totals
 
-        AppliedAmount := adjustmentDepositsRec.Amount;
+        AppliedAmount := adjustmentDepositsRec."BLRAmount";
 
         // Create General Journal Line
         GenJnlLine.Reset();
@@ -458,33 +475,33 @@ page 73209759 "Adjustment Deposits"
         else
             LastLineNo := 10000;
 
-        // case adjustmentDepositsRec."Item Description" of
-        //     adjustmentDepositsRec."Item Description"::"Security Deposit":
+        // case adjustmentDepositsRec."BLRItem Description" of
+        //     adjustmentDepositsRec."BLRItem Description"::"BLRSecurityDeposit":
         //         BalanceAccountNo := '4502';
-        //     adjustmentDepositsRec."Item Description"::"Chiller Deposit",
-        //     adjustmentDepositsRec."Item Description"::"Other Deposit":
+        //     adjustmentDepositsRec."BLRItem Description"::"Chiller Deposit",
+        //     adjustmentDepositsRec."BLRItem Description"::"Other Deposit":
         //         BalanceAccountNo := '4508';
         // end;
 
-        COASetupLine.SetRange("Secondary Item", Format(adjustmentDepositsRec."Item Description"));
+        COASetupLine.SetRange("BLRSecondary Item", Format(adjustmentDepositsRec."BLRItem Description"));
         if COASetupLine.FindFirst() then begin
-            if (COASetupLine.Residential = '') and (COASetupLine.Commercial = '') then
-                Error('COA Setup doest not exist or no G/L account has been selected for %1', adjustmentDepositsRec."Item Description")
+            if (COASetupLine.BLRResidential = '') and (COASetupLine.BLRCommercial = '') then
+                Error('COA Setup doest not exist or no G/L account has been selected for %1', adjustmentDepositsRec."BLRItem Description")
             else
-                if COASetupLine.Residential <> '' then
-                    BalanceAccountNo := COASetupLine.Residential
+                if COASetupLine.BLRResidential <> '' then
+                    BalanceAccountNo := COASetupLine.BLRResidential
                 else
-                    BalanceAccountNo := COASetupLine.Commercial;
+                    BalanceAccountNo := COASetupLine.BLRCommercial;
 
         end
         else
-            Error('COA Setup doest not exist or no G/L account has been selected for %1', adjustmentDepositsRec."Item Description");
-        if finalcalculation."Unit Type" <> '' then begin
+            Error('COA Setup doest not exist or no G/L account has been selected for %1', adjustmentDepositsRec."BLRItem Description");
+        if finalcalculation."BLRUnit Type" <> '' then begin
             CustomerCard.Reset();
-            CustomerCard.SetRange("No.", finalcalculation."Tenant ID");
+            CustomerCard.SetRange("No.", finalcalculation."BLRTenant ID");
             if CustomerCard.FindFirst() then begin
-                CustomerCard.Validate("Gen. Bus. Posting Group", finalcalculation."Unit Type");
-                CustomerCard.Validate("Customer Posting Group", finalcalculation."Unit Type");
+                CustomerCard.Validate("Gen. Bus. Posting Group", finalcalculation."BLRUnit Type");
+                CustomerCard.Validate("Customer Posting Group", finalcalculation."BLRUnit Type");
                 CustomerCard.Modify();
             end;
         end;
@@ -496,16 +513,16 @@ page 73209759 "Adjustment Deposits"
         GenJnlLine.Validate("Journal Template Name", JournalTemplateName);
         GenJnlLine.Validate("Journal Batch Name", JournalBatchName);
         GenJnlLine."Line No." := LastLineNo;
-        GenJnlLine."Posting Date" := PostingDate;
+        GenJnlLine."Posting Date" := adjustmentDepositsRec."BLRPosting Date";
         //GenJnlLine."Document Type" := GenJnlLine."Document Type"::Payment;
         GenJnlLine."Document No." := DocumentNo;
         GenJnlLine.Validate("Account Type", GenJnlLine."Account Type"::Customer);
         GenJnlLine.Validate("Account No.", Tenantid);
-        GenJnlLine.Description := adjustmentDepositsRec.Narration;
-        GenJnlLine."Contract ID" := ContractID;
+        GenJnlLine.Description := adjustmentDepositsRec."BLRNarration";
+        GenJnlLine."BLRContract ID" := ContractID;
         GenJnlLine.Validate("Amount", Round(-AppliedAmount));
-        GenJnlLine."Item Description" := adjustmentDepositsRec."Item Description";
-        GenJnlLine."Transaction Type" := adjustmentDepositsRec."Transaction Type";
+        GenJnlLine."BLRItem Description" := adjustmentDepositsRec."BLRItem Description";
+        GenJnlLine."BLRTransaction Type" := adjustmentDepositsRec."BLRTransaction Type";
         GenJnlLine.Validate("Bal. Account Type", GenJnlLine."Bal. Account Type"::"G/L Account");
         GenJnlLine.Validate("Bal. Account No.", BalanceAccountNo);
         // Do not set Applies-to fields since we don't need Posted Invoice IDs for adjustments
@@ -524,45 +541,45 @@ page 73209759 "Adjustment Deposits"
 
     // Validate deposit amount
 
-    procedure RefundValidateDepositAmount(var adjustmenrtDepositsRec: Record "Adjustment Deposits")
+    procedure RefundValidateDepositAmount(var adjustmenrtDepositsRec: Record "BLRAdjustmentDeposits")
     var
-        finalcalculationRec: Record "Final Calculation";
+        finalcalculationRec: Record "BLRFinalCalculation";
     begin
-        finalcalculationRec.SetRange("Contract ID", adjustmenrtDepositsRec."Contract Id");
+        finalcalculationRec.SetRange("BLRContract ID", adjustmenrtDepositsRec."BLRContract Id");
         if finalcalculationRec.FindFirst() then
-            if adjustmenrtDepositsRec."Transaction Type" = adjustmenrtDepositsRec."Transaction Type"::Refund then begin
-                if finalcalculationRec."Total Claim" <> 0 then
-                    case adjustmenrtDepositsRec."Item Description" of
-                        adjustmenrtDepositsRec."Item Description"::"Security Deposit":
-                            if finalcalculationRec."Remaining Security Deposit" = 0 then
+            if adjustmenrtDepositsRec."BLRTransaction Type" = adjustmenrtDepositsRec."BLRTransaction Type"::Refund then begin
+                if finalcalculationRec."BLRTotal Claim" <> 0 then
+                    case adjustmenrtDepositsRec."BLRItem Description" of
+                        adjustmenrtDepositsRec."BLRItem Description"::"Security Deposit":
+                            if finalcalculationRec."BLRRemaining Security Deposit" = 0 then
                                 Error('No Security Deposit available for refund.');
-                        adjustmenrtDepositsRec."Item Description"::"Chiller Deposit":
-                            if finalcalculationRec."Remaining Chiller Deposit" = 0 then
+                        adjustmenrtDepositsRec."BLRItem Description"::"Chiller Deposit":
+                            if finalcalculationRec."BLRRemaining Chiller Deposit" = 0 then
                                 Error('No Chiller Deposit available for refund.');
-                        adjustmenrtDepositsRec."Item Description"::"Other Deposit":
-                            if finalcalculationRec."Remaining Other Deposit" = 0 then
+                        adjustmenrtDepositsRec."BLRItem Description"::"Other Deposit":
+                            if finalcalculationRec."BLRRemaining Other Deposit" = 0 then
                                 Error('No Other Deposit available for refund.');
                     end;
 
             end
             else
-                if finalcalculationRec."Total Claim" = 0 then
-                    Error('Adjustment cannot be processed because no claim amount is available for contract  %1', Rec."Contract Id");
+                if finalcalculationRec."BLRTotal Claim" = 0 then
+                    Error('Adjustment cannot be processed because no claim amount is available for contract  %1', Rec."BLRContract Id");
 
 
     end;
 
     procedure checkedadjustement()
     var
-        adjustmentdepositsRec: Record "Adjustment Deposits";
+        adjustmentdepositsRec: Record "BLRAdjustmentDeposits";
     begin
-        adjustmentdepositsRec.SetRange("Contract Id", Rec."Contract Id");
-        adjustmentdepositsRec.SetRange("Item Description", Rec."Item Description");
-        adjustmentdepositsRec.SetRange("Transaction Type", Rec."Transaction Type");
-        adjustmentdepositsRec.SetRange(Adjusted, true);
+        adjustmentdepositsRec.SetRange("BLRContract Id", Rec."BLRContract Id");
+        adjustmentdepositsRec.SetRange("BLRItem Description", Rec."BLRItem Description");
+        adjustmentdepositsRec.SetRange("BLRTransaction Type", Rec."BLRTransaction Type");
+        adjustmentdepositsRec.SetRange(BLRAdjusted, true);
         if adjustmentdepositsRec.FindFirst()
         then
-            Error('%1 - %2 entry already exists for this contract', adjustmentdepositsRec."Item Description", adjustmentdepositsRec."Transaction Type");
+            Error('%1 - %2 entry already exists for this contract', adjustmentdepositsRec."BLRItem Description", adjustmentdepositsRec."BLRTransaction Type");
 
     end;
 }

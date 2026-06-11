@@ -1,5 +1,5 @@
 namespace PropertyManagement.PropertyManagement;
-report 73209589 "Revenue Allocation"
+report 73209589 "BLRRevenue Allocation"
 {
     ApplicationArea = All;
     Caption = 'Revenue Allocation';
@@ -8,39 +8,39 @@ report 73209589 "Revenue Allocation"
     DefaultLayout = Excel;
     dataset
     {
-        dataitem(TenancyContract; "Tenancy Contract")
+        dataitem(TenancyContract; "BLRTenancyContract")
         {
-            column(Property_Name; "Property Name")
+            column(Property_Name; "BLRProperty Name")
             {
             }
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
-            column(Contract_Tenor; "Contract Tenor")
+            column(Contract_Tenor; "BLRContract Tenor")
             {
             }
-            column(Tenant_ID; "Tenant ID")
+            column(Tenant_ID; "BLRTenant ID")
             {
             }
-            column(Customer_Name; "Customer Name")
+            column(Customer_Name; "BLRCustomer Name")
             {
             }
-            column(Contract_Start_Date; "Contract Start Date")
+            column(Contract_Start_Date; "BLRContract Start Date")
             {
             }
-            column(Contract_End_Date; "Contract End Date")
+            column(Contract_End_Date; "BLRContract End Date")
             {
             }
-            column(Grace_Period; "Grace Period")
+            column(Grace_Period; "BLRGrace Period")
             {
             }
-            column(Rent_Amount; "Rent Amount")
+            column(Rent_Amount; "BLRRent Amount")
             {
             }
-            column(Annual_Rent_Amount; "Annual Rent Amount")
+            column(Annual_Rent_Amount; "BLRAnnual Rent Amount")
             {
             }
-            column(Owner_s_Name; "Owner's Name")
+            column(Owner_s_Name; "BLROwner's Name")
             {
             }
             trigger OnAfterGetRecord()
@@ -48,8 +48,8 @@ report 73209589 "Revenue Allocation"
                 StartDateIsInRange: Boolean;
                 EndDateIsInRange: Boolean;
             begin
-                StartDateIsInRange := ("Contract Start Date" >= gCustomStartDate) and ("Contract Start Date" <= gCustomEndDate);
-                EndDateIsInRange := ("Contract End Date" >= gCustomStartDate) and ("Contract End Date" <= gCustomEndDate);
+                StartDateIsInRange := ("BLRContract Start Date" >= gCustomStartDate) and ("BLRContract Start Date" <= gCustomEndDate);
+                EndDateIsInRange := ("BLRContract End Date" >= gCustomStartDate) and ("BLRContract End Date" <= gCustomEndDate);
                 if not (StartDateIsInRange or EndDateIsInRange) then
                     CurrReport.SKIP();
             end;

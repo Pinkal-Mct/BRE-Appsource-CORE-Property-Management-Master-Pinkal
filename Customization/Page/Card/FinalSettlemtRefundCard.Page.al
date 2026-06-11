@@ -1,7 +1,7 @@
-page 73209695 "FinalSettlemtRefundCard"
+page 73209695 "BLRFinalSettlemtRefundCard"
 {
     PageType = ListPart;
-    SourceTable = "FinalSettlementRefund";
+    SourceTable = "BLRFinalSettlementRefund";
     ApplicationArea = All;
     Caption = 'Final Settlement Details';
 
@@ -13,48 +13,48 @@ page 73209695 "FinalSettlemtRefundCard"
             {
                 Caption = 'Refund Details';
 
-                field("Net Refund to the Tenant"; Rec."Net Refund to the Tenant")
+                field("Net Refund to the Tenant"; Rec."BLRNet Refund to the Tenant")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'Displays the net refund amount to the tenant.';
                 }
 
-                field("Refund Processed"; Rec."Refund Processed")
+                field("Refund Processed"; Rec."BLRRefund Processed")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'Displays the amount that has been processed for refund.';
                 }
 
-                field("Balance Refundable"; Rec."Balance Refundable")
+                field("Balance Refundable"; Rec."BLRBalance Refundable")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'Displays the balance amount that can be processed for refund.';
                 }
 
-                field("Refund Status"; Rec."Refund Status")
+                field("Refund Status"; Rec."BLRRefund Status")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'Displays the current status of the refund process.';
                 }
-                field("Adjust Security Deposit"; Rec."Adjust Security Deposit")
+                field("Adjust Security Deposit"; Rec."BLRAdjust Security Deposit")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     Visible = false;
                     ToolTip = 'Indicates if the security deposit has been adjusted.';
                 }
-                field("Adjust Chiller Deposit"; Rec."Adjust Chiller Deposit")
+                field("Adjust Chiller Deposit"; Rec."BLRAdjust Chiller Deposit")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     Visible = false;
                     ToolTip = 'Indicates if the chiller deposit has been adjusted.';
                 }
-                field("Adjust other deposit"; Rec."Adjust other deposit")
+                field("Adjust other deposit"; Rec."BLRAdjust other deposit")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -66,9 +66,9 @@ page 73209695 "FinalSettlemtRefundCard"
             repeater(RefundPaymentDetails)
             {
                 Caption = 'Refund Payment Details';
-                //  Editable = (Rec."Refund Payment Status" <> Rec."Refund Payment Status"::Paid);
+                //  Editable = (Rec."BLRRefund Payment Status" <> Rec."BLRRefund Payment Status"::Paid);
 
-                field("FC ID"; Rec."FC ID")
+                field("FC ID"; Rec."BLRFC ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -76,7 +76,7 @@ page 73209695 "FinalSettlemtRefundCard"
                     Caption = 'FC ID';
                     ToolTip = 'Displays the Final Calculation ID associated with the refund.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -84,37 +84,37 @@ page 73209695 "FinalSettlemtRefundCard"
                     Caption = 'Refund Contract ID';
                     ToolTip = 'Displays the contract ID associated with the refund.';
                 }
-                field("Refund Total Amount"; Rec."Refund Total Amount")
+                field("Refund Total Amount"; Rec."BLRRefund Total Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Displays the total amount to be refunded to the tenant.';
                 }
 
-                field("Refund Due Date"; Rec."Refund Due Date")
+                field("Refund Due Date"; Rec."BLRRefund Due Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Displays the due date for the refund.';
                 }
 
-                field("Refund Payment mode"; Rec."Refund Payment mode")
+                field("Refund Payment mode"; Rec."BLRRefund Payment mode")
                 {
                     ApplicationArea = All;
                     Lookup = true;
                     ToolTip = 'Select the payment mode for the refund. Options include Cash, Cheque, Bank Transfer, etc.';
                 }
 
-                field("Refund Payment Status"; Rec."Refund Payment Status")
+                field("Refund Payment Status"; Rec."BLRRefund Payment Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Displays the payment status of the refund. Options include Scheduled, Due, Overdue, Paid, etc.';
 
                     trigger OnValidate()
                     var
-                        finalSettlementRefund: Record FinalSettlementRefund;
-                        Email: Codeunit "FS Refundable Payment Receipt";
-                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
-                        RefundPostingMgt: Codeunit "Refund Settlement Posting Mgt.";
+                        finalSettlementRefund: Record BLRFinalSettlementRefund;
+                        Email: Codeunit "BLRFSRefundablePaymentReceipt";
+                        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
+                        RefundPostingMgt: Codeunit "BLRRefundSettlementPostingMgt.";
                         TempBlob: Codeunit "Temp Blob";
                         RecRef: RecordRef;
                         fileName: Text;
@@ -125,39 +125,39 @@ page 73209695 "FinalSettlemtRefundCard"
                         OutStream: OutStream;
                     begin
                         // Check if Receivable Payment Status is 'Received'
-                        if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then begin
-                            // Set Rec."Refund Payment Status" to 'Received' as well
-                            Rec."Refund Status" := Rec."Refund Status"::Paid;
+                        if Rec."BLRRefund Payment Status" = Rec."BLRRefund Payment Status"::Paid then begin
+                            // Set Rec."BLRRefund Payment Status" to 'Received' as well
+                            Rec."BLRRefund Status" := Rec."BLRRefund Status"::Paid;
                             Rec.Modify();  // Save changes to the current record
                         end;
 
-                        if Rec."Refund Payment Status" <> Rec."Refund Payment Status"::Paid then begin
+                        if Rec."BLRRefund Payment Status" <> Rec."BLRRefund Payment Status"::Paid then begin
                             // Set PaymentStatus to 'Received' as well
-                            Rec."Refund Status" := Rec."Refund Status"::Pending;
+                            Rec."BLRRefund Status" := Rec."BLRRefund Status"::Pending;
                             Rec.Modify();  // Save changes to the current record
                         end;
-                        if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then begin
-                            if (Rec."Refund Due Date" = 0D) or (Rec."Refund Due Date" > Today()) then
+                        if Rec."BLRRefund Payment Status" = Rec."BLRRefund Payment Status"::Paid then begin
+                            if (Rec."BLRRefund Due Date" = 0D) or (Rec."BLRRefund Due Date" > Today()) then
                                 Error('Refund Date is required. It must be today or in the past to mark payment status as Paid.');
 
 
 
-                            case Rec."Refund Payment mode" of
+                            case Rec."BLRRefund Payment mode" of
                                 'Cheque':
-                                    if (Rec."Refund Cheque No." = '-') or (Rec."Deposit Bank" = '') then
+                                    if (Rec."BLRRefund Cheque No." = '-') or (Rec."BLRDeposit Bank" = '') then
                                         Error('Cheque details are incomplete. Please fill Cheque Number and Deposit Bank');
 
 
 
                                 'Bank Transfer', 'Credit Card', 'Mobile Wallet':
-                                    if Rec."Deposit Bank" = '' then
-                                        Error('Deposit Bank must be entered for %1 payments.', Rec."Refund Payment mode");
+                                    if Rec."BLRDeposit Bank" = '' then
+                                        Error('Deposit Bank must be entered for %1 payments.', Rec."BLRRefund Payment mode");
 
                             end;
 
                             if Confirm('Do you want to post journal lines?', true) then begin
                                 RefundPostingMgt.PostRefundJournalLines(Rec);
-                                Rec."Receipt #" := 'Receipt_' + Format(Rec."Contract ID") + '-' + Format(Rec."FC ID");
+                                Rec."BLRReceipt #" := 'Receipt_' + Format(Rec."BLRContract ID") + '-' + Format(Rec."BLRFC ID");
 
                                 Rec.Modify(true);
                                 Commit();
@@ -167,10 +167,10 @@ page 73209695 "FinalSettlemtRefundCard"
                                 //  RecRef.Open(DATABASE::"Sales Header"); // Open the table reference
                                 // RecRef.GetTable(Rec);
                                 finalSettlementRefund.Reset();
-                                finalSettlementRefund.SetRange("Tenant ID", Rec."Tenant ID");
-                                finalSettlementRefund.SetRange("Contract ID", Rec."Contract ID");
+                                finalSettlementRefund.SetRange("BLRTenant ID", Rec."BLRTenant ID");
+                                finalSettlementRefund.SetRange("BLRContract ID", Rec."BLRContract ID");
                                 if not finalSettlementRefund.FindFirst() then begin
-                                    Rec."Refund Payment Status" := xRec."Refund Payment Status";
+                                    Rec."BLRRefund Payment Status" := xRec."BLRRefund Payment Status";
                                     exit;
                                 end;
 
@@ -179,13 +179,13 @@ page 73209695 "FinalSettlemtRefundCard"
                                 Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
                                 TempBlob.CreateInStream(inStream);
 
-                                fileName := 'Receipt_' + Format(Rec."Contract ID") + Format(Rec."FC ID") + '.pdf';
+                                fileName := 'Receipt_' + Format(Rec."BLRContract ID") + Format(Rec."BLRFC ID") + '.pdf';
 
                                 folderName := 'Payment Receipt';
                                 uploadResult := azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName);
                                 if fileName <> '' then begin
-                                    Rec."Payment Receipt/Proof" := fileName;
-                                    Rec."Pay Receipt/Proof document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                                    Rec."BLRPayment Receipt/Proof" := fileName;
+                                    Rec."BLRPayRcptProofDocURL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                                     Rec.Modify(true);
                                     Message('File uploaded successfully: %1', fileName);
                                 end;
@@ -194,29 +194,29 @@ page 73209695 "FinalSettlemtRefundCard"
                     end;
                 }
 
-                field("Deposit Bank"; Rec."Deposit Bank")
+                field("Deposit Bank"; Rec."BLRDeposit Bank")
                 {
                     ApplicationArea = All;
                     Lookup = true;
-                    Editable = Rec."Refund Payment Mode" <> 'Cash';
+                    Editable = Rec."BLRRefund Payment Mode" <> 'Cash';
                     ToolTip = 'Select the bank where the refund will be deposited. This field is editable only if the payment mode is not Cash.';
                 }
-                field("Refund Cheque No."; Rec."Refund Cheque No.")
+                field("Refund Cheque No."; Rec."BLRRefund Cheque No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the cheque number for the refund. This field is editable only if the payment mode is Cheque.';
-                    Editable = Rec."Refund Payment Mode" = 'Cheque';
+                    Editable = Rec."BLRRefund Payment Mode" = 'Cheque';
 
                     trigger OnValidate()
                     var
 
                     begin
-                        if Rec."Refund Payment Mode" <> 'Cheque' then
+                        if Rec."BLRRefund Payment Mode" <> 'Cheque' then
                             Error('Cheque number can only be entered when Payment Mode is set to Cheque.');
                     end;
                 }
 
-                field("Payment Receipt/Proof"; Rec."Payment Receipt/Proof")
+                field("Payment Receipt/Proof"; Rec."BLRPayment Receipt/Proof")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Receipt/Proof';
@@ -228,7 +228,7 @@ page 73209695 "FinalSettlemtRefundCard"
                         FileURL: Text;
                     begin
 
-                        FileURL := Rec."Pay Receipt/Proof document URL";
+                        FileURL := Rec."BLRPayRcptProofDocURL";
 
 
                         if FileURL = '' then
@@ -238,13 +238,13 @@ page 73209695 "FinalSettlemtRefundCard"
                         OpenFileInBrowser1(FileURL);
                     end;
                 }
-                field("Pay Receipt/Proof document URL"; Rec."Pay Receipt/Proof document URL")
+                field("Pay Receipt/Proof document URL"; Rec."BLRPayRcptProofDocURL")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Receipt/Proof document URL';
                     ToolTip = 'Displays the URL of the payment receipt or proof document.';
                 }
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -265,51 +265,51 @@ page 73209695 "FinalSettlemtRefundCard"
 
     trigger OnModifyRecord(): Boolean
     var
-        finalCalculationgrid: Record "Final Calculation";
-        paymentTypeRec: Record "Payment Type"; // Record variable for Payment Type
+        finalCalculationgrid: Record "BLRFinalCalculation";
+        paymentTypeRec: Record "BLRPaymentType"; // Record variable for Payment Type
 
     begin
 
         ////////////////////////// Refund final settlement /////////////////////////////////////
 
-        if Rec."Refund Cheque No." = '' then
-            Rec."Refund Cheque No." := '-';
-        if Rec."Refund Payment mode" = '' then
+        if Rec."BLRRefund Cheque No." = '' then
+            Rec."BLRRefund Cheque No." := '-';
+        if Rec."BLRRefund Payment mode" = '' then
             if paymentTypeRec.FindFirst() then
-                Rec."Refund Payment mode" := paymentTypeRec."Payment Method";
+                Rec."BLRRefund Payment mode" := paymentTypeRec."BLRPayment Method";
 
-        finalCalculationgrid.SetRange("FC ID", Rec."FC ID");
+        finalCalculationgrid.SetRange("BLRFC ID", Rec."BLRFC ID");
         if finalCalculationgrid.FindFirst() then begin
-            Rec."Contract ID" := finalCalculationgrid."Contract ID";
-            Rec."Tenant ID" := finalCalculationgrid."Tenant ID";
-            Rec."Net Refund to the Tenant" := finalCalculationgrid."Amount Refundable";
-            Rec."Balance Refundable" := Rec."Net Refund to the Tenant";
-            Rec."Refund Total Amount" := Rec."Net Refund to the Tenant";
+            Rec."BLRContract ID" := finalCalculationgrid."BLRContract ID";
+            Rec."BLRTenant ID" := finalCalculationgrid."BLRTenant ID";
+            Rec."BLRNet Refund to the Tenant" := finalCalculationgrid."BLRAmount Refundable";
+            Rec."BLRBalance Refundable" := Rec."BLRNet Refund to the Tenant";
+            Rec."BLRRefund Total Amount" := Rec."BLRNet Refund to the Tenant";
 
-            if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then begin
-                Rec."Refund Status" := Rec."Refund Status"::Paid;
-                Rec."Balance Refundable" := 0;
-                Rec."Refund Processed" := Rec."Net Refund to the Tenant";
+            if Rec."BLRRefund Payment Status" = Rec."BLRRefund Payment Status"::Paid then begin
+                Rec."BLRRefund Status" := Rec."BLRRefund Status"::Paid;
+                Rec."BLRBalance Refundable" := 0;
+                Rec."BLRRefund Processed" := Rec."BLRNet Refund to the Tenant";
                 Rec.Modify();
             end;
 
-            if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then
+            if Rec."BLRRefund Payment Status" = Rec."BLRRefund Payment Status"::Paid then
                 exit;
 
-            if Rec."Refund Due Date" = Today() then
-                Rec."Refund Payment Status" := Rec."Refund Payment Status"::Due
+            if Rec."BLRRefund Due Date" = Today() then
+                Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Due
 
             else
-                if Rec."Refund Due Date" > Today() then
-                    Rec."Refund Payment Status" := Rec."Refund Payment Status"::Scheduled
+                if Rec."BLRRefund Due Date" > Today() then
+                    Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Scheduled
 
                 else
-                    if Rec."Refund Due Date" = 0D then
-                        Rec."Refund Payment Status" := Rec."Refund Payment Status"::Scheduled
+                    if Rec."BLRRefund Due Date" = 0D then
+                        Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Scheduled
 
                     else
-                        if Rec."Refund Due Date" < Today() then
-                            Rec."Refund Payment Status" := Rec."Refund Payment Status"::Overdue;
+                        if Rec."BLRRefund Due Date" < Today() then
+                            Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Overdue;
 
             Rec.Modify();
 
@@ -318,51 +318,51 @@ page 73209695 "FinalSettlemtRefundCard"
 
     trigger OnAfterGetRecord()
     var
-        finalCalculationgrid: Record "Final Calculation";
-        paymentTypeRec: Record "Payment Type"; // Record variable for Payment Type
+        finalCalculationgrid: Record "BLRFinalCalculation";
+        paymentTypeRec: Record "BLRPaymentType"; // Record variable for Payment Type
 
     begin
 
         ////////////////////////// Refund final settlement /////////////////////////////////////
 
-        if Rec."Refund Cheque No." = '' then
-            Rec."Refund Cheque No." := '-';
-        if Rec."Refund Payment mode" = '' then
+        if Rec."BLRRefund Cheque No." = '' then
+            Rec."BLRRefund Cheque No." := '-';
+        if Rec."BLRRefund Payment mode" = '' then
             if paymentTypeRec.FindFirst() then
-                Rec."Refund Payment mode" := paymentTypeRec."Payment Method";
+                Rec."BLRRefund Payment mode" := paymentTypeRec."BLRPayment Method";
 
-        finalCalculationgrid.SetRange("FC ID", Rec."FC ID");
+        finalCalculationgrid.SetRange("BLRFC ID", Rec."BLRFC ID");
         if finalCalculationgrid.FindFirst() then begin
-            Rec."Contract ID" := finalCalculationgrid."Contract ID";
-            Rec."Tenant ID" := finalCalculationgrid."Tenant ID";
-            Rec."Net Refund to the Tenant" := finalCalculationgrid."Amount Refundable";
-            Rec."Balance Refundable" := Rec."Net Refund to the Tenant";
-            Rec."Refund Total Amount" := Rec."Net Refund to the Tenant";
+            Rec."BLRContract ID" := finalCalculationgrid."BLRContract ID";
+            Rec."BLRTenant ID" := finalCalculationgrid."BLRTenant ID";
+            Rec."BLRNet Refund to the Tenant" := finalCalculationgrid."BLRAmount Refundable";
+            Rec."BLRBalance Refundable" := Rec."BLRNet Refund to the Tenant";
+            Rec."BLRRefund Total Amount" := Rec."BLRNet Refund to the Tenant";
 
-            if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then begin
-                Rec."Refund Status" := Rec."Refund Status"::Paid;
-                Rec."Balance Refundable" := 0;
-                Rec."Refund Processed" := Rec."Net Refund to the Tenant";
+            if Rec."BLRRefund Payment Status" = Rec."BLRRefund Payment Status"::Paid then begin
+                Rec."BLRRefund Status" := Rec."BLRRefund Status"::Paid;
+                Rec."BLRBalance Refundable" := 0;
+                Rec."BLRRefund Processed" := Rec."BLRNet Refund to the Tenant";
                 Rec.Modify();
             end;
 
-            if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then
+            if Rec."BLRRefund Payment Status" = Rec."BLRRefund Payment Status"::Paid then
                 exit;
 
-            if Rec."Refund Due Date" = Today() then
-                Rec."Refund Payment Status" := Rec."Refund Payment Status"::Due
+            if Rec."BLRRefund Due Date" = Today() then
+                Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Due
 
             else
-                if Rec."Refund Due Date" > Today() then
-                    Rec."Refund Payment Status" := Rec."Refund Payment Status"::Scheduled
+                if Rec."BLRRefund Due Date" > Today() then
+                    Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Scheduled
 
                 else
-                    if Rec."Refund Due Date" = 0D then
-                        Rec."Refund Payment Status" := Rec."Refund Payment Status"::Scheduled
+                    if Rec."BLRRefund Due Date" = 0D then
+                        Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Scheduled
 
                     else
-                        if Rec."Refund Due Date" < Today() then
-                            Rec."Refund Payment Status" := Rec."Refund Payment Status"::Overdue;
+                        if Rec."BLRRefund Due Date" < Today() then
+                            Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Overdue;
 
             Rec.Modify();
         end;
@@ -370,54 +370,54 @@ page 73209695 "FinalSettlemtRefundCard"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     var
-        finalCalculationgrid: Record "Final Calculation";
-        paymentTypeRec: Record "Payment Type";
+        finalCalculationgrid: Record "BLRFinalCalculation";
+        paymentTypeRec: Record "BLRPaymentType";
     begin
 
-        Rec."Contract ID" := ContractID;
-        Rec."Tenant ID" := tenantID;
+        Rec."BLRContract ID" := ContractID;
+        Rec."BLRTenant ID" := tenantID;
 
 
         ////////////////////////// Refund final settlement /////////////////////////////////////
 
-        if Rec."Refund Cheque No." = '' then
-            Rec."Refund Cheque No." := '-';
-        if Rec."Refund Payment mode" = '' then
+        if Rec."BLRRefund Cheque No." = '' then
+            Rec."BLRRefund Cheque No." := '-';
+        if Rec."BLRRefund Payment mode" = '' then
             if paymentTypeRec.FindFirst() then
-                Rec."Refund Payment mode" := paymentTypeRec."Payment Method";
+                Rec."BLRRefund Payment mode" := paymentTypeRec."BLRPayment Method";
 
-        finalCalculationgrid.SetRange("FC ID", Rec."FC ID");
+        finalCalculationgrid.SetRange("BLRFC ID", Rec."BLRFC ID");
         if finalCalculationgrid.FindFirst() then begin
-            Rec."Contract ID" := finalCalculationgrid."Contract ID";
-            Rec."Tenant ID" := finalCalculationgrid."Tenant ID";
-            Rec."Net Refund to the Tenant" := finalCalculationgrid."Amount Refundable";
-            Rec."Balance Refundable" := Rec."Net Refund to the Tenant";
-            Rec."Refund Total Amount" := Rec."Net Refund to the Tenant";
+            Rec."BLRContract ID" := finalCalculationgrid."BLRContract ID";
+            Rec."BLRTenant ID" := finalCalculationgrid."BLRTenant ID";
+            Rec."BLRNet Refund to the Tenant" := finalCalculationgrid."BLRAmount Refundable";
+            Rec."BLRBalance Refundable" := Rec."BLRNet Refund to the Tenant";
+            Rec."BLRRefund Total Amount" := Rec."BLRNet Refund to the Tenant";
 
-            if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then begin
-                Rec."Refund Status" := Rec."Refund Status"::Paid;
-                Rec."Balance Refundable" := 0;
-                Rec."Refund Processed" := Rec."Net Refund to the Tenant";
+            if Rec."BLRRefund Payment Status" = Rec."BLRRefund Payment Status"::Paid then begin
+                Rec."BLRRefund Status" := Rec."BLRRefund Status"::Paid;
+                Rec."BLRBalance Refundable" := 0;
+                Rec."BLRRefund Processed" := Rec."BLRNet Refund to the Tenant";
                 Rec.Modify();
             end;
 
-            if Rec."Refund Payment Status" = Rec."Refund Payment Status"::Paid then
+            if Rec."BLRRefund Payment Status" = Rec."BLRRefund Payment Status"::Paid then
                 exit;
 
-            if Rec."Refund Due Date" = Today() then
-                Rec."Refund Payment Status" := Rec."Refund Payment Status"::Due
+            if Rec."BLRRefund Due Date" = Today() then
+                Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Due
 
             else
-                if Rec."Refund Due Date" > Today() then
-                    Rec."Refund Payment Status" := Rec."Refund Payment Status"::Scheduled
+                if Rec."BLRRefund Due Date" > Today() then
+                    Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Scheduled
 
                 else
-                    if Rec."Refund Due Date" = 0D then
-                        Rec."Refund Payment Status" := Rec."Refund Payment Status"::Scheduled
+                    if Rec."BLRRefund Due Date" = 0D then
+                        Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Scheduled
 
                     else
-                        if Rec."Refund Due Date" < Today() then
-                            Rec."Refund Payment Status" := Rec."Refund Payment Status"::Overdue;
+                        if Rec."BLRRefund Due Date" < Today() then
+                            Rec."BLRRefund Payment Status" := Rec."BLRRefund Payment Status"::Overdue;
 
             Rec.Modify();
         end;

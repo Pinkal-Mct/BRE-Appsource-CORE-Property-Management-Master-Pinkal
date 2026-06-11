@@ -2,7 +2,7 @@ namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
 using System.Text;
 using Microsoft.Sales.Customer;
-report 73209593 "Termination Template"
+report 73209593 "BLRTermination Template"
 {
     ApplicationArea = All;
     Caption = 'Termination Template';
@@ -10,7 +10,7 @@ report 73209593 "Termination Template"
     DefaultRenderingLayout = "TerminationTemplate.docx";
     dataset
     {
-        dataitem(FinalCalculation; "Final Calculation")
+        dataitem(FinalCalculation; "BLRFinalCalculation")
         {
             column(CompanyPicture; CompanyInfo.Picture)
             {
@@ -42,81 +42,81 @@ report 73209593 "Termination Template"
             column(CurrentDate; Format(CurrentDateTime, 0, '<Day,2>/<Month,2>/<Year4>'))
             {
             }
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
-            column(Contract_Start_Date; "Contract Start Date")
+            column(Contract_Start_Date; "BLRContract Start Date")
             {
             }
-            column(Contract_End_Date; "Contract End Date")
+            column(Contract_End_Date; "BLRContract End Date")
             {
             }
-            column(Intimation_Date; "Intimation Date")
+            column(Intimation_Date; "BLRIntimation Date")
             {
             }
-            column(Termination_Date; "Termination Date")
+            column(Termination_Date; "BLRTermination Date")
             {
             }
-            column(Original_Contract_Tenure; "Original Contract Tenure")
+            column(Original_Contract_Tenure; "BLROriginal Contract Tenure")
             {
             }
-            column(Actual_Contract_Tenure; "Actual Contract Tenure")
+            column(Actual_Contract_Tenure; "BLRActual Contract Tenure")
             {
             }
-            column(T_I_R; GetTotalReceiptsAmount("Contract ID"))
+            column(T_I_R; GetTotalReceiptsAmount("BLRContract ID"))
             {
             }
-            column(TRA_IV; GetTotalReceiptsAmountIncludingVAT("Contract ID"))
+            column(TRA_IV; GetTotalReceiptsAmountIncludingVAT("BLRContract ID"))
             {
             }
-            column(TIR_TRAIV; GetTotalReceiptsAmount("Contract ID") - GetTotalReceiptsAmountIncludingVAT("Contract ID"))
+            column(TIR_TRAIV; GetTotalReceiptsAmount("BLRContract ID") - GetTotalReceiptsAmountIncludingVAT("BLRContract ID"))
             {
             }
-            column(Sec_De; "Security Deposit")
+            column(Sec_De; "BLRSecurity Deposit")
             {
             }
-            column(Ad_Sec_De; "Adjustment Security Deposit")
+            column(Ad_Sec_De; "BLRAdjustment Security Deposit")
             {
             }
-            column(Net_Ba; ("Security Deposit" - "Adjustment Security Deposit"))
+            column(Net_Ba; ("BLRSecurity Deposit" - "BLRAdjustment Security Deposit"))
             {
             }
-            column(Oth_De; "Chiller Deposit" + "Other Deposit")
+            column(Oth_De; "BLRChiller Deposit" + "BLROther Deposit")
             {
             }
-            column(T_Deposit; "Security Deposit" + "Chiller Deposit" + "Other Deposit")
+            column(T_Deposit; "BLRSecurity Deposit" + "BLRChiller Deposit" + "BLROther Deposit")
             {
             }
-            column(T_RE_Deposit; -(("Security Deposit" - "Adjustment Security Deposit") + "Chiller Deposit" + "Other Deposit"))
+            column(T_RE_Deposit; -(("BLRSecurity Deposit" - "BLRAdjustment Security Deposit") + "BLRChiller Deposit" + "BLROther Deposit"))
             {
             }
             column(Total_Settlement;
-            GetRentBalancePending("Contract ID") +
-                GetTotalReceiptsAmount("Contract ID") - GetTotalReceiptsAmountIncludingVAT("Contract ID") +
-                GetTotalAdditionalCharges("Contract ID") +
-                -(("Security Deposit" - "Adjustment Security Deposit") + "Chiller Deposit" + "Other Deposit")
+            GetRentBalancePending("BLRContract ID") +
+                GetTotalReceiptsAmount("BLRContract ID") - GetTotalReceiptsAmountIncludingVAT("BLRContract ID") +
+                GetTotalAdditionalCharges("BLRContract ID") +
+                -(("BLRSecurity Deposit" - "BLRAdjustment Security Deposit") + "BLRChiller Deposit" + "BLROther Deposit")
             )
             {
             }
             column(Final_Settlement;
-            -(GetRentBalancePending("Contract ID") +
-                GetTotalReceiptsAmount("Contract ID") - GetTotalReceiptsAmountIncludingVAT("Contract ID") +
-                GetTotalAdditionalCharges("Contract ID") +
-                -(("Security Deposit" - "Adjustment Security Deposit") + "Chiller Deposit" + "Other Deposit"))
+            -(GetRentBalancePending("BLRContract ID") +
+                GetTotalReceiptsAmount("BLRContract ID") - GetTotalReceiptsAmountIncludingVAT("BLRContract ID") +
+                GetTotalAdditionalCharges("BLRContract ID") +
+                -(("BLRSecurity Deposit" - "BLRAdjustment Security Deposit") + "BLRChiller Deposit" + "BLROther Deposit"))
             )
             {
             }
             column(Final_Settlement_Words;
             ConvertFinalSettlementToWords(
-                    -(GetRentBalancePending("Contract ID") +
-                      GetTotalReceiptsAmount("Contract ID") - GetTotalReceiptsAmountIncludingVAT("Contract ID") +
-                      GetTotalAdditionalCharges("Contract ID") +
-                      -(("Security Deposit" - "Adjustment Security Deposit") + "Chiller Deposit" + "Other Deposit"))
+                    -(GetRentBalancePending("BLRContract ID") +
+                      GetTotalReceiptsAmount("BLRContract ID") - GetTotalReceiptsAmountIncludingVAT("BLRContract ID") +
+                      GetTotalAdditionalCharges("BLRContract ID") +
+                      -(("BLRSecurity Deposit" - "BLRAdjustment Security Deposit") + "BLRChiller Deposit" + "BLROther Deposit"))
                 )
             )
             {
             }
-            column(Total_AdC; GetTotalAdditionalCharges("Contract ID"))
+            column(Total_AdC; GetTotalAdditionalCharges("BLRContract ID"))
             {
             }
             column(Settlement_Status; GetSettlementStatus())
@@ -124,7 +124,7 @@ report 73209593 "Termination Template"
             }
             dataitem(Customer; Customer)
             {
-                DataItemLink = "No." = field("Tenant ID");
+                DataItemLink = "No." = field("BLRTenant ID");
                 column(Name; Name)
                 {
                 }
@@ -141,62 +141,62 @@ report 73209593 "Termination Template"
                 {
                 }
             }
-            dataitem("Tenancy Contract"; "Tenancy Contract")
+            dataitem("BLRTenancyContract"; "BLRTenancyContract")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                column(Property_Name; "Property Name")
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                column(Property_Name; "BLRProperty Name")
                 {
                 }
-                column(Unit_Name; "Unit Name")
+                column(Unit_Name; "BLRUnit Name")
                 {
                 }
-                column(Contract_Tenor; "Contract Tenor")
+                column(Contract_Tenor; "BLRContract Tenor")
                 {
                 }
             }
-            dataitem("Rent Calculate Sub"; "Rent Calculate Sub")
+            dataitem("BLRRentCalculateSub"; "BLRRentCalculateSub")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                column(Year; Year)
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                column(Year; BLRYear)
                 {
                 }
-                column(Period_Start_Date; "Period Start Date")
+                column(Period_Start_Date; "BLRPeriod Start Date")
                 {
                 }
-                column(Period_End_Date; "Period End Date")
+                column(Period_End_Date; "BLRPeriod End Date")
                 {
                 }
-                column(Final_Annual_Amount; "Final Annual Amount")
+                column(Final_Annual_Amount; "BLRFinal Annual Amount")
                 {
                 }
-                column(Per_Day_Rent; "Per Day Rent")
+                column(Per_Day_Rent; "BLRPer Day Rent")
                 {
                 }
-                column(Total_F_A_A; "Total Final Annual Amount")
+                column(Total_F_A_A; "BLRTotal Final Annual Amount")
                 {
                 }
             }
-            dataitem("Pending Receviable Grid"; "Pending Receviable Grid")
+            dataitem("BLRPendingReceviableGrid"; "BLRPendingReceviableGrid")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                DataItemTableView = where(RevenueDescription = filter('Rent'));
-                column(Rev_AIV; RevisedAmountInclVAT)
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                DataItemTableView = where(BLRRevenueDescription = filter('Rent'));
+                column(Rev_AIV; BLRRevisedAmountInclVAT)
                 {
                 }
-                column(Rec_AIV; ReceiptsAmountInclVAT)
+                column(Rec_AIV; BLRReceiptsAmountInclVAT)
                 {
                 }
-                column(Rent_BP; RevisedAmountInclVAT - ReceiptsAmountInclVAT)
+                column(Rent_BP; BLRRevisedAmountInclVAT - BLRReceiptsAmountInclVAT)
                 {
                 }
             }
-            dataitem("Additional Charges Sub"; "Additional Charges Sub")
+            dataitem("BLRAdditionalChargesSub"; "BLRAdditionalChargesSub")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                column(Secondary_Item_Type; "Secondary Item Type")
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                column(Secondary_Item_Type; "BLRSecondary Item Type")
                 {
                 }
-                column(Amount_IV; "Amount Including VAT")
+                column(Amount_IV; "BLRAmount Including VAT")
                 {
                 }
             }
@@ -240,10 +240,10 @@ report 73209593 "Termination Template"
 
     procedure GetSettlementStatus(): Text
     begin
-        if FinalCalculation."Net Receivable From The Tenant" > 0 then
+        if FinalCalculation."BLRNetRecvFromTheTenant" > 0 then
             exit('Claim');
 
-        if FinalCalculation."Amount Refundable" > 0 then
+        if FinalCalculation."BLRAmount Refundable" > 0 then
             exit('Refund');
 
         exit(' ');
@@ -252,58 +252,58 @@ report 73209593 "Termination Template"
 
     procedure GetTotalReceiptsAmount(ContractID: Integer): Decimal
     var
-        PendingReceivableGrid: Record "Pending Receviable Grid";
+        PendingReceivableGrid: Record "BLRPendingReceviableGrid";
         TotalAmount: Decimal;
     begin
         PendingReceivableGrid.Reset();
-        PendingReceivableGrid.SetRange("Contract ID", ContractID);
-        PendingReceivableGrid.SetRange("Payment Type", 'Installment');
+        PendingReceivableGrid.SetRange("BLRContract ID", ContractID);
+        PendingReceivableGrid.SetRange("BLRPayment Type", 'Installment');
         if PendingReceivableGrid.FindSet() then
             repeat
-                TotalAmount += PendingReceivableGrid.RevisedAmountInclVAT;
+                TotalAmount += PendingReceivableGrid.BLRRevisedAmountInclVAT;
             until PendingReceivableGrid.Next() = 0;
         exit(TotalAmount);
     end;
 
     procedure GetTotalReceiptsAmountIncludingVAT(ContractID: Integer): Decimal
     var
-        PendingReceivableGrid: Record "Pending Receviable Grid";
+        PendingReceivableGrid: Record "BLRPendingReceviableGrid";
         TotalAmount: Decimal;
     begin
         PendingReceivableGrid.Reset();
-        PendingReceivableGrid.SetRange("Contract ID", ContractID);
-        PendingReceivableGrid.SetRange("Payment Type", 'Installment');
+        PendingReceivableGrid.SetRange("BLRContract ID", ContractID);
+        PendingReceivableGrid.SetRange("BLRPayment Type", 'Installment');
         if PendingReceivableGrid.FindSet() then
             repeat
-                TotalAmount += PendingReceivableGrid.ReceiptsAmountInclVAT;
+                TotalAmount += PendingReceivableGrid.BLRReceiptsAmountInclVAT;
             until PendingReceivableGrid.Next() = 0;
         exit(TotalAmount);
     end;
 
     procedure GetTotalAdditionalCharges(ContractID: Integer): Decimal
     var
-        AdditionalChargesGrid: Record "Additional Charges Sub";
+        AdditionalChargesGrid: Record "BLRAdditionalChargesSub";
         TotalAmount: Decimal;
     begin
         AdditionalChargesGrid.Reset();
-        AdditionalChargesGrid.SetRange("Contract ID", ContractID);
+        AdditionalChargesGrid.SetRange("BLRContract ID", ContractID);
         if AdditionalChargesGrid.FindSet() then
             repeat
-                TotalAmount += AdditionalChargesGrid."Amount Including VAT";
+                TotalAmount += AdditionalChargesGrid."BLRAmount Including VAT";
             until AdditionalChargesGrid.Next() = 0;
         exit(TotalAmount);
     end;
 
     procedure GetRentBalancePending(ContractID: Integer): Decimal
     var
-        PendingReceivableGrid: Record "Pending Receviable Grid";
+        PendingReceivableGrid: Record "BLRPendingReceviableGrid";
         TotalPending: Decimal;
     begin
         PendingReceivableGrid.Reset();
-        PendingReceivableGrid.SetRange("Contract ID", ContractID);
-        PendingReceivableGrid.SetRange(RevenueDescription, 'Rent');
+        PendingReceivableGrid.SetRange("BLRContract ID", ContractID);
+        PendingReceivableGrid.SetRange(BLRRevenueDescription, 'Rent');
         if PendingReceivableGrid.FindFirst() then
-            TotalPending := PendingReceivableGrid.RevisedAmountInclVAT - PendingReceivableGrid.ReceiptsAmountInclVAT;
+            TotalPending := PendingReceivableGrid.BLRRevisedAmountInclVAT - PendingReceivableGrid.BLRReceiptsAmountInclVAT;
         exit(TotalPending);
     end;
 

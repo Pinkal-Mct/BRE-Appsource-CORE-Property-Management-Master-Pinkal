@@ -1,7 +1,7 @@
-page 73209764 "Brokerage Calculation List"
+page 73209764 "BLRBrokerage Calculation List"
 {
     PageType = List;
-    SourceTable = "Brokerage Calculation";
+    SourceTable = "BLRBrokerageCalculation";
     ApplicationArea = All;
     Caption = 'Brokerage Calculation List';
     UsageCategory = Lists;
@@ -13,31 +13,31 @@ page 73209764 "Brokerage Calculation List"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'Specifies the unique identifier for the brokerage calculation.';
                 }
-                field("Owner ID"; Rec."Owner ID")
+                field("Owner ID"; Rec."BLROwner ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Owner ID';
                     ToolTip = 'Specifies the unique identifier for the owner associated with the brokerage calculation.';
                 }
-                field("Property ID"; Rec."Property ID")
+                field("Property ID"; Rec."BLRProperty ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Property ID';
                     ToolTip = 'Specifies the unique identifier for the property associated with the brokerage calculation.';
                 }
-                field("Start Date"; Rec."Start Date")
+                field("Start Date"; Rec."BLRStart Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Start Date';
                     ToolTip = 'Specifies the start date for the brokerage calculation period.';
                 }
-                field("End Date"; Rec."End Date")
+                field("End Date"; Rec."BLREnd Date")
                 {
                     ApplicationArea = All;
                     Caption = 'End Date';

@@ -1,7 +1,7 @@
-page 73209728 "Revenue Recognition Card2"
+page 73209728 "BLRRevenue Recognition Card2"
 {
     PageType = ListPart;
-    SourceTable = "Revenue Recognition Subpage";
+    SourceTable = "BLRRevenueRecognitionSubpage";
     ApplicationArea = All;
     Caption = 'Revenue Recognition-Rent';
 
@@ -11,25 +11,25 @@ page 73209728 "Revenue Recognition Card2"
         {
             repeater(Group)
             {
-                field("Month"; Rec."Month")
+                field("Month"; Rec."BLRMonth")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The month for which the revenue recognition is calculated.';
                 }
 
-                field("No. of Days"; Rec."No. of Days")
+                field("No. of Days"; Rec."BLRNo. of Days")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The number of days in the month for which the revenue recognition is calculated.';
                 }
 
-                field("RR - Method 1 (Day)"; Rec."RR - Method 1 (Day)")
+                field("RR - Method 1 (Day)"; Rec."BLRRR - Method 1 (Day)")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The revenue recognition amount calculated using Method 1 for the day.';
                 }
 
-                field("RR - Method 2 (Month)"; Rec."RR - Method 2 (Month)")
+                field("RR - Method 2 (Month)"; Rec."BLRRR - Method 2 (Month)")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The revenue recognition amount calculated using Method 2 for the month.';
@@ -38,12 +38,12 @@ page 73209728 "Revenue Recognition Card2"
 
             group(TotalAmountCalculation)
             {
-                field("Total Amount(Day)"; Rec."Total Amount(Day)")
+                field("Total Amount(Day)"; Rec."BLRTotal Amount(Day)")
                 {
                     Caption = 'Total Amount(Day)';
                     ToolTip = 'The total amount calculated for the day based on the revenue recognition method.';
                 }
-                field("Total Amount(Month)"; Rec."Total Amount(Month)")
+                field("Total Amount(Month)"; Rec."BLRTotal Amount(Month)")
                 {
                     Caption = 'Total Amount(Month)';
                     ToolTip = 'The total amount calculated for the month based on the revenue recognition method.';

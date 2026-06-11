@@ -1,4 +1,4 @@
-pageextension 73209587 SalesInvoice extends "Sales Invoice"
+pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
 {
 
     layout
@@ -7,69 +7,69 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
         {
             group("Contract Details")
             {
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'The Contract ID field is used to link the sales invoice to a specific tenancy contract.';
-                    TableRelation = "Tenancy Contract"."Contract ID";
+                    TableRelation = "BLRTenancyContract"."BLRContract ID";
 
 
                     trigger OnValidate()
                     var
-                        tenancyContract: Record "Tenancy Contract";
+                        tenancyContract: Record "BLRTenancyContract";
                         customercard: Record Customer;
                     begin
-                        tenancyContract.SetRange("Contract ID", Rec."Contract ID");
+                        tenancyContract.SetRange("BLRContract ID", Rec."BLRContract ID");
 
                         if tenancyContract.FindFirst() then begin
-                            Rec."Tenant Name" := tenancyContract."Customer Name";
-                            Rec."Property Name" := tenancyContract."Property Name";
-                            Rec."Unit Name" := tenancyContract."Unit Name";
-                            Rec."Contract Tenure" := tenancyContract."Contract Tenor";
-                            Rec."Contract Period" := Format(tenancyContract."Contract Start Date", 0, '<Day,2>/<Month,2>/<Year4>') + ' To ' + Format(tenancyContract."Contract End Date", 0, '<Day,2>/<Month,2>/<Year4>');
-                            Rec."Property Classification" := tenancyContract."Property Classification";
-                            Rec."Contract Amount" := Round(tenancyContract."Annual Rent Amount");
+                            Rec."BLRTenant Name" := tenancyContract."BLRCustomer Name";
+                            Rec."BLRProperty Name" := tenancyContract."BLRProperty Name";
+                            Rec."BLRUnit Name" := tenancyContract."BLRUnit Name";
+                            Rec."BLRContract Tenure" := tenancyContract."BLRContract Tenor";
+                            Rec."BLRContract Period" := Format(tenancyContract."BLRContract Start Date", 0, '<Day,2>/<Month,2>/<Year4>') + ' To ' + Format(tenancyContract."BLRContract End Date", 0, '<Day,2>/<Month,2>/<Year4>');
+                            Rec."BLRProperty Classification" := tenancyContract."BLRProperty Classification";
+                            Rec."BLRContract Amount" := Round(tenancyContract."BLRAnnual Rent Amount");
                         end else begin
-                            Rec."Tenant Name" := '';
-                            rec."Property Name" := '';
-                            Rec."Unit Name" := '';
-                            Rec."Contract Tenure" := '';
-                            Rec."Contract Period" := '';
-                            Rec."Property Classification" := '';
+                            Rec."BLRTenant Name" := '';
+                            rec."BLRProperty Name" := '';
+                            Rec."BLRUnit Name" := '';
+                            Rec."BLRContract Tenure" := '';
+                            Rec."BLRContract Period" := '';
+                            Rec."BLRProperty Classification" := '';
                         end;
 
                         customercard.SetRange("No.", Rec."Sell-to Customer No.");
                         if customercard.FindSet() then
-                            if Rec."Property Classification" <> '' then begin
-                                customercard.Validate("Gen. Bus. Posting Group", Rec."Property Classification");
-                                customercard.Validate("Customer Posting Group", Rec."Property Classification");
+                            if Rec."BLRProperty Classification" <> '' then begin
+                                customercard.Validate("Gen. Bus. Posting Group", Rec."BLRProperty Classification");
+                                customercard.Validate("Customer Posting Group", Rec."BLRProperty Classification");
                                 customercard.Modify();
                             end;
 
-                        if Rec."Property Classification" <> '' then begin
-                            Rec.Validate("Gen. Bus. Posting Group", Rec."Property Classification");
-                            Rec.Validate("Customer Posting Group", Rec."Property Classification");
+                        if Rec."BLRProperty Classification" <> '' then begin
+                            Rec.Validate("Gen. Bus. Posting Group", Rec."BLRProperty Classification");
+                            Rec.Validate("Customer Posting Group", Rec."BLRProperty Classification");
                             Rec.Modify();
                         end;
                     end;
                 }
-                field("Property Name"; Rec."Property Name")
+                field("Property Name"; Rec."BLRProperty Name")
                 {
                     Caption = 'Property Name';
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Property Name field displays the name of the property associated with the tenancy contract.';
                 }
-                field("Unit Name"; Rec."Unit Name")
+                field("Unit Name"; Rec."BLRUnit Name")
                 {
                     Caption = 'Unit Name';
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Unit Name field displays the name of the unit associated with the tenancy contract.';
                 }
-                field("Contract Tenure"; Rec."Contract Tenure")
+                field("Contract Tenure"; Rec."BLRContract Tenure")
                 {
                     Caption = 'Contract Tenure';
                     ApplicationArea = All;
@@ -97,34 +97,34 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
                     Editable = false;
                     ToolTip = 'The Bill-to Customer No. field displays the customer number of the customer associated with the sales invoice.';
                 }
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Tenant Name field displays the name of the tenant associated with the tenancy contract.';
                 }
-                field("Customer P.O"; Rec."Customer P.O")
+                field("Customer P.O"; Rec."BLRCustomer P.O")
                 {
                     ApplicationArea = All;
                     Caption = 'Customer P.O';
                     Editable = NotAccessFieldFM;
                     ToolTip = 'The Customer P.O field is used to enter the purchase order number provided by the customer for the sales invoice.';
                 }
-                field("Customer P.O Date"; Rec."Customer P.O Date")
+                field("Customer P.O Date"; Rec."BLRCustomer P.O Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Customer P.O Date';
                     Editable = NotAccessFieldFM;
                     ToolTip = 'The Customer P.O Date field is used to enter the date of the purchase order provided by the customer for the sales invoice.';
                 }
-                field("Contract Period"; Rec."Contract Period")
+                field("Contract Period"; Rec."BLRContract Period")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Period';
                     Editable = false;
                     ToolTip = 'The Contract Period field displays the start and end dates of the tenancy contract.';
                 }
-                field("Reason for Rejection"; Rec."Reason for Rejection")
+                field("Reason for Rejection"; Rec."BLRReason for Rejection")
                 {
                     Caption = 'Reason For Rejection';
                     ApplicationArea = All;
@@ -132,7 +132,7 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
                     ToolTip = 'The Reason for Rejection field is used to specify the reason for rejecting the sales invoice during the approval process.';
                 }
 
-                field("Approval Status"; Rec."Approval Status")
+                field("Approval Status"; Rec."BLRApproval Status")
                 {
                     Caption = 'Approval Status';
                     ApplicationArea = All;
@@ -141,27 +141,27 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
 
                     trigger OnValidate()
                     var
-                        ShowDialogBox: Codeunit ShowDialogboxRejctionInvoice;
+                        ShowDialogBox: Codeunit BLRShowDialogboxRejectInvoice;
                         SalesPost: Codeunit "Sales-Post";
                     begin
-                        if Rec."Approval Status" = Rec."Approval Status"::Approved then begin
+                        if Rec."BLRApproval Status" = Rec."BLRApproval Status"::Approved then begin
                             CurrPage.SaveRecord();
                             SalesPost.Run(Rec);
                             CurrPage.Close();
                         end else
-                            if Rec."Approval Status" = Rec."Approval Status"::Rejected then
+                            if Rec."BLRApproval Status" = Rec."BLRApproval Status"::Rejected then
                                 ShowDialogBox.DialogboxForRejection(Rec);
                         UpdateInvoiceApprovalStatus();
                     end;
                 }
-                field("Overdue Invoice"; Rec."Overdue Invoice")
+                field("Overdue Invoice"; Rec."BLROverdue Invoice")
                 {
                     Caption = 'Overdue Invoice';
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Overdue Invoice field indicates whether the sales invoice is overdue. It is set to true if the invoice is past its due date.';
                 }
-                field("Property Classification"; Rec."Property Classification")
+                field("Property Classification"; Rec."BLRProperty Classification")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -172,19 +172,19 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
 
         addlast(General)
         {
-            field("FC ID"; Rec."FC ID")
+            field("FC ID"; Rec."BLRFC ID")
             {
                 ApplicationArea = All;
                 Editable = false;
                 ToolTip = 'The FC ID field is used to store the unique identifier for the financial controller associated with the sales invoice.';
             }
-            field("View Document URL"; Rec."View Document URL")
+            field("View Document URL"; Rec."BLRView Document URL")
             {
                 ApplicationArea = All;
                 Caption = 'View Document URL';
                 ToolTip = 'The View Document URL field contains the URL to view the document associated with the sales invoice.';
             }
-            field("View Invoice"; Rec."View Invoice")
+            field("View Invoice"; Rec."BLRView Invoice")
             {
                 ApplicationArea = All;
                 Caption = 'View Invoice';
@@ -196,7 +196,7 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
                     FileURL: Text;
                 begin
 
-                    FileURL := Rec."View Document URL";
+                    FileURL := Rec."BLRView Document URL";
 
                     if FileURL = '' then
                         Error('No document is available to view.');
@@ -220,7 +220,7 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
                 trigger OnAction()
                 var
                     SalesInvoice: Record "Sales Header";
-                    SalesInvoiceReport: Report InvoiceTemplate;
+                    SalesInvoiceReport: Report BLRInvoiceTemplate;
                 begin
                     Commit();
                     SalesInvoice.SetRange("No.", Rec."No.");
@@ -240,7 +240,7 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
                 ToolTip = 'Resend the sales invoice for approval.';
                 trigger OnAction()
                 var
-                    ResendInvoiceMail: Codeunit ResendUpdateInvoiceFM;
+                    ResendInvoiceMail: Codeunit BLRResendUpdateInvoiceFM;
                 begin
                     ResendInvoiceMail.ResendUpdateInvoice(Rec);
                 end;
@@ -251,7 +251,7 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
         {
             trigger OnBeforeAction()
             begin
-                if Rec."Approval Status" <> Rec."Approval Status"::Approved then
+                if Rec."BLRApproval Status" <> Rec."BLRApproval Status"::Approved then
                     Error('The Sales Invoice cannot be posted because the approval status is not "Approved".');
             end;
         }
@@ -303,7 +303,7 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
 
     trigger OnAfterGetRecord()
     var
-        tenancyContract: Record "Tenancy Contract";
+        tenancyContract: Record "BLRTenancyContract";
         customer: Record Customer;
     begin
         approvaleditable := GetUserEditableStatus();
@@ -321,18 +321,18 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
             Rec.Modify();
         end;
 
-        tenancyContract.SetRange("Contract ID", Rec."Contract ID");
+        tenancyContract.SetRange("BLRContract ID", Rec."BLRContract ID");
         if tenancyContract.FindFirst() then begin
-            Rec."Property Name" := tenancyContract."Property Name";
-            Rec."Unit Name" := tenancyContract."Unit Name";
-            Rec."Contract Tenure" := tenancyContract."Contract Tenor";
-            Rec."Tenant Name" := tenancyContract."Customer Name";
-            Rec."Contract Period" := Format(tenancyContract."Contract Start Date", 0, '<Day,2>/<Month,2>/<Year4>') + '  To  ' + Format(tenancyContract."Contract End Date", 0, '<Day,2>/<Month,2>/<Year4>')
+            Rec."BLRProperty Name" := tenancyContract."BLRProperty Name";
+            Rec."BLRUnit Name" := tenancyContract."BLRUnit Name";
+            Rec."BLRContract Tenure" := tenancyContract."BLRContract Tenor";
+            Rec."BLRTenant Name" := tenancyContract."BLRCustomer Name";
+            Rec."BLRContract Period" := Format(tenancyContract."BLRContract Start Date", 0, '<Day,2>/<Month,2>/<Year4>') + '  To  ' + Format(tenancyContract."BLRContract End Date", 0, '<Day,2>/<Month,2>/<Year4>')
         end else begin
-            rec."Property Name" := '';
-            Rec."Unit Name" := '';
-            Rec."Contract Tenure" := '';
-            Rec."Contract Period" := '';
+            rec."BLRProperty Name" := '';
+            Rec."BLRUnit Name" := '';
+            Rec."BLRContract Tenure" := '';
+            Rec."BLRContract Period" := '';
         end;
 
     end;
@@ -343,12 +343,12 @@ pageextension 73209587 SalesInvoice extends "Sales Invoice"
 
     procedure UpdateInvoiceApprovalStatus()
     var
-        PaymentSchedule2: Record "Payment Schedule2";
+        PaymentSchedule2: Record "BLRPaymentSchedule2";
     begin
-        PaymentSchedule2.SetRange("Invoice ID", Rec."No.");
+        PaymentSchedule2.SetRange("BLRInvoice ID", Rec."No.");
         if PaymentSchedule2.FindSet() then
             repeat
-                PaymentSchedule2.Validate("Invoice Approval Status", Rec."Approval Status");
+                PaymentSchedule2.Validate("BLRInvoice Approval Status", Rec."BLRApproval Status");
                 PaymentSchedule2.Modify();
             until PaymentSchedule2.Next() = 0;
     end;

@@ -1,7 +1,7 @@
-page 73209814 "Upcoming Payments List" // Use an appropriate page number
+page 73209814 "BLRUpcoming Payments List" // Use an appropriate page number
 {
     PageType = List;
-    SourceTable = "Payment Mode2"; // Replace with your actual payment table
+    SourceTable = "BLRPaymentMode2"; // Replace with your actual payment table
     ApplicationArea = All;
     Caption = 'Payments Due Within 10 Days';
     UsageCategory = Lists;
@@ -15,28 +15,28 @@ page 73209814 "Upcoming Payments List" // Use an appropriate page number
         {
             repeater(Group)
             {
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The unique identifier for the contract associated with this payment.';
                 }
-                field("Tenant Id"; Rec."Tenant Id")
+                field("Tenant Id"; Rec."BLRTenant Id")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The unique identifier for the tenant associated with this payment.';
                 }
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The name of the tenant associated with this payment.';
                 }
-                field("Due Date"; Rec."Due Date")
+                field("Due Date"; Rec."BLRDue Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The date when the payment is due.';
                     Style = Attention;
                 }
-                field("Amount"; Rec.Amount)
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The amount due for this payment.';
@@ -47,7 +47,7 @@ page 73209814 "Upcoming Payments List" // Use an appropriate page number
                     Caption = 'Days Until Due';
                     ToolTip = 'The number of days remaining until the payment is due.';
                 }
-                field("Payment Status"; Rec."Payment Status")
+                field("Payment Status"; Rec."BLRPayment Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The current status of the payment.';
@@ -65,14 +65,14 @@ page 73209814 "Upcoming Payments List" // Use an appropriate page number
         TenDaysLater := CALCDATE('<+10D>', CurrentDate);
 
         // Only filter by due date, don't check payment status
-        Rec.SetFilter("Due Date", '%1..%2', CurrentDate, TenDaysLater);
+        Rec.SetFilter("BLRDue Date", '%1..%2', CurrentDate, TenDaysLater);
     end;
 
     local procedure CalcDaysUntilDue(): Integer
     begin
-        if Rec."Due Date" = 0D then
+        if Rec."BLRDue Date" = 0D then
             exit(0);
 
-        exit(Rec."Due Date" - TODAY);
+        exit(Rec."BLRDue Date" - TODAY);
     end;
 }

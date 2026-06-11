@@ -1,4 +1,4 @@
-pageextension 73209586 "Sales Header" extends "Sales Credit Memo"
+pageextension 73209586 "BLRSales Header" extends "Sales Credit Memo"
 {
     actions
     {
@@ -17,7 +17,7 @@ pageextension 73209586 "Sales Header" extends "Sales Credit Memo"
                 trigger OnAction()
                 var
                     SalesHeader: Record "Sales Header";
-                    CreditNote: Report "Credit Note";
+                    CreditNote: Report "BLRCreditNote";
                 begin
                     // Filter the Sales Header record based on the current record
                     SalesHeader.SetRange("No.", Rec."No.");

@@ -1,9 +1,9 @@
-page 73209708 "Payment Schedule"
+page 73209708 "BLRPaymentSchedule"
 {
     PageType = ListPart;
     ApplicationArea = All;
     DeleteAllowed = true;
-    SourceTable = "Revenue Structure Subpage";
+    SourceTable = "BLRRevenueStructureSubpage";
     Caption = 'Payment Schedule';
     layout
     {
@@ -11,31 +11,31 @@ page 73209708 "Payment Schedule"
         {
             repeater(Group)
             {
-                field("Year"; Rec."Year")
+                field("Year"; Rec."BLRYear")
                 {
                     ApplicationArea = All;
                     Caption = 'Year';
                     ToolTip = 'Enter the Year.';
                 }
-                field("Period Start Date"; Rec."Period Start Date")
+                field("Period Start Date"; Rec."BLRPeriod Start Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Start Date';
                     ToolTip = 'Enter the Start Date.';
                 }
-                field("Period End Date"; Rec."Period End Date")
+                field("Period End Date"; Rec."BLRPeriod End Date")
                 {
                     ApplicationArea = All;
                     Caption = 'End Date';
                     ToolTip = 'Enter the End Date.';
                 }
-                field("Number of Days"; Rec."Number of Days")
+                field("Number of Days"; Rec."BLRNumber of Days")
                 {
                     ApplicationArea = All;
                     Caption = 'Number of Days';
                     ToolTip = 'Enter the Number of Days.';
                 }
-                field("Final Annual Amount"; Rec."Final Annual Amount")
+                field("Final Annual Amount"; Rec."BLRFinal Annual Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'Final Annual Amount';
@@ -44,14 +44,14 @@ page 73209708 "Payment Schedule"
                     NotBlank = true;
                     ToolTip = 'Enter the Final Annual Amount.';
                 }
-                field("Payment Frequency"; Rec."Payment Frequency")
+                field("Payment Frequency"; Rec."BLRPayment Frequency")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Frequency';
                     Editable = true;
                     ShowMandatory = true;
                 }
-                field("Yearly No. of Installment"; Rec."Yearly No. of Installment")
+                field("Yearly No. of Installment"; Rec."BLRYearly No. of Installment")
                 {
                     ApplicationArea = All;
                     Caption = 'Yearly No. of Instalment';
@@ -62,7 +62,7 @@ page 73209708 "Payment Schedule"
 
 
                 }
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -70,7 +70,7 @@ page 73209708 "Payment Schedule"
                     Visible = false;
                     ToolTip = 'The Tenant ID is used to identify the tenant associated with this record.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -78,7 +78,7 @@ page 73209708 "Payment Schedule"
                     Visible = false;
                     ToolTip = 'The Contract ID is used to identify the contract associated with this record.';
                 }
-                field("VAT %"; Rec."VAT %")
+                field("VAT %"; Rec."BLRVAT %")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT %';
@@ -88,13 +88,13 @@ page 73209708 "Payment Schedule"
             }
             group(" ")
             {
-                field("Total Amount"; Rec."Total Amount")
+                field("Total Amount"; Rec."BLRTotal Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'Total Amount';
                     ToolTip = 'Enter the Total Amount.';
                 }
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT Amount';
@@ -102,7 +102,7 @@ page 73209708 "Payment Schedule"
                     Visible = false;
                     Editable = false;
                 }
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount Including VAT';
@@ -110,7 +110,7 @@ page 73209708 "Payment Schedule"
                     Visible = false;
                     Editable = false;
                 }
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Secondary Item Type';
@@ -118,7 +118,7 @@ page 73209708 "Payment Schedule"
                     Visible = false;
                     Editable = false;
                 }
-                field("Link"; Rec."Link")
+                field("Link"; Rec."BLRLink")
                 {
                     ApplicationArea = All;
                     Caption = 'Link';
@@ -128,12 +128,12 @@ page 73209708 "Payment Schedule"
 
                     trigger OnDrillDown()
                     var
-                        tenancyContract: Record "Tenancy Contract";
-                        TargetRecord: Record "Revenue Structure";
-                        RevenueStructure1: Record "Revenue Structure";
-                        RevenueStructure: Record "Revenue Structure Subpage"; // Main table
-                        InstallmentStructure: Record "Revenue Structure Subpage1"; // Second subgrid table
-                        rentCalcSubCard: Page "Rent Calculation SubCard";
+                        tenancyContract: Record "BLRTenancyContract";
+                        TargetRecord: Record "BLRRevenueStructure";
+                        RevenueStructure1: Record "BLRRevenueStructure";
+                        RevenueStructure: Record "BLRRevenueStructureSubpage"; // Main table
+                        InstallmentStructure: Record "BLRRevenueStructureSubpage1"; // Second subgrid table
+                        rentCalcSubCard: Page "BLRRent Calculation SubCard";
                         TargetPageID: Integer;
                         StartDate: Date;
                         EndDate: Date;
@@ -171,33 +171,33 @@ page 73209708 "Payment Schedule"
 
                     begin
 
-                        RevenueStructure1.SetRange("RS ID", Rec."RS ID");
+                        RevenueStructure1.SetRange("BLRRS ID", Rec."BLRRS ID");
                         if RevenueStructure1.FindFirst() then
-                            if RevenueStructure1.Amount <> Rec."Total Amount" then
-                                Error('Total Amount (%1) must match the Amount field (%2). Please correct the values.', Rec."Total Amount", RevenueStructure1.Amount)
+                            if RevenueStructure1."BLRAmount" <> Rec."BLRTotal Amount" then
+                                Error('Total Amount (%1) must match the Amount field (%2). Please correct the values.', Rec."BLRTotal Amount", RevenueStructure1."BLRAmount")
                             else begin
 
-                                InstallmentStructure.SetRange("RS ID", Rec."RS ID");
+                                InstallmentStructure.SetRange("BLRRS ID", Rec."BLRRS ID");
                                 if InstallmentStructure.FindSet() then
                                     InstallmentStructure.DeleteAll();
 
 
-                                tenancyContract.Get(Rec."Contract ID");
-                                InstallmentStartDate := rentCalcSubCard.GetStartDate(tenancyContract."Contract Start Date", tenancyContract."Contract End Date", isMonthEnd, isMonthStart);
+                                tenancyContract.Get(Rec."BLRContract ID");
+                                InstallmentStartDate := rentCalcSubCard.GetStartDate(tenancyContract."BLRContract Start Date", tenancyContract."BLRContract End Date", isMonthEnd, isMonthStart);
 
 
                                 InstallmentEndDate := 0D;
 
                                 // Set filters to fetch related records
-                                // RevenueStructure.SetRange("Proposal ID", Rec."Proposal ID");
+                                // RevenueStructure.SetRange("BLRProposal ID", Rec."Proposal ID");
 
-                                RevenueStructure.SetRange("Tenant ID", Rec."Tenant ID");
-                                RevenueStructure.SetRange("Contract ID", Rec."Contract ID");
-                                RevenueStructure.SetRange("RS ID", Rec."RS ID");
-                                //TargetRecord.SetRange("Proposal ID", Rec."Proposal ID");
-                                TargetRecord.SetRange("Contract ID", Rec."Contract ID");
-                                TargetRecord.SetRange("Tenant ID", Rec."Tenant ID");
-                                TargetRecord.SetRange("RS ID", Rec."RS ID");
+                                RevenueStructure.SetRange("BLRTenant ID", Rec."BLRTenant ID");
+                                RevenueStructure.SetRange("BLRContract ID", Rec."BLRContract ID");
+                                RevenueStructure.SetRange("BLRRS ID", Rec."BLRRS ID");
+                                //TargetRecord.SetRange("BLRProposal ID", Rec."Proposal ID");
+                                TargetRecord.SetRange("BLRContract ID", Rec."BLRContract ID");
+                                TargetRecord.SetRange("BLRTenant ID", Rec."BLRTenant ID");
+                                TargetRecord.SetRange("BLRRS ID", Rec."BLRRS ID");
 
 
                                 if RevenueStructure.FindSet() then begin
@@ -206,27 +206,27 @@ page 73209708 "Payment Schedule"
 
 
 
-                                        StartDate := RevenueStructure."Period Start Date";
-                                        EndDate := RevenueStructure."Period End Date";
-                                        //VATAmount := RevenueStructure."VAT Amount";
-                                        VATPer := RevenueStructure."VAT %";
-                                        TotalYears := RevenueStructure."Year";
-                                        TargetPageID := RevenueStructure."RS ID";
+                                        StartDate := RevenueStructure."BLRPeriod Start Date";
+                                        EndDate := RevenueStructure."BLRPeriod End Date";
+                                        //VATAmount := RevenueStructure."BLRVAT Amount";
+                                        VATPer := RevenueStructure."BLRVAT %";
+                                        TotalYears := RevenueStructure."BLRYear";
+                                        TargetPageID := RevenueStructure."BLRRS ID";
                                         if TargetRecord.FindSet() then
-                                            Installment := TargetRecord."Number of Installments";
+                                            Installment := TargetRecord."BLRNumber of Installments";
 
 
 
-                                        //  InstallmentAmount := RevenueStructure."Final Annual Amount" / RevenueStructure."Yearly No. of Installment";
+                                        //  InstallmentAmount := RevenueStructure."BLRFinal Annual Amount" / RevenueStructure."BLRYearly No. of Installment";
 
-                                        InstallmentAmount := ROUND(RevenueStructure."Final Annual Amount" / RevenueStructure."Yearly No. of Installment", 0.01);
+                                        InstallmentAmount := ROUND(RevenueStructure."BLRFinal Annual Amount" / RevenueStructure."BLRYearly No. of Installment", 0.01);
 
-                                        TotalCalculatedAmount := InstallmentAmount * RevenueStructure."Yearly No. of Installment";  // 1666.67*3 = 5000.01
-                                        LastInstallmentAmount := TotalCalculatedAmount - RevenueStructure."Final Annual Amount"; // 5000.01 - 5000 = 0.01
+                                        TotalCalculatedAmount := InstallmentAmount * RevenueStructure."BLRYearly No. of Installment";  // 1666.67*3 = 5000.01
+                                        LastInstallmentAmount := TotalCalculatedAmount - RevenueStructure."BLRFinal Annual Amount"; // 5000.01 - 5000 = 0.01
                                         InstallmentAmount2 := InstallmentAmount - LastInstallmentAmount;   // 1666.67 - 0.01 = 1666.66
 
 
-                                        NoOfInstallments := RevenueStructure."Yearly No. of Installment";
+                                        NoOfInstallments := RevenueStructure."BLRYearly No. of Installment";
                                         //////////////////////////////// NEW Logic ////////////////////////////////
                                         StartYear := Date2DMY(StartDate, 3);
                                         StartMonth := Date2DMY(StartDate, 2);
@@ -302,56 +302,56 @@ page 73209708 "Payment Schedule"
 
                                             // 🔁 Insert (NO duplicate now)
                                             Clear(InstallmentStructure);
-                                            InstallmentStructure.SetRange("RS ID", TargetPageID);
-                                            InstallmentStructure.SetRange("Year", TotalYears);
-                                            InstallmentStructure.SetRange("Installment No.", InstallmentNumber);
+                                            InstallmentStructure.SetRange("BLRRS ID", TargetPageID);
+                                            InstallmentStructure.SetRange("BLRYear", TotalYears);
+                                            InstallmentStructure.SetRange("BLRInstallment No.", InstallmentNumber);
 
                                             if InstallmentStructure.FindFirst() then begin
 
                                                 if InstallmentNumber = NoOfInstallments then
-                                                    InstallmentStructure.Amount := InstallmentAmount2
+                                                    InstallmentStructure."BLRAmount" := InstallmentAmount2
                                                 else
-                                                    InstallmentStructure.Amount := InstallmentAmount;
+                                                    InstallmentStructure."BLRAmount" := InstallmentAmount;
 
-                                                InstallmentStructure."Installment Start Date" := InstallmentStartDate;
-                                                InstallmentStructure."Installment End Date" := InstallmentEndDate;
+                                                InstallmentStructure."BLRInstallment Start Date" := InstallmentStartDate;
+                                                InstallmentStructure."BLRInstallment End Date" := InstallmentEndDate;
 
                                                 InstallmentStructure.Modify();
 
                                             end else begin
 
                                                 InstallmentStructure.Init();
-                                                InstallmentStructure."RS ID" := TargetPageID;
-                                                InstallmentStructure."Tenant ID" := RevenueStructure."Tenant ID";
-                                                InstallmentStructure."Contract ID" := RevenueStructure."Contract ID";
-                                                InstallmentStructure."VAT %" := VATPer;
-                                                InstallmentStructure."Secondary Item Type" := RevenueStructure."Secondary Item Type";
-                                                InstallmentStructure."Year" := TotalYears;
-                                                InstallmentStructure."Installment No." := InstallmentNumber;
+                                                InstallmentStructure."BLRRS ID" := TargetPageID;
+                                                InstallmentStructure."BLRTenant ID" := RevenueStructure."BLRTenant ID";
+                                                InstallmentStructure."BLRContract ID" := RevenueStructure."BLRContract ID";
+                                                InstallmentStructure."BLRVAT %" := VATPer;
+                                                InstallmentStructure."BLRSecondary Item Type" := RevenueStructure."BLRSecondary Item Type";
+                                                InstallmentStructure."BLRYear" := TotalYears;
+                                                InstallmentStructure."BLRInstallment No." := InstallmentNumber;
 
                                                 // Amount
                                                 if InstallmentNumber = NoOfInstallments then
-                                                    InstallmentStructure.Amount := InstallmentAmount2
+                                                    InstallmentStructure."BLRAmount" := InstallmentAmount2
                                                 else
-                                                    InstallmentStructure.Amount := InstallmentAmount;
+                                                    InstallmentStructure."BLRAmount" := InstallmentAmount;
 
                                                 // VAT
-                                                if InstallmentStructure."VAT %" = 1 then
-                                                    InstallmentStructure."VAT %" := 5
+                                                if InstallmentStructure."BLRVAT %" = 1 then
+                                                    InstallmentStructure."BLRVAT %" := 5
                                                 else
-                                                    InstallmentStructure."VAT %" := 0;
+                                                    InstallmentStructure."BLRVAT %" := 0;
 
-                                                InstallmentStructure."VAT Amount" :=
-                                                    InstallmentStructure.Amount * (InstallmentStructure."VAT %" / 100);
+                                                InstallmentStructure."BLRVAT Amount" :=
+                                                    InstallmentStructure."BLRAmount" * (InstallmentStructure."BLRVAT %" / 100);
 
-                                                InstallmentStructure."Amount Including VAT" :=
-                                                    InstallmentStructure.Amount + InstallmentStructure."VAT Amount";
+                                                InstallmentStructure."BLRAmount Including VAT" :=
+                                                    InstallmentStructure."BLRAmount" + InstallmentStructure."BLRVAT Amount";
 
                                                 // Dates
-                                                InstallmentStructure."Installment Start Date" := InstallmentStartDate;
-                                                InstallmentStructure."Installment End Date" := InstallmentEndDate;
+                                                InstallmentStructure."BLRInstallment Start Date" := InstallmentStartDate;
+                                                InstallmentStructure."BLRInstallment End Date" := InstallmentEndDate;
 
-                                                InstallmentStructure."Due Date" := InstallmentStartDate;
+                                                InstallmentStructure."BLRDue Date" := InstallmentStartDate;
 
                                                 InstallmentStructure.Insert();
                                             end;
@@ -359,10 +359,10 @@ page 73209708 "Payment Schedule"
 
 
 
-                                            TargetRecord.SetRange("Contract ID", Rec."Contract ID");
-                                            // TargetRecord.SetRange("Proposal ID", RevenueStructure."Proposal ID"); 
-                                            TargetRecord.SetRange("RS ID", RevenueStructure."RS ID");
-                                            TargetRecord.SetRange("Secondary Item Type", RevenueStructure."Secondary Item Type");
+                                            TargetRecord.SetRange("BLRContract ID", Rec."BLRContract ID");
+                                            // TargetRecord.SetRange("BLRProposal ID", RevenueStructure."Proposal ID"); 
+                                            TargetRecord.SetRange("BLRRS ID", RevenueStructure."BLRRS ID");
+                                            TargetRecord.SetRange("BLRSecondary Item Type", RevenueStructure."BLRSecondary Item Type");
 
 
 
@@ -370,19 +370,19 @@ page 73209708 "Payment Schedule"
                                                 repeat
                                                     // Calculate or retrieve the Installment value
 
-                                                    Installment := TargetRecord."Number of Installments";
+                                                    Installment := TargetRecord."BLRNumber of Installments";
                                                     // Update the existing record
-                                                    TargetRecord."Number of Installments" := Installment;
+                                                    TargetRecord."BLRNumber of Installments" := Installment;
                                                     TargetRecord.Modify();
                                                 until TargetRecord.Next() = 0
                                             else begin
                                                 // If no records exist, insert a new record
                                                 TargetRecord.Init();
                                                 // TargetRecord."Proposal ID" := RevenueStructure."Proposal ID";
-                                                TargetRecord."Contract ID" := RevenueStructure."Contract ID";
-                                                TargetRecord."RS ID" := RevenueStructure."RS ID";
-                                                TargetRecord."Secondary Item Type" := RevenueStructure."Secondary Item Type";
-                                                TargetRecord."Number of Installments" := Installment; // Ensure Installment is correctly initialized or calculated
+                                                TargetRecord."BLRContract ID" := RevenueStructure."BLRContract ID";
+                                                TargetRecord."BLRRS ID" := RevenueStructure."BLRRS ID";
+                                                TargetRecord."BLRSecondary Item Type" := RevenueStructure."BLRSecondary Item Type";
+                                                TargetRecord."BLRNumber of Installments" := Installment; // Ensure Installment is correctly initialized or calculated
                                                 TargetRecord.Insert();
                                                 Clear(TargetRecord);
                                             end;
@@ -392,14 +392,14 @@ page 73209708 "Payment Schedule"
 
                                         end;
 
-                                        YearNo := RevenueStructure.Year;
+                                        YearNo := RevenueStructure."BLRYear";
                                     until RevenueStructure.Next() = 0;
 
 
 
                                     // if InstallmentStructure.FindSet() then begin
                                     //     repeat
-                                    //         if InstallmentStructure."Installment No." > RevenueStructure."Yearly No. of Installment" then
+                                    //         if InstallmentStructure."BLRInstallment No." > RevenueStructure."BLRYearly No. of Installment" then
                                     //             InstallmentStructure.Delete();
                                     //     until InstallmentStructure.Next() = 0;
                                     // end;
@@ -433,8 +433,8 @@ page 73209708 "Payment Schedule"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."Contract ID" := ContractID;
-        Rec."Tenant ID" := tenantID;
+        Rec."BLRContract ID" := ContractID;
+        Rec."BLRTenant ID" := tenantID;
     end;
 
     var

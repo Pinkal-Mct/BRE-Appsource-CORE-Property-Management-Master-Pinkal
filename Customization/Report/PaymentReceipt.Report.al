@@ -4,7 +4,7 @@ using Microsoft.Sales.Customer;
 using Microsoft.Sales.Receivables;
 using Microsoft.Sales.History;
 using Microsoft.Foundation.Company;
-report 73209586 PaymentReceipt
+report 73209586 BLRPaymentReceipt
 {
     ApplicationArea = All;
     Caption = 'Payment Receipt';
@@ -12,12 +12,12 @@ report 73209586 PaymentReceipt
     DefaultRenderingLayout = "PaymentReceipt.docx";
     dataset
     {
-        dataitem("Payment Mode2"; "Payment Mode2")
+        dataitem("BLRPaymentMode2"; "BLRPaymentMode2")
         {
             column(CompanyPicture; CompanyInfo.Picture)
             {
             }
-            column(Receipt__; "Receipt #")
+            column(Receipt__; "BLRReceipt #")
             {
             }
             column(CompanyName; CompanyInfo.Name)
@@ -44,56 +44,56 @@ report 73209586 PaymentReceipt
             column(CompanyTRN; CompanyInfo."VAT Registration No.")
             {
             }
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
-            column(Tenant_Name; "Tenant Name")
+            column(Tenant_Name; "BLRTenant Name")
             {
             }
-            column(Tenant_Email; "Tenant Email")
+            column(Tenant_Email; "BLRTenant Email")
             {
             }
-            column(Receipt_Date; Format("Receipt Date", 0, '<Day,2>/<Month,2>/<Year4>'))  // Add a column to hold the current date
+            column(Receipt_Date; Format("BLRReceipt Date", 0, '<Day,2>/<Month,2>/<Year4>'))  // Add a column to hold the current date
             {
             }
-            dataitem("Payment Schedule2"; "Payment Schedule2")
+            dataitem("BLRPaymentSchedule2"; "BLRPaymentSchedule2")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                DataItemTableView = SORTING("Payment Series");
-                column(Pay_S; "Payment Mode2"."Payment Series")
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                DataItemTableView = SORTING("BLRPayment Series");
+                column(Pay_S; "BLRPaymentMode2"."BLRPayment Series")
                 {
                 }
-                column(I_ID; "Payment Mode2"."Invoice #")
+                column(I_ID; "BLRPaymentMode2"."BLRInvoice #")
                 {
                 }
-                column(Pay_M; "Payment Mode2"."Payment Mode")
+                column(Pay_M; "BLRPaymentMode2"."BLRPayment Mode")
                 {
                 }
-                column(Che_N; "Payment Mode2"."Cheque Number")
+                column(Che_N; "BLRPaymentMode2"."BLRCheque Number")
                 {
                 }
-                column(Secondary_Item_Type; "Secondary Item Type")
+                column(Secondary_Item_Type; "BLRSecondary Item Type")
                 {
                 }
-                column(Amount; Amount)
+                column(Amount; BLRAmount)
                 {
                 }
-                column(V_A; "VAT Amount")
+                column(V_A; "BLRVAT Amount")
                 {
                 }
-                column(A_I_V; "Amount Including VAT")
+                column(A_I_V; "BLRAmount Including VAT")
                 {
                 }
                 trigger OnPreDataItem()
                 begin
-                    SetRange("Payment Series", "Payment Mode2"."Payment Series");
+                    SetRange("BLRPayment Series", "BLRPaymentMode2"."BLRPayment Series");
                 end;
 
                 trigger OnAfterGetRecord()
                 begin
-                    TotalAmount += Amount;
-                    TotalVATAmount += "VAT Amount";
-                    TotalAmountIncludingVAT += "Amount Including VAT";
+                    TotalAmount += BLRAmount;
+                    TotalVATAmount += "BLRVAT Amount";
+                    TotalAmountIncludingVAT += "BLRAmount Including VAT";
                 end;
             }
             dataitem(TotalSection; System.Utilities.Integer)
@@ -118,7 +118,7 @@ report 73209586 PaymentReceipt
             }
             dataitem(Customer; Customer)
             {
-                DataItemLink = "No." = field("Tenant Id");
+                DataItemLink = "No." = field("BLRTenant ID");
                 column(Address; Address)
                 {
                 }
@@ -129,22 +129,22 @@ report 73209586 PaymentReceipt
                 {
                 }
             }
-            dataitem("Tenancy Contract"; "Tenancy Contract")
+            dataitem("BLRTenancyContract"; "BLRTenancyContract")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                column(Property_Name; "Property Name")
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                column(Property_Name; "BLRProperty Name")
                 {
                 }
-                column(Unit_Name; "Unit Name")
+                column(Unit_Name; "BLRUnit Name")
                 {
                 }
-                column(Contract_Tenor; "Contract Tenor")
+                column(Contract_Tenor; "BLRContract Tenor")
                 {
                 }
-                column(Contract_Start_Date; "Contract Start Date")
+                column(Contract_Start_Date; "BLRContract Start Date")
                 {
                 }
-                column(Contract_End_Date; "Contract End Date")
+                column(Contract_End_Date; "BLRContract End Date")
                 {
                 }
             }

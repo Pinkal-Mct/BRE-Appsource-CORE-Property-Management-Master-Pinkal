@@ -1,4 +1,4 @@
-report 73209588 "Unearned Rent Revenue"
+report 73209588 "BLRUnearned Rent Revenue"
 {
     ApplicationArea = All;
     Caption = 'Unearned Rent Revenue';
@@ -7,57 +7,57 @@ report 73209588 "Unearned Rent Revenue"
     DefaultLayout = Excel;
     dataset
     {
-        dataitem("Sub Unearned Revenue Report"; "Sub Unearned Revenue Report")
+        dataitem("BLRSubUnearnedRevenueReport"; "BLRSubUnearnedRevenueReport")
         {
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
-            column(Customer_Name; "Customer Name")
+            column(Customer_Name; "BLRCustomer Name")
             {
             }
-            column(Unit_Name; "Unit Name")
+            column(Unit_Name; "BLRUnit Name")
             {
             }
-            column(Property; Property)
+            column(Property; BLRProperty)
             {
             }
-            column(Owner_Name; "Owner Name")
+            column(Owner_Name; "BLROwner Name")
             {
             }
-            column(Start_Date; "Start Date")
+            column(Start_Date; "BLRStart Date")
             {
             }
-            column(End_Date; "End Date")
+            column(End_Date; "BLREnd Date")
             {
             }
-            column(Termination_Date; "Termination Date")
+            column(Termination_Date; "BLRTermination Date")
             {
             }
-            column(Suspension_Date; "Suspension Date")
+            column(Suspension_Date; "BLRSuspension Date")
             {
             }
-            column(Contract_Value; "Contract Value")
+            column(Contract_Value; "BLRContract Value")
             {
             }
-            column(Contract_Status; "Contract Status")
+            column(Contract_Status; "BLRContract Status")
             {
             }
-            column(Opening_Balance; "Opening Balance")
+            column(Opening_Balance; "BLROpening Balance")
             {
             }
-            column(Invoice_Raised_During_the_Year; "Invoice Raised During the Year")
+            column(Invoice_Raised_During_the_Year; "BLRInvRaisedDurtheYear")
             {
             }
-            column(RevenueAllocated_DuringtheYear; "RevenueAllocated DuringtheYear")
+            column(RevenueAllocated_DuringtheYear; "BLRRevAllocDurtheYear")
             {
             }
-            column(Unearned_Revenue_Balance; "Unearned Revenue Balance")
+            column(Unearned_Revenue_Balance; "BLRUnearned Revenue Balance")
             {
             }
-            column(CalculatedUnearnedRevBalance; CalculatedUnearnedRevBalance)
+            column(CalculatedUnearnedRevBalance; BLRCalculatedUnearnedRevB19C1)
             {
             }
-            column(Shortfall_Excess; "Shortfall/Excess")
+            column(Shortfall_Excess; "BLRShortfall/Excess")
             {
             }
         }

@@ -1,10 +1,10 @@
-pageextension 73209591 GeneralLedgerEntriesExt extends "General Ledger Entries"
+pageextension 73209591 BLRGeneralLedgerEntriesExt extends "General Ledger Entries"
 {
     layout
     {
         addafter("Document No.")
         {
-            field("Contract ID"; Rec."Contract ID")
+            field("Contract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
                 Caption = 'Contract ID';

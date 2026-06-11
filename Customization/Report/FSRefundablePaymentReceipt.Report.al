@@ -2,7 +2,7 @@ namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
 using Microsoft.Sales.Customer;
 using System.Text;
-report 73209582 "FS Refundable Payment Receipt"
+report 73209582 "BLRFS RefundablePaymentReceipt"
 {
     ApplicationArea = All;
     Caption = 'FS Refundable PaymentReceipt';
@@ -11,7 +11,7 @@ report 73209582 "FS Refundable Payment Receipt"
 
     dataset
     {
-        dataitem(FinalSettlement; FinalSettlementRefund)
+        dataitem(FinalSettlement; BLRFinalSettlementRefund)
         {
             column(CompanyPicture; CompanyInfo.Picture)
             {
@@ -44,28 +44,28 @@ report 73209582 "FS Refundable Payment Receipt"
             column(CurrentDate; Format(CurrentDateTime, 0, '<Day,2>/<Month,2>/<Year4>'))  // Add a column to hold the current date
             {
             }
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
-            column(Payment_mode; "Refund Payment mode")
+            column(Payment_mode; "BLRRefund Payment mode")
             {
             }
-            column(Cheque_No_; "Refund Cheque No.")
+            column(Cheque_No_; "BLRRefund Cheque No.")
             {
             }
-            column(Total_Amount; "Refund Total Amount")
+            column(Total_Amount; "BLRRefund Total Amount")
             {
             }
-            column(Receipt__; "Receipt #")
+            column(Receipt__; "BLRReceipt #")
             {
             }
 
-            column(Final_Settlement_Words; ConvertFinalSettlementToWords("Refund Total Amount"))
+            column(Final_Settlement_Words; ConvertFinalSettlementToWords("BLRRefund Total Amount"))
             {
             }
             dataitem(Customer; Customer)
             {
-                DataItemLink = "No." = field("Tenant ID");
+                DataItemLink = "No." = field("BLRTenant ID");
                 column(Name; Name)
                 {
                 }
@@ -82,26 +82,26 @@ report 73209582 "FS Refundable Payment Receipt"
                 {
                 }
             }
-            dataitem("Tenancy Contract"; "Tenancy Contract")
+            dataitem("BLRTenancyContract"; "BLRTenancyContract")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                column(Property_Name; "Property Name")
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                column(Property_Name; "BLRProperty Name")
                 {
                 }
-                column(Unit_Name; "Unit Name")
+                column(Unit_Name; "BLRUnit Name")
                 {
                 }
-                column(Contract_Tenor; "Contract Tenor")
+                column(Contract_Tenor; "BLRContract Tenor")
                 {
                 }
             }
-            dataitem("Final Calculation"; "Final Calculation")
+            dataitem("BLRFinalCalculation"; "BLRFinalCalculation")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                column(Contract_Start_Date; "Contract Start Date")
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                column(Contract_Start_Date; "BLRContract Start Date")
                 {
                 }
-                column(Contract_End_Date; "Contract End Date")
+                column(Contract_End_Date; "BLRContract End Date")
                 {
                 }
             }

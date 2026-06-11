@@ -1,7 +1,7 @@
-page 73209673 "Approval Contract Status Card"
+page 73209673 "BLRApproval ContractStatusCard"
 {
     PageType = Card;
-    SourceTable = "Approval Contract Status";
+    SourceTable = "BLRApprovalContractStatus";
     ApplicationArea = All;
     Caption = 'Approval Contract Status Card';
 
@@ -11,29 +11,29 @@ page 73209673 "Approval Contract Status Card"
         {
             group(General)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the approval contract status.';
                 }
-                field("Status"; Rec."Status")
+                field("Status"; Rec."BLRStatus")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Current status of the approval contract.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Identifier for the contract associated with this approval status.';
                 }
-                field("Lease ID"; Rec."Lease ID")
+                field("Lease ID"; Rec."BLRLease ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Identifier for the lease associated with this approval status.';
                 }
 
-                field("Tenancy Contract Status"; Rec."Tenancy Contract Status")
+                field("Tenancy Contract Status"; Rec."BLRTenancy Contract Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Status of the tenancy contract related to this approval.';

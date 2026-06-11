@@ -1,4 +1,4 @@
-pageextension 73209580 OwnerProfileCardExt extends "Owner Profile Card"
+pageextension 73209580 BLROwnerProfileCardExt extends "BLROwner Profile Card"
 {
 
     layout

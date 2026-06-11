@@ -1,7 +1,7 @@
-page 73209714 "PDR Revenue Allocation Grid"
+page 73209714 "BLRPDRRevenueAllocationGrid"
 {
     PageType = List;
-    SourceTable = "PDR Revenue Allocation Details";
+    SourceTable = "BLRPDRRevenueAllocationDetails";
     ApplicationArea = All;
 
     layout
@@ -10,50 +10,50 @@ page 73209714 "PDR Revenue Allocation Grid"
         {
             repeater(Group)
             {
-                field("Praposal ID"; Rec."Praposal ID")
+                field("Praposal ID"; Rec."BLRPraposal ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The unique identifier for the proposal.';
                 }
-                field(Year; Rec.Year)
+                field(Year; Rec."BLRYear")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The year for which the revenue allocation is being made.';
                 }
-                field("Unit ID"; Rec."Unit ID")
+                field("Unit ID"; Rec."BLRUnit ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The identifier for the unit associated with the proposal.';
                     trigger OnDrillDown()
                     var
-                        LeaseProposal: Record "Lease Proposal Details"; // Assuming Lease Proposal record
-                        NewAllocationDetails: Record "PDR Revenue Allocation Details";
+                        LeaseProposal: Record "BLRLeaseProposalDetails"; // Assuming Lease Proposal record
+                        NewAllocationDetails: Record "BLRPDRRevenueAllocationDetails";
                         SingleUnitNames: Text;
                     begin
                         // Fetch the related Lease Proposal record dynamically (assuming there is a relationship between them)
-                        if LeaseProposal.Get(Rec."Praposal ID") then begin
+                        if LeaseProposal.Get(Rec."BLRPraposal ID") then begin
                             // Fetch the unit names dynamically from Lease Proposal
                             SingleUnitNames := GetLeaseUnitNames(LeaseProposal);
 
                             // Set the SingleUnitNames field in the new revenue allocation grid
-                            NewAllocationDetails."Unit ID" := CopyStr(SingleUnitNames, 1, 2048);
+                            NewAllocationDetails."BLRUnit ID" := CopyStr(SingleUnitNames, 1, 2048);
 
                             // Open the new grid page and pass the NewAllocationDetails record
-                            PAGE.Run(PAGE::"PDR Revenue Allocation Grid", NewAllocationDetails);
+                            PAGE.Run(PAGE::"BLRPDRRevenueAllocationGrid", NewAllocationDetails);
                         end;
                     end;
                 }
-                field("Sq. Ft."; Rec."Sq. Ft.")
+                field("Sq. Ft."; Rec."BLRSq. Ft.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The square footage of the unit associated with the proposal.';
                 }
-                field("Per Day Rent Per Unit"; Rec."Per Day Rent Per Unit")
+                field("Per Day Rent Per Unit"; Rec."BLRPer Day Rent Per Unit")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The rent amount per day for the unit associated with the proposal.';
                 }
-                field("Total Revenue"; Rec."Total Revenue")
+                field("Total Revenue"; Rec."BLRTotal Revenue")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The total revenue generated from the proposal.';
@@ -63,7 +63,7 @@ page 73209714 "PDR Revenue Allocation Grid"
     }
 
     //-----------------Get Lease Unit Name -----------------//
-    local procedure GetLeaseUnitNames(var LeaseProposal: Record "Lease Proposal Details"): Text
+    local procedure GetLeaseUnitNames(var LeaseProposal: Record "BLRLeaseProposalDetails"): Text
     var
         Result: Text;
     begin
@@ -74,22 +74,22 @@ page 73209714 "PDR Revenue Allocation Grid"
         // This is an example and should be adapted based on how unit names are linked to the Lease Proposal.
 
         // Assuming the Lease Proposal has a relation to units (could be a list or multiple fields like "UnitName1", "UnitName2", etc.)
-        if LeaseProposal."Single Unit Name" <> '' then begin
+        if LeaseProposal."BLRSingle Unit Name" <> '' then begin
             if Result <> '' then
                 Result := Result + ', '; // Add a comma separator if it's not the first entry
-            Result := Result + LeaseProposal."Single Unit Name";
+            Result := Result + LeaseProposal."BLRSingle Unit Name";
         end;
 
-        if LeaseProposal."Single Unit Name" <> '' then begin
+        if LeaseProposal."BLRSingle Unit Name" <> '' then begin
             if Result <> '' then
                 Result := Result + ', ';
-            Result := Result + LeaseProposal."Single Unit Name";
+            Result := Result + LeaseProposal."BLRSingle Unit Name";
         end;
 
-        if LeaseProposal."Single Unit Name" <> '' then begin
+        if LeaseProposal."BLRSingle Unit Name" <> '' then begin
             if Result <> '' then
                 Result := Result + ', ';
-            Result := Result + LeaseProposal."Single Unit Name";
+            Result := Result + LeaseProposal."BLRSingle Unit Name";
         end;
 
         // If there are many units or a dynamic list, you can loop through the related records

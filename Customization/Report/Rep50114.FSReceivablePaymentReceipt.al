@@ -2,7 +2,7 @@ namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
 using Microsoft.Foundation.Company;
 using Microsoft.Sales.Customer;
 using System.Text;
-report 73209581 FS_Receivable_PaymentReceipt
+report 73209581 BLRFSReceivablePaymentReceipt
 {
     ApplicationArea = All;
     Caption = 'FS_Receivable_PaymentReceipt';
@@ -10,12 +10,12 @@ report 73209581 FS_Receivable_PaymentReceipt
     DefaultRenderingLayout = "FS_Receivable_PaymentReceipt.docx";
     dataset
     {
-        dataitem(FinalSettlement; FinalSettlement)
+        dataitem(FinalSettlement; BLRFinalSettlement)
         {
             column(CompanyPicture; CompanyInfo.Picture)
             {
             }
-            column(Receipt__; "Payment Receipt")
+            column(Receipt__; "BLRPayment Receipt")
             {
             }
             column(CompanyName; CompanyInfo.Name)
@@ -45,22 +45,22 @@ report 73209581 FS_Receivable_PaymentReceipt
             column(CurrentDate; Format(CurrentDateTime, 0, '<Day,2>/<Month,2>/<Year4>'))  // Add a column to hold the current date
             {
             }
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
-            column(Payment_mode; "Receivable Payment mode")
+            column(Payment_mode; "BLRReceivable Payment mode")
             {
             }
-            column(Cheque_No_; "Receivable Cheque No.")
+            column(Cheque_No_; "BLRReceivable Cheque No.")
             {
             }
-            column(Total_Amount; "Receivable Total Amount")
+            column(Total_Amount; "BLRReceivable Total Amount")
             {
             }
-            column(Invoice_ID; "Invoice ID")
+            column(Invoice_ID; "BLRInvoice ID")
             {
             }
-            column(Final_Settlement_Words; ConvertFinalSettlementToWords("Receivable Total Amount"))
+            column(Final_Settlement_Words; ConvertFinalSettlementToWords("BLRReceivable Total Amount"))
             {
             }
             // column(Contract_Start_Date; "Contract Start Date")
@@ -71,7 +71,7 @@ report 73209581 FS_Receivable_PaymentReceipt
             // }
             dataitem(Customer; Customer)
             {
-                DataItemLink = "No." = field("Tenant ID");
+                DataItemLink = "No." = field("BLRTenant ID");
                 column(Name; Name)
                 {
                 }
@@ -88,26 +88,26 @@ report 73209581 FS_Receivable_PaymentReceipt
                 {
                 }
             }
-            dataitem("Tenancy Contract"; "Tenancy Contract")
+            dataitem("BLRTenancyContract"; "BLRTenancyContract")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                column(Property_Name; "Property Name")
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                column(Property_Name; "BLRProperty Name")
                 {
                 }
-                column(Unit_Name; "Unit Name")
+                column(Unit_Name; "BLRUnit Name")
                 {
                 }
-                column(Contract_Tenor; "Contract Tenor")
+                column(Contract_Tenor; "BLRContract Tenor")
                 {
                 }
             }
-            dataitem("Final Calculation"; "Final Calculation")
+            dataitem("BLRFinalCalculation"; "BLRFinalCalculation")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
-                column(Contract_Start_Date; "Contract Start Date")
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
+                column(Contract_Start_Date; "BLRContract Start Date")
                 {
                 }
-                column(Contract_End_Date; "Contract End Date")
+                column(Contract_End_Date; "BLRContract End Date")
                 {
                 }
                 // column(Payment_mode; "Receivable Payment mode")
@@ -160,18 +160,17 @@ report 73209581 FS_Receivable_PaymentReceipt
     }
     trigger OnInitReport()
     begin
-        if not CompanyInfo.Get() then begin
-            Error('Company Information not found.');
-        end else begin
+        if not CompanyInfo.Get() then
+            Error('Company Information not found.')
+        else
             // CompanyAddress := CompanyInfo.City + ', ' + CompanyInfo.County + ' ' + CompanyInfo."Post Code";
             CompanyInfo.CalcFields(Picture);
-        end;
+
     end;
 
     var
         CompanyInfo: Record "Company Information";
-        TotalAmountInclVAT: Decimal;
-        AutoFormat: Codeunit "Auto Format";
+
 
     // Function to convert number to words
     procedure ConvertFinalSettlementToWords(Amount: Decimal): Text
@@ -193,9 +192,9 @@ report 73209581 FS_Receivable_PaymentReceipt
         WholePart := ConvertNumberToWords(WholeNumber);
 
         // Convert decimal part to words if exists
-        if Decimals > 0 then begin
+        if Decimals > 0 then
             DecimalPart := ' and ' + ConvertNumberToWords(Decimals) + ' fils';
-        end;
+
 
         // Combine whole and decimal parts, and add 'Only'
         FinalText := WholePart + DecimalPart + ' Only';
@@ -292,7 +291,7 @@ report 73209581 FS_Receivable_PaymentReceipt
         end;
 
         // Process tens and ones
-        if N > 0 then begin
+        if N > 0 then
             if N <= 19 then
                 Result += Ones[N]
             else begin
@@ -300,7 +299,7 @@ report 73209581 FS_Receivable_PaymentReceipt
                 if N mod 10 > 0 then
                     Result += ' ' + Ones[N mod 10];
             end;
-        end;
+
 
         exit(Result.Trim());
     end;

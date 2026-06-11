@@ -1,4 +1,4 @@
-pageextension 73209579 Customers extends "Customer Card"
+pageextension 73209579 BLRCustomers extends "Customer Card"
 {
     layout
     {
@@ -149,54 +149,54 @@ pageextension 73209579 Customers extends "Customer Card"
         movefirst(CustContactDetails; "Phone No.", "MobilePhoneNo", "E-Mail")
         addafter(Name)
         {
-            field(Username; Rec.Username)
+            field(Username; Rec.BLRUsername)
             {
                 ApplicationArea = All;
                 ToolTip = 'The username for the tenant. This is used for login purposes.';
             }
-            field("Password"; rec."Password")
+            field("Password"; rec."BLRPassword")
             {
                 ApplicationArea = All;
                 ToolTip = 'The password for the tenant. This is used for login purposes.';
             }
-            field("Date Of Birth"; rec."Date Of Birth")
+            field("Date Of Birth"; rec."BLRDate Of Birth")
             {
                 ApplicationArea = All;
                 ToolTip = 'The date of birth of the tenant. This is used for identification purposes.';
             }
-            field("Nationality"; rec."Nationality")
+            field("Nationality"; rec."BLRNationality")
             {
                 ApplicationArea = All;
                 ToolTip = 'The nationality of the tenant. This is used for identification purposes.';
             }
-            field("Emirates ID"; rec."Emirates ID")
+            field("Emirates ID"; rec."BLREmirates ID")
             {
                 ApplicationArea = All;
                 ToolTip = 'The Emirates ID of the tenant. This is used for identification purposes.';
             }
-            field("Emirates ID Expiry Date"; rec."Emirates ID Expiry Date")
+            field("Emirates ID Expiry Date"; rec."BLREmirates ID Expiry Date")
             {
                 ApplicationArea = All;
                 ToolTip = 'The expiry date of the Emirates ID of the tenant. This is used for identification purposes.';
             }
-            field("License No."; Rec."License No.")
+            field("License No."; Rec."BLRLicense No.")
             {
                 ApplicationArea = All;
                 ToolTip = 'The license number of the tenant. This is used for identification purposes.';
             }
-            field("Licensing Authority"; Rec."Licensing Authority")
+            field("Licensing Authority"; Rec."BLRLicensing Authority")
             {
                 ApplicationArea = All;
                 ToolTip = 'The authority that issued the license for the tenant. This is used for identification purposes.';
             }
-            field("Code Area"; Rec."Code Area")
+            field("Code Area"; Rec."BLRCode Area")
             {
                 ApplicationArea = All;
                 Caption = 'Code Area';
                 Visible = false;
                 ToolTip = 'The code area for the tenant. This is used for identification purposes.';
             }
-            field(Occupation; Rec.Occupation)
+            field(Occupation; Rec."BLROccupation")
             {
                 ApplicationArea = All;
                 Caption = 'Occupation';
@@ -205,14 +205,14 @@ pageextension 73209579 Customers extends "Customer Card"
         }
         addlast(General)
         {
-            field("Customer Type"; Rec."Customer Type")
+            field("Customer Type"; Rec."BLRCustomer Type")
             {
                 ApplicationArea = All;
                 Caption = 'Customer Type';
                 ToolTip = 'The type of customer, such as individual or company. This is used for classification purposes.';
             }
 
-            field("Business Unit"; Rec."Business Unit")
+            field("Business Unit"; Rec."BLRBusiness Unit")
             {
                 ApplicationArea = All;
                 Caption = 'Business unit';
@@ -224,44 +224,44 @@ pageextension 73209579 Customers extends "Customer Card"
         {
             group("Passport Details")
             {
-                field("Passport Number"; rec."Passport Number")
+                field("Passport Number"; rec."BLRPassport Number")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The passport number of the tenant. This is used for identification purposes.';
                 }
-                field("Passport Issue Date"; rec."Passport Issue Date")
+                field("Passport Issue Date"; rec."BLRPassport Issue Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The issue date of the passport of the tenant. This is used for identification purposes.';
                 }
-                field("Passport Expiry Date"; rec."Passport Expiry Date")
+                field("Passport Expiry Date"; rec."BLRPassport Expiry Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The expiry date of the passport of the tenant. This is used for identification purposes.';
                 }
-                field("Country of Passport"; rec."Country of Passport")
+                field("Country of Passport"; rec."BLRCountry of Passport")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The country that issued the passport of the tenant. This is used for identification purposes.';
                 }
             }
 
-            part("Document Attachments"; "Tenant Document SubPage")
+            part("Document Attachments"; "BLRTenant Document SubPage")
             {
-                SubPageLink = No = FIELD("No."); // Link to filter attachments for this owner only
+                SubPageLink = BLRNo = FIELD("No."); // Link to filter attachments for this owner only
                 ApplicationArea = All;
                 Visible = isVisible;
             }
 
             group("Tenant Screening")
             {
-                field("Approve"; Rec."Approve")
+                field("Approve"; Rec."BLRApprove")
                 {
                     ApplicationArea = All;
                     Caption = 'Approve';
                     ToolTip = 'Indicates whether the tenant has been approved.';
                 }
-                field("Decline"; Rec."Decline")
+                field("Decline"; Rec."BLRDecline")
                 {
                     ApplicationArea = All;
                     Caption = 'Decline';
@@ -272,7 +272,7 @@ pageextension 73209579 Customers extends "Customer Card"
         }
         addafter("Address 2")
         {
-            field("P.O.Box"; Rec."P.O.Box")
+            field("P.O.Box"; Rec."BLRP.O.Box")
             {
                 ApplicationArea = All;
                 Caption = 'P.O.Box';

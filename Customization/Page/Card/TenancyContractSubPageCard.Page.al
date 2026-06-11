@@ -1,8 +1,8 @@
-page 73209746 "Tenancy Contract SubPage Card"
+page 73209746 "BLRTenancy ContractSubPageCard"
 {
     PageType = ListPart;
     ApplicationArea = All;
-    SourceTable = "Tenancy Contract Subpage";
+    SourceTable = "BLRTenancyContractSubpage";
     Caption = 'Other Payments';
     DeleteAllowed = false;
 
@@ -12,13 +12,13 @@ page 73209746 "Tenancy Contract SubPage Card"
         {
             repeater(Group)
             {
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Secondary Item Type';
                     ToolTip = 'Enter the Secondary Item Type.';
                 }
-                field("Amount"; Rec.Amount)
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
@@ -26,27 +26,27 @@ page 73209746 "Tenancy Contract SubPage Card"
                     Editable = isEditable;
                 }
 
-                field("VAT %"; Rec."VAT %")
+                field("VAT %"; Rec."BLRVAT %")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the VAT percentage.';
                 }
 
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'VAT Amount';
                     ToolTip = 'Enter the VAT Amount.';
                 }
 
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount Including VAT';
                     ToolTip = 'Enter the Amount Including VAT.';
                 }
 
-                field("Start Date"; Rec."Start Date")
+                field("Start Date"; Rec."BLRStart Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Start Date';
@@ -54,27 +54,27 @@ page 73209746 "Tenancy Contract SubPage Card"
                     ToolTip = 'Enter the Start Date.';
                 }
 
-                field("End Date"; Rec."End Date")
+                field("End Date"; Rec."BLREnd Date")
                 {
                     ApplicationArea = All;
                     Caption = 'End Date';
                     Lookup = true;
                     ToolTip = 'Enter the End Date.';
                 }
-                field(Invoiced; Rec.Invoiced)
+                field(Invoiced; Rec.BLRInvoiced)
                 {
                     ApplicationArea = All;
                     Caption = 'Invoiced';
                     ToolTip = 'Indicates whether the amount has been invoiced.';
                 }
-                field("Invoiced and Paid"; Rec."Invoiced and Paid")
+                field("Invoiced and Paid"; Rec."BLRInvoiced and Paid")
                 {
                     ApplicationArea = All;
                     Caption = 'Invoiced and Paid';
                     ToolTip = 'Indicates whether the amount has been invoiced and paid.';
                 }
 
-                field("Payment Type"; Rec."Payment Type")
+                field("BLRPaymentType"; Rec."BLRPayment Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Type';
@@ -84,7 +84,7 @@ page 73209746 "Tenancy Contract SubPage Card"
 
                 }
 
-                field("Generate Payment Schedule"; Rec."Generate Payment Schedule")
+                field("Generate Payment Schedule"; Rec."BLRGenerate Payment Schedule")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -92,8 +92,8 @@ page 73209746 "Tenancy Contract SubPage Card"
 
                     trigger OnDrillDown()
                     var
-                        RevenueStructure: Record "Revenue Structure Subpage";
-                        TargetRecord: Record "Revenue Structure"; // Replace with the actual table name
+                        RevenueStructure: Record "BLRRevenueStructureSubpage";
+                        TargetRecord: Record "BLRRevenueStructure"; // Replace with the actual table name
                         StartDate: Date;
                         EndDate: Date;
                         AnnualAmount: Decimal;
@@ -104,47 +104,47 @@ page 73209746 "Tenancy Contract SubPage Card"
                         NumDays: Integer;
 
                         Revenuestructureid: Integer;
-                    //LeaseRecord: Record "Lease Proposal Details";
+                    //LeaseRecord: Record "BLRLeaseProposalDetails";
 
 
                     begin
 
-                        if Rec."Payment Type" = Rec."Payment Type"::Installment then begin
+                        if Rec."BLRPayment Type" = Rec."BLRPayment Type"::Installment then begin
 
 
 
-                            TargetRecord.SetRange("Contract ID", Rec."ContractID");
-                            TargetRecord.SetRange("Secondary Item Type", Rec."Secondary Item Type");
-                            TargetRecord.SetRange("Tenant ID", Rec."TenantID");
+                            TargetRecord.SetRange("BLRContract ID", Rec."BLRContractID");
+                            TargetRecord.SetRange("BLRSecondary Item Type", Rec."BLRSecondary Item Type");
+                            TargetRecord.SetRange("BLRTenant ID", Rec."BLRTenantID");
 
                             if TargetRecord.FindSet() then begin
-                                TargetRecord."Contract Start Date" := Rec."Start Date";
-                                TargetRecord."Contract End Date" := Rec."End Date";
-                                TargetRecord."Amount" := Rec."Amount";
-                                TargetRecord."VAT Amount" := Rec."VAT Amount";
-                                TargetRecord."Amount Including VAT" := Rec."Amount Including VAT";
-                                TargetRecord."VAT %" := Rec."VAT %";
-                                TargetRecord."Entry No" := Rec."Entry No.";
+                                TargetRecord."BLRContract Start Date" := Rec."BLRStart Date";
+                                TargetRecord."BLRContract End Date" := Rec."BLREnd Date";
+                                TargetRecord."BLRAmount" := Rec."BLRAmount";
+                                TargetRecord."BLRVAT Amount" := Rec."BLRVAT Amount";
+                                TargetRecord."BLRAmount Including VAT" := Rec."BLRAmount Including VAT";
+                                TargetRecord."BLRVAT %" := Rec."BLRVAT %";
+                                TargetRecord."BLREntry No" := Rec."BLREntry No.";
                                 TargetRecord.Modify();
                             end else begin
                                 TargetRecord.Init();
-                                // TargetRecord."Proposal ID" := Rec."ProposalID";
-                                TargetRecord."Contract ID" := Rec."ContractID";
-                                TargetRecord."Tenant ID" := Rec."TenantID";
-                                TargetRecord."Secondary Item Type" := Rec."Secondary Item Type";
-                                TargetRecord."Contract Start Date" := Rec."Start Date";
-                                TargetRecord."Contract End Date" := Rec."End Date";
-                                TargetRecord."Amount" := Rec."Amount";
-                                TargetRecord."VAT Amount" := Rec."VAT Amount";
-                                TargetRecord."Amount Including VAT" := Rec."Amount Including VAT";
-                                TargetRecord."VAT %" := Rec."VAT %";
-                                TargetRecord."Entry No" := Rec."Entry No.";
+                                // TargetRecord."Proposal ID" := Rec."BLRProposalID";
+                                TargetRecord."BLRContract ID" := Rec."BLRContractID";
+                                TargetRecord."BLRTenant ID" := Rec."BLRTenantID";
+                                TargetRecord."BLRSecondary Item Type" := Rec."BLRSecondary Item Type";
+                                TargetRecord."BLRContract Start Date" := Rec."BLRStart Date";
+                                TargetRecord."BLRContract End Date" := Rec."BLREnd Date";
+                                TargetRecord."BLRAmount" := Rec."BLRAmount";
+                                TargetRecord."BLRVAT Amount" := Rec."BLRVAT Amount";
+                                TargetRecord."BLRAmount Including VAT" := Rec."BLRAmount Including VAT";
+                                TargetRecord."BLRVAT %" := Rec."BLRVAT %";
+                                TargetRecord."BLREntry No" := Rec."BLREntry No.";
                                 TargetRecord.Insert();
 
 
-                                StartDate := TargetRecord."Contract Start Date";
-                                EndDate := TargetRecord."Contract End Date";
-                                AnnualAmount := TargetRecord."Amount";
+                                StartDate := TargetRecord."BLRContract Start Date";
+                                EndDate := TargetRecord."BLRContract End Date";
+                                AnnualAmount := TargetRecord."BLRAmount";
 
                                 if (StartDate = 0D) or (EndDate = 0D) or (AnnualAmount = 0) then
                                     Error('Start Date, End Date, and Amount must be populated.');
@@ -157,16 +157,16 @@ page 73209746 "Tenancy Contract SubPage Card"
 
                                 while PeriodStartDate <= EndDate do begin
                                     RevenueStructure.Init();
-                                    RevenueStructure."RS ID" := TargetRecord."RS ID";
-                                    RevenueStructure."Tenant Id" := TargetRecord."Tenant ID";
-                                    RevenueStructure."Contract ID" := TargetRecord."Contract ID";
-                                    RevenueStructure."Year" := YearCounter;
-                                    RevenueStructure."Period Start Date" := PeriodStartDate;
+                                    RevenueStructure."BLRRS ID" := TargetRecord."BLRRS ID";
+                                    RevenueStructure."BLRTenant Id" := TargetRecord."BLRTenant ID";
+                                    RevenueStructure."BLRContract ID" := TargetRecord."BLRContract ID";
+                                    RevenueStructure."BLRYear" := YearCounter;
+                                    RevenueStructure."BLRPeriod Start Date" := PeriodStartDate;
 
-                                    RevenueStructure."VAT Amount" := TargetRecord."VAT Amount";
-                                    RevenueStructure."Amount Including VAT" := TargetRecord."Amount Including VAT";
-                                    RevenueStructure."Secondary Item Type" := TargetRecord."Secondary Item Type";
-                                    RevenueStructure."VAT %" := TargetRecord."VAT %";
+                                    RevenueStructure."BLRVAT Amount" := TargetRecord."BLRVAT Amount";
+                                    RevenueStructure."BLRAmount Including VAT" := TargetRecord."BLRAmount Including VAT";
+                                    RevenueStructure."BLRSecondary Item Type" := TargetRecord."BLRSecondary Item Type";
+                                    RevenueStructure."BLRVAT %" := TargetRecord."BLRVAT %";
 
 
 
@@ -177,12 +177,12 @@ page 73209746 "Tenancy Contract SubPage Card"
                                     if PeriodEndDate > EndDate then
                                         PeriodEndDate := EndDate;
 
-                                    RevenueStructure."Period End Date" := PeriodEndDate;
+                                    RevenueStructure."BLRPeriod End Date" := PeriodEndDate;
 
                                     NumDays := PeriodEndDate - PeriodStartDate + 1;
 
 
-                                    RevenueStructure."Number of Days" := NumDays;
+                                    RevenueStructure."BLRNumber of Days" := NumDays;
 
                                     RevenueStructure.Insert();
                                     RevenueStructure.Modify();
@@ -195,7 +195,7 @@ page 73209746 "Tenancy Contract SubPage Card"
 
                                     if TargetRecord.FindLast() then
                                         // If found, get the latest RS ID
-                                        Revenuestructureid := TargetRecord."RS ID"
+                                        Revenuestructureid := TargetRecord."BLRRS ID"
                                     else begin
                                         // If no record is found, create a new Revenue Structure record
                                         TargetRecord.Init();
@@ -203,10 +203,10 @@ page 73209746 "Tenancy Contract SubPage Card"
                                         TargetRecord.Modify(true);  // Insert the new record and generate the RS ID
 
                                         // Get the newly created RS ID
-                                        Revenuestructureid := TargetRecord."RS ID";
+                                        Revenuestructureid := TargetRecord."BLRRS ID";
                                     end;
 
-                                    Rec."Link" := Revenuestructureid;
+                                    Rec."BLRLink" := Revenuestructureid;
 
 
                                 end;
@@ -226,7 +226,7 @@ page 73209746 "Tenancy Contract SubPage Card"
                 }
 
 
-                field("Link"; Rec."Link")
+                field("Link"; Rec."BLRLink")
                 {
                     ApplicationArea = All;
                     Caption = 'Revenue Structure Link';
@@ -235,12 +235,12 @@ page 73209746 "Tenancy Contract SubPage Card"
 
                     trigger OnDrillDown()
                     var
-                        RevenueStructureRec: Record "Revenue Structure";
+                        RevenueStructureRec: Record "BLRRevenueStructure";
                     begin
-                        if Rec."Payment Type" = Rec."Payment Type"::Installment then begin
+                        if Rec."BLRPayment Type" = Rec."BLRPayment Type"::Installment then begin
 
-                            if RevenueStructureRec.Get(Rec."Link") then
-                                PAGE.RUN(PAGE::"Revenue Structure Card", RevenueStructureRec)
+                            if RevenueStructureRec.Get(Rec."BLRLink") then
+                                PAGE.RUN(PAGE::"BLRRevenue Structure Card", RevenueStructureRec)
                             else
                                 Message('The related Revenue Structure does not exist.');
                         end
@@ -249,7 +249,7 @@ page 73209746 "Tenancy Contract SubPage Card"
                     end;
 
                 }
-                field("Contract Renewal ID"; Rec."Contract Renewal ID")
+                field("Contract Renewal ID"; Rec."BLRContract Renewal ID")
                 {
                     Editable = false;
                     ApplicationArea = All;
@@ -261,31 +261,31 @@ page 73209746 "Tenancy Contract SubPage Card"
 
     trigger OnAfterGetRecord()
     var
-        revenueStructure: Record "Revenue Structure";
-        PaymentSchedule: Record "Payment Schedule2";
+        revenueStructure: Record "BLRRevenueStructure";
+        PaymentSchedule: Record "BLRPaymentSchedule2";
         SumInvoicedAmount: Decimal;
     begin
-        revenueStructure.SetRange("RS ID", Rec.Link);
+        revenueStructure.SetRange("BLRRS ID", Rec."BLRLink");
         if revenueStructure.IsEmpty() then
-            Rec.Link := 0;
+            Rec."BLRLink" := 0;
 
         // Calculate total invoiced amount for this secondary item type
         SumInvoicedAmount := 0;
-        PaymentSchedule.SetRange("Contract ID", Rec.ContractID);
-        PaymentSchedule.SetRange("Tenant ID", Rec.TenantID);
-        PaymentSchedule.SetRange("Secondary Item Type", Rec."Secondary Item Type");
+        PaymentSchedule.SetRange("BLRContract ID", Rec."BLRContractID");
+        PaymentSchedule.SetRange("BLRTenant ID", Rec."BLRTenantID");
+        PaymentSchedule.SetRange("BLRSecondary Item Type", Rec."BLRSecondary Item Type");
         // Only consider lines that are marked Invoiced and have an Invoice ID
-        PaymentSchedule.SetFilter(Invoiced, '=true');
-        PaymentSchedule.SetFilter("Invoice ID", '<>%1', '');
+        PaymentSchedule.SetFilter(BLRInvoiced, '=true');
+        PaymentSchedule.SetFilter("BLRInvoice ID", '<>%1', '');
         if PaymentSchedule.FindSet() then begin
             repeat
-                SumInvoicedAmount += PaymentSchedule.Amount;
+                SumInvoicedAmount += PaymentSchedule."BLRAmount";
             until PaymentSchedule.Next() = 0;
 
             // Update the displayed Invoiced amount on the Tenancy Subpage record
-            Rec.Invoiced := SumInvoicedAmount;
+            Rec.BLRInvoiced := SumInvoicedAmount;
         end else
-            Rec.Invoiced := 0;
+            Rec.BLRInvoiced := 0;
 
         Rec.Modify();
         CheckRefundableDeposit();
@@ -295,9 +295,9 @@ page 73209746 "Tenancy Contract SubPage Card"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.ContractID := ContractID;
-        Rec.TenantID := tenantID;
-        Rec.ProposalID := (proposalID);
+        Rec."BLRContractID" := ContractID;
+        Rec."BLRTenantID" := tenantID;
+        Rec."BLRProposalID" := (proposalID);
     end;
 
     var
@@ -310,9 +310,9 @@ page 73209746 "Tenancy Contract SubPage Card"
     var
         item: Record Item;
     begin
-        item.SetRange(Description, Rec."Secondary Item Type");
+        item.SetRange(Description, Rec."BLRSecondary Item Type");
         if item.FindFirst() then
-            if item."Category Types" = 'Refundable Deposit' then
+            if item."BLRCategory Types" = 'Refundable Deposit' then
                 isEditable := true
             else
                 isEditable := false;

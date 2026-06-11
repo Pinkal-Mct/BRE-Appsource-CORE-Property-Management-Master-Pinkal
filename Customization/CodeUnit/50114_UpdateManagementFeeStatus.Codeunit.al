@@ -1,4 +1,4 @@
-codeunit 73209622 "Update Management Fee Status"
+codeunit 73209622 "BLRUpdateManagement Fee Status"
 {
 
 
@@ -9,7 +9,7 @@ codeunit 73209622 "Update Management Fee Status"
 
     local procedure UpdateContractStatus()
     var
-        MgmtFeeLine: Record "Management Fee Grid";
+        MgmtFeeLine: Record "BLRManagementFeeGrid";
         TodayDate: Date;
     begin
         TodayDate := Today;
@@ -18,26 +18,26 @@ codeunit 73209622 "Update Management Fee Status"
 
         if MgmtFeeLine.FindSet() then
             repeat
-                if (MgmtFeeLine."Valid From" <= TodayDate) and
-                   (MgmtFeeLine."Valid To" >= TodayDate) then begin
+                if (MgmtFeeLine."BLRValid From" <= TodayDate) and
+                   (MgmtFeeLine."BLRValid To" >= TodayDate) then begin
 
-                    if MgmtFeeLine."Contract Status" <>
-                       MgmtFeeLine."Contract Status"::Active then begin
-                        MgmtFeeLine."Contract Status" :=
-                            MgmtFeeLine."Contract Status"::Active;
+                    if MgmtFeeLine."BLRContract Status" <>
+                       MgmtFeeLine."BLRContract Status"::Active then begin
+                        MgmtFeeLine."BLRContract Status" :=
+                            MgmtFeeLine."BLRContract Status"::Active;
                         MgmtFeeLine.Modify();
                     end;
 
-                end else begin
+                end else
 
-                    if MgmtFeeLine."Contract Status" <>
-                       MgmtFeeLine."Contract Status"::Expired then begin
-                        MgmtFeeLine."Contract Status" :=
-                            MgmtFeeLine."Contract Status"::Expired;
+                    if MgmtFeeLine."BLRContract Status" <>
+                       MgmtFeeLine."BLRContract Status"::Expired then begin
+                        MgmtFeeLine."BLRContract Status" :=
+                            MgmtFeeLine."BLRContract Status"::Expired;
                         MgmtFeeLine.Modify();
                     end;
 
-                end;
+
             until MgmtFeeLine.Next() = 0;
     end;
 }

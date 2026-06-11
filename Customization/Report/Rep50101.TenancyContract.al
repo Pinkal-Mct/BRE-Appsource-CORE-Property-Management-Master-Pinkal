@@ -1,7 +1,7 @@
 namespace PropertyManagement.PropertyManagement;
 using Microsoft.Foundation.Company;
 
-report 50101 "Tenancy Contract"
+report 73209591 "BLRTenancyContract"
 {
     ApplicationArea = All;
     Caption = 'Tenancy Contract';
@@ -9,148 +9,148 @@ report 50101 "Tenancy Contract"
     DefaultRenderingLayout = "TenancyContract.docx";
     dataset
     {
-        dataitem(TenancyContract; "Tenancy Contract")
+        dataitem(TenancyContract; "BLRTenancyContract")
         {
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
-            column(Contract_Type; "Contract Type")
+            column(Contract_Type; "BLRContract Type")
             {
             }
-            column(Proposal_ID; "Proposal ID")
+            column(Proposal_ID; "BLRProposal ID")
             {
             }
-            column(Renewal_Proposal_ID; "Renewal Proposal ID")
+            column(Renewal_Proposal_ID; "BLRRenewal Proposal ID")
             {
             }
-            column(OwnersName; "Owner's Name")
+            column(OwnersName; "BLROwner's Name")
             {
             }
-            column(LessorsName; "Lessor's Name")
+            column(LessorsName; "BLRLessor's Name")
             {
             }
-            column(LessorsEmiratesID; "Lessor's Emirates ID")
+            column(LessorsEmiratesID; "BLRLessor's Emirates ID")
             {
             }
-            column(LicenseNo; "License No.")
+            column(LicenseNo; "BLRLicense No.")
             {
             }
-            column(LicensingAuthority; "Licensing Authority")
+            column(LicensingAuthority; "BLRLicensing Authority")
             {
             }
-            column(LessorsEmail; "Lessor's Email")
+            column(LessorsEmail; "BLRLessor's Email")
             {
             }
-            column(LessorsPhone; "Lessor's Phone")
+            column(LessorsPhone; "BLRLessor's Phone")
             {
             }
-            column(EmiratesID; "Emirates ID")
+            column(EmiratesID; "BLREmirates ID")
             {
             }
-            column(EmailAddress; "Email Address")
+            column(EmailAddress; "BLREmail Address")
             {
             }
-            column(TenantID; "Tenant ID")
+            column(TenantID; "BLRTenant ID")
             {
             }
-            column(PropertyClassification; "Property Classification")
+            column(PropertyClassification; "BLRProperty Classification")
             {
             }
-            column(PropertyName; "Property Name")
+            column(PropertyName; "BLRProperty Name")
             {
             }
-            column(PropertyType; "Property Type")
+            column(PropertyType; "BLRProperty Type")
             {
             }
-            column(PropertyID; "Property ID")
+            column(PropertyID; "BLRProperty ID")
             {
             }
-            column(CustomerName; "Customer Name")
+            column(CustomerName; "BLRCustomer Name")
             {
             }
-            column(AnnualRentAmount; "Annual Rent Amount")
+            column(AnnualRentAmount; "BLRAnnual Rent Amount")
             {
             }
-            column(ContractTenor; "Contract Tenor")
+            column(ContractTenor; "BLRContract Tenor")
             {
             }
-            column(Contact_Number; "Contact Number")
+            column(Contact_Number; "BLRContact Number")
             {
             }
-            column(Customer_Name; "Customer Name")
+            column(Customer_Name; "BLRCustomer Name")
             {
             }
-            column(Contract_Tenor; "Contract Tenor")
+            column(Contract_Tenor; "BLRContract Tenor")
             {
             }
-            column(Rent_Amount; "Annual Rent Amount")
+            column(Rent_Amount; "BLRAnnual Rent Amount")
             {
             }
-            column(Annual_Rent_Amount; "Rent Amount")
+            column(Annual_Rent_Amount; "BLRRent Amount")
             {
             }
-            column(Payment_Frequency; "Payment Frequency")
+            column(Payment_Frequency; "BLRPayment Frequency")
             {
             }
             column(CompanyPicture; CompanyInfo.Picture)
             {
             }
-            column(Tenant_License_No_; "Tenant_License No.")
+            column(Tenant_License_No_; "BLRTenant_License No.")
             {
             }
-            column(Tenant_Licensing_Authority; "Tenant_Licensing Authority")
+            column(Tenant_Licensing_Authority; "BLRTenant_Licensing Authority")
             {
             }
-            column(Unit_Number; "Unit Number")
+            column(Unit_Number; "BLRUnit Number")
             {
             }
-            column(Makani_Number; "Makani Number")
+            column(Makani_Number; "BLRMakani Number")
             {
             }
-            column(DEWA_Number; "DEWA Number")
+            column(DEWA_Number; "BLRDEWA Number")
             {
             }
-            column(Emirate; Emirate)
+            column(Emirate; BLREmirate)
             {
             }
-            column(Community; Community)
+            column(Community; BLRCommunity)
             {
             }
-            column(Security_Deposit_Amount; "Security Deposit Amount")
+            column(Security_Deposit_Amount; "BLRSecurity Deposit Amount")
             {
             }
-            column(Property_Size; Format("Unit Sq. Feet", 0, '<Precision,0:0><Integer>'))
+            column(Property_Size; Format("BLRUnit Sq. Feet", 0, '<Precision,0:0><Integer>'))
             {
             }
-            column(Base_Unit_of_Measure; "Base Unit of Measure")
+            column(Base_Unit_of_Measure; "BLRBase Unit of Measure")
             {
             }
-            column(Payment_Method; "Payment Method")
+            column(Payment_Method; "BLRPayment Method")
             {
             }
-            column(Contract_Start_Date; Format("Contract Start Date", 0, '<Day,2>/<Month,2>/<Year4>'))
-            {
-            }
-
-            column(Contract_End_Date; Format("Contract End Date", 0, '<Day,2>/<Month,2>/<Year4>'))
+            column(Contract_Start_Date; Format("BLRContract Start Date", 0, '<Day,2>/<Month,2>/<Year4>'))
             {
             }
 
-            column(No_of_Installments; "No of Installments")
+            column(Contract_End_Date; Format("BLRContract End Date", 0, '<Day,2>/<Month,2>/<Year4>'))
             {
             }
-            column(Res; GetRadioButton("Property Classification" = 'Residential'))
+
+            column(No_of_Installments; "BLRNo of Installments")
+            {
+            }
+            column(Res; GetRadioButton("BLRProperty Classification" = 'Residential'))
             { }
-            column(Comm; GetRadioButton("Property Classification" = 'Commercial'))
+            column(Comm; GetRadioButton("BLRProperty Classification" = 'Commercial'))
             { }
-            column(Ind; GetRadioButton("Property Classification" = 'Industrial'))
+            column(Ind; GetRadioButton("BLRProperty Classification" = 'Industrial'))
             { }
 
-            dataitem("TC Additional Terms"; "TC Additional Terms")
+            dataitem("TC Additional Terms"; "BLRTCAdditionalTerms")
             {
-                DataItemLink = "Document No." = field("Contract ID");
+                DataItemLink = "BLRDocument No." = field("BLRContract ID");
                 DataItemLinkReference = TenancyContract;
-                column(Description; Description)
+                column(Description; BLRDescription)
                 {
                 }
                 column(no; number)
@@ -198,12 +198,11 @@ report 50101 "Tenancy Contract"
     }
     trigger OnInitReport()
     begin
-        if not CompanyInfo.Get() then begin
-            Error('Company Information not found.');
-        end else begin
+        if not CompanyInfo.Get() then
+            Error('Company Information not found.')
+        else
             // CompanyAddress := CompanyInfo.City + ', ' + CompanyInfo.County + ' ' + CompanyInfo."Post Code";
             CompanyInfo.CalcFields(Picture);
-        end;
         number := 0;
     end;
 

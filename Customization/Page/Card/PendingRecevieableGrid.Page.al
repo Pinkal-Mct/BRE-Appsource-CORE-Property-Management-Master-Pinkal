@@ -1,7 +1,7 @@
-page 73209715 "Pending Recevieable Grid"
+page 73209715 "BLRPendingRecevieableGrid"
 {
     PageType = ListPart;
-    SourceTable = "Pending Receviable Grid";
+    SourceTable = "BLRPendingReceviableGrid";
     ApplicationArea = All;
     Caption = 'Pending Receivable/Payable List';
     layout
@@ -10,7 +10,7 @@ page 73209715 "Pending Recevieable Grid"
         {
             repeater(Group)
             {
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ToolTip = 'The unique identifier for the contract.';
                     ApplicationArea = All;
@@ -18,7 +18,7 @@ page 73209715 "Pending Recevieable Grid"
                     Editable = false;
                     Visible = false;
                 }
-                field("Entry No"; Rec."Entry No")
+                field("Entry No"; Rec."BLREntry No")
                 {
                     ToolTip = 'The unique identifier for the entry.';
                     Caption = 'Entry No.';
@@ -26,77 +26,77 @@ page 73209715 "Pending Recevieable Grid"
                     Editable = false;
                     Visible = false;
                 }
-                field(RevenueDescription; Rec.RevenueDescription)
+                field(RevenueDescription; Rec.BLRRevenueDescription)
                 {
                     ToolTip = 'The description of the revenue item.';
                     ApplicationArea = All;
                     Caption = 'Revenue Description';
                     Editable = false;
                 }
-                field(RevisedAmount; Rec.RevisedAmount)
+                field(RevisedAmount; Rec.BLRRevisedAmount)
                 {
                     ToolTip = 'The revised amount for the revenue item.';
                     ApplicationArea = All;
                     Caption = 'Revised Amount';
                     Editable = false;
                 }
-                field(RevisedVAT; Rec.RevisedVAT)
+                field(RevisedVAT; Rec.BLRRevisedVAT)
                 {
                     ToolTip = 'The VAT applied to the revised amount.';
                     ApplicationArea = All;
                     Caption = 'Revised VAT';
                     Editable = false;
                 }
-                field(RevisedAmountInclVAT; Rec.RevisedAmountInclVAT)
+                field(RevisedAmountInclVAT; Rec.BLRRevisedAmountInclVAT)
                 {
                     ToolTip = 'The revised amount including VAT.';
                     ApplicationArea = All;
                     Caption = 'Revised Amount Incl. VAT';
                     Editable = false;
                 }
-                field(ReceiptsAmount; Rec.ReceiptsAmount)
+                field(ReceiptsAmount; Rec.BLRReceiptsAmount)
                 {
                     ToolTip = 'The total amount received for the revenue item.';
                     ApplicationArea = All;
                     Caption = 'Receipts Amount';
                     Editable = false;
                 }
-                field(ReceiptsVAT; Rec.ReceiptsVAT)
+                field(ReceiptsVAT; Rec.BLRReceiptsVAT)
                 {
                     ToolTip = 'The VAT applied to the receipts amount.';
                     ApplicationArea = All;
                     Caption = 'Receipts VAT';
                     Editable = false;
                 }
-                field(ReceiptsAmountInclVAT; Rec.ReceiptsAmountInclVAT)
+                field(ReceiptsAmountInclVAT; Rec.BLRReceiptsAmountInclVAT)
                 {
                     ToolTip = 'The total amount received including VAT.';
                     ApplicationArea = All;
                     Caption = 'Receipts Amount Incl. VAT';
                     Editable = false;
                 }
-                field(DifferenceAmount; Rec.DifferenceAmount)
+                field(DifferenceAmount; Rec.BLRDifferenceAmount)
                 {
                     ToolTip = 'The difference between the revised amount and the receipts amount.';
                     ApplicationArea = All;
                     Caption = 'Difference Amount';
                     Editable = false;
                 }
-                field(DifferenceVAT; Rec.DifferenceVAT)
+                field(DifferenceVAT; Rec.BLRDifferenceVAT)
                 {
                     ToolTip = 'The difference in VAT between the revised amount and the receipts amount.';
                     ApplicationArea = All;
                     Caption = 'Difference VAT';
                     Editable = false;
                 }
-                field(DifferenceAmountInclVAT; Rec.DifferenceAmountInclVAT)
+                field(DifferenceAmountInclVAT; Rec.BLRDifferenceAmountInclVAT)
                 {
                     ToolTip = 'The difference in total amount including VAT between the revised amount and the receipts amount.';
                     ApplicationArea = All;
                     Caption = 'Difference Amount Incl. VAT';
                     Editable = false;
                 }
-                field("Termination Date"; Rec."Termination Date")
+                field("Termination Date"; Rec."BLRTermination Date")
                 {
                     ToolTip = 'The date when the contract is terminated.';
                     ApplicationArea = All;
@@ -104,7 +104,7 @@ page 73209715 "Pending Recevieable Grid"
                     Editable = false;
                     Visible = false;
                 }
-                field("Payment Type"; Rec."Payment Type")
+                field("BLRPaymentType"; Rec."BLRPayment Type")
                 {
                     ToolTip = 'The type of payment associated with the revenue item.';
                     ApplicationArea = All;
@@ -112,7 +112,7 @@ page 73209715 "Pending Recevieable Grid"
                     Editable = false;
                     Visible = false;
                 }
-                field("CrditNoteID Security Deposit"; Rec."CrditNoteID Security Deposit")
+                field("CrditNoteID Security Deposit"; Rec."BLRCrditNoteIDSecDep")
                 {
                     ApplicationArea = All;
                     Caption = 'Credit Note ID Security Deposit';
@@ -123,14 +123,14 @@ page 73209715 "Pending Recevieable Grid"
                     var
                         postedsalesinvoice: Record "Sales Cr.Memo Header";
                     begin
-                        postedsalesinvoice.SetRange("No.", Rec."CrditNoteID Security Deposit");
+                        postedsalesinvoice.SetRange("No.", Rec."BLRCrditNoteIDSecDep");
                         if postedsalesinvoice.FindFirst() then
                             PAGE.Run(PAGE::"Posted Sales Credit Memo", postedsalesinvoice);
 
                     end;
 
                 }
-                field(GeneratedCRMemoSD; Rec.GeneratedCRMemoSD)
+                field(GeneratedCRMemoSD; Rec."BLRGeneratedCRMemoSD")
                 {
                     ApplicationArea = All;
                     Caption = 'Generated CR Memo SD';
@@ -146,19 +146,19 @@ page 73209715 "Pending Recevieable Grid"
                     GridLayout = Columns;
                     group("Revised Values")
                     {
-                        field("Total Revised Amount"; Rec."Total Revised Amount")
+                        field("Total Revised Amount"; Rec."BLRTotal Revised Amount")
                         {
                             ToolTip = 'The total revised amount for the revenue item.';
                             ApplicationArea = All;
                             Editable = false;
                         }
-                        field("Total Revised VAT"; Rec."Total Revised VAT")
+                        field("Total Revised VAT"; Rec."BLRTotal Revised VAT")
                         {
                             ToolTip = 'The total VAT applied to the revised amount.';
                             ApplicationArea = All;
                             Editable = false;
                         }
-                        field("Total Revised AmountIncl. VAT"; Rec."Total Revised AmountIncl. VAT")
+                        field("Total Revised AmountIncl. VAT"; Rec."BLRTotalRevAmtInclVAT")
                         {
                             ToolTip = 'The total revised amount including VAT.';
                             ApplicationArea = All;
@@ -167,19 +167,19 @@ page 73209715 "Pending Recevieable Grid"
                     }
                     group("Receipts Values")
                     {
-                        field("Total Receipts Amount"; Rec."Total Receipts Amount")
+                        field("Total Receipts Amount"; Rec."BLRTotal Receipts Amount")
                         {
                             ToolTip = 'The total amount received for the revenue item.';
                             ApplicationArea = All;
                             Editable = false;
                         }
-                        field("Total Receipts VAT"; Rec."Total Receipts VAT")
+                        field("Total Receipts VAT"; Rec."BLRTotal Receipts VAT")
                         {
                             ToolTip = 'The total VAT applied to the receipts amount.';
                             ApplicationArea = All;
                             Editable = false;
                         }
-                        field("Total Receipts AmountIncl. VAT"; Rec."Total Receipts AmountIncl. VAT")
+                        field("Total Receipts AmountIncl. VAT"; Rec."BLRTotalRcptsAmtInclVAT")
                         {
                             ToolTip = 'The total amount received including VAT.';
                             ApplicationArea = All;
@@ -209,13 +209,13 @@ page 73209715 "Pending Recevieable Grid"
                         //     Editable = false;
                         //     Caption = 'Total Difference Amount Incl. VAT';
                         // }
-                        field("Total Refundable"; Rec."Total Refundable")
+                        field("Total Refundable"; Rec."BLRTotal Refundable")
                         {
                             ToolTip = 'The total refundable amount based on the difference in amounts.';
                             ApplicationArea = All;
                             Editable = false;
                         }
-                        field("Total Receivable"; Rec."Total Receivable")
+                        field("Total Receivable"; Rec."BLRTotal Receivable")
                         {
                             ToolTip = 'The total receivable amount based on the difference in amounts.';
                             ApplicationArea = All;

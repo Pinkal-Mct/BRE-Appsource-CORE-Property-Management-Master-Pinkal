@@ -1,7 +1,7 @@
-page 73209790 "Payment Mode2 List"
+page 73209790 "BLRPayment Mode2 List"
 {
     PageType = List;
-    SourceTable = "Payment Mode2";
+    SourceTable = "BLRPaymentMode2";
     ApplicationArea = All;
     Caption = 'Payment Mode Grid List';
     UsageCategory = None;
@@ -14,27 +14,27 @@ page 73209790 "Payment Mode2 List"
         {
             repeater(Group)
             {
-                field("Payment Series"; Rec."Payment Series")
+                field("Payment Series"; Rec."BLRPayment Series")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The series used for the payment mode.';
                 }
-                field(Amount; Rec.Amount)
+                field(Amount; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The amount associated with the payment mode.';
                 }
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The VAT amount associated with the payment mode.';
                 }
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The total amount including VAT for the payment mode.';
                 }
-                field("Due Date"; Rec."Due Date")
+                field("Due Date"; Rec."BLRDue Date")
                 {
                     ApplicationArea = All;
                 }

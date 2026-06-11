@@ -1,7 +1,7 @@
-page 73209692 "Final Calculation Card"
+page 73209692 "BLRFinalCalculationCard"
 {
     PageType = Card;
-    SourceTable = "Final Calculation";
+    SourceTable = "BLRFinalCalculation";
     ApplicationArea = All;
     Caption = 'Final Calculation Card';
     // UsageCategory = Administration;
@@ -12,53 +12,53 @@ page 73209692 "Final Calculation Card"
         {
             group("Contract Details")
             {
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'Specifies the unique identifier for the contract.';
                 }
-                field("FC ID"; Rec."FC ID")
+                field("FC ID"; Rec."BLRFC ID")
                 {
                     ApplicationArea = All;
                     Editable = false; // The ID is not editable since it's auto-incrementing
                     ToolTip = 'Specifies the Final Calculation or related reference for the contract.';
                 }
-                field("Contract Start Date"; Rec."Contract Start Date")
+                field("Contract Start Date"; Rec."BLRContract Start Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Start Date';
                     ToolTip = 'Enter the Contract Start Date.';
                     Editable = false;
                 }
-                field("Contract End Date"; Rec."Contract End Date")
+                field("Contract End Date"; Rec."BLRContract End Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract End Date';
                     ToolTip = 'Enter the Contract End Date.';
                     Editable = false;
                 }
-                field("Unit Type"; Rec."Unit Type")
+                field("Unit Type"; Rec."BLRUnit Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Type';
                     ToolTip = 'Enter the Unit Type.';
                     Editable = false;
                 }
-                field("Contract Amount"; Rec."Contract Amount")
+                field("Contract Amount"; Rec."BLRContract Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Amount';
                     ToolTip = 'Enter the Contract Amount.';
                     Editable = false;
                 }
-                field("Intimation Date"; Rec."Intimation Date")
+                field("Intimation Date"; Rec."BLRIntimation Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Intimation Date';
                     ToolTip = 'Enter the Initmation Date.';
                 }
-                field("Termination Date"; Rec."Termination Date")
+                field("Termination Date"; Rec."BLRTermination Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Termination Date';
@@ -97,14 +97,14 @@ page 73209692 "Final Calculation Card"
                         CurrPage."FinalRevenueCalculation".Page.UPDATE();
                         CurrPage."BillingCalculation".Page.UPDATE();
                         CurrPage."Pendingreceivable/Payable".Page.UPDATE();
-                        CurrPage."Rent Calculation".Page.UPDATE();
+                        CurrPage."BLRRentCalculation".Page.UPDATE();
                         CurrPage."Other Payment".Page.UPDATE();
-                        CurrPage."Revenue Structure".Page.UPDATE();
+                        CurrPage."BLRRevenueStructure".Page.UPDATE();
                         CurrPage.PaymentDetails.Page.UPDATE();
 
                     end;
                 }
-                field("ContractYear(Termination Date)"; Rec."ContractYear(Termination Date)")
+                field("ContractYear(Termination Date)"; Rec."BLRContYearTermDate")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Year On Termination Date';
@@ -112,7 +112,7 @@ page 73209692 "Final Calculation Card"
                     Editable = false;
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Tenant ID';
@@ -120,21 +120,21 @@ page 73209692 "Final Calculation Card"
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier of the tenant associated with the contract.';
                 }
-                field("Tenant Email"; Rec."Tenant Email")
+                field("Tenant Email"; Rec."BLRTenant Email")
                 {
                     ApplicationArea = All;
                     Caption = 'Tenant Email';
                     Editable = false;
                     ToolTip = 'Displays the email address of the tenant.';
                 }
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Tenant Name';
                     Editable = false;
                     ToolTip = 'Shows the full name of the tenant.';
                 }
-                field("Original Contract Tenure"; Rec."Original Contract Tenure")
+                field("Original Contract Tenure"; Rec."BLROriginal Contract Tenure")
                 {
                     ApplicationArea = All;
                     Caption = 'Original Contract Tenure';
@@ -142,35 +142,35 @@ page 73209692 "Final Calculation Card"
                     Editable = false;
                 }
 
-                field("Actual Contract Tenure"; Rec."Actual Contract Tenure")
+                field("Actual Contract Tenure"; Rec."BLRActual Contract Tenure")
                 {
                     ApplicationArea = All;
                     Caption = 'Actual Contract Tenure';
                     ToolTip = 'Enter the Actual Contract Tenure.';
                     Editable = false;
                 }
-                field("Total No. Of Days"; Rec."Total No. Of Days")
+                field("Total No. Of Days"; Rec."BLRTotal No. Of Days")
                 {
                     ApplicationArea = All;
                     Caption = 'Total No. Of Days(Termination Year)';
                     ToolTip = 'Enter the Total No. Of Days.';
                     Editable = false;
                 }
-                field("Per Day Rent"; Rec."Per Day Rent")
+                field("Per Day Rent"; Rec."BLRPer Day Rent")
                 {
                     ApplicationArea = All;
                     Caption = 'Per Day Rent(Termination Year)';
                     ToolTip = 'Enter the Per Day Rent.';
                     Editable = false;
                 }
-                field("Annual Rent Amount TermiYear"; Rec."Annual Rent Amount TermiYear")
+                field("Annual Rent Amount TermiYear"; Rec."BLRAnnualRentAmtTermiYear")
                 {
                     ApplicationArea = All;
                     Caption = 'Annual Rent Amount of Termination Year';
                     Editable = false;
                     ToolTip = 'Displays the annual rent amount applicable for the year of termination.';
                 }
-                field("Status"; Rec.Status)
+                field("Status"; Rec.BLRStatus)
                 {
                     ApplicationArea = All;
                     Caption = 'Status';
@@ -178,14 +178,14 @@ page 73209692 "Final Calculation Card"
                     ToolTip = 'Indicates the current status of the record.';
                 }
 
-                field("Termination Status"; Rec."Termination Status")
+                field("Termination Status"; Rec."BLRTermination Status")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     Caption = 'Termination Type';
                     ToolTip = 'Shows the type of termination for the contract.';
                 }
-                field("Final Calculation Document"; Rec."Final Calculation Document")
+                field("Final Calculation Document"; Rec."BLRFinal Calculation Document")
                 {
                     ApplicationArea = All;
                     Caption = 'Final Calculation Document';
@@ -195,7 +195,7 @@ page 73209692 "Final Calculation Card"
 
                     trigger OnDrillDown()
                     var
-                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                         fileName: Text;
                         uploadResult: Text;
                         folderName: Text;
@@ -203,15 +203,15 @@ page 73209692 "Final Calculation Card"
                         folderName := 'finalcalculationdocument';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Final Calculation Document" := CopyStr(fileName, 1, StrLen(fileName));
-                            Rec."Final Calculation URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                            Rec."BLRFinal Calculation Document" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."BLRFinal Calculation URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
                     end;
                 }
 
-                field("Credit Note Document"; Rec."Credit Note Document")
+                field("Credit Note Document"; Rec."BLRCredit Note Document")
                 {
                     ApplicationArea = All;
                     Caption = 'Credit Note Document';
@@ -224,7 +224,7 @@ page 73209692 "Final Calculation Card"
                         FileURL: Text;
                     begin
                         // Get the URL of the uploaded document
-                        FileURL := Rec."Credit Note URL";
+                        FileURL := Rec."BLRCredit Note URL";
 
                         // Check if the file URL is not empty
                         if FileURL = '' then
@@ -236,7 +236,7 @@ page 73209692 "Final Calculation Card"
                     end;
                 }
 
-                field("Credit Note URL"; Rec."Credit Note URL")
+                field("Credit Note URL"; Rec."BLRCredit Note URL")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -248,35 +248,35 @@ page 73209692 "Final Calculation Card"
             }
 
 
-            part("FinalRevenueCalculation"; "Final Revenue Calculation Grid")
+            part("FinalRevenueCalculation"; "BLRFinalRevenueCalculationGrid")
             {
-                SubPageLink = "Contract ID" = FIELD("Contract ID");
+                SubPageLink = "BLRContract ID" = FIELD("BLRContract ID");
                 ApplicationArea = All;
                 UpdatePropagation = Both;
 
             }
 
-            part("BillingCalculation"; "Final Billing Calculation")
+            part("BillingCalculation"; "BLRFinalBillingCalculation")
             {
-                SubPageLink = "Contract ID" = FIELD("Contract ID");
+                SubPageLink = "BLRContract ID" = FIELD("BLRContract ID");
                 ApplicationArea = All;
                 UpdatePropagation = Both;
             }
 
 
 
-            part("Pendingreceivable/Payable"; "Pending Recevieable Grid")
+            part("Pendingreceivable/Payable"; "BLRPendingRecevieableGrid")
             {
-                SubPageLink = "Contract ID" = FIELD("Contract ID");
+                SubPageLink = "BLRContract ID" = FIELD("BLRContract ID");
                 ApplicationArea = All;
                 UpdatePropagation = Both;
             }
 
             group("Termination Additional Charges")
             {
-                part("Additional Charges"; "Additional Charges Sub Card")
+                part("Additional Charges"; "BLRAdditional Charges Sub Card")
                 {
-                    SubPageLink = "Contract ID" = FIELD("Contract ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
                     UpdatePropagation = Both;
                     // Visible = isVisible;
@@ -284,7 +284,7 @@ page 73209692 "Final Calculation Card"
             }
             group("Carry Forward the Security Deposit From")
             {
-                field("ContractID"; Rec."Contract ID")
+                field("ContractID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -294,7 +294,7 @@ page 73209692 "Final Calculation Card"
                     //     FetchSecurityDepositInfo();
                     // end;
                 }
-                field("Security Deposit"; Rec."Security Deposit")
+                field("BLRSecurityDeposit"; Rec."BLRSecurity Deposit")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -302,9 +302,9 @@ page 73209692 "Final Calculation Card"
                 }
 
             }
-            part("Carry Forward"; "Carry Forward Grid")
+            part("Carry Forward"; "BLRCarryForwardGrid")
             {
-                SubPageLink = "Contract ID" = FIELD("Contract ID"); // Link to filter attachments for this owner only
+                SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"); // Link to filter attachments for this owner only
                 ApplicationArea = All;
                 Caption = 'Carry Forward the Security Deposit To';
                 UpdatePropagation = Both;
@@ -312,26 +312,26 @@ page 73209692 "Final Calculation Card"
             }
             group("Refundable Deposits")
             {
-                field("NetBalance"; Rec."Security Deposit")
+                field("NetBalance"; Rec."BLRSecurity Deposit")
                 {
                     ApplicationArea = All;
                     Caption = 'Security Deposit';
                     Editable = false;
                     ToolTip = 'Displays the refundable security deposit amount.';
                 }
-                field("Chiller Deposit"; Rec."Chiller Deposit")
+                field("Chiller Deposit"; Rec."BLRChiller Deposit")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Shows the refundable chiller deposit amount.';
                 }
-                field("Other Deposit"; Rec."Other Deposit")
+                field("Other Deposit"; Rec."BLROther Deposit")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Displays other refundable deposits.';
                 }
-                field("Total Net Balance"; Rec."Total Refundable Deposit")
+                field("Total Net Balance"; Rec."BLRTotal Refundable Deposit")
                 {
                     ApplicationArea = All;
                     Caption = 'Total Refundable Deposit';
@@ -339,22 +339,22 @@ page 73209692 "Final Calculation Card"
                     ToolTip = 'Shows the total amount of refundable deposits.';
                 }
             }
-            part("Final Adjustment / Contract Reductions"; "FinalAdjuContractReduction")
+            part("Final Adjustment / Contract Reductions"; "BLRFinalAdjuContractReduction")
             {
-                SubPageLink = "Contract No." = FIELD("Contract ID");
+                SubPageLink = "BLRContract No." = FIELD("BLRContract ID");
                 ApplicationArea = All;
                 UpdatePropagation = Both;
             }
-            field("Credit Not To Be Raised"; Rec."Credit Not To Be Raised")
+            field("Credit Not To Be Raised"; Rec."BLRCredit Not To Be Raised")
             {
                 ApplicationArea = All;
                 Caption = 'Credit Not To Be Raised';
                 Editable = false;
                 ToolTip = 'Displays the total amount of credit notes';
             }
-            part("InvoiceCreditNoteSummary"; "InvoiceCreditNoteSummary")
+            part("BLRInvoiceCreditNoteSummary"; "BLRInvoiceCreditNoteSummary")
             {
-                SubPageLink = "Contract No." = FIELD("Contract ID");
+                SubPageLink = "BLRContract No." = FIELD("BLRContract ID");
                 ApplicationArea = All;
                 Caption = 'Invoice / Credit Note Summary';
                 UpdatePropagation = Both;
@@ -363,46 +363,46 @@ page 73209692 "Final Calculation Card"
 
             group("Summary")
             {
-                field("Total Claim"; Rec."Total Claim")
+                field("Total Claim"; Rec."BLRTotal Claim")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Displays the total claim amount.';
                 }
-                field("Total Adjustment"; Rec."Total Adjustment")
+                field("Total Adjustment"; Rec."BLRTotal Adjustment")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     Visible = false;
                     ToolTip = 'Shows the total adjustment amount.';
                 }
-                field("Total Refund"; Rec."Total Refund")
+                field("Total Refund"; Rec."BLRTotal Refund")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Displays the total refund amount to the tenant.';
                 }
-                field("Summery Net Balance"; Rec."Summery Net Balance")
+                field("Summery Net Balance"; Rec."BLRSummery Net Balance")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Displays the final net balance summary.';
                 }
-                field("Amount Refundable"; Rec."Amount Refundable")
+                field("Amount Refundable"; Rec."BLRAmount Refundable")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Shows the amount refundable to the tenant.';
                     trigger OnValidate()
                     begin
-                        if Rec."Amount Refundable" <> 0 then
+                        if Rec."BLRAmount Refundable" <> 0 then
                             IsRefundable := true
                         else
                             IsReceivable := true;
                         UpdateCanPost();
                     end;
                 }
-                field("Net Receivable From The Tenant"; Rec."Net Receivable From The Tenant")
+                field("Net Receivable From The Tenant"; Rec."BLRNetRecvFromTheTenant")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -410,35 +410,35 @@ page 73209692 "Final Calculation Card"
 
                     trigger OnValidate()
                     begin
-                        if Rec."Net Receivable From The Tenant" <> 0 then
+                        if Rec."BLRNetRecvFromTheTenant" <> 0 then
                             IsReceivable := true
                         else
                             IsRefundable := true;
                         UpdateCanPost();
                     end;
                 }
-                field("Remaining Security Deposit"; Rec."Remaining Security Deposit")
+                field("Remaining Security Deposit"; Rec."BLRRemaining Security Deposit")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Shows the remaining security deposit after adjustments.';
                     Visible = false;
                 }
-                field("Remaining Chiller Deposit"; Rec."Remaining Chiller Deposit")
+                field("Remaining Chiller Deposit"; Rec."BLRRemaining Chiller Deposit")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Shows the remaining chiller deposit after adjustments.';
                     Visible = false;
                 }
-                field("Remaining Other Deposit"; Rec."Remaining Other Deposit")
+                field("Remaining Other Deposit"; Rec."BLRRemaining Other Deposit")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Shows the remaining other deposit after adjustments.';
                     Visible = false;
                 }
             }
-            part("Adjustment Deposits"; "Adjustment Deposits")
+            part("BLRAdjustmentDeposits"; "BLRAdjustmentDeposits")
             {
-                SubPageLink = "Contract ID" = FIELD("Contract ID");
+                SubPageLink = "BLRContract ID" = FIELD("BLRContract ID");
                 ApplicationArea = All;
                 UpdatePropagation = Both;
             }
@@ -446,10 +446,10 @@ page 73209692 "Final Calculation Card"
             {
                 Caption = 'Final Settlement';
                 Visible = IsReceivable;
-                part("FinalSettelemts"; "FinalSettlemtCard")
+                part("FinalSettelemts"; "BLRFinalSettlemtCard")
                 {
-                    SubPageLink = "FC ID" = FIELD("FC ID");
-                    //  "Tenant ID" = FIELD("Tenant ID");
+                    SubPageLink = "BLRFC ID" = FIELD("BLRFC ID");
+                    //  "Tenant ID" = FIELD("BLRTenant ID");
                     ApplicationArea = All;
                     UpdatePropagation = Both;
                     // Visible = isVisible;
@@ -460,10 +460,10 @@ page 73209692 "Final Calculation Card"
             {
                 Caption = 'Final Settlement';
                 Visible = IsRefundable;
-                part("FinalSettelemtss"; "FinalSettlemtRefundCard")
+                part("FinalSettelemtss"; "BLRFinalSettlemtRefundCard")
                 {
-                    SubPageLink = "FC ID" = FIELD("FC ID");
-                    // "Tenant ID" = FIELD("Tenant ID");
+                    SubPageLink = "BLRFC ID" = FIELD("BLRFC ID");
+                    // "Tenant ID" = FIELD("BLRTenant ID");
                     ApplicationArea = All;
                     UpdatePropagation = Both;
                     // Visible = isVisible;
@@ -471,9 +471,9 @@ page 73209692 "Final Calculation Card"
             }
             group("Rent-Calculation")
             {
-                part("Rent Calculation"; "Rent Calculate Sub Card")
+                part("BLRRentCalculation"; "BLRRent Calculate Sub Card")
                 {
-                    SubPageLink = "Contract ID" = FIELD("Contract ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
                     UpdatePropagation = Both;
                     // Visible = isVisible;
@@ -481,9 +481,9 @@ page 73209692 "Final Calculation Card"
             }
             group("Revenue-structure")
             {
-                part("Other Payment"; "OtherPayment Calculate SubCard")
+                part("Other Payment"; "BLROtherPaymentCalSubCard")
                 {
-                    SubPageLink = "Contract ID" = FIELD("Contract ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
                     UpdatePropagation = Both;
                     // Visible = isVisible;
@@ -491,9 +491,9 @@ page 73209692 "Final Calculation Card"
             }
             group("Revenue structure - Yearly break-down")
             {
-                part("Revenue Structure"; "Revenue Calculate Sub Card")
+                part("BLRRevenueStructure"; "BLRRevenue Calculate Sub Card")
                 {
-                    SubPageLink = "Contract ID" = FIELD("Contract ID"); // Link to filter attachments for this owner only
+                    SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"); // Link to filter attachments for this owner only
                     ApplicationArea = All;
                     UpdatePropagation = Both;
                     // Visible = isVisible;
@@ -502,13 +502,13 @@ page 73209692 "Final Calculation Card"
 
             // part("PaymentSchedule"; "Payment Schedule Card2")
             // {
-            //     SubPageLink = "Contract ID" = FIELD("Contract ID"),
-            //   "Tenant ID" = FIELD("Tenant ID");
+            //     SubPageLink = "BLRContract ID" = FIELD("BLRContract ID"),
+            //   "Tenant ID" = FIELD("BLRTenant ID");
             //     ApplicationArea = All;
             // }
-            part(PaymentDetails; "Payment Details")
+            part(PaymentDetails; "BLRPaymentDetails")
             {
-                SubPageLink = "Contract ID" = FIELD("Contract ID");
+                SubPageLink = "BLRContract ID" = FIELD("BLRContract ID");
                 ApplicationArea = All;
                 UpdatePropagation = Both;
             }
@@ -529,43 +529,43 @@ page 73209692 "Final Calculation Card"
 
                 trigger OnAction()
                 var
-                    ApprovalFinalCalculation: Record "Approval Final Calculation";
-                    FinalCalculation: Record "Final Calculation";
+                    ApprovalFinalCalculation: Record "BLRApprovalFinalCalculation";
+                    FinalCalculation: Record "BLRFinalCalculation";
                     FinalCalculationid: Integer;
                 begin
                     // Validate required fields
-                    if Rec."Contract ID" = 0 then
+                    if Rec."BLRContract ID" = 0 then
                         Error('Contract ID must be specified');
 
-                    ApprovalFinalCalculation.SetRange("Contract ID", Rec."Contract ID");
-                    ApprovalFinalCalculation.SetRange("Tenant ID", Rec."Tenant ID");
-                    ApprovalFinalCalculation.SetRange("FC ID", Rec."FC ID");
+                    ApprovalFinalCalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
+                    ApprovalFinalCalculation.SetRange("BLRTenant ID", Rec."BLRTenant ID");
+                    ApprovalFinalCalculation.SetRange("BLRFC ID", Rec."BLRFC ID");
 
                     if ApprovalFinalCalculation.FindSet() then begin
-                        ApprovalFinalCalculation."FC ID" := Rec."FC ID";
-                        ApprovalFinalCalculation."Contract ID" := Rec."Contract ID";
-                        ApprovalFinalCalculation."Tenant ID" := Rec."Tenant ID";
-                        ApprovalFinalCalculation."Status" := Rec."Status";
-                        ApprovalFinalCalculation."Contract Start Date" := Rec."Contract Start Date";
-                        ApprovalFinalCalculation."Contract End Date" := Rec."Contract End Date";
-                        ApprovalFinalCalculation."Termination Date" := Rec."Termination Date";
-                        ApprovalFinalCalculation."Contract Amount" := Rec."Contract Amount";
-                        ApprovalFinalCalculation."Link" := Rec."FC ID";
+                        ApprovalFinalCalculation."BLRFC ID" := Rec."BLRFC ID";
+                        ApprovalFinalCalculation."BLRContract ID" := Rec."BLRContract ID";
+                        ApprovalFinalCalculation."BLRTenant ID" := Rec."BLRTenant ID";
+                        ApprovalFinalCalculation."BLRStatus" := Rec."BLRStatus";
+                        ApprovalFinalCalculation."BLRContract Start Date" := Rec."BLRContract Start Date";
+                        ApprovalFinalCalculation."BLRContract End Date" := Rec."BLRContract End Date";
+                        ApprovalFinalCalculation."BLRTermination Date" := Rec."BLRTermination Date";
+                        ApprovalFinalCalculation."BLRContract Amount" := Rec."BLRContract Amount";
+                        ApprovalFinalCalculation."BLRLink" := Rec."BLRFC ID";
                         ApprovalFinalCalculation.Modify();
                         Message('Approval Request Modify successfully!');
                     end else begin
 
                         // Create new entry
                         ApprovalFinalCalculation.Init();
-                        ApprovalFinalCalculation."FC ID" := Rec."FC ID";
-                        ApprovalFinalCalculation."Contract ID" := Rec."Contract ID";
-                        ApprovalFinalCalculation."Tenant ID" := Rec."Tenant ID";
-                        ApprovalFinalCalculation."Status" := Rec."Status";
-                        ApprovalFinalCalculation."Contract Start Date" := Rec."Contract Start Date";
-                        ApprovalFinalCalculation."Contract End Date" := Rec."Contract End Date";
-                        ApprovalFinalCalculation."Termination Date" := Rec."Termination Date";
-                        ApprovalFinalCalculation."Contract Amount" := Rec."Contract Amount";
-                        ApprovalFinalCalculation."Link" := Rec."FC ID";
+                        ApprovalFinalCalculation."BLRFC ID" := Rec."BLRFC ID";
+                        ApprovalFinalCalculation."BLRContract ID" := Rec."BLRContract ID";
+                        ApprovalFinalCalculation."BLRTenant ID" := Rec."BLRTenant ID";
+                        ApprovalFinalCalculation."BLRStatus" := Rec."BLRStatus";
+                        ApprovalFinalCalculation."BLRContract Start Date" := Rec."BLRContract Start Date";
+                        ApprovalFinalCalculation."BLRContract End Date" := Rec."BLRContract End Date";
+                        ApprovalFinalCalculation."BLRTermination Date" := Rec."BLRTermination Date";
+                        ApprovalFinalCalculation."BLRContract Amount" := Rec."BLRContract Amount";
+                        ApprovalFinalCalculation."BLRLink" := Rec."BLRFC ID";
                         ApprovalFinalCalculation.Insert(true);
 
                         Message('Approval Request Send successfully!');
@@ -582,19 +582,19 @@ page 73209692 "Final Calculation Card"
 
                 trigger OnAction()
                 var
-                    FinalCalculation: Record "Final Calculation";
+                    FinalCalculation: Record "BLRFinalCalculation";
                     TerminateDate: Date;
                     DaysCal: Integer;
                     StartDate: Date;
                 begin
-                    FinalCalculation.SetRange("FC ID", Rec."FC ID");
-                    FinalCalculation.SetRange("Contract ID", Rec."Contract ID");
+                    FinalCalculation.SetRange("BLRFC ID", Rec."BLRFC ID");
+                    FinalCalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
                     if not FinalCalculation.IsEmpty() then begin
 
-                        StartDate := Rec."Contract Start Date";
-                        TerminateDate := Rec."Termination Date";
+                        StartDate := Rec."BLRContract Start Date";
+                        TerminateDate := Rec."BLRTermination Date";
                         DaysCal := TerminateDate - StartDate + 1;
-                        Rec."Actual Contract Tenure" := DaysCal;
+                        Rec."BLRActual Contract Tenure" := DaysCal;
                         Rec.Modify();
 
                     end;
@@ -628,9 +628,9 @@ page 73209692 "Final Calculation Card"
                     CurrPage."FinalRevenueCalculation".Page.UPDATE();
                     CurrPage."BillingCalculation".Page.UPDATE();
                     CurrPage."Pendingreceivable/Payable".Page.UPDATE();
-                    CurrPage."Rent Calculation".Page.UPDATE();
+                    CurrPage."BLRRentCalculation".Page.UPDATE();
                     CurrPage."Other Payment".Page.UPDATE();
-                    CurrPage."Revenue Structure".Page.UPDATE();
+                    CurrPage."BLRRevenueStructure".Page.UPDATE();
                     CurrPage.PaymentDetails.Page.UPDATE();
 
                 end;
@@ -645,10 +645,10 @@ page 73209692 "Final Calculation Card"
                 ToolTip = 'Execute the selected report to view or analyze the related data.';
                 trigger OnAction()
                 var
-                    Finalcalculation: Record "Final Calculation";
-                    TerminationReport: Report "Termination Template";
+                    Finalcalculation: Record "BLRFinalCalculation";
+                    TerminationReport: Report "BLRTermination Template";
                 begin
-                    Finalcalculation.SetRange("Contract ID", Rec."Contract ID");  // Set appropriate filters
+                    Finalcalculation.SetRange("BLRContract ID", Rec."BLRContract ID");  // Set appropriate filters
                     TerminationReport.SetTableView(Finalcalculation);
                     TerminationReport.RunModal();
                 end;
@@ -672,31 +672,31 @@ page 73209692 "Final Calculation Card"
     //////////////////  START Final Revenue Calculation Grid ////////////////////
     procedure PopulateRevenueCalculationGrid()
     var
-        FinalRevCalcGrid: Record "Final Revenue Calculation Grid";
-        RentCalc: Record "Rent Calculation";
+        FinalRevCalcGrid: Record "BLRFinalRevenueCalculationGrid";
+        RentCalc: Record "BLRRentCalculation";
     begin
         // Clear existing lines in Final Revenue Calculation Grid for this contract
-        FinalRevCalcGrid.SetRange("Contract ID", Rec."Contract ID");
+        FinalRevCalcGrid.SetRange("BLRContract ID", Rec."BLRContract ID");
         if FinalRevCalcGrid.FindSet() then
             FinalRevCalcGrid.DeleteAll();
 
 
         // Step 1: Get main rent amount from Rent Calculation table
         // RentCalc.Reset();
-        RentCalc.SetRange("Contract ID", Rec."Contract ID");
+        RentCalc.SetRange("BLRContract ID", Rec."BLRContract ID");
         if RentCalc.FindSet() then
             repeat
                 FinalRevCalcGrid.Init();
-                FinalRevCalcGrid."Contract ID" := RentCalc."Contract ID";
-                FinalRevCalcGrid."Revenue Description" := RentCalc."Secondary Item Type";
-                FinalRevCalcGrid."Original Amount" := RentCalc."Amount";
-                FinalRevCalcGrid."Original VAT" := RentCalc."VAT Amount";
-                FinalRevCalcGrid."Original Amount Incl." := RentCalc."Amount Including VAT";
-                FinalRevCalcGrid."Actual Contract Tenure" := Rec."Actual Contract Tenure";
-                // FinalRevCalcGrid."Per Day Rent" := Rec."Per Day Rent";
-                FinalRevCalcGrid."ContractYear(Termination Date)" := Rec."ContractYear(Termination Date)";
-                // FinalRevCalcGrid."Annual Rent Amount TermiYear" := Rec."Annual Rent Amount TermiYear";
-                FinalRevCalcGrid."Total No. Of Days" := Rec."Total No. Of Days";
+                FinalRevCalcGrid."BLRContract ID" := RentCalc."BLRContract ID";
+                FinalRevCalcGrid."BLRRevenue Description" := RentCalc."BLRSecondary Item Type";
+                FinalRevCalcGrid."BLROriginal Amount" := RentCalc."BLRAmount";
+                FinalRevCalcGrid."BLROriginal VAT" := RentCalc."BLRVAT Amount";
+                FinalRevCalcGrid."BLROriginal Amount Incl." := RentCalc."BLRAmount Including VAT";
+                FinalRevCalcGrid."BLRActual Contract Tenure" := Rec."BLRActual Contract Tenure";
+                // FinalRevCalcGrid."BLRPer Day Rent" := Rec."BLRPer Day Rent";
+                FinalRevCalcGrid."BLRContYearTermDate" := Rec."BLRContYearTermDate";
+                // FinalRevCalcGrid."BLRAnnualRentAmtTermiYear" := Rec."BLRAnnualRentAmtTermiYear";
+                FinalRevCalcGrid."BLRTotal No. Of Days" := Rec."BLRTotal No. Of Days";
                 FinalRevCalcGrid.Insert();
                 Clear(FinalRevCalcGrid);
             until RentCalc.Next() = 0;
@@ -705,31 +705,31 @@ page 73209692 "Final Calculation Card"
 
     procedure GetDataTenancyContract()
     var
-        FinalRevCalcGrid1: Record "Final Revenue Calculation Grid";
-        TenancyContractLine1: Record "Tenancy Contract Subpage";
+        FinalRevCalcGrid1: Record "BLRFinalRevenueCalculationGrid";
+        TenancyContractLine1: Record "BLRTenancyContractSubpage";
 
     begin
 
         // TenancyContractLine.Reset();
-        TenancyContractLine1.SetRange("ContractID", Rec."Contract ID");
-        TenancyContractLine1.SetFilter("Amount Including VAT", '<>%1', 0);
+        TenancyContractLine1.SetRange("BLRContractID", Rec."BLRContract ID");
+        TenancyContractLine1.SetFilter("BLRAmount Including VAT", '<>%1', 0);
         if TenancyContractLine1.FindSet() then
             repeat
                 FinalRevCalcGrid1.Init();
-                FinalRevCalcGrid1."Contract ID" := Rec."Contract ID";
-                FinalRevCalcGrid1."Revenue Description" := TenancyContractLine1."Secondary Item Type";
-                FinalRevCalcGrid1."Original Amount" := TenancyContractLine1.Amount;
+                FinalRevCalcGrid1."BLRContract ID" := Rec."BLRContract ID";
+                FinalRevCalcGrid1."BLRRevenue Description" := TenancyContractLine1."BLRSecondary Item Type";
+                FinalRevCalcGrid1."BLROriginal Amount" := TenancyContractLine1."BLRAmount";
 
                 // Calculate VAT amount based on percentage
-                FinalRevCalcGrid1."Original VAT" := TenancyContractLine1."VAT Amount";
+                FinalRevCalcGrid1."BLROriginal VAT" := TenancyContractLine1."BLRVAT Amount";
 
-                FinalRevCalcGrid1."Original Amount Incl." := TenancyContractLine1."Amount Including VAT";
-                FinalRevCalcGrid1."Actual Contract Tenure" := Rec."Actual Contract Tenure";
-                //   FinalRevCalcGrid1."Per Day Rent" := Rec."Per Day Rent";
-                FinalRevCalcGrid1."ContractYear(Termination Date)" := Rec."ContractYear(Termination Date)";
-                //  FinalRevCalcGrid1."Annual Rent Amount TermiYear" := Rec."Annual Rent Amount TermiYear";
-                FinalRevCalcGrid1."Total No. Of Days" := Rec."Total No. Of Days";
-                FinalRevCalcGrid1."Payment Type" := Format(TenancyContractLine1."Payment Type");
+                FinalRevCalcGrid1."BLROriginal Amount Incl." := TenancyContractLine1."BLRAmount Including VAT";
+                FinalRevCalcGrid1."BLRActual Contract Tenure" := Rec."BLRActual Contract Tenure";
+                //   FinalRevCalcGrid1."BLRPer Day Rent" := Rec."BLRPer Day Rent";
+                FinalRevCalcGrid1."BLRContYearTermDate" := Rec."BLRContYearTermDate";
+                //  FinalRevCalcGrid1."BLRAnnualRentAmtTermiYear" := Rec."BLRAnnualRentAmtTermiYear";
+                FinalRevCalcGrid1."BLRTotal No. Of Days" := Rec."BLRTotal No. Of Days";
+                FinalRevCalcGrid1."BLRPayment Type" := Format(TenancyContractLine1."BLRPayment Type");
                 FinalRevCalcGrid1.Insert();
                 Clear(FinalRevCalcGrid1);
             until TenancyContractLine1.Next() = 0;
@@ -738,9 +738,9 @@ page 73209692 "Final Calculation Card"
 
     procedure PopulateRevisedCalculationGrid()
     var
-        FinalRevCalcGridRec2: Record "Final Revenue Calculation Grid";
+        FinalRevCalcGridRec2: Record "BLRFinalRevenueCalculationGrid";
     begin
-        FinalRevCalcGridRec2.SetRange("Contract ID", Rec."Contract ID");
+        FinalRevCalcGridRec2.SetRange("BLRContract ID", Rec."BLRContract ID");
         if FinalRevCalcGridRec2.FindSet() then
             repeat
                 GetAnnualRentAmountOfTerminationDateFromRentCalculation(FinalRevCalcGridRec2);
@@ -753,60 +753,60 @@ page 73209692 "Final Calculation Card"
             until FinalRevCalcGridRec2.Next() = 0;
     end;
 
-    procedure GetAnnualRentAmountOfTerminationDateFromRentCalculation(var FinalRevenueCalculationGridRec: Record "Final Revenue Calculation Grid")
+    procedure GetAnnualRentAmountOfTerminationDateFromRentCalculation(var FinalRevenueCalculationGridRec: Record "BLRFinalRevenueCalculationGrid")
     var
-        RentCalculation2: Record "Rent Calculation Subpage";
-    // FinalRevenueCalculationGridRec: Record "Final Revenue Calculation Grid";
+        RentCalculation2: Record "BLRRentCalculationSubpage";
+    // FinalRevenueCalculationGridRec: Record "BLRFinalRevenueCalculationGrid";
     begin
-        RentCalculation2.SetRange("Contract ID", FinalRevenueCalculationGridRec."Contract ID");
-        RentCalculation2.SetRange("Year", FinalRevenueCalculationGridRec."ContractYear(Termination Date)");
-        RentCalculation2.SetRange("Secondary Item Type", FinalRevenueCalculationGridRec."Revenue Description");
+        RentCalculation2.SetRange("BLRContract ID", FinalRevenueCalculationGridRec."BLRContract ID");
+        RentCalculation2.SetRange("BLRYear", FinalRevenueCalculationGridRec."BLRContYearTermDate");
+        RentCalculation2.SetRange("BLRSecondary Item Type", FinalRevenueCalculationGridRec."BLRRevenue Description");
         if RentCalculation2.FindSet() then
-            FinalRevenueCalculationGridRec."Annual Rent Amount TermiYear" := 0;
-        FinalRevenueCalculationGridRec."Per Day Rent" := 0;
+            FinalRevenueCalculationGridRec."BLRAnnualRentAmtTermiYear" := 0;
+        FinalRevenueCalculationGridRec."BLRPer Day Rent" := 0;
         repeat
-            FinalRevenueCalculationGridRec."Annual Rent Amount TermiYear" += RentCalculation2."Final Annual Amount";
-            FinalRevenueCalculationGridRec."Per Day Rent" += RentCalculation2."Per Day Rent";
+            FinalRevenueCalculationGridRec."BLRAnnualRentAmtTermiYear" += RentCalculation2."BLRFinal Annual Amount";
+            FinalRevenueCalculationGridRec."BLRPer Day Rent" += RentCalculation2."BLRPer Day Rent";
             FinalRevenueCalculationGridRec.Modify();
         until RentCalculation2.Next() = 0;
     end;
 
-    procedure GetAnnualAmountFromRevenueStructure(var FinalRevenueCalculationGridRec1: Record "Final Revenue Calculation Grid")
+    procedure GetAnnualAmountFromRevenueStructure(var FinalRevenueCalculationGridRec1: Record "BLRFinalRevenueCalculationGrid")
     var
-        RevenueStructureSubpage: Record "Revenue Structure Subpage";
+        RevenueStructureSubpage: Record "BLRRevenueStructureSubpage";
 
     begin
-        RevenueStructureSubpage.SetRange("Contract ID", FinalRevenueCalculationGridRec1."Contract ID");
-        RevenueStructureSubpage.SetRange("Year", FinalRevenueCalculationGridRec1."ContractYear(Termination Date)");
-        RevenueStructureSubpage.SetRange("Secondary Item Type", FinalRevenueCalculationGridRec1."Revenue Description");
+        RevenueStructureSubpage.SetRange("BLRContract ID", FinalRevenueCalculationGridRec1."BLRContract ID");
+        RevenueStructureSubpage.SetRange("BLRYear", FinalRevenueCalculationGridRec1."BLRContYearTermDate");
+        RevenueStructureSubpage.SetRange("BLRSecondary Item Type", FinalRevenueCalculationGridRec1."BLRRevenue Description");
 
         if RevenueStructureSubpage.FindSet() then
             repeat
 
-                FinalRevenueCalculationGridRec1."Annual Rent Amount TermiYear" := RevenueStructureSubpage."Final Annual Amount";
-                FinalRevenueCalculationGridRec1."Per Day Rent" := RevenueStructureSubpage."Final Annual Amount" / RevenueStructureSubpage."Number of Days";
+                FinalRevenueCalculationGridRec1."BLRAnnualRentAmtTermiYear" := RevenueStructureSubpage."BLRFinal Annual Amount";
+                FinalRevenueCalculationGridRec1."BLRPer Day Rent" := RevenueStructureSubpage."BLRFinal Annual Amount" / RevenueStructureSubpage."BLRNumber of Days";
                 FinalRevenueCalculationGridRec1.Modify();
             until RevenueStructureSubpage.Next() = 0;
 
     end;
 
-    procedure OneTimePaymentTypeRevisedRecalculatedAmount(var FinalRevenueCalculationGridRec2: Record "Final Revenue Calculation Grid")
+    procedure OneTimePaymentTypeRevisedRecalculatedAmount(var FinalRevenueCalculationGridRec2: Record "BLRFinalRevenueCalculationGrid")
     var
-        TenancyContractsubpage: Record "Tenancy Contract Subpage";
+        TenancyContractsubpage: Record "BLRTenancyContractSubpage";
     begin
-        TenancyContractsubpage.SetRange(ContractID, FinalRevenueCalculationGridRec2."Contract ID");
-        TenancyContractsubpage.SetRange("Payment Type", 1);
-        TenancyContractsubpage.SetRange("Secondary Item Type", FinalRevenueCalculationGridRec2."Revenue Description");
+        TenancyContractsubpage.SetRange("BLRContractID", FinalRevenueCalculationGridRec2."BLRContract ID");
+        TenancyContractsubpage.SetRange("BLRPayment Type", 1);
+        TenancyContractsubpage.SetRange("BLRSecondary Item Type", FinalRevenueCalculationGridRec2."BLRRevenue Description");
         if TenancyContractsubpage.FindSet() then
             repeat
-                FinalRevenueCalculationGridRec2."Revised Amount" := TenancyContractsubpage.Amount;
-                FinalRevenueCalculationGridRec2."Revised VAT %" := TenancyContractsubpage."VAT %";
-                if FinalRevenueCalculationGridRec2."Revised VAT %" = 1 then
-                    FinalRevenueCalculationGridRec2."Revised VAT %" := 5
+                FinalRevenueCalculationGridRec2."BLRRevised Amount" := TenancyContractsubpage."BLRAmount";
+                FinalRevenueCalculationGridRec2."BLRRevised VAT %" := TenancyContractsubpage."BLRVAT %";
+                if FinalRevenueCalculationGridRec2."BLRRevised VAT %" = 1 then
+                    FinalRevenueCalculationGridRec2."BLRRevised VAT %" := 5
                 else
-                    FinalRevenueCalculationGridRec2."Revised VAT %" := 0;
-                FinalRevenueCalculationGridRec2."Revised VAT" := TenancyContractsubpage."VAT Amount";
-                FinalRevenueCalculationGridRec2."Revised Amount Incl." := TenancyContractsubpage."Amount Including VAT";
+                    FinalRevenueCalculationGridRec2."BLRRevised VAT %" := 0;
+                FinalRevenueCalculationGridRec2."BLRRevised VAT" := TenancyContractsubpage."BLRVAT Amount";
+                FinalRevenueCalculationGridRec2."BLRRevised Amount Incl." := TenancyContractsubpage."BLRAmount Including VAT";
                 FinalRevenueCalculationGridRec2.Modify();
             //  Clear(FinalRevenueCalculation);
             until TenancyContractsubpage.Next() = 0;
@@ -814,10 +814,10 @@ page 73209692 "Final Calculation Card"
     end;
 
 
-    procedure GetRentAmountFromRentCalculation(var FinalRevenueCalculationGridRec3: Record "Final Revenue Calculation Grid")
+    procedure GetRentAmountFromRentCalculation(var FinalRevenueCalculationGridRec3: Record "BLRFinalRevenueCalculationGrid")
     var
-        RentCalculation1: Record "Rent Calculation Subpage";
-        RentCalculation: Record "Rent Calculation Subpage";
+        RentCalculation1: Record "BLRRentCalculationSubpage";
+        RentCalculation: Record "BLRRentCalculationSubpage";
         Totalamount: Decimal;
         TotalVATAmount: Decimal;
         calculateteminationamount: Decimal;
@@ -826,43 +826,43 @@ page 73209692 "Final Calculation Card"
     begin
         Totalamount := 0;
         RentCalculation.Reset();
-        RentCalculation.SetRange("Contract ID", FinalRevenueCalculationGridRec3."Contract ID");
-        RentCalculation.SetFilter(Year, '1..%1', FinalRevenueCalculationGridRec3."ContractYear(Termination Date)");
+        RentCalculation.SetRange("BLRContract ID", FinalRevenueCalculationGridRec3."BLRContract ID");
+        RentCalculation.SetFilter(BLRYear, '1..%1', FinalRevenueCalculationGridRec3."BLRContYearTermDate");
 
         if RentCalculation.FindSet() then
             repeat
                 // Sum up Final Annual Amount values
-                TotalAmount += RentCalculation."Final Annual Amount";
-                TotalVATAmount += RentCalculation."VAT Amount"
+                TotalAmount += RentCalculation."BLRFinal Annual Amount";
+                TotalVATAmount += RentCalculation."BLRVAT Amount"
             until RentCalculation.Next() = 0;
 
-        RentCalculation1.SetRange("Contract ID", FinalRevenueCalculationGridRec3."Contract ID");
-        RentCalculation1.SetRange("Secondary Item Type", FinalRevenueCalculationGridRec3."Revenue Description");
+        RentCalculation1.SetRange("BLRContract ID", FinalRevenueCalculationGridRec3."BLRContract ID");
+        RentCalculation1.SetRange("BLRSecondary Item Type", FinalRevenueCalculationGridRec3."BLRRevenue Description");
         if RentCalculation1.FindSet() then
             repeat
-                FinalReviseAmount := Totalamount - FinalRevenueCalculationGridRec3."Annual Rent Amount TermiYear";
-                calculateteminationamount := FinalRevenueCalculationGridRec3."Per Day Rent" * FinalRevenueCalculationGridRec3."Total No. Of Days"; // 3rd year 365 days - termination 71 days = 294 so calculate 294 * per day rent 122.67 = FinalReviseAmount variable 
-                FinalRevenueCalculationGridRec3."Revised Amount" := FinalReviseAmount + calculateteminationamount;
-                FinalRevenueCalculationGridRec3."Revised VAT %" := RentCalculation1."VAT %";
+                FinalReviseAmount := Totalamount - FinalRevenueCalculationGridRec3."BLRAnnualRentAmtTermiYear";
+                calculateteminationamount := FinalRevenueCalculationGridRec3."BLRPer Day Rent" * FinalRevenueCalculationGridRec3."BLRTotal No. Of Days"; // 3rd year 365 days - termination 71 days = 294 so calculate 294 * per day rent 122.67 = FinalReviseAmount variable 
+                FinalRevenueCalculationGridRec3."BLRRevised Amount" := FinalReviseAmount + calculateteminationamount;
+                FinalRevenueCalculationGridRec3."BLRRevised VAT %" := RentCalculation1."BLRVAT %";
 
-                if FinalRevenueCalculationGridRec3."Revised VAT %" = 1 then
-                    FinalRevenueCalculationGridRec3."Revised VAT %" := 5
+                if FinalRevenueCalculationGridRec3."BLRRevised VAT %" = 1 then
+                    FinalRevenueCalculationGridRec3."BLRRevised VAT %" := 5
                 else
-                    FinalRevenueCalculationGridRec3."Revised VAT %" := 0;
-                // TotalVATAmount := FinalRevenueCalculationGridRec3."Revised Amount" - (FinalRevenueCalculationGridRec3."Revised Amount" / (1 + (FinalRevenueCalculationGridRec3."Revised VAT %" / 100)));
+                    FinalRevenueCalculationGridRec3."BLRRevised VAT %" := 0;
+                // TotalVATAmount := FinalRevenueCalculationGridRec3."BLRRevised Amount" - (FinalRevenueCalculationGridRec3."BLRRevised Amount" / (1 + (FinalRevenueCalculationGridRec3."BLRRevised VAT %" / 100)));
                 // TotalVATAmount := Round(TotalVATAmount, 0.01);
-                TotalVATAmount := (FinalRevenueCalculationGridRec3."Revised Amount" * FinalRevenueCalculationGridRec3."Revised VAT %") / 100;
+                TotalVATAmount := (FinalRevenueCalculationGridRec3."BLRRevised Amount" * FinalRevenueCalculationGridRec3."BLRRevised VAT %") / 100;
 
-                FinalRevenueCalculationGridRec3."Revised VAT" := TotalVATAmount;
-                FinalRevenueCalculationGridRec3."Revised Amount Incl." := FinalRevenueCalculationGridRec3."Revised Amount" + FinalRevenueCalculationGridRec3."Revised VAT";
+                FinalRevenueCalculationGridRec3."BLRRevised VAT" := TotalVATAmount;
+                FinalRevenueCalculationGridRec3."BLRRevised Amount Incl." := FinalRevenueCalculationGridRec3."BLRRevised Amount" + FinalRevenueCalculationGridRec3."BLRRevised VAT";
                 FinalRevenueCalculationGridRec3.Modify();
             until RentCalculation1.Next() = 0;
     end;
 
-    procedure GetRevisedAmountcalculatrefromRevenueStructuresubpage(var FinalRevenueCalculationGridRec4: Record "Final Revenue Calculation Grid")
+    procedure GetRevisedAmountcalculatrefromRevenueStructuresubpage(var FinalRevenueCalculationGridRec4: Record "BLRFinalRevenueCalculationGrid")
     var
-        RevenueStructureSubpage1: Record "Revenue Structure Subpage";
-        RevenueStructureSubpage2: Record "Revenue Structure Subpage";
+        RevenueStructureSubpage1: Record "BLRRevenueStructureSubpage";
+        RevenueStructureSubpage2: Record "BLRRevenueStructureSubpage";
         ChargesItemTotalamount: Decimal;
         ChargesItemTotalVATAmount: Decimal;
         calculateteminationamount1: Decimal;
@@ -872,51 +872,51 @@ page 73209692 "Final Calculation Card"
     begin
         ChargesItemTotalamount := 0;
         RevenueStructureSubpage1.Reset();
-        RevenueStructureSubpage1.SetRange("Contract ID", FinalRevenueCalculationGridRec4."Contract ID");
-        RevenueStructureSubpage1.SetRange("Secondary Item Type", FinalRevenueCalculationGridRec4."Revenue Description");
-        RevenueStructureSubpage1.SetFilter(Year, '1..%1', FinalRevenueCalculationGridRec4."ContractYear(Termination Date)");
+        RevenueStructureSubpage1.SetRange("BLRContract ID", FinalRevenueCalculationGridRec4."BLRContract ID");
+        RevenueStructureSubpage1.SetRange("BLRSecondary Item Type", FinalRevenueCalculationGridRec4."BLRRevenue Description");
+        RevenueStructureSubpage1.SetFilter(BLRYear, '1..%1', FinalRevenueCalculationGridRec4."BLRContYearTermDate");
 
 
         if RevenueStructureSubpage1.FindSet() then
             repeat
                 // Sum up Final Annual Amount values
-                ChargesItemTotalamount += RevenueStructureSubpage1."Final Annual Amount";
-                ChargesItemTotalVATAmount += RevenueStructureSubpage1."VAT Amount"
+                ChargesItemTotalamount += RevenueStructureSubpage1."BLRFinal Annual Amount";
+                ChargesItemTotalVATAmount += RevenueStructureSubpage1."BLRVAT Amount"
             until RevenueStructureSubpage1.Next() = 0;
 
-        RevenueStructureSubpage2.SetRange("Contract ID", FinalRevenueCalculationGridRec4."Contract ID");
-        RevenueStructureSubpage2.SetRange("Secondary Item Type", FinalRevenueCalculationGridRec4."Revenue Description");
+        RevenueStructureSubpage2.SetRange("BLRContract ID", FinalRevenueCalculationGridRec4."BLRContract ID");
+        RevenueStructureSubpage2.SetRange("BLRSecondary Item Type", FinalRevenueCalculationGridRec4."BLRRevenue Description");
         if RevenueStructureSubpage2.FindSet() then
             repeat
-                FinalReviseAmount := ChargesItemTotalamount - FinalRevenueCalculationGridRec4."Annual Rent Amount TermiYear";
-                calculateteminationamount1 := FinalRevenueCalculationGridRec4."Per Day Rent" * FinalRevenueCalculationGridRec4."Total No. Of Days"; // 3rd year 365 days - termination 71 days = 294 so calculate 294 * per day rent 122.67 = FinalReviseAmount variable 
-                FinalRevenueCalculationGridRec4."Revised Amount" := FinalReviseAmount + calculateteminationamount1;
-                FinalRevenueCalculationGridRec4."Revised VAT %" := RevenueStructureSubpage2."VAT %";
-                if FinalRevenueCalculationGridRec4."Revised VAT %" = 1 then
-                    FinalRevenueCalculationGridRec4."Revised VAT %" := 5
+                FinalReviseAmount := ChargesItemTotalamount - FinalRevenueCalculationGridRec4."BLRAnnualRentAmtTermiYear";
+                calculateteminationamount1 := FinalRevenueCalculationGridRec4."BLRPer Day Rent" * FinalRevenueCalculationGridRec4."BLRTotal No. Of Days"; // 3rd year 365 days - termination 71 days = 294 so calculate 294 * per day rent 122.67 = FinalReviseAmount variable 
+                FinalRevenueCalculationGridRec4."BLRRevised Amount" := FinalReviseAmount + calculateteminationamount1;
+                FinalRevenueCalculationGridRec4."BLRRevised VAT %" := RevenueStructureSubpage2."BLRVAT %";
+                if FinalRevenueCalculationGridRec4."BLRRevised VAT %" = 1 then
+                    FinalRevenueCalculationGridRec4."BLRRevised VAT %" := 5
                 else
-                    FinalRevenueCalculationGridRec4."Revised VAT %" := 0;
+                    FinalRevenueCalculationGridRec4."BLRRevised VAT %" := 0;
 
-                // ChargesItemTotalVATAmount := FinalRevenueCalculationGridRec4."Revised Amount" - (FinalRevenueCalculationGridRec4."Revised Amount" / (1 + (FinalRevenueCalculationGridRec4."Revised VAT %" / 100)));
+                // ChargesItemTotalVATAmount := FinalRevenueCalculationGridRec4."BLRRevised Amount" - (FinalRevenueCalculationGridRec4."BLRRevised Amount" / (1 + (FinalRevenueCalculationGridRec4."BLRRevised VAT %" / 100)));
                 // ChargesItemTotalVATAmount := Round(ChargesItemTotalVATAmount, 0.01);
-                ChargesItemTotalVATAmount := (FinalRevenueCalculationGridRec4."Revised Amount" * FinalRevenueCalculationGridRec4."Revised VAT %") / 100;
+                ChargesItemTotalVATAmount := (FinalRevenueCalculationGridRec4."BLRRevised Amount" * FinalRevenueCalculationGridRec4."BLRRevised VAT %") / 100;
 
-                FinalRevenueCalculationGridRec4."Revised VAT" := ChargesItemTotalVATAmount;
-                FinalRevenueCalculationGridRec4."Revised Amount Incl." := FinalRevenueCalculationGridRec4."Revised Amount" + FinalRevenueCalculationGridRec4."Revised VAT";
+                FinalRevenueCalculationGridRec4."BLRRevised VAT" := ChargesItemTotalVATAmount;
+                FinalRevenueCalculationGridRec4."BLRRevised Amount Incl." := FinalRevenueCalculationGridRec4."BLRRevised Amount" + FinalRevenueCalculationGridRec4."BLRRevised VAT";
                 FinalRevenueCalculationGridRec4.Modify();
 
             until RevenueStructureSubpage2.Next() = 0;
     end;
 
-    procedure DifferenceAmountCalculation(var FinalRevenueCalculationGridRec5: Record "Final Revenue Calculation Grid")
+    procedure DifferenceAmountCalculation(var FinalRevenueCalculationGridRec5: Record "BLRFinalRevenueCalculationGrid")
     var
 
     begin
 
 
-        FinalRevenueCalculationGridRec5."Difference Amount" := FinalRevenueCalculationGridRec5."Original Amount" - FinalRevenueCalculationGridRec5."Revised Amount";
-        FinalRevenueCalculationGridRec5."Difference VAT" := FinalRevenueCalculationGridRec5."Original VAT" - FinalRevenueCalculationGridRec5."Revised VAT";
-        FinalRevenueCalculationGridRec5."Difference Amount Incl." := FinalRevenueCalculationGridRec5."Original Amount Incl." - FinalRevenueCalculationGridRec5."Revised Amount Incl.";
+        FinalRevenueCalculationGridRec5."BLRDifference Amount" := FinalRevenueCalculationGridRec5."BLROriginal Amount" - FinalRevenueCalculationGridRec5."BLRRevised Amount";
+        FinalRevenueCalculationGridRec5."BLRDifference VAT" := FinalRevenueCalculationGridRec5."BLROriginal VAT" - FinalRevenueCalculationGridRec5."BLRRevised VAT";
+        FinalRevenueCalculationGridRec5."BLRDifference Amount Incl." := FinalRevenueCalculationGridRec5."BLROriginal Amount Incl." - FinalRevenueCalculationGridRec5."BLRRevised Amount Incl.";
         FinalRevenueCalculationGridRec5.Modify();
 
 
@@ -940,69 +940,69 @@ page 73209692 "Final Calculation Card"
 
     procedure GetContractTerminationYear()
     var
-        RentCalculationSub: Record "Rent Calculation Subpage";
+        RentCalculationSub: Record "BLRRentCalculationSubpage";
         UserYear: Integer;
         Terminationdate: Date;
     begin
         UserYear := 0;
-        Terminationdate := Rec."Termination Date";
-        RentCalculationSub.SetRange("Contract ID", Rec."Contract ID");
+        Terminationdate := Rec."BLRTermination Date";
+        RentCalculationSub.SetRange("BLRContract ID", Rec."BLRContract ID");
         if RentCalculationSub.FindSet() then
             repeat
-                if (Terminationdate >= RentCalculationSub."Period Start Date") and (Terminationdate <= RentCalculationSub."Period End Date") then
-                    UserYear := RentCalculationSub.Year;
+                if (Terminationdate >= RentCalculationSub."BLRPeriod Start Date") and (Terminationdate <= RentCalculationSub."BLRPeriod End Date") then
+                    UserYear := RentCalculationSub."BLRYear";
             until (RentCalculationSub.Next() = 0) or (UserYear <> 0);
 
-        Rec."ContractYear(Termination Date)" := UserYear;
+        Rec."BLRContYearTermDate" := UserYear;
         Rec.Modify();
     end;
 
     procedure Fetchperdayrent()
     var
-        RentCalculation1: Record "Rent Calculation Subpage";
+        RentCalculation1: Record "BLRRentCalculationSubpage";
         DifferenceDays: Integer;
     begin
-        RentCalculation1.SetRange("Contract ID", Rec."Contract ID");
-        RentCalculation1.SetRange("Year", Rec."ContractYear(Termination Date)");
+        RentCalculation1.SetRange("BLRContract ID", Rec."BLRContract ID");
+        RentCalculation1.SetRange("BLRYear", Rec."BLRContYearTermDate");
 
         if RentCalculation1.FindSet() then
-            Rec."Per Day Rent" := 0;
-        Rec."Annual Rent Amount TermiYear" := 0;
+            Rec."BLRPer Day Rent" := 0;
+        Rec."BLRAnnualRentAmtTermiYear" := 0;
         repeat
-            Rec."Per Day Rent" += RentCalculation1."Per Day Rent";
-            DifferenceDays := Rec."Termination Date" - RentCalculation1."Period Start Date";
-            Rec."Total No. Of Days" := DifferenceDays + 1;
-            Rec."Annual Rent Amount TermiYear" += RentCalculation1."Final Annual Amount";
+            Rec."BLRPer Day Rent" += RentCalculation1."BLRPer Day Rent";
+            DifferenceDays := Rec."BLRTermination Date" - RentCalculation1."BLRPeriod Start Date";
+            Rec."BLRTotal No. Of Days" := DifferenceDays + 1;
+            Rec."BLRAnnualRentAmtTermiYear" += RentCalculation1."BLRFinal Annual Amount";
             Rec.Modify();
         until RentCalculation1.Next() = 0;
     end;
 
     procedure RentCalculate()
     var
-        RentCalculationSub: Record "Rent Calculation Subpage";
-        RentCalculates: Record "Rent Calculate Sub";
+        RentCalculationSub: Record "BLRRentCalculationSubpage";
+        RentCalculates: Record "BLRRentCalculateSub";
     begin
 
 
-        RentCalculates.SetRange("Contract ID", Rec."Contract ID");
+        RentCalculates.SetRange("BLRContract ID", Rec."BLRContract ID");
         if RentCalculates.FindSet() then
             RentCalculates.DeleteAll();
 
         // TenancyContractLine.Reset();
-        RentCalculationSub.SetRange("Contract ID", Rec."Contract ID");
-        RentCalculationSub.SetRange("Tenant ID", Rec."Tenant ID");
+        RentCalculationSub.SetRange("BLRContract ID", Rec."BLRContract ID");
+        RentCalculationSub.SetRange("BLRTenant ID", Rec."BLRTenant ID");
         if RentCalculationSub.FindSet() then
             repeat
                 RentCalculates.Init();
-                RentCalculates."Contract ID" := Rec."Contract ID";
-                RentCalculates."Tenant ID" := Rec."Tenant ID";
+                RentCalculates."BLRContract ID" := Rec."BLRContract ID";
+                RentCalculates."BLRTenant ID" := Rec."BLRTenant ID";
                 // Calculate VAT amount based on percentage
-                RentCalculates."Year" := RentCalculationSub."Year";
-                RentCalculates."Period Start Date" := RentCalculationSub."Period Start Date";
-                RentCalculates."Period End Date" := RentCalculationSub."Period End Date";
-                RentCalculates."Number Of Days" := RentCalculationSub."Number Of Days";
-                RentCalculates."Final Annual Amount" := RentCalculationSub."Final Annual Amount";
-                RentCalculates."Per Day Rent" := RentCalculationSub."Per Day Rent";
+                RentCalculates."BLRYear" := RentCalculationSub."BLRYear";
+                RentCalculates."BLRPeriod Start Date" := RentCalculationSub."BLRPeriod Start Date";
+                RentCalculates."BLRPeriod End Date" := RentCalculationSub."BLRPeriod End Date";
+                RentCalculates."BLRNumber Of Days" := RentCalculationSub."BLRNumber Of Days";
+                RentCalculates."BLRFinal Annual Amount" := RentCalculationSub."BLRFinal Annual Amount";
+                RentCalculates."BLRPer Day Rent" := RentCalculationSub."BLRPer Day Rent";
                 RentCalculates.Insert();
                 Clear(RentCalculates);
             until RentCalculationSub.Next() = 0;
@@ -1010,27 +1010,27 @@ page 73209692 "Final Calculation Card"
 
     procedure OtherPaymentCalculate()
     var
-        TenancyContractSub: Record "Tenancy Contract Subpage";
-        OtherPaymentCalculateSub: Record "Other Payment Calculate Sub";
+        TenancyContractSub: Record "BLRTenancyContractSubpage";
+        OtherPaymentCalculateSub: Record "BLROtherPaymentCalculateSub";
 
     begin
-        OtherPaymentCalculateSub.SetRange("Contract ID", Rec."Contract ID");
+        OtherPaymentCalculateSub.SetRange("BLRContract ID", Rec."BLRContract ID");
         if OtherPaymentCalculateSub.FindSet() then
             OtherPaymentCalculateSub.DeleteAll();
 
 
-        TenancyContractSub.SetRange("ContractID", Rec."Contract ID");
+        TenancyContractSub.SetRange("BLRContractID", Rec."BLRContract ID");
         if TenancyContractSub.FindSet() then
             repeat
                 OtherPaymentCalculateSub.Init();
-                OtherPaymentCalculateSub."Contract ID" := Rec."Contract ID";
-                OtherPaymentCalculateSub."Tenant ID" := Rec."Tenant ID";
-                OtherPaymentCalculateSub."Secondary Item Type" := TenancyContractSub."Secondary Item Type";
-                OtherPaymentCalculateSub."Amount" := TenancyContractSub."Amount";
-                OtherPaymentCalculateSub."VAT Amount" := TenancyContractSub."VAT Amount";
-                OtherPaymentCalculateSub."Amount Including VAT" := TenancyContractSub."Amount Including VAT";
-                OtherPaymentCalculateSub."Start Date" := TenancyContractSub."Start Date";
-                OtherPaymentCalculateSub."End Date" := TenancyContractSub."End Date";
+                OtherPaymentCalculateSub."BLRContract ID" := Rec."BLRContract ID";
+                OtherPaymentCalculateSub."BLRTenant ID" := Rec."BLRTenant ID";
+                OtherPaymentCalculateSub."BLRSecondary Item Type" := TenancyContractSub."BLRSecondary Item Type";
+                OtherPaymentCalculateSub."BLRAmount" := TenancyContractSub."BLRAmount";
+                OtherPaymentCalculateSub."BLRVAT Amount" := TenancyContractSub."BLRVAT Amount";
+                OtherPaymentCalculateSub."BLRAmount Including VAT" := TenancyContractSub."BLRAmount Including VAT";
+                OtherPaymentCalculateSub."BLRStart Date" := TenancyContractSub."BLRStart Date";
+                OtherPaymentCalculateSub."BLREnd Date" := TenancyContractSub."BLREnd Date";
                 OtherPaymentCalculateSub.Insert();
                 Clear(OtherPaymentCalculateSub);
             until TenancyContractSub.Next() = 0;
@@ -1039,32 +1039,32 @@ page 73209692 "Final Calculation Card"
 
     procedure RevenueCalculateOneTime()
     var
-        TenancyContractSub: Record "Tenancy Contract Subpage";
-        //PaymentSchedule2: Record "Payment Schedule2";
-        RevenueCalculates: Record "Revenue Calculate Sub";
+        TenancyContractSub: Record "BLRTenancyContractSubpage";
+        //PaymentSchedule2: Record "BLRPaymentSchedule2";
+        RevenueCalculates: Record "BLRRevenueCalculateSub";
 
     begin
 
-        RevenueCalculates.SetRange("Contract ID", Rec."Contract ID");
+        RevenueCalculates.SetRange("BLRContract ID", Rec."BLRContract ID");
         if RevenueCalculates.FindSet() then
             RevenueCalculates.DeleteAll();
 
 
-        TenancyContractSub.SetRange("ContractID", Rec."Contract ID");
-        TenancyContractSub.SetRange("TenantID", Rec."Tenant ID");
+        TenancyContractSub.SetRange("BLRContractID", Rec."BLRContract ID");
+        TenancyContractSub.SetRange("BLRTenantID", Rec."BLRTenant ID");
 
-        TenancyContractSub.SetRange("Payment Type", 1);
+        TenancyContractSub.SetRange("BLRPayment Type", 1);
         if TenancyContractSub.FindSet() then
             repeat
                 RevenueCalculates.Init();
-                RevenueCalculates."Contract ID" := TenancyContractSub."ContractID";
-                RevenueCalculates."Tenant ID" := TenancyContractSub."TenantId";
-                RevenueCalculates."Secondary Item Type" := TenancyContractSub."Secondary Item Type";
-                RevenueCalculates.Amount := TenancyContractSub.Amount;
-                RevenueCalculates."VAT Amount" := TenancyContractSub."VAT Amount";
-                RevenueCalculates."Amount Including VAT" := RevenueCalculates.Amount + RevenueCalculates."VAT Amount";
-                RevenueCalculates."Installment Start Date" := TenancyContractSub."Start Date";
-                RevenueCalculates."Installment End Date" := TenancyContractSub."End Date";
+                RevenueCalculates."BLRContract ID" := TenancyContractSub."BLRContractID";
+                RevenueCalculates."BLRTenant ID" := TenancyContractSub."BLRTenantId";
+                RevenueCalculates."BLRSecondary Item Type" := TenancyContractSub."BLRSecondary Item Type";
+                RevenueCalculates."BLRAmount" := TenancyContractSub."BLRAmount";
+                RevenueCalculates."BLRVAT Amount" := TenancyContractSub."BLRVAT Amount";
+                RevenueCalculates."BLRAmount Including VAT" := RevenueCalculates."BLRAmount" + RevenueCalculates."BLRVAT Amount";
+                RevenueCalculates."BLRInstallment Start Date" := TenancyContractSub."BLRStart Date";
+                RevenueCalculates."BLRInstallment End Date" := TenancyContractSub."BLREnd Date";
                 RevenueCalculates.Insert();
                 Clear(RevenueCalculates);
             until TenancyContractSub.Next() = 0;
@@ -1072,25 +1072,25 @@ page 73209692 "Final Calculation Card"
 
     procedure RevenueCalculate()
     var
-        RevenueStructureSub: Record "Revenue Structure Subpage";
-        RevenueCalculateSub: Record "Revenue Calculate Sub";
+        RevenueStructureSub: Record "BLRRevenueStructureSubpage";
+        RevenueCalculateSub: Record "BLRRevenueCalculateSub";
     begin
 
         // TenancyContractLine.Reset();
-        RevenueStructureSub.SetRange("Contract ID", Rec."Contract ID");
-        RevenueStructureSub.SetRange("Tenant ID", Rec."Tenant ID");
+        RevenueStructureSub.SetRange("BLRContract ID", Rec."BLRContract ID");
+        RevenueStructureSub.SetRange("BLRTenant ID", Rec."BLRTenant ID");
         if RevenueStructureSub.FindSet() then
             repeat
                 RevenueCalculateSub.Init();
-                RevenueCalculateSub."Contract ID" := Rec."Contract ID";
-                RevenueCalculateSub."Tenant ID" := Rec."Tenant ID";
+                RevenueCalculateSub."BLRContract ID" := Rec."BLRContract ID";
+                RevenueCalculateSub."BLRTenant ID" := Rec."BLRTenant ID";
                 // Calculate VAT amount based on percentage
-                RevenueCalculateSub."Secondary Item Type" := RevenueStructureSub."Secondary Item Type";
-                RevenueCalculateSub."Amount" := RevenueStructureSub."Final Annual Amount";
-                RevenueCalculateSub."VAT Amount" := RevenueStructureSub."VAT Amount";
-                RevenueCalculateSub."Amount Including VAT" := RevenueCalculateSub."Amount" + RevenueStructureSub."VAT Amount";
-                RevenueCalculateSub."Installment Start Date" := RevenueStructureSub."Period Start Date";
-                RevenueCalculateSub."Installment End Date" := RevenueStructureSub."Period End Date";
+                RevenueCalculateSub."BLRSecondary Item Type" := RevenueStructureSub."BLRSecondary Item Type";
+                RevenueCalculateSub."BLRAmount" := RevenueStructureSub."BLRFinal Annual Amount";
+                RevenueCalculateSub."BLRVAT Amount" := RevenueStructureSub."BLRVAT Amount";
+                RevenueCalculateSub."BLRAmount Including VAT" := RevenueCalculateSub."BLRAmount" + RevenueStructureSub."BLRVAT Amount";
+                RevenueCalculateSub."BLRInstallment Start Date" := RevenueStructureSub."BLRPeriod Start Date";
+                RevenueCalculateSub."BLRInstallment End Date" := RevenueStructureSub."BLRPeriod End Date";
                 RevenueCalculateSub.Insert();
                 Clear(RevenueCalculateSub);
             until RevenueStructureSub.Next() = 0;
@@ -1100,17 +1100,17 @@ page 73209692 "Final Calculation Card"
     //----------------------------------Fetch Security Deposit-------------------------------//
     // procedure FetchSecurityDepositInfo()
     // var
-    //     ContractRec: Record "Tenancy Contract";
+    //     ContractRec: Record "BLRTenancyContract";
     // begin
-    //     if Rec."Contract ID" <> 0 then begin
+    //     if Rec."BLRContract ID" <> 0 then begin
     //         ContractRec.Reset();
-    //         ContractRec.SetRange("Contract ID", Rec."Contract ID");
+    //         ContractRec.SetRange("BLRContract ID", Rec."BLRContract ID");
 
     //         if ContractRec.FindFirst() then begin
     //             // Update the fields without showing messages (this is automatic)
-    //             Rec."Security Deposit" := ContractRec."Security Deposit Amount";
-    //             Rec."Adjustment Security Deposit" := ContractRec."Security Balanced Amount";
-    //             Rec."Net Balance" := ContractRec."Security Deposit Amount" - ContractRec."Security Balanced Amount";
+    //             Rec."BLRSecurityDeposit" := ContractRec."BLRSecurity Deposit Amount";
+    //             Rec."BLRAdjustmentSecurityDeposit" := ContractRec."BLRSecurity Balanced Amount";
+    //             Rec."BLRNet Balance" := ContractRec."BLRSecurity Deposit Amount" - ContractRec."BLRSecurity Balanced Amount";
     //             Rec.Modify(false);  // false means don't trigger validation
     //         end;
     //     end;
@@ -1121,19 +1121,19 @@ page 73209692 "Final Calculation Card"
     // Add this procedure to calculate the total from the Additional Charges grid
     // procedure UpdateTotalClaim()
     // var
-    //     AdditionalCharges: Record "Additional Charges Sub";
+    //     AdditionalCharges: Record "BLRAdditionalChargesSub";
     //     TotalAmount: Decimal;
     // begin
     //     AdditionalCharges.Reset();
-    //     AdditionalCharges.SetRange("Contract ID", Rec."Contract ID");
+    //     AdditionalCharges.SetRange("BLRContract ID", Rec."BLRContract ID");
 
     //     if AdditionalCharges.FindSet() then begin
     //         repeat
-    //             TotalAmount += AdditionalCharges."Amount Including VAT";
+    //             TotalAmount += AdditionalCharges."BLRAmount Including VAT";
     //         until AdditionalCharges.Next() = 0;
     //     end;
 
-    //     Rec."Total Claim" := TotalAmount;
+    //     Rec."BLRTotal Claim" := TotalAmount;
     //     Rec.Modify(false);
     //     CurrPage.Update(false);
     // end;
@@ -1146,56 +1146,56 @@ page 73209692 "Final Calculation Card"
 
     trigger OnAfterGetRecord()
     begin
-        CurrPage."Additional Charges".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."Additional Charges".Page.SetContractID(Rec."Contract ID");
-        CurrPage."Additional Charges".Page.SetStartEndDate(Rec."Contract Start Date", Rec."Contract End Date");
-        CurrPage."Additional Charges".Page.SetUnitType(Rec."Unit Type");
-        CurrPage."FinalSettelemts".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."FinalSettelemts".Page.SetContractID(Rec."Contract ID");
-        CurrPage."FinalSettelemtss".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."FinalSettelemtss".Page.SetContractID(Rec."Contract ID");
-        CurrPage."Carry Forward".Page.SetContractId(Rec."Contract ID");
-        CurrPage."Final Adjustment / Contract Reductions".Page.SetContractNo(Rec."Contract ID");
-        CurrPage.InvoiceCreditNoteSummary.Page.SetContractNo(Rec."Contract ID");
+        CurrPage."Additional Charges".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."Additional Charges".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage."Additional Charges".Page.SetStartEndDate(Rec."BLRContract Start Date", Rec."BLRContract End Date");
+        CurrPage."Additional Charges".Page.SetUnitType(Rec."BLRUnit Type");
+        CurrPage."FinalSettelemts".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."FinalSettelemts".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage."FinalSettelemtss".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."FinalSettelemtss".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage."Carry Forward".Page.SetContractId(Rec."BLRContract ID");
+        CurrPage."Final Adjustment / Contract Reductions".Page.SetContractNo(Rec."BLRContract ID");
+        CurrPage.BLRInvoiceCreditNoteSummary.Page.SetContractNo(Rec."BLRContract ID");
         // FetchSecurityDepositInfo();
         // UpdateTotalClaim(); // Add this line to calculate the total
         FinalSettlementVisible();
-        if Rec."Amount Refundable" <> 0 then
+        if Rec."BLRAmount Refundable" <> 0 then
             IsRefundable := true
         else
             IsReceivable := true;
 
-        if Rec."Net Receivable From The Tenant" <> 0 then
+        if Rec."BLRNetRecvFromTheTenant" <> 0 then
             IsReceivable := true
         else
             IsRefundable := true;
         UpdateCanPost();
-        CurrPage."Carry Forward".Page.SetContractId(Rec."Contract ID");
+        CurrPage."Carry Forward".Page.SetContractId(Rec."BLRContract ID");
     end;
 
 
 
     trigger OnModifyRecord(): Boolean
     begin
-        CurrPage."Additional Charges".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."Additional Charges".Page.SetContractID(Rec."Contract ID");
-        CurrPage."Additional Charges".Page.SetStartEndDate(Rec."Contract Start Date", Rec."Contract End Date");
-        CurrPage."Additional Charges".Page.SetUnitType(Rec."Unit Type");
-        CurrPage."FinalSettelemts".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."FinalSettelemts".Page.SetContractID(Rec."Contract ID");
-        CurrPage."FinalSettelemtss".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."FinalSettelemtss".Page.SetContractID(Rec."Contract ID");
-        CurrPage."Carry Forward".Page.SetContractId(Rec."Contract ID");
-        CurrPage."Final Adjustment / Contract Reductions".Page.SetContractNo(Rec."Contract ID");
-        CurrPage.InvoiceCreditNoteSummary.Page.SetContractNo(Rec."Contract ID");
+        CurrPage."Additional Charges".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."Additional Charges".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage."Additional Charges".Page.SetStartEndDate(Rec."BLRContract Start Date", Rec."BLRContract End Date");
+        CurrPage."Additional Charges".Page.SetUnitType(Rec."BLRUnit Type");
+        CurrPage."FinalSettelemts".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."FinalSettelemts".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage."FinalSettelemtss".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."FinalSettelemtss".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage."Carry Forward".Page.SetContractId(Rec."BLRContract ID");
+        CurrPage."Final Adjustment / Contract Reductions".Page.SetContractNo(Rec."BLRContract ID");
+        CurrPage.BLRInvoiceCreditNoteSummary.Page.SetContractNo(Rec."BLRContract ID");
         // UpdateTotalClaim(); // Add this line to calculate the total
         FinalSettlementVisible();
-        if Rec."Amount Refundable" <> 0 then
+        if Rec."BLRAmount Refundable" <> 0 then
             IsRefundable := true
         else
             IsReceivable := true;
 
-        if Rec."Net Receivable From The Tenant" <> 0 then
+        if Rec."BLRNetRecvFromTheTenant" <> 0 then
             IsReceivable := true
         else
             IsRefundable := true;
@@ -1204,24 +1204,24 @@ page 73209692 "Final Calculation Card"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        CurrPage."Additional Charges".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."Additional Charges".Page.SetContractID(Rec."Contract ID");
-        CurrPage."Additional Charges".Page.SetStartEndDate(Rec."Contract Start Date", Rec."Contract End Date");
-        CurrPage."Additional Charges".Page.SetUnitType(Rec."Unit Type");
-        CurrPage."FinalSettelemts".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."FinalSettelemts".Page.SetContractID(Rec."Contract ID");
-        CurrPage."FinalSettelemtss".Page.SetTenantID(Rec."Tenant ID");
-        CurrPage."FinalSettelemtss".Page.SetContractID(Rec."Contract ID");
-        CurrPage."Carry Forward".Page.SetContractId(Rec."Contract ID");
-        CurrPage."Final Adjustment / Contract Reductions".Page.SetContractNo(Rec."Contract ID");
-        CurrPage.InvoiceCreditNoteSummary.Page.SetContractNo(Rec."Contract ID");
+        CurrPage."Additional Charges".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."Additional Charges".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage."Additional Charges".Page.SetStartEndDate(Rec."BLRContract Start Date", Rec."BLRContract End Date");
+        CurrPage."Additional Charges".Page.SetUnitType(Rec."BLRUnit Type");
+        CurrPage."FinalSettelemts".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."FinalSettelemts".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage."FinalSettelemtss".Page.SetTenantID(Rec."BLRTenant ID");
+        CurrPage."FinalSettelemtss".Page.SetContractID(Rec."BLRContract ID");
+        CurrPage."Carry Forward".Page.SetContractId(Rec."BLRContract ID");
+        CurrPage."Final Adjustment / Contract Reductions".Page.SetContractNo(Rec."BLRContract ID");
+        CurrPage.BLRInvoiceCreditNoteSummary.Page.SetContractNo(Rec."BLRContract ID");
         FinalSettlementVisible();
-        if Rec."Amount Refundable" <> 0 then
+        if Rec."BLRAmount Refundable" <> 0 then
             IsRefundable := true
         else
             IsReceivable := true;
 
-        if Rec."Net Receivable From The Tenant" <> 0 then
+        if Rec."BLRNetRecvFromTheTenant" <> 0 then
             IsReceivable := true
         else
             IsRefundable := true;
@@ -1231,34 +1231,34 @@ page 73209692 "Final Calculation Card"
     procedure BillingCalcGridRentCalc()
     var
 
-        BillinCalcGrid: Record "Final Billing Calculation Grid";
-        RentCalc1: Record "Rent Calculation";
+        BillinCalcGrid: Record "BLRFinalBillingCalculationGrid";
+        RentCalc1: Record "BLRRentCalculation";
         vatper: Integer;
 
     begin
         // Clear existing lines in Final Revenue Calculation Grid for this contract
-        BillinCalcGrid.SetRange("Contract ID", Rec."Contract ID");
+        BillinCalcGrid.SetRange("BLRContract ID", Rec."BLRContract ID");
         if BillinCalcGrid.FindSet() then
             BillinCalcGrid.DeleteAll();
 
 
         // Step 1: Get main rent amount from Rent Calculation table
         // RentCalc.Reset();
-        RentCalc1.SetRange("Contract ID", Rec."Contract ID");
+        RentCalc1.SetRange("BLRContract ID", Rec."BLRContract ID");
         if RentCalc1.FindSet() then
             repeat
                 BillinCalcGrid.Init();
-                BillinCalcGrid."Contract ID" := RentCalc1."Contract ID";
-                BillinCalcGrid."RevenueDescription" := RentCalc1."Secondary Item Type";
-                BillinCalcGrid."Termination Date" := Rec."Termination Date";
-                BillinCalcGrid."Property Classification" := Rec."Unit Type";
-                BillinCalcGrid."Tenant ID" := Rec."Tenant ID";
-                // BillinCalcGrid."VAT %" := RentCalc1."VAT %";
-                if RentCalc1."VAT %" = RentCalc1."VAT %"::"5" then
+                BillinCalcGrid."BLRContract ID" := RentCalc1."BLRContract ID";
+                BillinCalcGrid."BLRRevenueDescription" := RentCalc1."BLRSecondary Item Type";
+                BillinCalcGrid."BLRTermination Date" := Rec."BLRTermination Date";
+                BillinCalcGrid."BLRProperty Classification" := Rec."BLRUnit Type";
+                BillinCalcGrid."BLRTenant ID" := Rec."BLRTenant ID";
+                // BillinCalcGrid."BLRVAT %" := RentCalc1."BLRVAT %";
+                if RentCalc1."BLRVAT %" = RentCalc1."BLRVAT %"::"5" then
                     vatper := 5
                 else
                     vatper := 0;
-                BillinCalcGrid."VAT %" := vatper;
+                BillinCalcGrid."BLRVAT %" := vatper;
                 BillinCalcGrid.Insert();
                 Clear(BillinCalcGrid);
             until RentCalc1.Next() = 0;
@@ -1268,29 +1268,29 @@ page 73209692 "Final Calculation Card"
 
     procedure BillingCalcridTenancyContractSubpge()
     var
-        BillingCalc1: Record "Final Billing Calculation Grid";
-        TenancyContractLine2: Record "Tenancy Contract Subpage";
+        BillingCalc1: Record "BLRFinalBillingCalculationGrid";
+        TenancyContractLine2: Record "BLRTenancyContractSubpage";
         vatper: Integer;
 
     begin
         // TenancyContractLine.Reset();
-        TenancyContractLine2.SetRange("ContractID", Rec."Contract ID");
-        TenancyContractLine2.SetFilter("Amount Including VAT", '<>%1', 0);
+        TenancyContractLine2.SetRange("BLRContractID", Rec."BLRContract ID");
+        TenancyContractLine2.SetFilter("BLRAmount Including VAT", '<>%1', 0);
         if TenancyContractLine2.FindSet() then
             repeat
                 BillingCalc1.Init();
-                BillingCalc1."Contract ID" := Rec."Contract ID";
-                BillingCalc1."RevenueDescription" := TenancyContractLine2."Secondary Item Type";
-                BillingCalc1."Termination Date" := Rec."Termination Date";
-                BillingCalc1."Payment Type" := Format(TenancyContractLine2."Payment Type");
-                BillingCalc1."Property Classification" := Rec."Unit Type";
-                BillingCalc1."Tenant ID" := Rec."Tenant ID";
-                // BillingCalc1."VAT %" := TenancyContractLine2."VAT %";
-                if TenancyContractLine2."VAT %" = TenancyContractLine2."VAT %"::"5%" then
+                BillingCalc1."BLRContract ID" := Rec."BLRContract ID";
+                BillingCalc1."BLRRevenueDescription" := TenancyContractLine2."BLRSecondary Item Type";
+                BillingCalc1."BLRTermination Date" := Rec."BLRTermination Date";
+                BillingCalc1."BLRPayment Type" := Format(TenancyContractLine2."BLRPayment Type");
+                BillingCalc1."BLRProperty Classification" := Rec."BLRUnit Type";
+                BillingCalc1."BLRTenant ID" := Rec."BLRTenant ID";
+                // BillingCalc1."BLRVAT %" := TenancyContractLine2."BLRVAT %";
+                if TenancyContractLine2."BLRVAT %" = TenancyContractLine2."BLRVAT %"::"5%" then
                     vatper := 5
                 else
                     vatper := 0;
-                BillingCalc1."VAT %" := vatper;
+                BillingCalc1."BLRVAT %" := vatper;
                 BillingCalc1.Insert();
                 Clear(BillingCalc1);
             until TenancyContractLine2.Next() = 0;
@@ -1305,9 +1305,9 @@ page 73209692 "Final Calculation Card"
 
     procedure PopulateBillingCalculationGrid()
     var
-        FinalBillingGridRec: Record "Final Billing Calculation Grid";
+        FinalBillingGridRec: Record "BLRFinalBillingCalculationGrid";
     begin
-        FinalBillingGridRec.SetRange("Contract ID", Rec."Contract ID");
+        FinalBillingGridRec.SetRange("BLRContract ID", Rec."BLRContract ID");
         if FinalBillingGridRec.FindSet() then
             repeat
                 FetchDataFromRevenueCalcGrid(FinalBillingGridRec);
@@ -1318,55 +1318,55 @@ page 73209692 "Final Calculation Card"
             until FinalBillingGridRec.Next() = 0;
     end;
 
-    procedure FetchDataFromRevenueCalcGrid(var BillingCalcGrid: Record "Final Billing Calculation Grid")
+    procedure FetchDataFromRevenueCalcGrid(var BillingCalcGrid: Record "BLRFinalBillingCalculationGrid")
     var
-        RevenueGrid: Record "Final Revenue Calculation Grid";
+        RevenueGrid: Record "BLRFinalRevenueCalculationGrid";
     begin
-        RevenueGrid.SetRange("Contract ID", BillingCalcGrid."Contract ID");
-        RevenueGrid.SetRange("Revenue Description", BillingCalcGrid.RevenueDescription);
+        RevenueGrid.SetRange("BLRContract ID", BillingCalcGrid."BLRContract ID");
+        RevenueGrid.SetRange("BLRRevenue Description", BillingCalcGrid."BLRRevenueDescription");
         if RevenueGrid.FindSet() then
             repeat
-                BillingCalcGrid.RevisedAmount := RevenueGrid."Revised Amount";
-                BillingCalcGrid.RevisedVAT := RevenueGrid."Revised VAT";
-                BillingCalcGrid.RevisedAmountInclVAT := RevenueGrid."Revised Amount Incl.";
+                BillingCalcGrid.BLRRevisedAmount := RevenueGrid."BLRRevised Amount";
+                BillingCalcGrid.BLRRevisedVAT := RevenueGrid."BLRRevised VAT";
+                BillingCalcGrid.BLRRevisedAmountInclVAT := RevenueGrid."BLRRevised Amount Incl.";
                 BillingCalcGrid.Modify();
             until RevenueGrid.Next() = 0;
 
     end;
 
 
-    procedure Invoiceamountfrompaymentscheule(var BillingCalcGrid: Record "Final Billing Calculation Grid")
+    procedure Invoiceamountfrompaymentscheule(var BillingCalcGrid: Record "BLRFinalBillingCalculationGrid")
     var
-        PaymentScheduleRec: Record "Payment Schedule2";
+        PaymentScheduleRec: Record "BLRPaymentSchedule2";
         Totalamount: Decimal;
         VATAmount: Decimal;
         AmountIncVAT: Decimal;
     begin
         Totalamount := 0;
         PaymentScheduleRec.Reset();
-        PaymentScheduleRec.SetRange("Contract ID", BillingCalcGrid."Contract ID");
-        //PaymentScheduleRec.SetFilter("Due Date", '<%1', Rec."Termination Date");
-        PaymentScheduleRec.SetFilter("Workflow frequency date", '<=%1', BillingCalcGrid."Termination Date");
-        PaymentScheduleRec.SetRange(Invoiced, true);
-        PaymentScheduleRec.SetFilter("Invoice Approval Status", 'Approved');
-        PaymentScheduleRec.SetRange("Secondary Item Type", BillingCalcGrid.RevenueDescription);
+        PaymentScheduleRec.SetRange("BLRContract ID", BillingCalcGrid."BLRContract ID");
+        //PaymentScheduleRec.SetFilter("BLRDue Date", '<%1', Rec."BLRTermination Date");
+        PaymentScheduleRec.SetFilter("BLRWorkflow frequency date", '<=%1', BillingCalcGrid."BLRTermination Date");
+        PaymentScheduleRec.SetRange(BLRInvoiced, true);
+        PaymentScheduleRec.SetFilter("BLRInvoice Approval Status", 'Approved');
+        PaymentScheduleRec.SetRange("BLRSecondary Item Type", BillingCalcGrid.BLRRevenueDescription);
 
         if PaymentScheduleRec.FindSet() then
             repeat
-                Totalamount += PaymentScheduleRec.Amount;
-                VATAmount += PaymentScheduleRec."VAT Amount";
-                AmountIncVAT += PaymentScheduleRec."Amount Including VAT";
+                Totalamount += PaymentScheduleRec."BLRAmount";
+                VATAmount += PaymentScheduleRec."BLRVAT Amount";
+                AmountIncVAT += PaymentScheduleRec."BLRAmount Including VAT";
 
             until PaymentScheduleRec.Next() = 0;
 
-        PaymentScheduleRec.SetRange("Contract ID", BillingCalcGrid."Contract ID");
-        PaymentScheduleRec.SetRange("Secondary Item Type", BillingCalcGrid.RevenueDescription);
+        PaymentScheduleRec.SetRange("BLRContract ID", BillingCalcGrid."BLRContract ID");
+        PaymentScheduleRec.SetRange("BLRSecondary Item Type", BillingCalcGrid.BLRRevenueDescription);
 
         if PaymentScheduleRec.FindSet() then
             repeat
-                BillingCalcGrid.InvoicedAmount := Totalamount;
-                BillingCalcGrid.InvoicedVAT := VATAmount;
-                BillingCalcGrid.InvoicedAmountInclVAT := AmountIncVAT;
+                BillingCalcGrid.BLRInvoicedAmount := Totalamount;
+                BillingCalcGrid.BLRInvoicedVAT := VATAmount;
+                BillingCalcGrid.BLRInvoicedAmountInclVAT := AmountIncVAT;
                 BillingCalcGrid.Modify();
             until PaymentScheduleRec.Next() = 0;
     end;
@@ -1374,72 +1374,72 @@ page 73209692 "Final Calculation Card"
 
 
 
-    procedure CreditNoteTotalAmount(var BillingCalcGrid: Record "Final Billing Calculation Grid")
+    procedure CreditNoteTotalAmount(var BillingCalcGrid: Record "BLRFinalBillingCalculationGrid")
     var
-        billingcalculationgird1: Record "Final Billing Calculation Grid";
-        billingcalculationgird2: Record "Final Billing Calculation Grid";
-        InvoiceCreditNoteSummaryRec: Record InvoiceCreditNoteSummary;
+        billingcalculationgird1: Record "BLRFinalBillingCalculationGrid";
+        billingcalculationgird2: Record "BLRFinalBillingCalculationGrid";
+        InvoiceCreditNoteSummaryRec: Record BLRInvoiceCreditNoteSummary;
         TotalPositiveAmount: Decimal;
     begin
         // Calculate total positive difference for the whole contract
         TotalPositiveAmount := 0;
-        billingcalculationgird1.SetRange("Contract ID", BillingCalcGrid."Contract ID");
-        billingcalculationgird1.SetFilter("DifferenceAmountInclVAT", '>%1', 0);
+        billingcalculationgird1.SetRange("BLRContract ID", BillingCalcGrid."BLRContract ID");
+        billingcalculationgird1.SetFilter("BLRDifferenceAmountInclVAT", '>%1', 0);
         if billingcalculationgird1.FindSet() then
             repeat
-                TotalPositiveAmount += billingcalculationgird1."DifferenceAmountInclVAT";
+                TotalPositiveAmount += billingcalculationgird1."BLRDifferenceAmountInclVAT";
             until billingcalculationgird1.Next() = 0;
 
         // Write the same (absolute) total to every grid record for this contract
-        billingcalculationgird2.SetRange("Contract ID", BillingCalcGrid."Contract ID");
+        billingcalculationgird2.SetRange("BLRContract ID", BillingCalcGrid."BLRContract ID");
         if billingcalculationgird2.FindSet() then
             repeat
-                billingcalculationgird2."Credit Note To Be Raised" := Abs(TotalPositiveAmount);
-                billingcalculationgird2."Credit Note Amount" := Abs(TotalPositiveAmount);
+                billingcalculationgird2."BLRCredit Note To Be Raised" := Abs(TotalPositiveAmount);
+                billingcalculationgird2."BLRCredit Note Amount" := Abs(TotalPositiveAmount);
                 billingcalculationgird2.Modify();
             until billingcalculationgird2.Next() = 0;
 
-        InvoiceCreditNoteSummaryRec.SetRange("Contract No.", BillingCalcGrid."Contract ID");
-        InvoiceCreditNoteSummaryRec.SetRange(Description, 'Final Billing Calculation');
+        InvoiceCreditNoteSummaryRec.SetRange("BLRContract No.", BillingCalcGrid."BLRContract ID");
+        InvoiceCreditNoteSummaryRec.SetRange(BLRDescription, 'Final Billing Calculation');
         if InvoiceCreditNoteSummaryRec.FindFirst() then begin
-            InvoiceCreditNoteSummaryRec."Credit Note" := Abs(TotalPositiveAmount);
+            InvoiceCreditNoteSummaryRec."BLRCredit Note" := Abs(TotalPositiveAmount);
             InvoiceCreditNoteSummaryRec.Modify();
         end;
 
     end;
 
 
-    procedure InvoiceTotalAmount(var BillingCalcGrid: Record "Final Billing Calculation Grid")
+    procedure InvoiceTotalAmount(var BillingCalcGrid: Record "BLRFinalBillingCalculationGrid")
     var
-        billingcalculationgird1: Record "Final Billing Calculation Grid";
-        billingcalculationgird2: Record "Final Billing Calculation Grid";
-        InvoiceCreditNoteSummaryRec: Record InvoiceCreditNoteSummary;
+        billingcalculationgird1: Record "BLRFinalBillingCalculationGrid";
+        billingcalculationgird2: Record "BLRFinalBillingCalculationGrid";
+        InvoiceCreditNoteSummaryRec: Record BLRInvoiceCreditNoteSummary;
         TotalNegativeDifference: Decimal;
     begin
         // Calculate total negative difference for the whole contract
         TotalNegativeDifference := 0;
-        billingcalculationgird1.SetRange("Contract ID", BillingCalcGrid."Contract ID");
-        billingcalculationgird1.SetFilter("DifferenceAmountInclVAT", '<%1', 0);
+        billingcalculationgird1.SetRange("BLRContract ID", BillingCalcGrid."BLRContract ID");
+        billingcalculationgird1.SetFilter("BLRDifferenceAmountInclVAT", '<%1', 0);
         if billingcalculationgird1.FindSet() then
             repeat
-                TotalNegativeDifference += billingcalculationgird1."DifferenceAmountInclVAT";
+                TotalNegativeDifference += billingcalculationgird1."BLRDifferenceAmountInclVAT";
             until billingcalculationgird1.Next() = 0;
 
         // Write the same (absolute) total to every grid record for this contract
-        billingcalculationgird2.SetRange("Contract ID", BillingCalcGrid."Contract ID");
+        billingcalculationgird2.SetRange("BLRContract ID", BillingCalcGrid."BLRContract ID");
         if billingcalculationgird2.FindSet() then
             repeat
                 // Keep already invoiced lines at zero (existing business rule)
-                if billingcalculationgird2.Invoiced then
-                    billingcalculationgird2."Invoice To Be Raised" := 0
+                if billingcalculationgird2."BLRInvoiced" then
+                    billingcalculationgird2."BLRInvoice To Be Raised" := 0
                 else
-                    billingcalculationgird2."Invoice To Be Raised" := Abs(TotalNegativeDifference);
-                billingcalculationgird2."Invoice Amount" := Abs(TotalNegativeDifference);
+                    billingcalculationgird2."BLRInvoice To Be Raised" := Abs(TotalNegativeDifference);
+                billingcalculationgird2."BLRInvoice Amount" := Abs(TotalNegativeDifference);
                 billingcalculationgird2.Modify();
             until billingcalculationgird2.Next() = 0;
 
 
-        // InvoiceCreditNoteSummaryRec.SetRange("Contract No.", BillingCalcGrid."Contract ID");
+        // InvoiceCreditNoteSummaryRec.SetRange("BLRContract No.", BillingCalcGrid."BLRContract ID");
         // InvoiceCreditNoteSummaryRec.SetRange(Description, 'Final Billing Calculation');
         // if InvoiceCreditNoteSummaryRec.FindFirst() then begin
         //     InvoiceCreditNoteSummaryRec.Invoice := Abs(TotalNegativeDifference);
@@ -1447,12 +1447,12 @@ page 73209692 "Final Calculation Card"
         // end;
     end;
 
-    procedure DifferenceAmountCalculationBilling(var BillingCalcGrid: Record "Final Billing Calculation Grid")
+    procedure DifferenceAmountCalculationBilling(var BillingCalcGrid: Record "BLRFinalBillingCalculationGrid")
     begin
 
-        BillingCalcGrid."DifferenceAmount" := BillingCalcGrid.InvoicedAmount - BillingCalcGrid.RevisedAmount;
-        BillingCalcGrid."DifferenceVAT" := BillingCalcGrid.InvoicedVAT - BillingCalcGrid.RevisedVAT;
-        BillingCalcGrid.DifferenceAmountInclVAT := BillingCalcGrid.InvoicedAmountInclVAT - BillingCalcGrid.RevisedAmountInclVAT;
+        BillingCalcGrid."BLRDifferenceAmount" := BillingCalcGrid."BLRInvoicedAmount" - BillingCalcGrid."BLRRevisedAmount";
+        BillingCalcGrid."BLRDifferenceVAT" := BillingCalcGrid."BLRInvoicedVAT" - BillingCalcGrid."BLRRevisedVAT";
+        BillingCalcGrid."BLRDifferenceAmountInclVAT" := BillingCalcGrid."BLRInvoicedAmountInclVAT" - BillingCalcGrid."BLRRevisedAmountInclVAT";
         BillingCalcGrid.Modify();
     end;
 
@@ -1466,27 +1466,27 @@ page 73209692 "Final Calculation Card"
     procedure ReciveableCalcGridRentCalc()
     var
 
-        RecvieableCalcGrid: Record "Pending Receviable Grid";
-        RentCalc2: Record "Rent Calculation";
+        RecvieableCalcGrid: Record "BLRPendingReceviableGrid";
+        RentCalc2: Record "BLRRentCalculation";
 
     begin
         // Clear existing lines in Final Revenue Calculation Grid for this contract
-        RecvieableCalcGrid.SetRange("Contract ID", Rec."Contract ID");
+        RecvieableCalcGrid.SetRange("BLRContract ID", Rec."BLRContract ID");
         if RecvieableCalcGrid.FindSet() then
             RecvieableCalcGrid.DeleteAll();
 
 
         // Step 1: Get main rent amount from Rent Calculation table
         // RentCalc.Reset();
-        RentCalc2.SetRange("Contract ID", Rec."Contract ID");
+        RentCalc2.SetRange("BLRContract ID", Rec."BLRContract ID");
         if RentCalc2.FindSet() then
             repeat
                 RecvieableCalcGrid.Init();
-                RecvieableCalcGrid."Contract ID" := RentCalc2."Contract ID";
-                RecvieableCalcGrid."RevenueDescription" := RentCalc2."Secondary Item Type";
-                RecvieableCalcGrid."Termination Date" := Rec."Termination Date";
-                RecvieableCalcGrid."Tenant ID" := Rec."Tenant ID";
-                RecvieableCalcGrid."Unit Type" := Rec."Unit Type";
+                RecvieableCalcGrid."BLRContract ID" := RentCalc2."BLRContract ID";
+                RecvieableCalcGrid."BLRRevenueDescription" := RentCalc2."BLRSecondary Item Type";
+                RecvieableCalcGrid."BLRTermination Date" := Rec."BLRTermination Date";
+                RecvieableCalcGrid."BLRTenant ID" := Rec."BLRTenant ID";
+                RecvieableCalcGrid."BLRUnit Type" := Rec."BLRUnit Type";
                 RecvieableCalcGrid.Insert();
                 Clear(RecvieableCalcGrid);
             until RentCalc2.Next() = 0;
@@ -1495,20 +1495,20 @@ page 73209692 "Final Calculation Card"
 
     procedure ReciveableCalcridTenancyContractSubpge()
     var
-        RecvieableCalcGrid1: Record "Pending Receviable Grid";
-        TenancyContractLine3: Record "Tenancy Contract Subpage";
+        RecvieableCalcGrid1: Record "BLRPendingReceviableGrid";
+        TenancyContractLine3: Record "BLRTenancyContractSubpage";
 
     begin
         // TenancyContractLine.Reset();
-        TenancyContractLine3.SetRange("ContractID", Rec."Contract ID");
-        TenancyContractLine3.SetFilter("Amount Including VAT", '<>%1', 0);
+        TenancyContractLine3.SetRange("BLRContractID", Rec."BLRContract ID");
+        TenancyContractLine3.SetFilter("BLRAmount Including VAT", '<>%1', 0);
         if TenancyContractLine3.FindSet() then
             repeat
                 RecvieableCalcGrid1.Init();
-                RecvieableCalcGrid1."Contract ID" := Rec."Contract ID";
-                RecvieableCalcGrid1."RevenueDescription" := TenancyContractLine3."Secondary Item Type";
-                RecvieableCalcGrid1."Termination Date" := Rec."Termination Date";
-                RecvieableCalcGrid1."Payment Type" := Format(TenancyContractLine3."Payment Type");
+                RecvieableCalcGrid1."BLRContract ID" := Rec."BLRContract ID";
+                RecvieableCalcGrid1."BLRRevenueDescription" := TenancyContractLine3."BLRSecondary Item Type";
+                RecvieableCalcGrid1."BLRTermination Date" := Rec."BLRTermination Date";
+                RecvieableCalcGrid1."BLRPayment Type" := Format(TenancyContractLine3."BLRPayment Type");
                 RecvieableCalcGrid1.Insert();
                 Clear(RecvieableCalcGrid1);
             until TenancyContractLine3.Next() = 0;
@@ -1521,26 +1521,26 @@ page 73209692 "Final Calculation Card"
 
     procedure PaymentDetailsFromPaymentSchedule2()
     var
-        paymentschedule2Card: Record "Payment Schedule2";
-        paymentdetail: Record "Payment Details";
+        paymentschedule2Card: Record "BLRPaymentSchedule2";
+        paymentdetail: Record "BLRPaymentDetails";
     begin
-        paymentdetail.SetRange("Contract ID", Rec."Contract ID");
+        paymentdetail.SetRange("BLRContract ID", Rec."BLRContract ID");
         if paymentdetail.FindSet() then
             paymentdetail.DeleteAll();
 
 
-        paymentschedule2Card.SetRange("Contract ID", Rec."Contract ID");
+        paymentschedule2Card.SetRange("BLRContract ID", Rec."BLRContract ID");
         if paymentschedule2Card.FindSet() then
             repeat
                 paymentdetail.Init();
-                paymentdetail."Contract ID" := paymentschedule2Card."Contract ID";
-                paymentdetail."Item Description" := paymentschedule2Card."Secondary Item Type";
-                paymentdetail.Amount := paymentschedule2Card.Amount;
-                paymentdetail."VAT Amount" := paymentschedule2Card."VAT Amount";
-                paymentdetail."Amount Including VAT" := paymentschedule2Card."Amount Including VAT";
-                paymentdetail."Payment Status" := paymentschedule2Card."Payment Status";
-                paymentdetail."Payment Date" := paymentschedule2Card."Due Date";
-                paymentdetail."Termination Date" := Rec."Termination Date";
+                paymentdetail."BLRContract ID" := paymentschedule2Card."BLRContract ID";
+                paymentdetail."BLRItem Description" := paymentschedule2Card."BLRSecondary Item Type";
+                paymentdetail."BLRAmount" := paymentschedule2Card."BLRAmount";
+                paymentdetail."BLRVAT Amount" := paymentschedule2Card."BLRVAT Amount";
+                paymentdetail."BLRAmount Including VAT" := paymentschedule2Card."BLRAmount Including VAT";
+                paymentdetail."BLRPayment Status" := paymentschedule2Card."BLRPayment Status";
+                paymentdetail."BLRPayment Date" := paymentschedule2Card."BLRDue Date";
+                paymentdetail."BLRTermination Date" := Rec."BLRTermination Date";
                 paymentdetail.Insert();
                 Clear(paymentdetail);
             until paymentschedule2Card.Next() = 0;
@@ -1561,12 +1561,12 @@ page 73209692 "Final Calculation Card"
 
     procedure UpdateCanPost()
     begin
-        CanPost := (Rec."Amount Refundable" <> 0) or (Rec."Net Receivable From The Tenant" <> 0);
+        CanPost := (Rec."BLRAmount Refundable" <> 0) or (Rec."BLRNetRecvFromTheTenant" <> 0);
     end;
 
     procedure FinalSettlementVisible()
     begin
-        if (Rec."Amount Refundable" = 0) and (Rec."Net Receivable From The Tenant" = 0) then begin
+        if (Rec."BLRAmount Refundable" = 0) and (Rec."BLRNetRecvFromTheTenant" = 0) then begin
             IsReceivable := false;
             IsRefundable := false;
         end;
@@ -1576,9 +1576,9 @@ page 73209692 "Final Calculation Card"
 
     procedure PopulatePendingReceivableGrid()
     var
-        PendingReceivableGrid: Record "Pending Receviable Grid";
+        PendingReceivableGrid: Record "BLRPendingReceviableGrid";
     begin
-        PendingReceivableGrid.SetRange("Contract ID", Rec."Contract ID");
+        PendingReceivableGrid.SetRange("BLRContract ID", Rec."BLRContract ID");
         if PendingReceivableGrid.FindSet() then
             repeat
                 FetchDataFromRevenueCalcGrid(PendingReceivableGrid);
@@ -1590,78 +1590,78 @@ page 73209692 "Final Calculation Card"
 
     end;
 
-    procedure FetchDataFromRevenueCalcGrid(var pendingReceiveable: Record "Pending Receviable Grid")
+    procedure FetchDataFromRevenueCalcGrid(var pendingReceiveable: Record "BLRPendingReceviableGrid")
     var
-        RevenueGrid: Record "Final Revenue Calculation Grid";
+        RevenueGrid: Record "BLRFinalRevenueCalculationGrid";
     begin
-        RevenueGrid.SetRange("Contract ID", pendingReceiveable."Contract ID");
-        RevenueGrid.SetRange("Revenue Description", pendingReceiveable.RevenueDescription);
+        RevenueGrid.SetRange("BLRContract ID", pendingReceiveable."BLRContract ID");
+        RevenueGrid.SetRange("BLRRevenue Description", pendingReceiveable.BLRRevenueDescription);
         if RevenueGrid.FindSet() then
             repeat
-                pendingReceiveable.RevisedAmount := RevenueGrid."Revised Amount";
-                pendingReceiveable.RevisedVAT := RevenueGrid."Revised VAT";
-                pendingReceiveable.RevisedAmountInclVAT := RevenueGrid."Revised Amount Incl.";
+                pendingReceiveable.BLRRevisedAmount := RevenueGrid."BLRRevised Amount";
+                pendingReceiveable.BLRRevisedVAT := RevenueGrid."BLRRevised VAT";
+                pendingReceiveable.BLRRevisedAmountInclVAT := RevenueGrid."BLRRevised Amount Incl.";
                 pendingReceiveable.Modify();
             until RevenueGrid.Next() = 0;
 
     end;
 
-    procedure Recvieableamountfrompaymentscheule(var pendingReceiveable: Record "Pending Receviable Grid")
+    procedure Recvieableamountfrompaymentscheule(var pendingReceiveable: Record "BLRPendingReceviableGrid")
     var
-        PaymentScheduleRec: Record "Payment Schedule2";
+        PaymentScheduleRec: Record "BLRPaymentSchedule2";
         Totalamount: Decimal;
         VATAmount: Decimal;
         AmountIncVAT: Decimal;
     begin
         Totalamount := 0;
         PaymentScheduleRec.Reset();
-        PaymentScheduleRec.SetRange("Contract ID", pendingReceiveable."Contract ID");
-        PaymentScheduleRec.SetFilter("Due Date", '<=%1', pendingReceiveable."Termination Date");
-        PaymentScheduleRec.SetRange("Payment Status", 'Received');
-        PaymentScheduleRec.SetRange("Secondary Item Type", pendingReceiveable.RevenueDescription);
+        PaymentScheduleRec.SetRange("BLRContract ID", pendingReceiveable."BLRContract ID");
+        PaymentScheduleRec.SetFilter("BLRDue Date", '<=%1', pendingReceiveable."BLRTermination Date");
+        PaymentScheduleRec.SetRange("BLRPayment Status", 'Received');
+        PaymentScheduleRec.SetRange("BLRSecondary Item Type", pendingReceiveable.BLRRevenueDescription);
         if PaymentScheduleRec.FindSet() then
             repeat
-                Totalamount += PaymentScheduleRec.Amount;
-                VATAmount += PaymentScheduleRec."VAT Amount";
-                AmountIncVAT += PaymentScheduleRec."Amount Including VAT";
+                Totalamount += PaymentScheduleRec."BLRAmount";
+                VATAmount += PaymentScheduleRec."BLRVAT Amount";
+                AmountIncVAT += PaymentScheduleRec."BLRAmount Including VAT";
 
             until PaymentScheduleRec.Next() = 0;
 
-        PaymentScheduleRec.SetRange("Contract ID", pendingReceiveable."Contract ID");
-        PaymentScheduleRec.SetRange("Secondary Item Type", pendingReceiveable.RevenueDescription);
+        PaymentScheduleRec.SetRange("BLRContract ID", pendingReceiveable."BLRContract ID");
+        PaymentScheduleRec.SetRange("BLRSecondary Item Type", pendingReceiveable.BLRRevenueDescription);
         if PaymentScheduleRec.FindSet() then
             repeat
-                pendingReceiveable.ReceiptsAmount := Totalamount;
-                pendingReceiveable.ReceiptsVAT := VATAmount;
-                pendingReceiveable.ReceiptsAmountInclVAT := AmountIncVAT;
+                pendingReceiveable.BLRReceiptsAmount := Totalamount;
+                pendingReceiveable.BLRReceiptsVAT := VATAmount;
+                pendingReceiveable.BLRReceiptsAmountInclVAT := AmountIncVAT;
                 pendingReceiveable.Modify();
             until PaymentScheduleRec.Next() = 0;
     end;
 
-    procedure DifferenceAmountCalculationReceivable(var RecvieableCalcGrid: Record "Pending Receviable Grid")
+    procedure DifferenceAmountCalculationReceivable(var RecvieableCalcGrid: Record "BLRPendingReceviableGrid")
 
     begin
 
-        RecvieableCalcGrid.DifferenceAmount := RecvieableCalcGrid.RevisedAmount - RecvieableCalcGrid.ReceiptsAmount;
-        RecvieableCalcGrid.DifferenceVAT := RecvieableCalcGrid.RevisedVAT - RecvieableCalcGrid.ReceiptsVAT;
-        RecvieableCalcGrid.DifferenceAmountInclVAT := RecvieableCalcGrid.RevisedAmountInclVAT - RecvieableCalcGrid.ReceiptsAmountInclVAT;
+        RecvieableCalcGrid.BLRDifferenceAmount := RecvieableCalcGrid.BLRRevisedAmount - RecvieableCalcGrid.BLRReceiptsAmount;
+        RecvieableCalcGrid.BLRDifferenceVAT := RecvieableCalcGrid.BLRRevisedVAT - RecvieableCalcGrid.BLRReceiptsVAT;
+        RecvieableCalcGrid.BLRDifferenceAmountInclVAT := RecvieableCalcGrid.BLRRevisedAmountInclVAT - RecvieableCalcGrid.BLRReceiptsAmountInclVAT;
         RecvieableCalcGrid.Modify();
 
     end;
 
     // procedure RecevieablePositiveamount()
     // var
-    //     pendingReceieableRecGrid: Record "Pending Receviable Grid";
+    //     pendingReceieableRecGrid: Record "BLRPendingReceviableGrid";
     // begin
-    //     pendingReceieableRecGrid.SetRange("Contract ID", Rec."Contract ID");
+    //     pendingReceieableRecGrid.SetRange("BLRContract ID", Rec."BLRContract ID");
     //     if pendingReceieableRecGrid.FindSet() then
     //         repeat
-    //             pendingReceieableRecGrid.CalcFields("Total DifferenceAmountIncl.VAT");
+    //             pendingReceieableRecGrid.CalcFields("BLRTotalDiffAmtInclVAT");
     //             if pendingReceieableRecGrid.DifferenceAmountInclVAT < 0 then begin
-    //                 pendingReceieableRecGrid."Total Refundable" := Abs(pendingReceieableRecGrid.DifferenceAmountInclVAT);
+    //                 pendingReceieableRecGrid."BLRTotal Refundable" := Abs(pendingReceieableRecGrid.DifferenceAmountInclVAT);
     //                 pendingReceieableRecGrid.Modify();
     //             end else begin
-    //                 pendingReceieableRecGrid."Total Receivable" := pendingReceieableRecGrid.DifferenceAmountInclVAT;
+    //                 pendingReceieableRecGrid."BLRTotal Receivable" := pendingReceieableRecGrid.DifferenceAmountInclVAT;
     //                 pendingReceieableRecGrid.Modify();
 
     //             end;
@@ -1670,24 +1670,24 @@ page 73209692 "Final Calculation Card"
 
     procedure TotalRefundableAmount()
     var
-        pendingreceivablegrid1: Record "Pending Receviable Grid";
-        pendingreceivablegrid2: Record "Pending Receviable Grid";
+        pendingreceivablegrid1: Record "BLRPendingReceviableGrid";
+        pendingreceivablegrid2: Record "BLRPendingReceviableGrid";
         TotalNegativeAmount: Decimal;
     begin
         // Calculate total positive difference for the whole contract
         TotalNegativeAmount := 0;
-        pendingreceivablegrid1.SetRange("Contract ID", Rec."Contract ID");
-        pendingreceivablegrid1.SetFilter("DifferenceAmountInclVAT", '<%1', 0);
+        pendingreceivablegrid1.SetRange("BLRContract ID", Rec."BLRContract ID");
+        pendingreceivablegrid1.SetFilter("BLRDifferenceAmountInclVAT", '<%1', 0);
         if pendingreceivablegrid1.FindSet() then
             repeat
-                TotalNegativeAmount += pendingreceivablegrid1."DifferenceAmountInclVAT";
+                TotalNegativeAmount += pendingreceivablegrid1."BLRDifferenceAmountInclVAT";
             until pendingreceivablegrid1.Next() = 0;
 
         // Write the same (absolute) total to every grid record for this contract
-        pendingreceivablegrid2.SetRange("Contract ID", Rec."Contract ID");
+        pendingreceivablegrid2.SetRange("BLRContract ID", Rec."BLRContract ID");
         if pendingreceivablegrid2.FindSet() then
             repeat
-                pendingreceivablegrid2."Total Refundable" := Abs(TotalNegativeAmount);
+                pendingreceivablegrid2."BLRTotal Refundable" := Abs(TotalNegativeAmount);
                 pendingreceivablegrid2.Modify();
             until pendingreceivablegrid2.Next() = 0;
 
@@ -1696,25 +1696,25 @@ page 73209692 "Final Calculation Card"
 
     procedure TotalReceivableAmount()
     var
-        pendingreceivablegrid1: Record "Pending Receviable Grid";
-        pendingreceivablegrid2: Record "Pending Receviable Grid";
+        pendingreceivablegrid1: Record "BLRPendingReceviableGrid";
+        pendingreceivablegrid2: Record "BLRPendingReceviableGrid";
         TotalPositiveAmount: Decimal;
     begin
         // Calculate total negative difference for the whole contract
         TotalPositiveAmount := 0;
-        pendingreceivablegrid1.SetRange("Contract ID", Rec."Contract ID");
-        pendingreceivablegrid1.SetFilter("DifferenceAmountInclVAT", '>%1', 0);
+        pendingreceivablegrid1.SetRange("BLRContract ID", Rec."BLRContract ID");
+        pendingreceivablegrid1.SetFilter("BLRDifferenceAmountInclVAT", '>%1', 0);
         if pendingreceivablegrid1.FindSet() then
             repeat
-                TotalPositiveAmount += pendingreceivablegrid1."DifferenceAmountInclVAT";
+                TotalPositiveAmount += pendingreceivablegrid1."BLRDifferenceAmountInclVAT";
             until pendingreceivablegrid1.Next() = 0;
 
         // Write the same (absolute) total to every grid record for this contract
-        pendingreceivablegrid2.SetRange("Contract ID", Rec."Contract ID");
+        pendingreceivablegrid2.SetRange("BLRContract ID", Rec."BLRContract ID");
         if pendingreceivablegrid2.FindSet() then
             repeat
                 // Keep already invoiced lines at zero (existing business rule)
-                pendingreceivablegrid2."Total Receivable" := Abs(TotalPositiveAmount);
+                pendingreceivablegrid2."BLRTotal Receivable" := Abs(TotalPositiveAmount);
                 pendingreceivablegrid2.Modify();
             until pendingreceivablegrid2.Next() = 0;
 
@@ -1724,54 +1724,54 @@ page 73209692 "Final Calculation Card"
 
     procedure GetBillingCharges()
     var
-        BillingCalcGrid: Record "Final Billing Calculation Grid";
+        BillingCalcGrid: Record "BLRFinalBillingCalculationGrid";
     begin
-        BillingCalcGrid.SetRange("Contract ID", Rec."Contract ID");
+        BillingCalcGrid.SetRange("BLRContract ID", Rec."BLRContract ID");
         if BillingCalcGrid.FindSet() then
             repeat
                 InvoiceCreditNoteSummaryData(BillingCalcGrid)
                        until BillingCalcGrid.Next() = 0;
     end;
 
-    procedure InvoiceCreditNoteSummaryData(var BillingCalcGrid: Record "Final Billing Calculation Grid")
+    procedure InvoiceCreditNoteSummaryData(var BillingCalcGrid: Record "BLRFinalBillingCalculationGrid")
     var
-        BillingCalcGrid1: Record "Final Billing Calculation Grid";
-        InvoiceCreditNoteSummaryRec: Record InvoiceCreditNoteSummary;
+        BillingCalcGrid1: Record "BLRFinalBillingCalculationGrid";
+        InvoiceCreditNoteSummaryRec: Record BLRInvoiceCreditNoteSummary;
         DescriptionList: List of [Text];
         Description: Text;
     begin
-        BillingCalcGrid1.SetRange("Contract ID", BillingCalcGrid."Contract ID");
-        BillingCalcGrid1.SetFilter(BillingCalcGrid1."DifferenceAmountInclVAT", '<>%1', 0);
+        BillingCalcGrid1.SetRange("BLRContract ID", BillingCalcGrid."BLRContract ID");
+        BillingCalcGrid1.SetFilter(BillingCalcGrid1."BLRDifferenceAmountInclVAT", '<>%1', 0);
         if BillingCalcGrid1.FindSet() then
             repeat
-                InvoiceCreditNoteSummaryRec.SetRange("Contract No.", Rec."Contract ID");
-                InvoiceCreditNoteSummaryRec.SetRange(Description, 'Final Billing Calculation');
-                InvoiceCreditNoteSummaryRec.SetRange("Revenue Description", BillingCalcGrid1.RevenueDescription);
+                InvoiceCreditNoteSummaryRec.SetRange("BLRContract No.", Rec."BLRContract ID");
+                InvoiceCreditNoteSummaryRec.SetRange(BLRDescription, 'Final Billing Calculation');
+                InvoiceCreditNoteSummaryRec.SetRange("BLRRevenue Description", BillingCalcGrid1.BLRRevenueDescription);
                 if InvoiceCreditNoteSummaryRec.FindFirst() then begin
-                    InvoiceCreditNoteSummaryRec.Invoice := 0;
-                    InvoiceCreditNoteSummaryRec."Credit Note" := 0;
-                    if BillingCalcGrid1."DifferenceAmountInclVAT" > 0 then
-                        InvoiceCreditNoteSummaryRec."Credit Note" := Abs(BillingCalcGrid1."DifferenceAmountInclVAT")
+                    InvoiceCreditNoteSummaryRec.BLRInvoice := 0;
+                    InvoiceCreditNoteSummaryRec."BLRCredit Note" := 0;
+                    if BillingCalcGrid1."BLRDifferenceAmountInclVAT" > 0 then
+                        InvoiceCreditNoteSummaryRec."BLRCredit Note" := Abs(BillingCalcGrid1."BLRDifferenceAmountInclVAT")
                     else
-                        InvoiceCreditNoteSummaryRec.Invoice := Abs(BillingCalcGrid1."DifferenceAmountInclVAT");
+                        InvoiceCreditNoteSummaryRec.BLRInvoice := Abs(BillingCalcGrid1."BLRDifferenceAmountInclVAT");
                     InvoiceCreditNoteSummaryRec.Modify(true);
                 end
                 else begin
                     Clear(InvoiceCreditNoteSummaryRec);
                     InvoiceCreditNoteSummaryRec.Init();
-                    InvoiceCreditNoteSummaryRec."Contract No." := Rec."Contract ID";
-                    InvoiceCreditNoteSummaryRec.Description := 'Final Billing Calculation';
-                    InvoiceCreditNoteSummaryRec."Revenue Description" := BillingCalcGrid1.RevenueDescription;
-                    if BillingCalcGrid1."DifferenceAmountInclVAT" > 0 then
-                        InvoiceCreditNoteSummaryRec."Credit Note" := Abs(BillingCalcGrid1."DifferenceAmountInclVAT")
+                    InvoiceCreditNoteSummaryRec."BLRContract No." := Rec."BLRContract ID";
+                    InvoiceCreditNoteSummaryRec.BLRDescription := 'Final Billing Calculation';
+                    InvoiceCreditNoteSummaryRec."BLRRevenue Description" := BillingCalcGrid1.BLRRevenueDescription;
+                    if BillingCalcGrid1."BLRDifferenceAmountInclVAT" > 0 then
+                        InvoiceCreditNoteSummaryRec."BLRCredit Note" := Abs(BillingCalcGrid1."BLRDifferenceAmountInclVAT")
                     else
-                        InvoiceCreditNoteSummaryRec.Invoice := Abs(BillingCalcGrid1."DifferenceAmountInclVAT");
+                        InvoiceCreditNoteSummaryRec.BLRInvoice := Abs(BillingCalcGrid1."BLRDifferenceAmountInclVAT");
                     InvoiceCreditNoteSummaryRec.Insert(true);
                 end;
             until BillingCalcGrid1.Next() = 0;
 
         // Clear existing lines in Final Revenue Calculation Grid for this contract
-        // InvoiceCreditNoteSummaryRec.SetRange("Contract No.", Rec."Contract ID");
+        // InvoiceCreditNoteSummaryRec.SetRange("BLRContract No.", Rec."BLRContract ID");
         // if not InvoiceCreditNoteSummaryRec.IsEmpty() then
         //     exit;
 
@@ -1781,7 +1781,7 @@ page 73209692 "Final Calculation Card"
 
         // foreach Description in DescriptionList do begin
         //     InvoiceCreditNoteSummaryRec.Init();
-        //     InvoiceCreditNoteSummaryRec."Contract No." := Rec."Contract ID";
+        //     InvoiceCreditNoteSummaryRec."Contract No." := Rec."BLRContract ID";
         //     InvoiceCreditNoteSummaryRec.Description := Description;
         //     InvoiceCreditNoteSummaryRec.Insert();
         //     Clear(InvoiceCreditNoteSummaryRec);
@@ -1792,30 +1792,30 @@ page 73209692 "Final Calculation Card"
 
     procedure PopulateFinalAdjtCaontractRedGrid()
     var
-        tenancyContractSub: Record "Tenancy Contract Subpage";
+        tenancyContractSub: Record "BLRTenancyContractSubpage";
         item: Record Item;
-        finalAdj: Record FinancialAdjContractReduction;
-        pendingReceiveable: Record "Pending Receviable Grid";
+        finalAdj: Record BLRFinAdjContractReduction;
+        pendingReceiveable: Record "BLRPendingReceviableGrid";
     begin
-        finalAdj.SetRange("Contract No.", Rec."Contract ID");
+        finalAdj.SetRange("BLRContract No.", Rec."BLRContract ID");
         if finalAdj.FindFirst() then
             exit;
-        tenancyContractSub.SetRange("ContractID", Rec."Contract ID");
+        tenancyContractSub.SetRange("BLRContractID", Rec."BLRContract ID");
         if tenancyContractSub.FindSet() then
             repeat
-                item.SetRange(Description, tenancyContractSub."Secondary Item Type");
-                item.SetRange("Item type template", item."Item type template"::"Secondary Item");
-                item.SetFilter("Category Types", '%1|%2|%3|%4', 'Refundable Deposit', 'Government fees', 'Govt. Fees', 'Government Fees');
+                item.SetRange(Description, tenancyContractSub."BLRSecondary Item Type");
+                item.SetRange("BLRItem type template", item."BLRItem type template"::"Secondary Item");
+                item.SetFilter("BLRCategory Types", '%1|%2|%3|%4', 'Refundable Deposit', 'Government fees', 'Govt. Fees', 'Government Fees');
                 if item.FindFirst() then begin
-                    pendingReceiveable.SetRange("Contract ID", Rec."Contract ID");
-                    pendingReceiveable.SetRange(RevenueDescription, item.Description);
+                    pendingReceiveable.SetRange("BLRContract ID", Rec."BLRContract ID");
+                    pendingReceiveable.SetRange(BLRRevenueDescription, item.Description);
                     if pendingReceiveable.FindFirst() then begin
                         finalAdj.Init();
-                        finalAdj."Contract No." := Rec."Contract ID";
-                        finalAdj."Revenue Description" := item.Description;
+                        finalAdj."BLRContract No." := Rec."BLRContract ID";
+                        finalAdj."BLRRevenue Description" := item.Description;
                         finalAdj.Insert(true);
-                        finalAdj.Validate(Amount, pendingReceiveable.DifferenceAmount);
-                        finalAdj.Validate("VAT %", item."VAT %");
+                        finalAdj.Validate(BLRAmount, pendingReceiveable.BLRDifferenceAmount);
+                        finalAdj.Validate("BLRVAT %", item."BLRVAT %");
                         // finalAdj."VAT Amount" := pendingReceiveable.DifferenceVAT;
                         // finalAdj."Amount Incl. VAT" := pendingReceiveable.DifferenceAmountInclVAT;
                         Clear(finalAdj);
@@ -1828,7 +1828,7 @@ page 73209692 "Final Calculation Card"
     //////////////////////// END PENDING RECIVEABLE CALCULATION //////////////////////
 
     var
-        carryForwardGrid: Page "Carry Forward Grid";
+        carryForwardGrid: Page "BLRCarryForwardGrid";
         IsReceivable: Boolean;
         IsRefundable: Boolean;
         CanPost: Boolean;

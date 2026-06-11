@@ -1,7 +1,7 @@
-page 73209796 "PDC Transactions"
+page 73209796 "BLRPDC Transactions"
 {
     PageType = List;
-    SourceTable = "PDC Transaction";
+    SourceTable = "BLRPDCTransaction";
     ApplicationArea = All;
     Caption = 'PDC Transactions List';
     UsageCategory = Lists;
@@ -23,7 +23,7 @@ page 73209796 "PDC Transactions"
                     trigger OnValidate()
                     begin
                         if TenantFilter <> '' then
-                            Rec.SETFILTER("Tenant Name Display", '&&' + TenantFilter + '*')
+                            Rec.SETFILTER("BLRTenant Name Display", '&&' + TenantFilter + '*')
                         else
                             Rec.RESET();
 
@@ -39,7 +39,7 @@ page 73209796 "PDC Transactions"
                     trigger OnValidate()
                     begin
                         if StatusFilter <> StatusFilter::" " then
-                            Rec.SETRANGE(Rec."Cheque Status", StatusFilter)
+                            Rec.SETRANGE(Rec."BLRCheque Status", StatusFilter)
                         else
                             Rec.RESET();
 
@@ -55,7 +55,7 @@ page 73209796 "PDC Transactions"
                     trigger OnValidate()
                     begin
                         if ChequeNo <> '' then
-                            Rec.SETFILTER("Cheque Number", '&&' + ChequeNo + '*')
+                            Rec.SETFILTER("BLRCheque Number", '&&' + ChequeNo + '*')
                         else
                             Rec.RESET();
 
@@ -71,7 +71,7 @@ page 73209796 "PDC Transactions"
                     trigger OnValidate()
                     begin
                         if DateToFilter <> 0D then
-                            Rec.SETFILTER("Cheque Date", '=%1', DateToFilter)
+                            Rec.SETFILTER("BLRCheque Date", '=%1', DateToFilter)
                         else
                             Rec.RESET();
 
@@ -81,17 +81,17 @@ page 73209796 "PDC Transactions"
             }
             repeater(Group)
             {
-                field("PDC ID"; Rec."PDC ID") { ToolTip = 'Unique identifier for the PDC transaction.'; }
-                field("payment Series"; Rec."payment Series") { ToolTip = 'Payment series associated with the PDC transaction.'; }
-                field("Tenant Name"; Rec."Tenant Name Display") { ToolTip = 'Name of the tenant associated with the PDC transaction.'; }
-                field("Tenant Id"; Rec."Tenant Id") { ToolTip = 'Identifier for the tenant associated with the PDC transaction.'; }
-                field("Contract ID"; Rec."Contract ID") { ToolTip = 'Identifier for the contract associated with the PDC transaction.'; }
-                field("Bank Name"; Rec."Bank Name") { ToolTip = 'Name of the bank associated with the PDC transaction.'; }
-                field("Cheque Number"; Rec."Cheque Number") { ToolTip = 'Cheque number associated with the PDC transaction.'; }
-                field("Cheque Date"; Rec."Cheque Date") { ToolTip = 'Date when the cheque was issued.'; }
-                field("Amount"; Rec.Amount) { ToolTip = 'Amount of the PDC transaction.'; }
-                field("Status"; Rec."Cheque Status") { ToolTip = 'Current status of the PDC transaction, such as Pending, Cleared, or Rejected.'; }
-                field("Approval Status"; Rec."Approval Status") { ToolTip = 'Approval status of the PDC transaction.'; }
+                field("PDC ID"; Rec."BLRPDC ID") { ToolTip = 'Unique identifier for the PDC transaction.'; }
+                field("payment Series"; Rec."BLRpayment Series") { ToolTip = 'Payment series associated with the PDC transaction.'; }
+                field("Tenant Name"; Rec."BLRTenant Name Display") { ToolTip = 'Name of the tenant associated with the PDC transaction.'; }
+                field("Tenant Id"; Rec."BLRTenant Id") { ToolTip = 'Identifier for the tenant associated with the PDC transaction.'; }
+                field("Contract ID"; Rec."BLRContract ID") { ToolTip = 'Identifier for the contract associated with the PDC transaction.'; }
+                field("Bank Name"; Rec."BLRBank Name") { ToolTip = 'Name of the bank associated with the PDC transaction.'; }
+                field("Cheque Number"; Rec."BLRCheque Number") { ToolTip = 'Cheque number associated with the PDC transaction.'; }
+                field("Cheque Date"; Rec."BLRCheque Date") { ToolTip = 'Date when the cheque was issued.'; }
+                field("Amount"; Rec."BLRAmount") { ToolTip = 'Amount of the PDC transaction.'; }
+                field("Status"; Rec."BLRCheque Status") { ToolTip = 'Current status of the PDC transaction, such as Pending, Cleared, or Rejected.'; }
+                field("Approval Status"; Rec."BLRApproval Status") { ToolTip = 'Approval status of the PDC transaction.'; }
 
 
             }
@@ -112,16 +112,16 @@ page 73209796 "PDC Transactions"
                 trigger OnAction()
                 begin
                     if TenantFilter <> '' then
-                        Rec.SETFILTER("Tenant Name Display", '&&' + TenantFilter + '*');
+                        Rec.SETFILTER("BLRTenant Name Display", '&&' + TenantFilter + '*');
 
                     if StatusFilter <> StatusFilter::" " then
-                        Rec.SETRANGE(Rec."Cheque Status", StatusFilter);
+                        Rec.SETRANGE(Rec."BLRCheque Status", StatusFilter);
 
                     if ChequeNo <> '' then
-                        Rec.SETFILTER("Cheque Number", '&&' + ChequeNo + '*');
+                        Rec.SETFILTER("BLRCheque Number", '&&' + ChequeNo + '*');
 
                     if DateToFilter <> 0D then
-                        Rec.SETFILTER("Cheque Date", '<=%1', DateToFilter);
+                        Rec.SETFILTER("BLRCheque Date", '<=%1', DateToFilter);
 
                     CurrPage.UPDATE(false);
                 end;
@@ -151,9 +151,9 @@ page 73209796 "PDC Transactions"
     }
     trigger OnOpenPage()
     var
-        PDCTransaction: Record "PDC Transaction";
+        PDCTransaction: Record "BLRPDCTransaction";
     begin
-        PDCTransaction.SetRange("Cheque Status", PDCTransaction."Cheque Status"::Cancelled);
+        PDCTransaction.SetRange("BLRCheque Status", PDCTransaction."BLRCheque Status"::Cancelled);
 
         if PDCTransaction.FindSet() then
             repeat
@@ -165,7 +165,7 @@ page 73209796 "PDC Transactions"
 
         TenantFilter: Text[100]; // Filter for Tenant Name
 
-        StatusFilter: Enum "PDC Status Type Enum"; // Filter for Cheque Status
+        StatusFilter: Enum "BLRPDC Status Type Enum"; // Filter for Cheque Status
         ChequeNo: Text[20]; // Filter start date
         DateToFilter: Date; // Filter end date
 

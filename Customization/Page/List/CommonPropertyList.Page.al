@@ -1,12 +1,12 @@
-page 73209770 "Common Property List"
+page 73209770 "BLRCommon Property List"
 {
     PageType = List;
-    SourceTable = "Property Registration";
+    SourceTable = "BLRPropertyRegistration";
     ApplicationArea = All;
     Caption = 'Common Property List';
     UsageCategory = Lists;
     ShowFilter = false;
-    SourceTableView = where("Property Classification" = const('Common'));
+    SourceTableView = where("BLRProperty Classification" = const('Common'));
 
     InsertAllowed = false;
     ModifyAllowed = false;
@@ -18,24 +18,24 @@ page 73209770 "Common Property List"
         {
             repeater(Group)
             {
-                field("Property ID"; Rec."Property ID")
+                field("Property ID"; Rec."BLRProperty ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Property ID';
                     ToolTip = 'The unique identifier for the property.';
                 }
-                field("Property Name"; Rec."Property Name")
+                field("Property Name"; Rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Property Name';
                     ToolTip = 'The name of the property.';
                 }
-                field("Property Type"; Rec."Property Classification")
+                field("BLRPropertyType"; Rec."BLRProperty Classification")
                 {
                     ApplicationArea = All;
                     Caption = 'Property Type';
                     ToolTip = 'The classification of the property.';
-                    TableRelation = "Property Type";
+                    TableRelation = "BLRPropertyType";
                 }
             }
         }
@@ -43,7 +43,7 @@ page 73209770 "Common Property List"
 
     trigger OnOpenPage();
     begin
-        Rec.SetRange("Property Classification", 'Common'); // Filter for only vacant properties
+        Rec.SetRange("BLRProperty Classification", 'Common'); // Filter for only vacant properties
     end;
 
 }

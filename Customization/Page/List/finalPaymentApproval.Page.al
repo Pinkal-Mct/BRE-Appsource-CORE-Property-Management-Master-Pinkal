@@ -1,7 +1,7 @@
-page 73209778 "final payment approval"
+page 73209778 "BLRfinal payment approval"
 {
     PageType = List;
-    SourceTable = finalPaymentApproval;
+    SourceTable = BLRfinalPaymentApproval;
     ApplicationArea = All;
     Caption = 'Final Payment Approval';
     UsageCategory = Lists;
@@ -15,69 +15,69 @@ page 73209778 "final payment approval"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the unique identifier for the final payment approval record.';
                 }
-                field(Status; Rec.Status)
+                field(Status; Rec.BLRStatus)
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the current status of the final payment approval.';
                 }
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the unique identifier for the tenant associated with this payment approval.';
                 }
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the name of the tenant associated with this payment approval.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the unique identifier for the contract associated with this payment approval.';
                 }
-                field("Payment transaction ID"; Rec."Payment transaction ID")
+                field("Payment transaction ID"; Rec."BLRPayment transaction ID")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the unique identifier for the payment transaction associated with this payment approval.';
                 }
 
-                field("Payment Date"; Rec."Payment Date")
+                field("Payment Date"; Rec."BLRPayment Date")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the date of the payment associated with this approval.';
                 }
-                field("Total Amount"; Rec."Total Amount")
+                field("Total Amount"; Rec."BLRTotal Amount")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the total amount of the payment associated with this approval.';
                 }
-                field("Due Date"; Rec."Due Date")
+                field("Due Date"; Rec."BLRDue Date")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the due date for the payment approval.';
                 }
-                field("Payment mode"; Rec."Payment mode")
+                field("Payment mode"; Rec."BLRPayment mode")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Specifies the mode of payment for this approval.';
                 }
-                field(Description; Rec.Description)
+                field(Description; Rec.BLRDescription)
                 {
                     ApplicationArea = All;
                     Editable = true;
@@ -101,11 +101,11 @@ page 73209778 "final payment approval"
 
                 trigger OnAction()
                 var
-                    Finalsettlement: Record "FinalSettlement";
-                    SelectedRecs: Record "finalPaymentApproval";
+                    Finalsettlement: Record "BLRFinalSettlement";
+                    SelectedRecs: Record "BLRfinalPaymentApproval";
                     ApproveCount: Integer;
                     ErrorCount: Integer;
-                    PaymentStatus: Enum "Payment Status";
+                    PaymentStatus: Enum "BLRPayment Status";
                 begin
                     CurrPage.SetSelectionFilter(SelectedRecs);
 
@@ -119,14 +119,14 @@ page 73209778 "final payment approval"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs.Status = 'Pending' then begin
-                                SelectedRecs.Status := 'Received';
+                            if SelectedRecs."BLRStatus" = 'Pending' then begin
+                                SelectedRecs."BLRStatus" := 'Received';
                                 SelectedRecs.Modify();
 
-                                Finalsettlement.SetRange("Contract ID", SelectedRecs."Contract ID");
+                                Finalsettlement.SetRange("BLRContract ID", SelectedRecs."BLRContract ID");
                                 if Finalsettlement.FindSet() then begin
-                                    Finalsettlement."Receivable Payment Status" := PaymentStatus::Received;
-                                    Finalsettlement.receivablePaymentStatuss := 'Received';
+                                    Finalsettlement."BLRReceivable Payment Status" := PaymentStatus::Received;
+                                    Finalsettlement."BLRreceivablePaymentStatuss" := 'Received';
                                     Finalsettlement.Modify(true);
                                 end;
                                 ApproveCount += 1;
@@ -148,7 +148,7 @@ page 73209778 "final payment approval"
 
                 trigger OnAction()
                 var
-                    SelectedRecs: Record "finalPaymentApproval";
+                    SelectedRecs: Record "BLRfinalPaymentApproval";
                     RejectCount: Integer;
                     ErrorCount: Integer;
                 begin
@@ -165,8 +165,8 @@ page 73209778 "final payment approval"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs.Status = 'Pending' then begin
-                                SelectedRecs.Status := 'Not Received'; // Set status to "Declined"
+                            if SelectedRecs."BLRStatus" = 'Pending' then begin
+                                SelectedRecs."BLRStatus" := 'Not Received'; // Set status to "Declined"
                                 SelectedRecs.Modify();
                                 RejectCount += 1;
                             end else

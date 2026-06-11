@@ -1,7 +1,7 @@
-page 73209793 "Payment Schedule Grid"
+page 73209793 "BLRPayment Schedule Grid"
 {
     PageType = List;
-    SourceTable = "Payment Schedule2";
+    SourceTable = "BLRPaymentSchedule2";
     ApplicationArea = All;
     Caption = 'Payment Schedule Grid List';
     UsageCategory = None;
@@ -13,32 +13,32 @@ page 73209793 "Payment Schedule Grid"
         {
             repeater(Group)
             {
-                field("Payment Series"; Rec."Payment Series")
+                field("Payment Series"; Rec."BLRPayment Series")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The series of the payment schedule.';
                 }
-                field("Secondary Item Type"; Rec."Secondary Item Type")
+                field("Secondary Item Type"; Rec."BLRSecondary Item Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The type of the secondary item associated with the payment schedule.';
                 }
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The amount of the payment schedule.';
                 }
-                field("VAT Amount"; Rec."VAT Amount")
+                field("VAT Amount"; Rec."BLRVAT Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The VAT amount associated with the payment schedule.';
                 }
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field("Amount Including VAT"; Rec."BLRAmount Including VAT")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The total amount including VAT for the payment schedule.';
                 }
-                field("Due Date"; Rec."Due Date")
+                field("Due Date"; Rec."BLRDue Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the Due Date.';

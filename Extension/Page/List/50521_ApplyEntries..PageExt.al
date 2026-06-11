@@ -1,10 +1,10 @@
-pageextension 73209598 ApplyEntriesPageExt extends "Apply Customer Entries"
+pageextension 73209598 BLRApplyEntriesPageExt extends "Apply Customer Entries"
 {
     layout
     {
         addafter("Document No.")
         {
-            field("Contract ID"; Rec."Contract ID")
+            field("Contract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
                 Caption = 'Contract ID';
@@ -21,6 +21,6 @@ pageextension 73209598 ApplyEntriesPageExt extends "Apply Customer Entries"
 
     //     // Re-apply Contract ID filter
     //     if ParentCLE.GetFilter("Contract ID") <> '' then
-    //         Rec.SetFilter("Contract ID", ParentCLE.GetFilter("Contract ID"));
+    //         Rec.SetFilter("BLRContract ID", ParentCLE.GetFilter("Contract ID"));
     // end;
 }

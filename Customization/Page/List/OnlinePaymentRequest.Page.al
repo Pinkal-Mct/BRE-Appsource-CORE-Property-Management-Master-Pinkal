@@ -1,7 +1,7 @@
-page 73209787 "Online Payment Request"
+page 73209787 "BLROnline Payment Request"
 {
     PageType = List;
-    SourceTable = OnlinePaymentApproval;
+    SourceTable = BLROnlinePaymentApproval;
     ApplicationArea = All;
     Caption = 'Payment receive Approval';
     UsageCategory = Lists;
@@ -9,9 +9,9 @@ page 73209787 "Online Payment Request"
     ModifyAllowed = false;
     DeleteAllowed = false;
     Permissions =
-        tabledata OnlinePaymentApproval = RM,
-        tabledata "Payment Mode2" = RM,
-        tabledata "Payment Schedule2" = RM;
+        tabledata BLROnlinePaymentApproval = RM,
+        tabledata "BLRPaymentMode2" = RM,
+        tabledata "BLRPaymentSchedule2" = RM;
 
     layout
     {
@@ -19,73 +19,73 @@ page 73209787 "Online Payment Request"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the online payment request.';
                 }
-                field(Status; Rec.Status)
+                field(Status; Rec."BLRStatus")
                 {
                     ApplicationArea = All;
                     Editable = true;
                     ToolTip = 'Status of the online payment request, such as Pending, Received, or Not Received.';
                 }
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the tenant associated with the online payment request.';
                 }
-                field("Tenant Name"; Rec."Tenant Name")
+                field("Tenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Name of the tenant associated with the online payment request.';
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the contract associated with the online payment request.';
                 }
-                field("Payment transaction ID"; Rec."Payment transaction ID")
+                field("Payment transaction ID"; Rec."BLRPayment transaction ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Unique identifier for the payment transaction associated with the online payment request.';
                 }
-                field("Payment Series"; Rec."Payment Series")
+                field("Payment Series"; Rec."BLRPayment Series")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Payment series associated with the online payment request.';
                 }
-                field("Payment Date"; Rec."Payment Date")
+                field("Payment Date"; Rec."BLRPayment Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Date of the payment associated with the online payment request.';
                 }
-                field("Total Amount"; Rec."Total Amount")
+                field("Total Amount"; Rec."BLRTotal Amount")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Total amount of the payment associated with the online payment request.';
                 }
-                field("Due Date"; Rec."Due Date")
+                field("Due Date"; Rec."BLRDue Date")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Due date for the payment associated with the online payment request.';
                 }
-                field("Payment mode"; Rec."Payment mode")
+                field("Payment mode"; Rec."BLRPayment mode")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Payment mode used for the online payment request, such as Credit Card, Bank Transfer, etc.';
                 }
-                field(Description; Rec.Description)
+                field(Description; Rec.BLRDescription)
                 {
                     ApplicationArea = All;
                     Editable = true;
@@ -108,12 +108,12 @@ page 73209787 "Online Payment Request"
 
                 trigger OnAction()
                 var
-                    SelectedRecs: Record "OnlinePaymentApproval";
-                    PaymentRec: Record "Payment Mode2";
-                    PaymentScheduleRec: Record "Payment Schedule2";
+                    SelectedRecs: Record "BLROnlinePaymentApproval";
+                    PaymentRec: Record "BLRPaymentMode2";
+                    PaymentScheduleRec: Record "BLRPaymentSchedule2";
                     ApproveCount: Integer;
                     ErrorCount: Integer;
-                    PaymentStatus: Enum "Payment Status";
+                    PaymentStatus: Enum "BLRPayment Status";
                 begin
                     CurrPage.SetSelectionFilter(SelectedRecs);
 
@@ -127,33 +127,33 @@ page 73209787 "Online Payment Request"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs.Status = 'Pending' then begin
-                                SelectedRecs.Status := 'Received';
+                            if SelectedRecs."BLRStatus" = 'Pending' then begin
+                                SelectedRecs."BLRStatus" := 'Received';
                                 SelectedRecs.Modify();
 
-                                PaymentRec.SetRange(PaymentRec."Contract ID", SelectedRecs."Contract ID");
-                                PaymentRec.SetRange(PaymentRec."Tenant ID", SelectedRecs."Tenant ID");
-                                PaymentRec.SetRange(PaymentRec."Payment Series", SelectedRecs."Payment Series");
+                                PaymentRec.SetRange(PaymentRec."BLRContract ID", SelectedRecs."BLRContract ID");
+                                PaymentRec.SetRange(PaymentRec."BLRTenant ID", SelectedRecs."BLRTenant ID");
+                                PaymentRec.SetRange(PaymentRec."BLRPayment Series", SelectedRecs."BLRPayment Series");
 
                                 if PaymentRec.FindSet() then begin
                                     // Update the status of OnlinePaymentApproval record
-                                    PaymentRec."Approve/Decline Status" := 'Received';
-                                    // PaymentRec."Payment Status" := PaymentStatus::Received;
-                                    PaymentRec.Validate("Payment Status", PaymentStatus::Received);
-                                    PaymentRec."Payment Received Date" := Today;
+                                    PaymentRec."BLRApprove/Decline Status" := 'Received';
+                                    // PaymentRec."BLRPayment Status" := PaymentStatus::Received;
+                                    PaymentRec.Validate("BLRPayment Status", PaymentStatus::Received);
+                                    PaymentRec."BLRPayment Received Date" := Today;
                                     PaymentRec.Modify(true);
                                 end;
 
-                                PaymentScheduleRec.SetRange(PaymentScheduleRec."Contract ID", PaymentRec."Contract ID");
-                                PaymentScheduleRec.SetRange(PaymentScheduleRec."Tenant ID", PaymentRec."Tenant ID");
-                                PaymentScheduleRec.SetRange(PaymentScheduleRec."Payment Series", PaymentRec."Payment Series");
+                                PaymentScheduleRec.SetRange(PaymentScheduleRec."BLRContract ID", PaymentRec."BLRContract ID");
+                                PaymentScheduleRec.SetRange(PaymentScheduleRec."BLRTenant ID", PaymentRec."BLRTenant ID");
+                                PaymentScheduleRec.SetRange(PaymentScheduleRec."BLRPayment Series", PaymentRec."BLRPayment Series");
 
                                 // Loop through the Payment Schedule records to find matching Payment Series
                                 if PaymentScheduleRec.FindSet() then
                                     repeat
                                         // Update Payment Schedule status to "Received" for the matching Payment Series
-                                        PaymentScheduleRec."Payment Status" := 'Received';
-                                        PaymentScheduleRec."Payment Recieved Date" := PaymentRec."Payment Received Date";
+                                        PaymentScheduleRec."BLRPayment Status" := 'Received';
+                                        PaymentScheduleRec."BLRPayment Recieved Date" := PaymentRec."BLRPayment Received Date";
                                         PaymentScheduleRec.Modify(); // Save the updated record
                                     until PaymentScheduleRec.Next() = 0; // Continue until all matching records are processed
 
@@ -177,8 +177,8 @@ page 73209787 "Online Payment Request"
 
                 trigger OnAction()
                 var
-                    SelectedRecs: Record "OnlinePaymentApproval";
-                    PaymentRec: Record "Payment Mode2";
+                    SelectedRecs: Record "BLROnlinePaymentApproval";
+                    PaymentRec: Record "BLRPaymentMode2";
                     RejectCount: Integer;
                     ErrorCount: Integer;
                 begin
@@ -195,17 +195,17 @@ page 73209787 "Online Payment Request"
 
                     if SelectedRecs.FindSet() then
                         repeat
-                            if SelectedRecs.Status = 'Pending' then begin
-                                SelectedRecs.Status := 'Not Received'; // Set status to "Declined"
+                            if SelectedRecs."BLRStatus" = 'Pending' then begin
+                                SelectedRecs."BLRStatus" := 'Not Received'; // Set status to "Declined"
                                 SelectedRecs.Modify();
 
-                                PaymentRec.SetRange(PaymentRec."Contract ID", SelectedRecs."Contract ID");
-                                PaymentRec.SetRange(PaymentRec."Tenant ID", SelectedRecs."Tenant ID");
-                                PaymentRec.SetRange(PaymentRec."Payment Series", SelectedRecs."Payment Series");
+                                PaymentRec.SetRange(PaymentRec."BLRContract ID", SelectedRecs."BLRContract ID");
+                                PaymentRec.SetRange(PaymentRec."BLRTenant ID", SelectedRecs."BLRTenant ID");
+                                PaymentRec.SetRange(PaymentRec."BLRPayment Series", SelectedRecs."BLRPayment Series");
 
                                 if PaymentRec.FindSet() then begin
                                     // Update the status of OnlinePaymentApproval record
-                                    PaymentRec."Approve/Decline Status" := 'Not Received';
+                                    PaymentRec."BLRApprove/Decline Status" := 'Not Received';
                                     PaymentRec.Modify(true);
                                 end;
 

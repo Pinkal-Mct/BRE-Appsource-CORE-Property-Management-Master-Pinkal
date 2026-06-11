@@ -1,7 +1,7 @@
-page 73209686 "CR Single LumAnnualAmnt SP"
+page 73209686 "BLRCRSingleLumAnnualAmntSP"
 {
     PageType = ListPart;
-    SourceTable = "CR Single LumAnnualAmnt SP";
+    SourceTable = "BLRCRSingleLumAnnualAmntSP";
     ApplicationArea = All;
     Caption = 'Single Lum_AnnualAmount SubPage';
 
@@ -11,31 +11,31 @@ page 73209686 "CR Single LumAnnualAmnt SP"
         {
             repeater(Group)
             {
-                field("ID"; rec."ID")
+                field("ID"; rec."BLRID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Unique identifier for the record.';
                 }
-                field("SL_Merged Unit ID"; rec."SL_Merged Unit ID")
+                field("SL_Merged Unit ID"; rec."BLRSL_Merged Unit ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Merged Unit ID';
                     Visible = false;
                     ToolTip = 'Unique identifier for the merged unit.';
                 }
-                field("SL_Unit ID"; rec."SL_Unit ID")
+                field("SL_Unit ID"; rec."BLRSL_Unit ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit ID';
                     ToolTip = 'Unique identifier for the unit.';
                 }
-                field("SL_Year"; rec.SL_Year)
+                field("SL_Year"; rec."BLRSL_Year")
                 {
                     ApplicationArea = All;
                     Caption = 'Year';
                     ToolTip = 'Year for which the annual amount is calculated.';
                 }
-                field("SL_Start Date"; rec."SL_Start Date")
+                field("SL_Start Date"; rec."BLRSL_Start Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Start Date';
@@ -47,7 +47,7 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                     end;
                 }
 
-                field("SL_End Date"; rec."SL_End Date")
+                field("SL_End Date"; rec."BLRSL_End Date")
                 {
                     ApplicationArea = All;
                     Caption = 'End Date';
@@ -58,13 +58,13 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                         RecalculateNumberOfDays();
                     end;
                 }
-                field("SL_Number of Days"; rec."SL_Number of Days")
+                field("SL_Number of Days"; rec."BLRSL_Number of Days")
                 {
                     ApplicationArea = All;
                     Caption = 'Number of Days';
                     ToolTip = 'Number of days between the start and end date.';
                 }
-                field("SL_Unit Sq Ft"; rec."SL_Unit Sq Ft")
+                field("SL_Unit Sq Ft"; rec."BLRSL_Unit Sq Ft")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Sq Ft';
@@ -72,7 +72,7 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                     ToolTip = 'Square footage of the unit.';
 
                 }
-                field("SL_Rate per Sq.Ft"; rec."SL_Rate per Sq.Ft")
+                field("SL_Rate per Sq.Ft"; rec."BLRSL_Rate per Sq.Ft")
                 {
                     ApplicationArea = All;
                     Caption = 'Rate per Sq.Ft';
@@ -80,18 +80,18 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                     ToolTip = 'Rate per square foot for the unit.';
 
                 }
-                field("SL_Rent Increase %"; rec."SL_Rent Increase %")
+                field("SL_Rent Increase %"; rec."BLRSL_Rent Increase %")
                 {
                     ApplicationArea = All;
                     Caption = 'Rent Increase %';
                     ToolTip = 'Percentage of rent increase for the unit.';
                     trigger OnValidate()
                     begin
-                        if Rec."SL_Rent Increase %" < 0 then
+                        if Rec."BLRSL_Rent Increase %" < 0 then
                             Error('Rent Increase % cannot be negative.');
 
                         // Calculate the annual amount and final annual amount based on rent increase
-                        if Rec.SL_Year > 1 then
+                        if Rec."BLRSL_Year" > 1 then
                             RecalculateRentIncrease();
 
                         Rec.Modify();
@@ -100,7 +100,7 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                     end;
                 }
 
-                field("SL_Annual Amount"; rec."SL_Annual Amount")
+                field("SL_Annual Amount"; rec."BLRSL_Annual Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'Annual Amount';
@@ -108,29 +108,29 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                     DecimalPlaces = 2 : 2;
                     trigger OnValidate()
                     var
-                        PreviousYearRecord: Record "CR Single LumAnnualAmnt SP";
+                        PreviousYearRecord: Record "BLRCRSingleLumAnnualAmntSP";
                         RentIncreasePercentage: Decimal;
                     begin
                         // Set Final Annual Amount to the entered Annual Amount
-                        Rec."SL_Final Annual Amount" := Rec."SL_Annual Amount";
+                        Rec."BLRSL_Final Annual Amount" := Rec."BLRSL_Annual Amount";
 
                         // If this is the 2nd year or later, calculate the rent increase percentage
-                        if Rec.SL_Year > 1 then begin
+                        if Rec."BLRSL_Year" > 1 then begin
                             // Fetch the previous year's record
-                            PreviousYearRecord.SetRange("ID", Rec."ID");
-                            PreviousYearRecord.SetRange(SL_Year, Rec.SL_Year - 1);
+                            PreviousYearRecord.SetRange("BLRID", Rec."BLRID");
+                            PreviousYearRecord.SetRange(BLRSL_Year, Rec."BLRSL_Year" - 1);
 
                             if PreviousYearRecord.FindFirst() then begin
                                 // Calculate the rent increase percentage based on the entered annual amount
-                                if PreviousYearRecord."SL_Final Annual Amount" > 0 then
+                                if PreviousYearRecord."BLRSL_Final Annual Amount" > 0 then
                                     RentIncreasePercentage :=
-                                        ((Rec."SL_Annual Amount" - PreviousYearRecord."SL_Final Annual Amount") /
-                                        PreviousYearRecord."SL_Final Annual Amount") * 100
+                                        ((Rec."BLRSL_Annual Amount" - PreviousYearRecord."BLRSL_Final Annual Amount") /
+                                        PreviousYearRecord."BLRSL_Final Annual Amount") * 100
                                 else
                                     RentIncreasePercentage := 0;
 
                                 // Update the Rent Increase % field with precise decimal value
-                                Rec."SL_Rent Increase %" := RentIncreasePercentage;
+                                Rec."BLRSL_Rent Increase %" := RentIncreasePercentage;
                             end else
                                 Error('No record found for the previous year to base the calculation.');
                         end;
@@ -141,7 +141,7 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                         RecalculatePerDayRent();
                     end;
                 }
-                field("SL_Round off"; rec."SL_Round off")
+                field("SL_Round off"; rec."BLRSL_Round off")
                 {
                     ApplicationArea = All;
                     Caption = 'Round off';
@@ -149,17 +149,17 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                     trigger OnValidate()
                     begin
                         // Recalculate the final annual amount
-                        if Rec."SL_Round off" = 0 then
-                            Rec."SL_Final Annual Amount" := Rec."SL_Annual Amount"
+                        if Rec."BLRSL_Round off" = 0 then
+                            Rec."BLRSL_Final Annual Amount" := Rec."BLRSL_Annual Amount"
                         else
-                            Rec."SL_Final Annual Amount" := Rec."SL_Annual Amount" + Rec."SL_Round off";
+                            Rec."BLRSL_Final Annual Amount" := Rec."BLRSL_Annual Amount" + Rec."BLRSL_Round off";
 
                         Rec.Modify();
                         // Recalculate totals
                         RecalculateTotals();
                     end;
                 }
-                field("SL_Final Annual Amount"; rec."SL_Final Annual Amount")
+                field("SL_Final Annual Amount"; rec."BLRSL_Final Annual Amount")
                 {
                     ApplicationArea = All;
                     Caption = 'Final Annual Amount';
@@ -173,7 +173,7 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                         RecalculateTotals();
                     end;
                 }
-                field("SL_Per Day Rent"; rec."SL_Per Day Rent")
+                field("SL_Per Day Rent"; rec."BLRSL_Per Day Rent")
                 {
                     ApplicationArea = All;
                     Caption = 'Per Day Rent';
@@ -193,7 +193,7 @@ page 73209686 "CR Single LumAnnualAmnt SP"
             group("Total Rent Caculation")
             {
 
-                field("TotalAnnualAmount"; rec.TotalAnnualAmount)
+                field("TotalAnnualAmount"; rec."BLRTotalAnnualAmount")
                 {
                     Caption = 'Total Contract Amount';
                     ApplicationArea = All;
@@ -201,7 +201,7 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                     ToolTip = 'Total annual amount for all records in the proposal.';
                 }
 
-                field("TotalRoundOff"; rec.TotalRoundOff)
+                field("TotalRoundOff"; rec."BLRTotalRoundOff")
                 {
                     Caption = 'Round Off';
                     ApplicationArea = All;
@@ -209,7 +209,7 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                     ToolTip = 'Total round off amount for all records in the proposal.';
                 }
 
-                field("TotalFinalAmount"; rec.TotalFinalAmount)
+                field("TotalFinalAmount"; rec."BLRTotalFinalAmount")
                 {
                     Caption = 'Total Final Contract Amount';
                     ApplicationArea = All;
@@ -217,7 +217,7 @@ page 73209686 "CR Single LumAnnualAmnt SP"
                     ToolTip = 'Total final annual amount for all records in the proposal.';
                 }
 
-                field("TotalFirstAnnualAmount"; rec.TotalFirstAnnualAmount)
+                field("TotalFirstAnnualAmount"; rec."BLRTotalFirstAnnualAmount")
                 {
                     Caption = 'Total Annual Amount';
                     ApplicationArea = All;
@@ -237,25 +237,25 @@ page 73209686 "CR Single LumAnnualAmnt SP"
         IsLeapYearInRange: Boolean;
     begin
         // Validate Start Date and End Date
-        if Rec."SL_Start Date" = 0D then
+        if Rec."BLRSL_Start Date" = 0D then
             Error('Start Date is not valid.');
-        if Rec."SL_End Date" = 0D then
+        if Rec."BLRSL_End Date" = 0D then
             Error('End Date is not valid.');
-        if Rec."SL_End Date" < Rec."SL_Start Date" then
+        if Rec."BLRSL_End Date" < Rec."BLRSL_Start Date" then
             Error('End Date cannot be earlier than Start Date.');
 
         // Initialize variables
-        StartYear := Date2DMY(Rec."SL_Start Date", 3); // Extract year of Start Date
-        EndYear := Date2DMY(Rec."SL_End Date", 3);    // Extract year of End Date
-        TotalDays := Rec."SL_End Date" - Rec."SL_Start Date" + 1;
+        StartYear := Date2DMY(Rec."BLRSL_Start Date", 3); // Extract year of Start Date
+        EndYear := Date2DMY(Rec."BLRSL_End Date", 3);    // Extract year of End Date
+        TotalDays := Rec."BLRSL_End Date" - Rec."BLRSL_Start Date" + 1;
         IsLeapYearInRange := false;
 
         // Check each year in the range for leap year
         for CurrentYear := StartYear to EndYear do
             if IsLeapYear(CurrentYear) then
                 // Ensure the leap day (Feb 29) falls within the Start and End Date
-                if (DMY2Date(29, 2, CurrentYear) >= Rec."SL_Start Date") and
-                   (DMY2Date(29, 2, CurrentYear) <= Rec."SL_End Date") then begin
+                if (DMY2Date(29, 2, CurrentYear) >= Rec."BLRSL_Start Date") and
+                   (DMY2Date(29, 2, CurrentYear) <= Rec."BLRSL_End Date") then begin
                     IsLeapYearInRange := true;
                     break; // Stop checking further once a leap year is found
                 end;
@@ -265,7 +265,7 @@ page 73209686 "CR Single LumAnnualAmnt SP"
             TotalDays := TotalDays + 1;
 
         // Set the calculated number of days
-        Rec."SL_Number of Days" := TotalDays;
+        Rec."BLRSL_Number of Days" := TotalDays;
 
         Rec.Modify();
     end;
@@ -280,10 +280,10 @@ page 73209686 "CR Single LumAnnualAmnt SP"
 
     local procedure RecalculatePerDayRent()
     begin
-        if Rec."SL_Number of Days" > 0 then
-            Rec."SL_Per Day Rent" := Rec."SL_Final Annual Amount" / Rec."SL_Number of Days"
+        if Rec."BLRSL_Number of Days" > 0 then
+            Rec."BLRSL_Per Day Rent" := Rec."BLRSL_Final Annual Amount" / Rec."BLRSL_Number of Days"
         else
-            Rec."SL_Per Day Rent" := 0;
+            Rec."BLRSL_Per Day Rent" := 0;
 
         Rec.Modify();
         CurrPage.Update();
@@ -291,17 +291,17 @@ page 73209686 "CR Single LumAnnualAmnt SP"
 
     local procedure RecalculateRentIncrease()
     var
-        PreviousYearRecord: Record "CR Single LumAnnualAmnt SP";
+        PreviousYearRecord: Record "BLRCRSingleLumAnnualAmntSP";
         IncreaseFactor: Decimal;
     begin
         // Fetch the previous year's record
-        PreviousYearRecord.SetRange("ID", Rec."ID");
-        PreviousYearRecord.SetRange(SL_Year, Rec.SL_Year - 1);
+        PreviousYearRecord.SetRange("BLRID", Rec."BLRID");
+        PreviousYearRecord.SetRange(BLRSL_Year, Rec."BLRSL_Year" - 1);
 
         if PreviousYearRecord.FindFirst() then begin
-            IncreaseFactor := 1 + (Rec."SL_Rent Increase %" / 100);
-            Rec."SL_Annual Amount" := PreviousYearRecord."SL_Final Annual Amount" * IncreaseFactor;
-            Rec."SL_Final Annual Amount" := Rec."SL_Annual Amount";
+            IncreaseFactor := 1 + (Rec."BLRSL_Rent Increase %" / 100);
+            Rec."BLRSL_Annual Amount" := PreviousYearRecord."BLRSL_Final Annual Amount" * IncreaseFactor;
+            Rec."BLRSL_Final Annual Amount" := Rec."BLRSL_Annual Amount";
 
             // Recalculate Per Day Rent
             RecalculatePerDayRent();
@@ -312,8 +312,8 @@ page 73209686 "CR Single LumAnnualAmnt SP"
     local procedure RecalculateTotals()
     var
 
-        LeaseProposalRec: Record "Contract Renewal";
-        RecordTemp: Record "CR Single LumAnnualAmnt SP";
+        LeaseProposalRec: Record "BLRContractRenewal";
+        RecordTemp: Record "BLRCRSingleLumAnnualAmntSP";
         TotalAnnual: Decimal;
         TotalFinal: Decimal;
         lTotalRoundOff: Decimal;
@@ -327,29 +327,29 @@ page 73209686 "CR Single LumAnnualAmnt SP"
         FirstYearAnnualAmount := 0; // Initialize to 0
 
         // Loop through all records for the same Proposal ID to calculate totals
-        RecordTemp.SetRange("ID", Rec."ID");
+        RecordTemp.SetRange("BLRID", Rec."BLRID");
         if RecordTemp.FindSet() then
             repeat
-                TotalAnnual += RecordTemp."SL_Annual Amount";
-                TotalFinal += RecordTemp."SL_Final Annual Amount";
-                lTotalRoundOff += RecordTemp."SL_Round off";
+                TotalAnnual += RecordTemp."BLRSL_Annual Amount";
+                TotalFinal += RecordTemp."BLRSL_Final Annual Amount";
+                lTotalRoundOff += RecordTemp."BLRSL_Round off";
 
                 // Check for the first year and assign its Annual Amount
-                if RecordTemp."SL_Year" = 1 then
-                    FirstYearAnnualAmount := RecordTemp."SL_Final Annual Amount";
+                if RecordTemp."BLRSL_Year" = 1 then
+                    FirstYearAnnualAmount := RecordTemp."BLRSL_Final Annual Amount";
             until RecordTemp.Next() = 0;
 
         // Update the totals in the current record
-        Rec.TotalAnnualAmount := TotalAnnual;
-        Rec.TotalFinalAmount := TotalFinal;
-        Rec.TotalRoundOff := lTotalRoundOff;
-        Rec.TotalFirstAnnualAmount := FirstYearAnnualAmount; // Assign the first year's annual amount
+        Rec."BLRTotalAnnualAmount" := TotalAnnual;
+        Rec."BLRTotalFinalAmount" := TotalFinal;
+        Rec."BLRTotalRoundOff" := lTotalRoundOff;
+        Rec."BLRTotalFirstAnnualAmount" := FirstYearAnnualAmount; // Assign the first year's annual amount
 
         // Update Lease Proposal Details with calculated totals
-        LeaseProposalRec.SetRange("ID", Rec."ID");
+        LeaseProposalRec.SetRange("BLRID", Rec."BLRID");
         if LeaseProposalRec.FindSet() then begin
-            LeaseProposalRec."Rent Amount" := FirstYearAnnualAmount; // Update Rent Amount with the first year's Final Annual Amount
-            LeaseProposalRec."Contract Amount" := TotalFinal; // Update Annual Rent Amount with the Total Final Amount
+            LeaseProposalRec."BLRRent Amount" := FirstYearAnnualAmount; // Update Rent Amount with the first year's Final Annual Amount
+            LeaseProposalRec."BLRContract Amount" := TotalFinal; // Update Annual Rent Amount with the Total Final Amount
 
             LeaseProposalRec.Modify(); // Save the changes to the Lease Proposal record
         end;

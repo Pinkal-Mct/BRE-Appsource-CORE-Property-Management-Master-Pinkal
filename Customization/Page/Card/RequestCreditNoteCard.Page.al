@@ -1,7 +1,7 @@
-page 73209723 "Request Credit Note Card"
+page 73209723 "BLRRequest Credit Note Card"
 {
     PageType = Card;
-    SourceTable = "Request Credit Note";
+    SourceTable = "BLRRequestCreditNote";
     ApplicationArea = All;
     Caption = 'Request Credit Note Card';
     UsageCategory = Administration;
@@ -11,87 +11,87 @@ page 73209723 "Request Credit Note Card"
         {
             group(Group)
             {
-                field("Request No."; Rec."Request No.")
+                field("Request No."; Rec."BLRRequest No.")
                 {
                     ToolTip = 'The unique identifier for the request credit note.';
                     ApplicationArea = All;
                     Caption = 'Request No.';
                     Editable = false;
                 }
-                field("Contract ID"; Rec."Contract ID")
+                field("Contract ID"; Rec."BLRContract ID")
                 {
                     ToolTip = 'The unique identifier for the contract associated with the request credit note.';
                     ApplicationArea = All;
                     Caption = 'Contract ID';
-                    TableRelation = "Tenancy Contract";
+                    TableRelation = "BLRTenancyContract";
                     trigger OnValidate()
                     var
-                        TenancyContract: Record "Tenancy Contract";
+                        TenancyContract: Record "BLRTenancyContract";
                     begin
-                        if Rec."Contract ID" <> 0 then begin
-                            if not TenancyContract.Get(Rec."Contract ID") then
+                        if Rec."BLRContract ID" <> 0 then begin
+                            if not TenancyContract.Get(Rec."BLRContract ID") then
                                 Error('The specified Contract ID does not exist.');
-                            Rec."Tenant No." := TenancyContract."Tenant ID";
-                            Rec."Customer Name" := TenancyContract."Customer Name";
-                            Rec."Payment Frequency" := Format(TenancyContract."Payment Frequency");
-                            Rec."Property Name" := TenancyContract."Property Name";
-                            Rec."Property Classification" := COPYSTR(TenancyContract."Property Classification", 1, StrLen(TenancyContract."Property Classification"));
+                            Rec."BLRTenant No." := TenancyContract."BLRTenant ID";
+                            Rec."BLRCustomer Name" := TenancyContract."BLRCustomer Name";
+                            Rec."BLRPayment Frequency" := Format(TenancyContract."BLRPayment Frequency");
+                            Rec."BLRProperty Name" := TenancyContract."BLRProperty Name";
+                            Rec."BLRProperty Classification" := COPYSTR(TenancyContract."BLRProperty Classification", 1, StrLen(TenancyContract."BLRProperty Classification"));
                         end else begin
-                            Rec."Tenant No." := '';
-                            Rec."Customer Name" := '';
-                            Rec."Payment Frequency" := '';
-                            Rec."Property Name" := '';
-                            Rec."Property Classification" := '';
+                            Rec."BLRTenant No." := '';
+                            Rec."BLRCustomer Name" := '';
+                            Rec."BLRPayment Frequency" := '';
+                            Rec."BLRProperty Name" := '';
+                            Rec."BLRProperty Classification" := '';
                         end;
                     end;
                 }
-                field("Property Name"; Rec."Property Name")
+                field("Property Name"; Rec."BLRProperty Name")
                 {
                     ToolTip = 'The name of the property associated with the request credit note.';
                     ApplicationArea = All;
                     Caption = 'Property Name';
                     Editable = false;
                 }
-                field("Tenant No."; Rec."Tenant No.")
+                field("Tenant No."; Rec."BLRTenant No.")
                 {
                     ToolTip = 'The unique identifier for the tenant associated with the request credit note.';
                     ApplicationArea = All;
                     Caption = 'Tenant No.';
                     Editable = false;
                 }
-                field("Customer Name"; Rec."Customer Name")
+                field("Customer Name"; Rec."BLRCustomer Name")
                 {
                     ToolTip = 'The name of the customer associated with the request credit note.';
                     ApplicationArea = All;
                     Caption = 'Tenant Name';
                     Editable = false;
                 }
-                field("Request Date"; Rec."Request Date")
+                field("Request Date"; Rec."BLRRequest Date")
                 {
                     ToolTip = 'The date when the request credit note was created.';
                     ApplicationArea = All;
                     Caption = 'Request Date';
                 }
-                field(Reason; Rec.Reason)
+                field(Reason; Rec."BLRReason")
                 {
                     ToolTip = 'The reason for the request credit note.';
                     ApplicationArea = All;
                     Caption = 'Reason';
                 }
-                field("Request Source"; Rec."Request Source")
+                field("Request Source"; Rec."BLRRequest Source")
                 {
                     ToolTip = 'The source of the request credit note.';
                     ApplicationArea = All;
                     Caption = 'Request Source';
                 }
-                field(Status; Rec.Status)
+                field(Status; Rec."BLRStatus")
                 {
                     ToolTip = 'The status of the request credit note.';
                     ApplicationArea = All;
                     Caption = 'Status';
                     Editable = IsFinanceManager;
                 }
-                field(Remark; Rec."Reason for Rejection")
+                field(Remark; Rec."BLRReason for Rejection")
                 {
                     ToolTip = 'The reason for rejection of the request credit note.';
                     ApplicationArea = All;
@@ -99,15 +99,15 @@ page 73209723 "Request Credit Note Card"
                     MultiLine = true;
                     Editable = false;
                 }
-                field("Adjust with Invoice"; Rec."Adjust with Invoice")
+                field("Adjust with Invoice"; Rec."BLRAdjust with Invoice")
                 {
                     ApplicationArea = All;
                     Caption = 'Adjust with Invoice';
                 }
             }
-            part("Request Credit Note Lines"; "Request CreditNote Grid")
+            part("Request Credit Note Lines"; "BLRRequest CreditNote Grid")
             {
-                SubPageLink = "Request No." = FIELD("Request No.");
+                SubPageLink = "BLRRequest No." = FIELD("BLRRequest No.");
                 ApplicationArea = All;
                 Caption = 'Request Credit Note Lines';
             }
@@ -125,7 +125,7 @@ page 73209723 "Request Credit Note Card"
                 Visible = CanSubmitForApproval;
                 trigger OnAction()
                 var
-                    RequestCreditnoteapproval: Codeunit "Approval Request Crdit note ";
+                    RequestCreditnoteapproval: Codeunit "BLRApprovalRequestCrditnote ";
                 begin
                     RequestCreditnoteapproval.SubmitCreditNote(Rec);
                     Dialog.Message('Email sent for approval.');
@@ -143,15 +143,15 @@ page 73209723 "Request Credit Note Card"
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     var
     begin
-        CurrPage."Request Credit Note Lines".Page.SetContractID(Rec."Contract ID");
+        CurrPage."Request Credit Note Lines".Page.SetContractID(Rec."BLRContract ID");
     end;
 
     trigger OnAfterGetRecord()
     var
     begin
-        CurrPage."Request Credit Note Lines".Page.SetContractID(Rec."Contract ID");
+        CurrPage."Request Credit Note Lines".Page.SetContractID(Rec."BLRContract ID");
         IsFinanceManager := CheckUserRole();
-        CanSubmitForApproval := (Rec.Status in [Rec.Status::" ", Rec.Status::Rejected]);
+        CanSubmitForApproval := (Rec."BLRStatus" in [Rec."BLRStatus"::" ", Rec."BLRStatus"::Rejected]);
     end;
 
     trigger OnOpenPage()

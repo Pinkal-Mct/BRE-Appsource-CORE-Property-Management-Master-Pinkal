@@ -1,4 +1,4 @@
-pageextension 73209601 "PostedsalesinvoiceList" extends "Posted Sales Invoices"
+pageextension 73209601 "BLRPostedsalesinvoiceList" extends "Posted Sales Invoices"
 {
     layout
     {
@@ -9,7 +9,7 @@ pageextension 73209601 "PostedsalesinvoiceList" extends "Posted Sales Invoices"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the pre-assigned number of the sales invoice.';
             }
-            field("Contract ID"; Rec."Contract ID")
+            field("Contract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
             }
