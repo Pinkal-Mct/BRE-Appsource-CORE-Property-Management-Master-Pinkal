@@ -4,7 +4,7 @@ pageextension 73209586 "BLRSales Header" extends "Sales Credit Memo"
     {
         addafter(Action7)
         {
-            action("Create Credit Note")
+            action("BLRCreate Credit Note")
             {
                 ToolTip = 'Create a credit note for the selected sales header.';
                 Caption = 'Create Credit Note';

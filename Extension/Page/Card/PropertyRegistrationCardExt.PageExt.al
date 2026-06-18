@@ -10,13 +10,13 @@ pageextension 73209584 BLRPropertyRegistrationCardExt extends "BLRProperty Regis
 
     trigger OnOpenPage()
     begin
-        ShowDocAttachment := not (IsUserInProfile('LEASE MANAGER') or IsUserInProfile('FINANCE MANAGER'));
+        ShowDocAttachment := not (BLRIsUserInProfile('LEASE MANAGER') or BLRIsUserInProfile('FINANCE MANAGER'));
     end;
 
     var
         ShowDocAttachment: Boolean;
 
-    local procedure IsUserInProfile(ProfileID: Code[20]): Boolean
+    local procedure BLRIsUserInProfile(ProfileID: Code[20]): Boolean
     var
         AccessControl: Record "User Personalization";
     begin

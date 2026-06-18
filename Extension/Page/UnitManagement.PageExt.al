@@ -34,10 +34,10 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
 
         addafter("Ongoing Sales")
         {
-            cuegroup("All")
+            cuegroup("BLRAll")
             {
                 Caption = 'All';
-                field("All Property"; GetAllPropertiesCount())
+                field("BLRAll Property"; BLRGetAllPropertiesCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'All Property';
@@ -49,7 +49,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRProperty Registration List");
                     end;
                 }
-                field("All Unit"; GetAllUnitsCount())
+                field("BLRAll Unit"; BLRGetAllUnitsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'All Unit';
@@ -69,10 +69,10 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                     end;
                 }
             }
-            cuegroup("BLRPropertyType")
+            cuegroup("BLRBLRPropertyType")
             {
                 Caption = 'Property Type';
-                field("Residential Property Count"; GetResidentialPropertiesCount())
+                field("BLRResidential Property Count"; BLRGetResidentialPropertiesCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Residential property';
@@ -84,7 +84,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRResidential Property List");
                     end;
                 }
-                field("Commercial Property Count"; GetCommercialPropertiesCount())
+                field("BLRCommercial Property Count"; BLRGetCommercialPropertiesCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Commercial property';
@@ -96,7 +96,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRCommercial Property List");
                     end;
                 }
-                field("Common Property Count"; GetCommonPropertiesCount())
+                field("BLRCommon Property Count"; BLRGetCommonPropertiesCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Common property';
@@ -109,10 +109,10 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                     end;
                 }
             }
-            cuegroup("Unit Type")
+            cuegroup("BLRUnit Type")
             {
                 Caption = 'Unit Type';
-                field("Residential Unit Count"; GetResidentialunitsCount())
+                field("BLRResidential Unit Count"; BLRGetResidentialunitsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Residential units';
@@ -124,7 +124,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRResidential Unit List");
                     end;
                 }
-                field("Commercial Unit Count"; GetCommercialunitsCount())
+                field("BLRCommercial Unit Count"; BLRGetCommercialunitsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Commercial units';
@@ -136,7 +136,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRCommercial Unit List");
                     end;
                 }
-                field("Common Unit Count"; GetCommonunitsCount())
+                field("BLRCommon Unit Count"; BLRGetCommonunitsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Common units';
@@ -149,10 +149,10 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                     end;
                 }
             }
-            cuegroup("Unit Status")
+            cuegroup("BLRUnit Status")
             {
                 Caption = 'Unit Status'; // Adjust the caption as needed
-                field("Free units Count"; GetFreeunitsCount())
+                field("BLRFree units Count"; BLRGetFreeunitsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Free units';
@@ -164,7 +164,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRFree Unit List");
                     end;
                 }
-                field("Selected units Count"; GetSelectedunitsCount())
+                field("BLRSelected units Count"; BLRGetSelectedunitsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Selected units';
@@ -176,7 +176,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRSelected Unit List");
                     end;
                 }
-                field("Occupied units Count"; GetOccupiedunitsCount())
+                field("BLROccupied units Count"; BLRGetOccupiedunitsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Occupied units';
@@ -189,10 +189,10 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                     end;
                 }
             }
-            cuegroup("Merged Unit Status")
+            cuegroup("BLRMerged Unit Status")
             {
                 Caption = 'Merged Unit Status'; // Adjust the caption as needed
-                field("Free Merged units Count"; GetFreeMergedUnitsCount())
+                field("BLRFree Merged units Count"; BLRGetFreeMergedUnitsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Free merged units';
@@ -204,7 +204,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRFree Merged Unit list");
                     end;
                 }
-                field("Occupied Merged units Count"; GetOccupiedMergedUnitsCount())
+                field("BLROccupied Merged units Count"; BLRGetOccupiedMergedUnitsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Occupied merged units';
@@ -217,9 +217,9 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                     end;
                 }
             }
-            cuegroup("Tenancy Contracts Statistics")
+            cuegroup("BLRTenancy Contracts Statistics")
             {
-                field("All Proposals Count"; GetAllProposalsCount())
+                field("BLRAll Proposals Count"; BLRGetAllProposalsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'All Proposals';
@@ -231,7 +231,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRLease Proposal List");
                     end;
                 }
-                field("Active Contracts Count"; GetActiveContractsCount())
+                field("BLRActive Contracts Count"; BLRGetActiveContractsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Active Contracts';
@@ -243,7 +243,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRActive Contract List");
                     end;
                 }
-                field("Suspended Contracts Count"; GetSuspendedContractsCount())
+                field("BLRSuspended Contracts Count"; BLRGetSuspendedContractsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Suspended Contracts';
@@ -255,7 +255,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRSuspended Contract List");
                     end;
                 }
-                field("Contracts Expiring Soon"; GetExpiringContractsCount())
+                field("BLRContracts Expiring Soon"; BLRGetExpiringContractsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Contracts Expiring Soon';
@@ -268,9 +268,9 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                     end;
                 }
             }
-            cuegroup("Sales Credit Memo")
+            cuegroup("BLRSales Credit Memo")
             {
-                field("Sales Credit Memo Count"; GetSalesCreditMemoCount())
+                field("BLRSales Credit Memo Count"; BLRGetSalesCreditMemoCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Posted Sales Credit Memo';
@@ -282,7 +282,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"Posted Sales Credit Memos");
                     end;
                 }
-                field("Full Adjusted Credit Memo Count"; GefulladjustedCreditMemoCount())
+                field("BLRFull Adjusted Credit Memo Count"; BLRGefulladjustedCreditMemoCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Full Adjusted Credit Memo';
@@ -295,7 +295,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"Posted Sales Credit Memos");
                     end;
                 }
-                field("Unpaid Credit Memo Count"; Getunpaidcreditmemo())
+                field("BLRUnpaid Credit Memo Count"; BLRGetunpaidcreditmemo())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Unpaid Credit Memo';
@@ -309,9 +309,9 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                     end;
                 }
             }
-            cuegroup("Payments ")
+            cuegroup("BLRPayments ")
             {
-                field("Payments Due Within 10 Days"; GetPaymentsDueCount())
+                field("BLRPayments Due Within 10 Days"; BLRGetPaymentsDueCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Payments Due Within 10 Days';
@@ -323,7 +323,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRUpcoming Payments List");
                     end;
                 }
-                field("Overdue Payments"; GetOverduePaymentsCount())
+                field("BLROverdue Payments"; BLRGetOverduePaymentsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Overdue Payments';
@@ -337,9 +337,9 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                     end;
                 }
             }
-            cuegroup("Suspended Contracts")
+            cuegroup("BLRSuspended Contracts")
             {
-                field("All Suspended Contracts Count"; GetSuspendedContractsCount())
+                field("BLRAll Suspended Contracts Count"; BLRGetSuspendedContractsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'All Suspended Contracts';
@@ -351,7 +351,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRSuspended Contract List");
                     end;
                 }
-                field("Legally Suspended Contracts"; GetLegallySuspendedContractsCount())
+                field("BLRLegally Suspended Contracts"; BLRGetLegallySuspendedContractsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Suspended Contracts-Legal';
@@ -364,7 +364,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
                         PAGE.RUN(PAGE::"BLRLegal Suspended Contracts");
                     end;
                 }
-                field("Business Suspended Contracts"; GetBusinessSuspendedContractsCount())
+                field("BLRBusiness Suspended Contracts"; BLRGetBusinessSuspendedContractsCount())
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Temporarily Suspended Contracts';
@@ -382,14 +382,14 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         }
     }
 
-    procedure GetAllPropertiesCount(): Integer;
+    procedure BLRGetAllPropertiesCount(): Integer;
     var
         PropertyRec: Record "BLRPropertyRegistration"; // Replace with your actual Property Table
     begin
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
-    procedure GetAllUnitsCount(): Integer;
+    procedure BLRGetAllUnitsCount(): Integer;
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
@@ -398,7 +398,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
-    procedure GetResidentialPropertiesCount(): Integer;
+    procedure BLRGetResidentialPropertiesCount(): Integer;
     var
         PropertyRec: Record "BLRPropertyRegistration"; // Replace with your actual Property Table
     begin
@@ -406,7 +406,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
-    procedure GetCommercialPropertiesCount(): Integer;
+    procedure BLRGetCommercialPropertiesCount(): Integer;
     var
         PropertyRec: Record "BLRPropertyRegistration"; // Replace with your actual Property Table
     begin
@@ -414,7 +414,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
-    procedure GetCommonPropertiesCount(): Integer;
+    procedure BLRGetCommonPropertiesCount(): Integer;
     var
         PropertyRec: Record "BLRPropertyRegistration"; // Replace with your actual Property Table
     begin
@@ -422,7 +422,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
-    procedure GetResidentialunitsCount(): Integer;
+    procedure BLRGetResidentialunitsCount(): Integer;
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
@@ -430,7 +430,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
-    procedure GetFreeMergedUnitsCount(): Integer;
+    procedure BLRGetFreeMergedUnitsCount(): Integer;
     var
         MergedUnitsRec: Record "BLRMergedUnits";
     begin
@@ -438,7 +438,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(MergedUnitsRec.Count());
     end;
 
-    procedure GetOccupiedMergedUnitsCount(): Integer;
+    procedure BLRGetOccupiedMergedUnitsCount(): Integer;
     var
         MergedUnitsRec: Record "BLRMergedUnits";
     begin
@@ -447,7 +447,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
     end;
 
 
-    procedure GetCommercialunitsCount(): Integer;
+    procedure BLRGetCommercialunitsCount(): Integer;
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
@@ -455,7 +455,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
-    procedure GetCommonunitsCount(): Integer;
+    procedure BLRGetCommonunitsCount(): Integer;
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
@@ -463,7 +463,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
-    procedure GetFreeunitsCount(): Integer;
+    procedure BLRGetFreeunitsCount(): Integer;
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
@@ -473,7 +473,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
-    procedure GetSelectedunitsCount(): Integer;
+    procedure BLRGetSelectedunitsCount(): Integer;
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
@@ -482,7 +482,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
-    procedure GetOccupiedunitsCount(): Integer;
+    procedure BLRGetOccupiedunitsCount(): Integer;
     var
         PropertyRec: Record Item; // Replace with your actual Property Table
     begin
@@ -491,7 +491,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PropertyRec.Count()); // Return the count of vacant properties
     end;
 
-    procedure GetAllProposalsCount(): Integer;
+    procedure BLRGetAllProposalsCount(): Integer;
     var
         ProposalRec: Record "BLRLeaseProposalDetails"; // Replace with your actual Proposal Table
     begin
@@ -499,7 +499,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(ProposalRec.Count()); // Return the count of all proposals
     end;
 
-    procedure GetActiveContractsCount(): Integer;
+    procedure BLRGetActiveContractsCount(): Integer;
     var
         ContractRec: Record "BLRTenancyContract"; // Replace with your actual Contract Table
     begin
@@ -507,7 +507,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(ContractRec.Count()); // Return the count of active contracts
     end;
 
-    procedure GetSuspendedContractsCount(): Integer;
+    procedure BLRGetSuspendedContractsCount(): Integer;
     var
         ContractRec: Record BLRSuspendReasonTable; // Replace with your actual Contract Table
     begin
@@ -516,7 +516,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(ContractRec.Count()); // Return the count of active contracts
     end;
 
-    procedure GetExpiringContractsCount(): Integer;
+    procedure BLRGetExpiringContractsCount(): Integer;
     var
         ContractRec: Record "BLRTenancyContract";
         CurrentDate: Date;
@@ -530,7 +530,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(ContractRec.Count());
     end;
 
-    procedure GetPaymentsDueCount(): Integer;
+    procedure BLRGetPaymentsDueCount(): Integer;
     var
         PaymentRec: Record "BLRPaymentMode2"; // Replace with your actual payment table name
         CurrentDate: Date;
@@ -544,7 +544,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PaymentRec.Count());
     end;
 
-    procedure GetOverduePaymentsCount(): Integer;
+    procedure BLRGetOverduePaymentsCount(): Integer;
     var
         PaymentRec: Record "BLRPaymentMode2"; // Replace with your actual payment table name
     begin
@@ -553,7 +553,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(PaymentRec.Count());
     end;
 
-    procedure GetLegallySuspendedContractsCount(): Integer;
+    procedure BLRGetLegallySuspendedContractsCount(): Integer;
     var
         ContractRec: Record BLRSuspendReasonTable;
     begin
@@ -563,7 +563,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(ContractRec.Count());
     end;
 
-    procedure GetBusinessSuspendedContractsCount(): Integer;
+    procedure BLRGetBusinessSuspendedContractsCount(): Integer;
     var
         ContractRec: Record BLRSuspendReasonTable;
     begin
@@ -573,14 +573,14 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(ContractRec.Count());
     end;
 
-    procedure GetSalesCreditMemoCount(): Integer;
+    procedure BLRGetSalesCreditMemoCount(): Integer;
     var
         SalesCreditMemoRec: Record "Sales Cr.Memo Header"; // Replace with your actual Sales Credit Memo Table
     begin
         exit(SalesCreditMemoRec.Count()); // Return the count of Sales Credit Memos
     end;
 
-    procedure GefulladjustedCreditMemoCount(): Integer;
+    procedure BLRGefulladjustedCreditMemoCount(): Integer;
     var
         SalesCreditMemoRec: Record "Sales Cr.Memo Header"; // Replace with your actual Sales Credit Memo Table
     begin
@@ -588,7 +588,7 @@ pageextension 73209605 BLRUnitManagement extends "O365 Activities"
         exit(SalesCreditMemoRec.Count()); // Return the count of Sales Credit Memos with remaining amount 0
     end;
 
-    procedure Getunpaidcreditmemo(): Integer;
+    procedure BLRGetunpaidcreditmemo(): Integer;
     var
         SalesCreditMemoRec: Record "Sales Cr.Memo Header"; // Replace with your actual Sales Credit Memo Table
     begin

@@ -47,58 +47,58 @@ pageextension 73209600 BLRItemListExtension extends "Item List"
 
         addbefore(Description)
         {
-            field("Unit Name"; Rec."BLRUnit Name")
+            field("BLRUnit Name"; Rec."BLRUnit Name")
             {
                 ApplicationArea = All;
                 Caption = 'Unit Name';
                 ToolTip = 'Name of the unit';
             }
-            field("Property Name"; Rec."BLRProperty Name")
+            field("BLRProperty Name"; Rec."BLRProperty Name")
             {
                 ApplicationArea = All;
                 Caption = 'Property Name';
                 ToolTip = 'Name of the property to which the unit belongs';
             }
-            field("Usage Type"; Rec."BLRUsage Type")
+            field("BLRUsage Type"; Rec."BLRUsage Type")
             {
                 ApplicationArea = All;
                 Caption = 'Usage Type';
                 ToolTip = 'Type of usage for the unit, e.g., Residential, Commercial';
             }
-            field("Unit Status"; Rec."BLRUnit Status")
+            field("BLRUnit Status"; Rec."BLRUnit Status")
             {
                 ApplicationArea = All;
                 Caption = 'Unit Status';
                 ToolTip = 'Current status of the unit, e.g., Free, Occupied, Under Maintenance';
             }
 
-            field("Merging/Splitting"; rec."BLRMergeSplitOption")
+            field("BLRMerging/Splitting"; rec."BLRMergeSplitOption")
             {
                 ApplicationArea = All;
                 ToolTip = 'Indicates if the unit is available for merging or splitting';
             }
 
-            field("Market Rate per Sq. Ft."; rec."BLRMarket Rate per Sq. Ft.")
+            field("BLRMarket Rate per Sq. Ft."; rec."BLRMarket Rate per Sq. Ft.")
             {
                 ApplicationArea = All;
                 ToolTip = 'Market rate per square foot for the unit';
             }
 
-            field("Amount"; Rec."BLRAmount")
+            field("BLRAmount"; Rec."BLRAmount")
             {
                 ApplicationArea = All;
                 Caption = 'Amount';
                 ToolTip = 'Total amount associated with the unit';
             }
 
-            field("Unit Registration Date"; Rec."Last Date Modified")
+            field("BLRUnit Registration Date"; Rec."Last Date Modified")
             {
                 ApplicationArea = All;
                 Caption = 'Last Date Modified';
                 ToolTip = 'Date when the unit was last modified';
             }
 
-            field("Merged Unit ID"; Rec."BLRMerged Unit ID")
+            field("BLRMerged Unit ID"; Rec."BLRMerged Unit ID")
             {
                 ApplicationArea = All;
                 Caption = 'Merged Unit ID';
@@ -112,7 +112,7 @@ pageextension 73209600 BLRItemListExtension extends "Item List"
         Selected: Boolean; // Variable to store whether the unit is selected
 
     // Function to retrieve selected Unit IDs
-    procedure GetSelectedUnitIDs(): Text
+    procedure BLRGetSelectedUnitIDs(): Text
     var
         SelectedUnits: Text;
     begin

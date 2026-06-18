@@ -4,7 +4,7 @@ pageextension 73209594 BLRBankAccountLedgerEntriesExt extends "Bank Account Ledg
     {
         addafter("Document No.")
         {
-            field("Contract ID"; Rec."BLRContract ID")
+            field("BLRContract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
                 Caption = 'Contract ID';

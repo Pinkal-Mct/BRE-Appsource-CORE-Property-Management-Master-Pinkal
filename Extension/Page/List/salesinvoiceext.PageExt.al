@@ -4,7 +4,7 @@ pageextension 73209602 BLRsalesinvoiceext extends "Sales Invoice List"
     {
         addafter(Amount)
         {
-            field("Contract ID"; Rec."BLRContract ID")
+            field("BLRContract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
                 Caption = 'Contract ID';
@@ -27,72 +27,72 @@ pageextension 73209602 BLRsalesinvoiceext extends "Sales Invoice List"
                     end;
                 end;
             }
-            field("Property Name"; Rec."BLRProperty Name")
+            field("BLRProperty Name"; Rec."BLRProperty Name")
             {
                 Caption = 'Property Name';
                 ApplicationArea = All;
                 Editable = false;
                 ToolTip = 'Specifies the name of the property associated with the sales invoice.';
             }
-            field("Unit Name"; Rec."BLRUnit Name")
+            field("BLRUnit Name"; Rec."BLRUnit Name")
             {
                 Caption = 'Unit Name';
                 ApplicationArea = All;
                 Editable = false;
                 ToolTip = 'Specifies the name of the unit associated with the sales invoice.';
             }
-            field("Contract Tenure"; Rec."BLRContract Tenure")
+            field("BLRContract Tenure"; Rec."BLRContract Tenure")
             {
                 Caption = 'Contract Tenure';
                 ApplicationArea = All;
                 Editable = false;
                 ToolTip = 'Specifies the tenure of the contract associated with the sales invoice.';
             }
-            field("Sell-to Phone No."; Rec."Sell-to Phone No.")
+            field("BLRSell-to Phone No."; Rec."Sell-to Phone No.")
             {
                 Caption = 'Customer Phone No.';
                 ApplicationArea = All;
                 Editable = false;
                 ToolTip = 'Specifies the phone number of the customer associated with the sales invoice.';
             }
-            field("Sell-to E-Mail"; Rec."Sell-to E-Mail")
+            field("BLRSell-to E-Mail"; Rec."Sell-to E-Mail")
             {
                 Caption = 'Customer Email';
                 ApplicationArea = All;
                 Editable = false;
                 ToolTip = 'Specifies the email address of the customer associated with the sales invoice.';
             }
-            field("Contract Period"; Rec."BLRContract Period")
+            field("BLRContract Period"; Rec."BLRContract Period")
             {
                 Caption = 'Contract Period';
                 ApplicationArea = All;
                 ToolTip = 'Specifies the period of the contract associated with the sales invoice.';
             }
-            field("Reason for Rejection"; Rec."BLRReason for Rejection")
+            field("BLRReason for Rejection"; Rec."BLRReason for Rejection")
             {
                 Caption = 'Reason For Rejection';
                 ApplicationArea = All;
                 ToolTip = 'The Reason for Rejection field is used to specify the reason for rejecting the sales invoice during the approval process.';
             }
-            field("Approval Status"; Rec."BLRApproval Status")
+            field("BLRApproval Status"; Rec."BLRApproval Status")
             {
                 Caption = 'Approval Status';
                 ApplicationArea = All;
                 ToolTip = 'Specifies the approval status of the sales invoice.';
             }
-            field("Tenant Name"; Rec."BLRTenant Name")
+            field("BLRTenant Name"; Rec."BLRTenant Name")
             {
                 ApplicationArea = All;
                 Editable = false;
                 ToolTip = 'Specifies the name of the tenant associated with the sales invoice.';
             }
-            field("Customer P.O"; Rec."BLRCustomer P.O")
+            field("BLRCustomer P.O"; Rec."BLRCustomer P.O")
             {
                 ApplicationArea = All;
                 Caption = 'Customer P.O';
                 ToolTip = 'Specifies the customer purchase order number associated with the sales invoice.';
             }
-            field("Customer P.O Date"; Rec."BLRCustomer P.O Date")
+            field("BLRCustomer P.O Date"; Rec."BLRCustomer P.O Date")
             {
                 ApplicationArea = All;
                 Caption = 'Customer P.O Date';

@@ -4,7 +4,7 @@ pageextension 73209598 BLRApplyEntriesPageExt extends "Apply Customer Entries"
     {
         addafter("Document No.")
         {
-            field("Contract ID"; Rec."BLRContract ID")
+            field("BLRContract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
                 Caption = 'Contract ID';

@@ -5,9 +5,9 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
     {
         addafter(General)
         {
-            group("Contract Details")
+            group("BLRContract Details")
             {
-                field("Contract ID"; Rec."BLRContract ID")
+                field("BLRContract ID"; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                     ApplicationArea = All;
@@ -55,76 +55,76 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
                         end;
                     end;
                 }
-                field("Property Name"; Rec."BLRProperty Name")
+                field("BLRProperty Name"; Rec."BLRProperty Name")
                 {
                     Caption = 'Property Name';
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Property Name field displays the name of the property associated with the tenancy contract.';
                 }
-                field("Unit Name"; Rec."BLRUnit Name")
+                field("BLRUnit Name"; Rec."BLRUnit Name")
                 {
                     Caption = 'Unit Name';
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Unit Name field displays the name of the unit associated with the tenancy contract.';
                 }
-                field("Contract Tenure"; Rec."BLRContract Tenure")
+                field("BLRContract Tenure"; Rec."BLRContract Tenure")
                 {
                     Caption = 'Contract Tenure';
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Contract Tenure field displays the duration of the tenancy contract.';
                 }
-                field("Sell-to Phone No."; Rec."Sell-to Phone No.")
+                field("BLRSell-to Phone No."; Rec."Sell-to Phone No.")
                 {
                     Caption = 'Customer Phone No.';
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Sell-to Phone No. field displays the phone number of the customer associated with the sales invoice.';
                 }
-                field("Sell-to E-Mail"; Rec."Sell-to E-Mail")
+                field("BLRSell-to E-Mail"; Rec."Sell-to E-Mail")
                 {
                     Caption = 'Customer Email';
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Sell-to E-Mail field displays the email address of the customer associated with the sales invoice.';
                 }
-                field("Bill-to Customer No."; Rec."Bill-to Customer No.")
+                field("BLRBill-to Customer No."; Rec."Bill-to Customer No.")
                 {
                     Caption = 'Customer No.';
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Bill-to Customer No. field displays the customer number of the customer associated with the sales invoice.';
                 }
-                field("Tenant Name"; Rec."BLRTenant Name")
+                field("BLRTenant Name"; Rec."BLRTenant Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Tenant Name field displays the name of the tenant associated with the tenancy contract.';
                 }
-                field("Customer P.O"; Rec."BLRCustomer P.O")
+                field("BLRCustomer P.O"; Rec."BLRCustomer P.O")
                 {
                     ApplicationArea = All;
                     Caption = 'Customer P.O';
                     Editable = NotAccessFieldFM;
                     ToolTip = 'The Customer P.O field is used to enter the purchase order number provided by the customer for the sales invoice.';
                 }
-                field("Customer P.O Date"; Rec."BLRCustomer P.O Date")
+                field("BLRCustomer P.O Date"; Rec."BLRCustomer P.O Date")
                 {
                     ApplicationArea = All;
                     Caption = 'Customer P.O Date';
                     Editable = NotAccessFieldFM;
                     ToolTip = 'The Customer P.O Date field is used to enter the date of the purchase order provided by the customer for the sales invoice.';
                 }
-                field("Contract Period"; Rec."BLRContract Period")
+                field("BLRContract Period"; Rec."BLRContract Period")
                 {
                     ApplicationArea = All;
                     Caption = 'Contract Period';
                     Editable = false;
                     ToolTip = 'The Contract Period field displays the start and end dates of the tenancy contract.';
                 }
-                field("Reason for Rejection"; Rec."BLRReason for Rejection")
+                field("BLRReason for Rejection"; Rec."BLRReason for Rejection")
                 {
                     Caption = 'Reason For Rejection';
                     ApplicationArea = All;
@@ -132,7 +132,7 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
                     ToolTip = 'The Reason for Rejection field is used to specify the reason for rejecting the sales invoice during the approval process.';
                 }
 
-                field("Approval Status"; Rec."BLRApproval Status")
+                field("BLRApproval Status"; Rec."BLRApproval Status")
                 {
                     Caption = 'Approval Status';
                     ApplicationArea = All;
@@ -151,17 +151,17 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
                         end else
                             if Rec."BLRApproval Status" = Rec."BLRApproval Status"::Rejected then
                                 ShowDialogBox.DialogboxForRejection(Rec);
-                        UpdateInvoiceApprovalStatus();
+                        BLRUpdateInvoiceApprovalStatus();
                     end;
                 }
-                field("Overdue Invoice"; Rec."BLROverdue Invoice")
+                field("BLROverdue Invoice"; Rec."BLROverdue Invoice")
                 {
                     Caption = 'Overdue Invoice';
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'The Overdue Invoice field indicates whether the sales invoice is overdue. It is set to true if the invoice is past its due date.';
                 }
-                field("Property Classification"; Rec."BLRProperty Classification")
+                field("BLRProperty Classification"; Rec."BLRProperty Classification")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -172,19 +172,19 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
 
         addlast(General)
         {
-            field("FC ID"; Rec."BLRFC ID")
+            field("BLRFC ID"; Rec."BLRFC ID")
             {
                 ApplicationArea = All;
                 Editable = false;
                 ToolTip = 'The FC ID field is used to store the unique identifier for the financial controller associated with the sales invoice.';
             }
-            field("View Document URL"; Rec."BLRView Document URL")
+            field("BLRView Document URL"; Rec."BLRView Document URL")
             {
                 ApplicationArea = All;
                 Caption = 'View Document URL';
                 ToolTip = 'The View Document URL field contains the URL to view the document associated with the sales invoice.';
             }
-            field("View Invoice"; Rec."BLRView Invoice")
+            field("BLRView Invoice"; Rec."BLRView Invoice")
             {
                 ApplicationArea = All;
                 Caption = 'View Invoice';
@@ -201,7 +201,7 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
                     if FileURL = '' then
                         Error('No document is available to view.');
 
-                    OpenFileInBrowser(FileURL);
+                    BLROpenFileInBrowser(FileURL);
                 end;
             }
         }
@@ -211,7 +211,7 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
     {
         addafter(Release)
         {
-            action("Run Report")
+            action("BLRRun Report")
             {
                 Caption = 'Run Report';
                 ApplicationArea = All;
@@ -232,7 +232,7 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
         }
         addafter(Action9)
         {
-            action(ResendForApproval)
+            action(BLRResendForApproval)
             {
                 ApplicationArea = All;
                 Caption = 'Resend For Approval';
@@ -258,7 +258,7 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
 
 
     }
-    procedure OpenFileInBrowser(URL: Text)
+    procedure BLROpenFileInBrowser(URL: Text)
     begin
         if URL <> '' then
             Hyperlink(URL)
@@ -266,7 +266,7 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
             Error('The file URL is invalid.');
     end;
 
-    procedure GetUserEditableStatus(): Boolean
+    procedure BLRGetUserEditableStatus(): Boolean
     var
         UserPersonalization: Record "User Personalization";
     begin
@@ -284,7 +284,7 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
 
     end;
 
-    procedure NotAccessFieldFinanceManager(): Boolean
+    procedure BLRNotAccessFieldFinanceManager(): Boolean
     var
         UserPersonalization1: Record "User Personalization";
     begin
@@ -306,8 +306,8 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
         tenancyContract: Record "BLRTenancyContract";
         customer: Record Customer;
     begin
-        approvaleditable := GetUserEditableStatus();
-        NotAccessFieldFM := NotAccessFieldFinanceManager();
+        approvaleditable := BLRGetUserEditableStatus();
+        NotAccessFieldFM := BLRNotAccessFieldFinanceManager();
         customer.SetRange("No.", Rec."Sell-to Customer No.");
 
         if customer.FindFirst() then begin
@@ -341,7 +341,7 @@ pageextension 73209587 BLRSalesInvoice extends "Sales Invoice"
         approvaleditable: Boolean;
         NotAccessFieldFM: Boolean;
 
-    procedure UpdateInvoiceApprovalStatus()
+    procedure BLRUpdateInvoiceApprovalStatus()
     var
         PaymentSchedule2: Record "BLRPaymentSchedule2";
     begin

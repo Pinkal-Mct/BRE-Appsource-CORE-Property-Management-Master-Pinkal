@@ -4,55 +4,55 @@ pageextension 73209581 BLRPostedSalesCreditMemo extends "Posted Sales Credit Mem
     {
         addafter(General)
         {
-            group("Contract Information")
+            group("BLRContract Information")
             {
-                field("Contract ID"; Rec."BLRContract ID")
+                field("BLRContract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'ID of the contract related to this credit memo.';
                 }
-                field("Property Name"; Rec."BLRProperty Name")
+                field("BLRProperty Name"; Rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Name of the property related to this credit memo.';
                 }
-                field("Unit Name"; Rec."BLRUnit Name")
+                field("BLRUnit Name"; Rec."BLRUnit Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Name of the unit related to this credit memo.';
                 }
-                field("Contract Amount"; Rec."BLRContract Amount")
+                field("BLRContract Amount"; Rec."BLRContract Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Amount of the contract related to this credit memo.';
                     Editable = false;
                 }
-                field("Contract Tenure"; Rec."BLRContract Tenure")
+                field("BLRContract Tenure"; Rec."BLRContract Tenure")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Tenure of the contract related to this credit memo.';
                 }
-                field("Contract Period"; Rec."BLRContract Period")
+                field("BLRContract Period"; Rec."BLRContract Period")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Period of the contract related to this credit memo.';
                 }
-                field("Property Classification"; Rec."BLRProperty Classification")
+                field("BLRProperty Classification"; Rec."BLRProperty Classification")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Classification of the property related to this credit memo.';
                 }
-                field("Approval Status for CreditNote"; Rec."BLRApprovalStatusforCreditNote")
+                field("BLRApproval Status for CreditNote"; Rec."BLRApprovalStatusforCreditNote")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Approval status for the credit note.';
                 }
-                field("Rejection Reason CreditNote"; Rec."BLRRejection Reason CreditNote")
+                field("BLRRejection Reason CreditNote"; Rec."BLRRejection Reason CreditNote")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Reason for rejection of the credit note.';
                 }
-                field("Terminated Credit Note"; Rec."BLRTerminated Credit Note")
+                field("BLRTerminated Credit Note"; Rec."BLRTerminated Credit Note")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indicates if the credit note is terminated.';
@@ -65,13 +65,13 @@ pageextension 73209581 BLRPostedSalesCreditMemo extends "Posted Sales Credit Mem
         }
         addlast(General)
         {
-            field("Credit Memo URL"; Rec."BLRCredit Memo URL")
+            field("BLRCredit Memo URL"; Rec."BLRCredit Memo URL")
             {
                 ApplicationArea = All;
                 Caption = 'View Document URL';
                 ToolTip = 'Specifies the URL to view the document associated with this posted sales credit memo.';
             }
-            field("Credit Memo Document"; Rec."BLRCredit Memo Document")
+            field("BLRCredit Memo Document"; Rec."BLRCredit Memo Document")
             {
                 ToolTip = 'Specifies the document associated with this posted sales credit memo.';
                 ApplicationArea = All;
@@ -90,14 +90,14 @@ pageextension 73209581 BLRPostedSalesCreditMemo extends "Posted Sales Credit Mem
                         Error('No document is available to view.');
 
 
-                    OpenFileInBrowser(FileURL);
+                    BLROpenFileInBrowser(FileURL);
                 end;
 
             }
         }
 
     }
-    procedure OpenFileInBrowser(URL: Text)
+    procedure BLROpenFileInBrowser(URL: Text)
     begin
 
         if URL <> '' then

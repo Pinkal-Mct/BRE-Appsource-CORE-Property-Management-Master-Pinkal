@@ -4,13 +4,13 @@ pageextension 73209599 BLRCustomerListExtension extends "Customer List"
     {
         addlast(Control1)
         {
-            field("Customer Type"; Rec."BLRCustomer Type")
+            field("BLRCustomer Type"; Rec."BLRCustomer Type")
             {
                 ApplicationArea = All;
                 Caption = 'Customer Type';
                 ToolTip = 'Specifies the type of customer.';
             }
-            field("Business Unit"; Rec."BLRBusiness Unit")
+            field("BLRBusiness Unit"; Rec."BLRBusiness Unit")
             {
                 ApplicationArea = All;
                 Caption = 'Business unit';

@@ -2,7 +2,7 @@
   "id": "0d315d7e-99d5-4269-b1dd-4e1ba08706f2",
    "name": "RidgeEstates 365 Property Lease Management",
   "publisher": "BlueRidge IT FZE",
-  "version": "1.0.0.3",
+  "version": "1.0.0.4",
   "brief": "RidgeEstates 365 Property Lease Management is a UAE‑ready solution built on Microsoft Dynamics 365 Business Central that helps organizations manage the full lease lifecycle, improve visibility across contracts and occupancy, and maintain control over renewals, expiries, and tenant data.",
   "description": "RidgeEstates 365 Property Lease Management is a purpose‑built solution designed for property owners, developers, and portfolio operators managing lease operations across the UAE. Built natively on Microsoft Dynamics 365 Business Central, it provides a structured, centralized approach to managing leases within a secure, Microsoft‑powered platform. The solution addresses common leasing challenges such as fragmented systems, manual contract handling, missed renewals, and limited visibility across properties. Lease records, tenancy data, unit details, key dates, and supporting documents are all centralized in a unified source, giving teams consistent control over the entire lease lifecycle. RidgeEstates 365 enables organizations to digitize lease administration, track renewals and expiries proactively, and monitor occupancy and vacancy in real time. Automated alerts, structured workflows, and dashboards help teams stay ahead of critical tenant actions while reducing administrative overhead and operational risk. RidgeEstates 365 provides a reliable foundation for organizations looking to modernize lease operations, improve data accuracy, and support portfolio growth with greater confidence and visibility.",
   "privacyStatement": "https://www.blueridgeit.com/ridgeestates-365-privacy-policy/",
@@ -14,7 +14,7 @@
     "id": "87e40ced-b925-4fad-b625-87a4aa2c7b4a",
     "name": "RidgeEstates 365 Core Management",
     "publisher": "BlueRidge IT FZE",
-    "version": "1.0.0.3"
+    "version": "1.0.0.4"  
   }],
   "screenshots": [],
   "platform": "28.0.0.0",
@@ -32,7 +32,10 @@
   },
   "runtime": "15.0",
   "features": [
-    "NoImplicitWith"
+    "NoImplicitWith",
+    "TranslationFile"
   ],
-  "contextSensitiveHelpUrl": "https://www.blueridgeit.com/help-support-ridgeestates-365/"
+  
+  "contextSensitiveHelpUrl": "https://www.blueridgeit.com/help-support-ridgeestates-365/",
+  "applicationInsightsConnectionString": "InstrumentationKey=4e144378-d9ea-4e85-8b88-36cdbf03899e;IngestionEndpoint=https://uaenorth-0.in.applicationinsights.azure.com/;LiveEndpoint=https://uaenorth.livediagnostics.monitor.azure.com/;ApplicationId=59ed0b62-5dae-48ec-b912-b3173b4f26c3"
 }

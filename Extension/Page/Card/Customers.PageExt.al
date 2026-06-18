@@ -141,62 +141,62 @@ pageextension 73209579 BLRCustomers extends "Customer Card"
         }
         addafter(AddressDetails)
         {
-            group(CustContactDetails)
+            group(BLRCustContactDetails)
             {
                 Caption = 'Contact Details';
             }
         }
-        movefirst(CustContactDetails; "Phone No.", "MobilePhoneNo", "E-Mail")
+        movefirst(BLRCustContactDetails; "Phone No.", "MobilePhoneNo", "E-Mail")
         addafter(Name)
         {
-            field(Username; Rec.BLRUsername)
+            field(BLRUsername; Rec.BLRUsername)
             {
                 ApplicationArea = All;
                 ToolTip = 'The username for the tenant. This is used for login purposes.';
             }
-            field("Password"; rec."BLRPassword")
+            field("BLRPassword"; rec."BLRPassword")
             {
                 ApplicationArea = All;
                 ToolTip = 'The password for the tenant. This is used for login purposes.';
             }
-            field("Date Of Birth"; rec."BLRDate Of Birth")
+            field("BLRDate Of Birth"; rec."BLRDate Of Birth")
             {
                 ApplicationArea = All;
                 ToolTip = 'The date of birth of the tenant. This is used for identification purposes.';
             }
-            field("Nationality"; rec."BLRNationality")
+            field("BLRNationality"; rec."BLRNationality")
             {
                 ApplicationArea = All;
                 ToolTip = 'The nationality of the tenant. This is used for identification purposes.';
             }
-            field("Emirates ID"; rec."BLREmirates ID")
+            field("BLREmirates ID"; rec."BLREmirates ID")
             {
                 ApplicationArea = All;
                 ToolTip = 'The Emirates ID of the tenant. This is used for identification purposes.';
             }
-            field("Emirates ID Expiry Date"; rec."BLREmirates ID Expiry Date")
+            field("BLREmirates ID Expiry Date"; rec."BLREmirates ID Expiry Date")
             {
                 ApplicationArea = All;
                 ToolTip = 'The expiry date of the Emirates ID of the tenant. This is used for identification purposes.';
             }
-            field("License No."; Rec."BLRLicense No.")
+            field("BLRLicense No."; Rec."BLRLicense No.")
             {
                 ApplicationArea = All;
                 ToolTip = 'The license number of the tenant. This is used for identification purposes.';
             }
-            field("Licensing Authority"; Rec."BLRLicensing Authority")
+            field("BLRLicensing Authority"; Rec."BLRLicensing Authority")
             {
                 ApplicationArea = All;
                 ToolTip = 'The authority that issued the license for the tenant. This is used for identification purposes.';
             }
-            field("Code Area"; Rec."BLRCode Area")
+            field("BLRCode Area"; Rec."BLRCode Area")
             {
                 ApplicationArea = All;
                 Caption = 'Code Area';
                 Visible = false;
                 ToolTip = 'The code area for the tenant. This is used for identification purposes.';
             }
-            field(Occupation; Rec."BLROccupation")
+            field(BLROccupation; Rec."BLROccupation")
             {
                 ApplicationArea = All;
                 Caption = 'Occupation';
@@ -205,14 +205,14 @@ pageextension 73209579 BLRCustomers extends "Customer Card"
         }
         addlast(General)
         {
-            field("Customer Type"; Rec."BLRCustomer Type")
+            field("BLRCustomer Type"; Rec."BLRCustomer Type")
             {
                 ApplicationArea = All;
                 Caption = 'Customer Type';
                 ToolTip = 'The type of customer, such as individual or company. This is used for classification purposes.';
             }
 
-            field("Business Unit"; Rec."BLRBusiness Unit")
+            field("BLRBusiness Unit"; Rec."BLRBusiness Unit")
             {
                 ApplicationArea = All;
                 Caption = 'Business unit';
@@ -222,46 +222,46 @@ pageextension 73209579 BLRCustomers extends "Customer Card"
         }
         addafter("Address & Contact")
         {
-            group("Passport Details")
+            group("BLRPassport Details")
             {
-                field("Passport Number"; rec."BLRPassport Number")
+                field("BLRPassport Number"; rec."BLRPassport Number")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The passport number of the tenant. This is used for identification purposes.';
                 }
-                field("Passport Issue Date"; rec."BLRPassport Issue Date")
+                field("BLRPassport Issue Date"; rec."BLRPassport Issue Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The issue date of the passport of the tenant. This is used for identification purposes.';
                 }
-                field("Passport Expiry Date"; rec."BLRPassport Expiry Date")
+                field("BLRPassport Expiry Date"; rec."BLRPassport Expiry Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The expiry date of the passport of the tenant. This is used for identification purposes.';
                 }
-                field("Country of Passport"; rec."BLRCountry of Passport")
+                field("BLRCountry of Passport"; rec."BLRCountry of Passport")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The country that issued the passport of the tenant. This is used for identification purposes.';
                 }
             }
 
-            part("Document Attachments"; "BLRTenant Document SubPage")
+            part("BLRDocument Attachments"; "BLRTenant Document SubPage")
             {
-                SubPageLink = BLRNo = FIELD("No."); // Link to filter attachments for this owner only
+                SubPageLink = BLRNo = field("No."); // Link to filter attachments for this owner only
                 ApplicationArea = All;
                 Visible = isVisible;
             }
 
-            group("Tenant Screening")
+            group("BLRTenant Screening")
             {
-                field("Approve"; Rec."BLRApprove")
+                field("BLRApprove"; Rec."BLRApprove")
                 {
                     ApplicationArea = All;
                     Caption = 'Approve';
                     ToolTip = 'Indicates whether the tenant has been approved.';
                 }
-                field("Decline"; Rec."BLRDecline")
+                field("BLRDecline"; Rec."BLRDecline")
                 {
                     ApplicationArea = All;
                     Caption = 'Decline';
@@ -272,7 +272,7 @@ pageextension 73209579 BLRCustomers extends "Customer Card"
         }
         addafter("Address 2")
         {
-            field("P.O.Box"; Rec."BLRP.O.Box")
+            field("BLRP.O.Box"; Rec."BLRP.O.Box")
             {
                 ApplicationArea = All;
                 Caption = 'P.O.Box';
@@ -286,18 +286,18 @@ pageextension 73209579 BLRCustomers extends "Customer Card"
 
     trigger OnModifyRecord(): Boolean
     begin
-        CurrPage."Document Attachments".Page.SetPropertyId(Rec."No.");
+        CurrPage."BLRDocument Attachments".Page.SetPropertyId(Rec."No.");
     end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        CurrPage."Document Attachments".Page.SetPropertyId(Rec."No.");
+        CurrPage."BLRDocument Attachments".Page.SetPropertyId(Rec."No.");
         isVisible := true;
     end;
 
     trigger OnAfterGetRecord()
     begin
-        CurrPage."Document Attachments".Page.SetPropertyId(Rec."No.");
+        CurrPage."BLRDocument Attachments".Page.SetPropertyId(Rec."No.");
         if Rec."No." <> '' then
             isVisible := true
         else

@@ -2,17 +2,13 @@ codeunit 73209624 "BLRSplitCombinePaymentModemail"
 {
     procedure SendTenantEmail(Rec: Record "BLRApprovalPaymentRequest")
     var
+        customer: Record Customer;
+        CompanyInfo: Record "Company Information";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
-        customer: Record Customer;
         //  SalesInvHeader: Record "Sales Invoice Header";
         EmailAddress: List of [Text];
-
         BCCMail: List of [Text];
-        // Record for User Personalization
-
-        CompanyInfo: Record "Company Information";
-
         TenantEmail: List of [Text];
         Subject: Text;
 
@@ -22,8 +18,7 @@ codeunit 73209624 "BLRSplitCombinePaymentModemail"
             TenantEmail.Add(customer."E-Mail");
         if TenantEmail.Count() = 0 then
             Error('No email address found for the tenant. Email cannot be sent.');
-        if CompanyInfo.Get() then begin
-
+        if CompanyInfo.Get() then
             case Rec."BLRRequest Type" of
                 'Split':
                     begin
@@ -93,7 +88,6 @@ codeunit 73209624 "BLRSplitCombinePaymentModemail"
 
 
             end;
-        end;
         //EmailMessage.Create();
     end;
 }

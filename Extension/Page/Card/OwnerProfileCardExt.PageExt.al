@@ -19,15 +19,15 @@ pageextension 73209580 BLROwnerProfileCardExt extends "BLROwner Profile Card"
 
     trigger OnOpenPage()
     begin
-        ShowBankingInfo := not (IsUserInProfile('LEASE MANAGER') or IsUserInProfile('PROPERTY MANAGER'));
-        ShowOwnerDocs := not IsUserInProfile('LEASE MANAGER');
+        ShowBankingInfo := not (BLRIsUserInProfile('LEASE MANAGER') or BLRIsUserInProfile('PROPERTY MANAGER'));
+        ShowOwnerDocs := not BLRIsUserInProfile('LEASE MANAGER');
     end;
 
     var
         ShowBankingInfo: Boolean;
         ShowOwnerDocs: Boolean;
 
-    local procedure IsUserInProfile(ProfileID: Code[20]): Boolean
+    local procedure BLRIsUserInProfile(ProfileID: Code[20]): Boolean
     var
         AccessControl: Record "User Personalization";
     begin

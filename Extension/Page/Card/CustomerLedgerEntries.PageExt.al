@@ -4,7 +4,7 @@ pageextension 73209577 BLRCustomerLedgerEntries extends "Customer Ledger Entries
     {
         addafter(Open)
         {
-            field(Positive; Rec.Positive)
+            field(BLRPositive; Rec.Positive)
             {
                 ApplicationArea = All;
                 Caption = 'Positive';

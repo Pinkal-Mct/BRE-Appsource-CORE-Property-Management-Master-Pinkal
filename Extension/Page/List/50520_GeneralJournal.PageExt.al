@@ -4,7 +4,7 @@ pageextension 73209597 BLRGeneralJournalExt extends "General Journal"
     {
         addafter("Document No.")
         {
-            field("Contract ID"; Rec."BLRContract ID")
+            field("BLRContract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
                 Caption = 'Contract ID';

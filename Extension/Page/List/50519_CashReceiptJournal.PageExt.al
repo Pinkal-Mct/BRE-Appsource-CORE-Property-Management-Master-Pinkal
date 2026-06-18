@@ -4,19 +4,19 @@ pageextension 73209596 BLRCashReceiptJournalExt extends "Cash Receipt Journal"
     {
         addafter("Document No.")
         {
-            field("Contract ID"; Rec."BLRContract ID")
+            field("BLRContract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
                 Caption = 'Contract ID';
             }
-            field("Item Description"; Rec."BLRItem Description")
+            field("BLRItem Description"; Rec."BLRItem Description")
             {
                 ApplicationArea = All;
                 Caption = 'Item Description';
                 ToolTip = 'Specifies the description of the item.';
                 Editable = false;
             }
-            field("Transaction Type"; Rec."BLRTransaction Type")
+            field("BLRTransaction Type"; Rec."BLRTransaction Type")
             {
                 ApplicationArea = All;
                 Caption = 'Transaction Type';

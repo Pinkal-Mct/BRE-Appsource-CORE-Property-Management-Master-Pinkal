@@ -4,7 +4,7 @@ pageextension 73209583 "BLRPostedSalesInvoiceLine" extends "Posted Sales Invoice
     {
         addafter("Gen. Prod. Posting Group")
         {
-            field("Contract ID"; Rec."BLRContract ID")
+            field("BLRContract ID"; Rec."BLRContract ID")
             {
                 ApplicationArea = All;
                 Caption = 'Contract ID';

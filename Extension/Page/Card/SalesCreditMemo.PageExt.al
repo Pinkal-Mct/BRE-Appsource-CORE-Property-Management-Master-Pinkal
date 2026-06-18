@@ -4,9 +4,9 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
     {
         addafter(General)
         {
-            group("Contract Information")
+            group("BLRContract Information")
             {
-                field("Contract ID"; Rec."BLRContract ID")
+                field("BLRContract ID"; Rec."BLRContract ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'ID of the contract related to this credit memo.';
@@ -40,44 +40,44 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
                     end;
 
                 }
-                field("Contract Amount"; Rec."BLRContract Amount")
+                field("BLRContract Amount"; Rec."BLRContract Amount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Amount of the contract related to this credit memo.';
                     Editable = false;
                 }
-                field("Property Name"; Rec."BLRProperty Name")
+                field("BLRProperty Name"; Rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Name of the property related to this credit memo.';
                     Editable = false;
                 }
-                field("Unit Name"; Rec."BLRUnit Name")
+                field("BLRUnit Name"; Rec."BLRUnit Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Name of the unit related to this credit memo.';
                     Editable = false;
                 }
-                field("Contract Tenure"; Rec."BLRContract Tenure")
+                field("BLRContract Tenure"; Rec."BLRContract Tenure")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Tenure of the contract related to this credit memo.';
                     Editable = false;
 
                 }
-                field("Contract Period"; Rec."BLRContract Period")
+                field("BLRContract Period"; Rec."BLRContract Period")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Period of the contract related to this credit memo.';
                     Editable = false;
                 }
-                field("Property Classification"; Rec."BLRProperty Classification")
+                field("BLRProperty Classification"; Rec."BLRProperty Classification")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Classification of the property related to this credit memo.';
                     Editable = false;
                 }
-                field("Approval Status for CreditNote"; Rec."BLRApprovalStatusforCreditNote")
+                field("BLRApproval Status for CreditNote"; Rec."BLRApprovalStatusforCreditNote")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Approval status of the credit note.';
@@ -100,13 +100,13 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
 
                     end;
                 }
-                field("Rejection Reason CreditNote"; Rec."BLRRejection Reason CreditNote")
+                field("BLRRejection Reason CreditNote"; Rec."BLRRejection Reason CreditNote")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Reason for rejection of the credit note.';
                     Editable = false;
                 }
-                field("Terminated Credit Note"; Rec."BLRTerminated Credit Note")
+                field("BLRTerminated Credit Note"; Rec."BLRTerminated Credit Note")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indicates if the credit note is terminated.';
@@ -119,13 +119,13 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
         }
         addlast(General)
         {
-            field("Credit Memo URL"; Rec."BLRCredit Memo URL")
+            field("BLRCredit Memo URL"; Rec."BLRCredit Memo URL")
             {
                 ApplicationArea = All;
                 Caption = 'Credit Memo Document URL';
                 ToolTip = 'URL of the credit memo document stored in Azure Blob Storage.';
             }
-            field("Credit Memo Document"; Rec."BLRCredit Memo Document")
+            field("BLRCredit Memo Document"; Rec."BLRCredit Memo Document")
             {
                 ApplicationArea = All;
                 Caption = 'View Invoice';
@@ -142,7 +142,7 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
                     if FileURL = '' then
                         Error('No document is available to view.');
 
-                    OpenFileInBrowser(FileURL);
+                    BLROpenFileInBrowser(FileURL);
                 end;
 
             }
@@ -152,10 +152,11 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
     {
         addafter(Action7)
         {
-            action("Send Approval to Finance Manager")
+            action("BLRSend Approval to Finance Manager")
             {
                 ApplicationArea = All;
                 Caption = 'Send Approval to Finance Manager';
+                Image = SendApprovalRequest;
                 ToolTip = 'Send the credit memo for approval to the finance manager.';
                 trigger OnAction()
                 var
@@ -180,7 +181,7 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
     var
         tenancyContract: Record "BLRTenancyContract";
     begin
-        approvaleditable := GetUserEditableStatus();
+        approvaleditable := BLRGetUserEditableStatus();
         tenancyContract.SetRange("BLRContract ID", Rec."BLRContract ID");
         if tenancyContract.FindFirst() then begin
 
@@ -198,7 +199,7 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
         end;
     end;
 
-    procedure GetUserEditableStatus(): Boolean
+    procedure BLRGetUserEditableStatus(): Boolean
     var
         UserPersonalization: Record "User Personalization";
     begin
@@ -216,7 +217,7 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
 
     end;
 
-    procedure OpenFileInBrowser(URL: Text)
+    procedure BLROpenFileInBrowser(URL: Text)
     begin
 
         if URL <> '' then

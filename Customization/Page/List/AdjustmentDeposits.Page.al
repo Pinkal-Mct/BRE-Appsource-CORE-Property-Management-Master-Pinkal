@@ -124,7 +124,6 @@ page 73209759 "BLRAdjustmentDeposits"
                     adjustmentDepositsRec: Record "BLRAdjustmentDeposits";
                     GenJournalLineRec: Record "Gen. Journal Line";
                     TenancyContractRec: Record "BLRTenancyContract";
-                    GenJnlPost: Codeunit "Gen. Jnl.-Post";
                     Previewed: Boolean;
                 begin
 
