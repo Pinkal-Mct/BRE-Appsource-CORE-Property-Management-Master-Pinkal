@@ -3,6 +3,7 @@ page 73209808 "BLRSecurity DepositLedgerList"
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
+    Caption = 'Security Deposit Ledger List';
     SourceTable = "BLRSecurityDepositeLedger";
 
     layout

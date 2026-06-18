@@ -1,4 +1,4 @@
-permissionset 73209576 PagePermissionSet
+permissionset 73209576 BRLPrtyLeaseMgtPerm
 {
     Assignable = true;
     Permissions = report BLRAbuDhabi_Contract = X,

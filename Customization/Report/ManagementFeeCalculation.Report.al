@@ -2,6 +2,7 @@ report 73209584 "BLRManagement Fee Calculation"
 {
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
+    Caption = 'Management Fee Calculation';
     DefaultRenderingLayout = "ManagementFeeCalculation.docx";
 
     dataset

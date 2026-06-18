@@ -2,7 +2,7 @@ page 73209718 "BLRPropertyRegistrationSubPage"
 {
     PageType = ListPart;
     ApplicationArea = All;
-    UsageCategory = Administration;
+    UsageCategory = None;
     SourceTable = "BLRPropertyDocumentDetails";
     Caption = 'Property Registration SubPage';
 

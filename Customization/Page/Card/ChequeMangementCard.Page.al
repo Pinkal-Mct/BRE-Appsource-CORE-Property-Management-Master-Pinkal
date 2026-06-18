@@ -2,7 +2,7 @@ page 73209678 "BLRCheque Mangement Card"
 {
     PageType = Card;
     ApplicationArea = All;
-    UsageCategory = Administration;
+    UsageCategory = None;
     SourceTable = "BLRChequeTable";
     Editable = true;
 

@@ -2,7 +2,8 @@ page 73209712 "BLRPayment Transaction Card"
 {
     PageType = Card;
     ApplicationArea = All;
-    UsageCategory = Administration;
+    UsageCategory = None;
+    Caption = 'Payment Transaction Card';
     SourceTable = "BLRPaymentTransaction";
 
     layout

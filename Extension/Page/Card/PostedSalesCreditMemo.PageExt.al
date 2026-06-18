@@ -42,7 +42,7 @@ pageextension 73209581 BLRPostedSalesCreditMemo extends "Posted Sales Credit Mem
                     ApplicationArea = All;
                     ToolTip = 'Classification of the property related to this credit memo.';
                 }
-                field("Approval Status for CreditNote"; Rec."BLRApproval Status for CreditNote")
+                field("Approval Status for CreditNote"; Rec."BLRApprovalStatusforCreditNote")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Approval status for the credit note.';

@@ -77,7 +77,7 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
                     ToolTip = 'Classification of the property related to this credit memo.';
                     Editable = false;
                 }
-                field("Approval Status for CreditNote"; Rec."BLRApproval Status for CreditNote")
+                field("Approval Status for CreditNote"; Rec."BLRApprovalStatusforCreditNote")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Approval status of the credit note.';
@@ -92,10 +92,10 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
                         ShowDialogBox: Codeunit BLRDialogboxRejecCreditMemo;
                     begin
 
-                        if Rec."BLRApproval Status for CreditNote" = Rec."BLRApproval Status for CreditNote"::Approved then
+                        if Rec."BLRApprovalStatusforCreditNote" = Rec."BLRApprovalStatusforCreditNote"::Approved then
                             SalesCreditNotePost.Run(Rec)
                         else
-                            if Rec."BLRApproval Status for CreditNote" = Rec."BLRApproval Status for CreditNote"::Rejected then
+                            if Rec."BLRApprovalStatusforCreditNote" = Rec."BLRApprovalStatusforCreditNote"::Rejected then
                                 ShowDialogBox.Dialogboxcreditmemo(Rec);
 
                     end;
@@ -169,7 +169,7 @@ pageextension 73209585 BLRSalesCreditMemo extends "Sales Credit Memo"
         {
             trigger OnBeforeAction()
             begin
-                if Rec."BLRApproval Status for CreditNote" <> Rec."BLRApproval Status for CreditNote"::Approved then
+                if Rec."BLRApprovalStatusforCreditNote" <> Rec."BLRApprovalStatusforCreditNote"::Approved then
                     Error('The Sales Credit Memo cannot be posted because the approval status is not "Approved".');
             end;
         }

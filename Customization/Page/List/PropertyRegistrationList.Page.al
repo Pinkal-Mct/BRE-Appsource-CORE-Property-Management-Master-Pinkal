@@ -2,6 +2,7 @@ page 73209797 "BLRProperty Registration List"
 {
     PageType = List;
     SourceTable = "BLRPropertyRegistration";
+    Caption = 'Property Registration List';
     ApplicationArea = All;
     UsageCategory = Lists;
     CardPageId = 73209717;

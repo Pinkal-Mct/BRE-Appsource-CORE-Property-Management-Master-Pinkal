@@ -253,5 +253,18 @@ page 73209717 "BLRProperty Registration Card"
                 Clear(workflowfrequencyPR);
             until workflowfrequency.Next() = 0;
     end;
+
+    trigger OnQueryClosePage(CloseAction: Action): Boolean
+    begin
+        if Rec."BLRProperty ID" = '' then
+            exit(true);
+
+        if Rec."BLRProperty Classification" = '' then begin
+            Message('Please select Property Classification');
+            exit(false);
+        end;
+
+        exit(true);
+    end;
 }
 

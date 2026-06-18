@@ -1,24 +1,24 @@
 {
   "id": "0d315d7e-99d5-4269-b1dd-4e1ba08706f2",
-  "name": "Core-Property-RealEstate-AppSource",
-  "publisher": "Default Publisher",
-  "version": "1.0.0.0",
-  "brief": "",
-  "description": "",
-  "privacyStatement": "",
-  "EULA": "",
-  "help": "",
-  "url": "",
-  "logo": "",
+   "name": "RidgeEstates 365 Property Lease Management",
+  "publisher": "BlueRidge IT FZE",
+  "version": "1.0.0.3",
+  "brief": "RidgeEstates 365 Property Lease Management is a UAE‑ready solution built on Microsoft Dynamics 365 Business Central that helps organizations manage the full lease lifecycle, improve visibility across contracts and occupancy, and maintain control over renewals, expiries, and tenant data.",
+  "description": "RidgeEstates 365 Property Lease Management is a purpose‑built solution designed for property owners, developers, and portfolio operators managing lease operations across the UAE. Built natively on Microsoft Dynamics 365 Business Central, it provides a structured, centralized approach to managing leases within a secure, Microsoft‑powered platform. The solution addresses common leasing challenges such as fragmented systems, manual contract handling, missed renewals, and limited visibility across properties. Lease records, tenancy data, unit details, key dates, and supporting documents are all centralized in a unified source, giving teams consistent control over the entire lease lifecycle. RidgeEstates 365 enables organizations to digitize lease administration, track renewals and expiries proactively, and monitor occupancy and vacancy in real time. Automated alerts, structured workflows, and dashboards help teams stay ahead of critical tenant actions while reducing administrative overhead and operational risk. RidgeEstates 365 provides a reliable foundation for organizations looking to modernize lease operations, improve data accuracy, and support portfolio growth with greater confidence and visibility.",
+  "privacyStatement": "https://www.blueridgeit.com/ridgeestates-365-privacy-policy/",
+  "EULA": "https://www.blueridgeit.com/end-user-license-agreement-eula-ridgeestates-365/",
+  "help": "https://www.blueridgeit.com/help-support-ridgeestates-365/",
+  "url": "https://blueridgeit.com/ridgeestates-365/",
+  "logo": "./Logo/RidgeEstates365Logo.png",
   "dependencies": [{
     "id": "87e40ced-b925-4fad-b625-87a4aa2c7b4a",
-    "name": "Core-RealEstate-AppSource",
-    "publisher": "Default Publisher",
-    "version": "1.0.0.2"
+    "name": "RidgeEstates 365 Core Management",
+    "publisher": "BlueRidge IT FZE",
+    "version": "1.0.0.3"
   }],
   "screenshots": [],
-  "platform": "1.0.0.0",
-  "application": "26.0.0.0",
+  "platform": "28.0.0.0",
+  "application": "28.1.0.0",
   "idRanges": [
     {
       "from": 73209575,
@@ -26,12 +26,13 @@
     }
   ],
   "resourceExposurePolicy": {
-    "allowDebugging": true,
-    "allowDownloadingSource": true,
+    "allowDebugging": false, 
+    "allowDownloadingSource": false,
     "includeSourceInSymbolFile": true
   },
   "runtime": "15.0",
   "features": [
     "NoImplicitWith"
-  ]
+  ],
+  "contextSensitiveHelpUrl": "https://www.blueridgeit.com/help-support-ridgeestates-365/"
 }

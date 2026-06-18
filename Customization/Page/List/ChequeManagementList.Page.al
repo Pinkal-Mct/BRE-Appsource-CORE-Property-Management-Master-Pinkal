@@ -3,6 +3,7 @@ page 73209767 "BLRCheque Management List"
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
+    Caption = 'Cheque Management List';
     SourceTable = "BLRChequeTable";
 
     layout

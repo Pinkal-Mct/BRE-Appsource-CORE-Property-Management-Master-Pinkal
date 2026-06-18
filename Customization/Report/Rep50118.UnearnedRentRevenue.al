@@ -54,7 +54,7 @@ report 73209588 "BLRUnearned Rent Revenue"
             column(Unearned_Revenue_Balance; "BLRUnearned Revenue Balance")
             {
             }
-            column(CalculatedUnearnedRevBalance; BLRCalculatedUnearnedRevB19C1)
+            column(G_L_Balance; "BLRG/L Balance")
             {
             }
             column(Shortfall_Excess; "BLRShortfall/Excess")
